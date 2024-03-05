@@ -1,23 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import Welcome from './src/Welcome/Welcome';
 
 const App = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text
-        style={{
-          color: 'black',
-        }}>
-        App
-      </Text>
-    </View>
-  );
+  return <Welcome />;
 };
 
 export default App;
