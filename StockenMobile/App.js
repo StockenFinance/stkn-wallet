@@ -4,9 +4,10 @@ import Welcome from './src/Welcome/Welcome';
 import ImportWallet from './src/ImportWallet/ImportWallet';
 import CreateWallet from './src/CreateWallet/CreateWallet';
 import BackupPhrase from './src/BackupPhrase/BackupPhrase';
+import ConfirmBackupPhrase from './src/ConfirmBackupPhrase/ConfirmBackupPhrase';
 
 const App = () => {
-  return <BackupPhrase />;
+  return <ConfirmBackupPhrase />;
 };
 
 export default App;
