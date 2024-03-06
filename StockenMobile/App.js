@@ -6,9 +6,10 @@ import CreateWallet from './src/CreateWallet/CreateWallet';
 import BackupPhrase from './src/BackupPhrase/BackupPhrase';
 import ConfirmBackupPhrase from './src/ConfirmBackupPhrase/ConfirmBackupPhrase';
 import RecoveryPhraseConfirmation from './src/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation';
+import Dashboard from './src/Dashboard/Dashboard';
 
 const App = () => {
-  return <ConfirmBackupPhrase />;
+  return <Dashboard />;
 };
 
 export default App;
