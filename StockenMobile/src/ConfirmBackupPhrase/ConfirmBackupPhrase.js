@@ -1,7 +1,13 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import React from 'react';
 
-const ConfirmBackupPhrase = () => {
+const ConfirmBackupPhrase = ({
+  placeholder,
+  onChangeText,
+  value,
+  handleFocus,
+  handleBlur,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,7 +28,43 @@ const ConfirmBackupPhrase = () => {
           its words in the fields below in the right order
         </Text>
       </View>
-      <View style={styles.securityMessageContainer}></View>
+
+      <View style={styles.securityPhraseContainer}>
+        <View style={styles.securityPhraseTextContainer}>
+          <View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.countingText}>1</Text>
+              <Text style={styles.namesText}>history</Text>
+            </View>
+            <View style={{flexDirection: 'row', marginVertical: '10%'}}>
+              <Text style={styles.countingText}>2</Text>
+              <Text style={styles.namesText}>novel</Text>
+            </View>
+          </View>
+          <View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                caretColor="red"
+                placeholderTextColor={'grey'}
+                placeholder={placeholder}
+                onChangeText={onChangeText}
+                value={value}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                caretColor="red"
+                placeholderTextColor={'grey'}
+                placeholder={placeholder}
+                onChangeText={onChangeText}
+                value={value}
+                style={styles.input}
+              />
+            </View>
+          </View>
+        </View>
+      </View>
       <View style={styles.languageButtonContainer}>
         <View style={styles.languageButton}>
           <Text style={styles.englishText}>choice</Text>
@@ -32,6 +74,16 @@ const ConfirmBackupPhrase = () => {
         </View>
         <View style={styles.languageButton}>
           <Text style={[styles.englishText]}>animal</Text>
+        </View>
+      </View>
+      <View style={styles.importButton}>
+        <View style={styles.alertContainer}>
+          <View style={styles.alertView}>
+            <Text style={styles.alertText}>!</Text>
+          </View>
+          <Text style={styles.importText}>
+            Please select word #6 from the list
+          </Text>
         </View>
       </View>
     </View>
@@ -101,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '22%',
-    height: '28%',
+    height: 35,
     backgroundColor: '#F19220',
     borderRadius: 10,
     marginHorizontal: '2%',
@@ -110,5 +162,102 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: '#ffffff',
+  },
+  securityMessageContainer: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: '88%',
+    borderRadius: 15,
+    height: '12%',
+    marginTop: '7%',
+    backgroundColor: '#F4F7FA',
+  },
+  alertImage: {
+    width: 38,
+    height: 40,
+    marginTop: '2%',
+  },
+  securityText: {
+    fontSize: 13,
+    fontWeight: '400',
+    color: '#000000',
+    textAlign: 'center',
+    width: '85%',
+  },
+  securityPhraseContainer: {
+    alignSelf: 'center',
+    width: '87%',
+    height: 121,
+    borderRadius: 15,
+    marginTop: '10%',
+    backgroundColor: '#F4F7FA',
+  },
+  securityPhraseTextContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+    marginTop: '8%',
+  },
+  countingText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#B7BECD',
+    marginHorizontal: '8%',
+  },
+  namesText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#253452',
+  },
+  inputContainer: {
+    width: 133,
+    height: 35,
+    alignSelf: 'center',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginBottom: 10,
+  },
+  input: {
+    height: 50,
+    fontSize: 18,
+    fontWeight: '700',
+    paddingHorizontal: 8,
+    marginTop: '-5%',
+    color: '#B7BECD',
+  },
+  importButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '80%',
+    width: '85%',
+    height: '6.5%',
+    alignSelf: 'center',
+    borderRadius: 10,
+    backgroundColor: '#D5DFEB',
+  },
+  importText: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#253452',
+  },
+  alertContainer: {
+    flexDirection: 'row',
+    marginLeft: '-10%',
+    marginTop: '2%',
+  },
+  alertView: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#F19220',
+    marginHorizontal: '3%',
+  },
+  alertText: {
+    fontSize: 14,
+    fontWeight: '900',
+    color: '#ffffff',
+    alignSelf: 'center',
   },
 });

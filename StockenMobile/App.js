@@ -8,7 +8,7 @@ import ConfirmBackupPhrase from './src/ConfirmBackupPhrase/ConfirmBackupPhrase';
 import RecoveryPhraseConfirmation from './src/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation';
 
 const App = () => {
-  return <RecoveryPhraseConfirmation />;
+  return <ConfirmBackupPhrase />;
 };
 
 export default App;
