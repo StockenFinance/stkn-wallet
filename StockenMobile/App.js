@@ -7,9 +7,10 @@ import BackupPhrase from './src/BackupPhrase/BackupPhrase';
 import ConfirmBackupPhrase from './src/ConfirmBackupPhrase/ConfirmBackupPhrase';
 import RecoveryPhraseConfirmation from './src/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation';
 import Dashboard from './src/Dashboard/Dashboard';
+import SwapScreen from './src/SwapScreen/SwapScreen';
 
 const App = () => {
-  return <Dashboard />;
+  return <SwapScreen />;
 };
 
 export default App;
