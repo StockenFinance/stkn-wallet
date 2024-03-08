@@ -8,9 +8,10 @@ import ConfirmBackupPhrase from './src/ConfirmBackupPhrase/ConfirmBackupPhrase';
 import RecoveryPhraseConfirmation from './src/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation';
 import Dashboard from './src/Dashboard/Dashboard';
 import SwapScreen from './src/SwapScreen/SwapScreen';
+import Settings from './src/Settings/Settings';
 
 const App = () => {
-  return <Dashboard />;
+  return <Settings />;
 };
 
 export default App;
