@@ -10,7 +10,7 @@ import Dashboard from './src/Dashboard/Dashboard';
 import SwapScreen from './src/SwapScreen/SwapScreen';
 
 const App = () => {
-  return <SwapScreen />;
+  return <Dashboard />;
 };
 
 export default App;
