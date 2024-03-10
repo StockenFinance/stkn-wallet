@@ -9,9 +9,10 @@ import RecoveryPhraseConfirmation from './src/RecoveryPhraseConfirmation/Recover
 import Dashboard from './src/Dashboard/Dashboard';
 import SwapScreen from './src/SwapScreen/SwapScreen';
 import Settings from './src/Settings/Settings';
+import SendScreen from './src/SendScreen/SendScreen';
 
 const App = () => {
-  return <Settings />;
+  return <SendScreen />;
 };
 
 export default App;

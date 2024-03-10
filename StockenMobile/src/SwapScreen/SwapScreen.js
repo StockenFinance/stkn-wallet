@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   divider: {
     flex: 1,
     height: 1.5,
-    backgroundColor: '#808BA0', // You can customize the divider color
+    backgroundColor: '#808BA0',
   },
   swapImageContainer: {
     width: 45,
@@ -300,9 +300,9 @@ const styles = StyleSheet.create({
     marginHorizontal: '3%',
   },
   image: {
-    width: 24, // Adjust the width of the image as needed
-    height: 24, // Adjust the height of the image as needed
-    marginHorizontal: 10, // Adjust the margin between the image and dividers as needed
+    width: 24,
+    height: 24,
+    marginHorizontal: 10,
   },
   currencyConvertView: {
     width: 198,

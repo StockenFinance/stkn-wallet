@@ -75,7 +75,8 @@ const ImportWallet = () => {
         </View>
 
         <CustomTextInput
-          placeholder="Confirm Password"
+          place
+          holder="Confirm Password"
           onChangeText={handleChangeText}
           value={text}
         />
