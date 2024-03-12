@@ -12,9 +12,10 @@ import React from 'react';
 // import SendScreen from './src/SendScreen/SendScreen';
 // import BuyScreen from './src/BuyScreen/BuyScreen';
 import ChartScreen from './src/ChartScreen/ChartScreen';
+import Activity from './src/Activity/Activity';
 
 const App = () => {
-  return <ChartScreen />;
+  return <Activity />;
 };
 
 export default App;

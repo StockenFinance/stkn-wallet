@@ -25,10 +25,7 @@ const CurrencyDetailsCard = ({item}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Image
-                source={require('../src/assets/images/bitcoin.png')}
-                style
-              />
+              <Image source={require('../src/assets/images/bitcoin.png')} />
             </View>
 
             <View style={{marginLeft: '8%', marginTop: '-12%'}}>
