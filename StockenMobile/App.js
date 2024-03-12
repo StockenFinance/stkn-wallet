@@ -10,9 +10,10 @@ import Dashboard from './src/Dashboard/Dashboard';
 import SwapScreen from './src/SwapScreen/SwapScreen';
 import Settings from './src/Settings/Settings';
 import SendScreen from './src/SendScreen/SendScreen';
+import BuyScreen from './src/BuyScreen/BuyScreen';
 
 const App = () => {
-  return <SendScreen />;
+  return <BuyScreen />;
 };
 
 export default App;
