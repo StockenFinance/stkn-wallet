@@ -5,11 +5,11 @@ import {
   Image,
   TextInput,
   ScrollView,
-} from 'react-native';
-import React from 'react';
-import {styles} from './styles';
+} from "react-native";
+import React from "react";
+import { styles } from "./styles";
 
-const SendScreen = ({placeholder, onChangeText, value}) => {
+const SendScreen = ({ placeholder, onChangeText, value }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -17,13 +17,13 @@ const SendScreen = ({placeholder, onChangeText, value}) => {
           <View style={styles.allNetworksView}>
             <View style={styles.coinImageContainer}>
               <Image
-                source={require('../assets/images/ethereum.png')}
+                source={require("../assets/images/ethereum.png")}
                 style={styles.coinImage}
               />
             </View>
             <Text style={styles.allNetworksText}>Ethereum</Text>
             <Image
-              source={require('../assets/images/dropdown.png')}
+              source={require("../assets/images/dropdown.png")}
               style={styles.dropdownImage}
             />
           </View>
@@ -34,26 +34,28 @@ const SendScreen = ({placeholder, onChangeText, value}) => {
             <View
               style={[
                 styles.allNetworksView,
-                {marginLeft: '5%', marginTop: '5%'},
-              ]}>
-              <View style={[styles.coinImageContainer, {width: 40}]}>
+                { marginLeft: "5%", marginTop: "5%" },
+              ]}
+            >
+              <View style={[styles.coinImageContainer, { width: 40 }]}>
                 <Image
-                  source={require('../assets/images/ethereum.png')}
+                  source={require("../assets/images/ethereum.png")}
                   style={styles.coinImage}
                 />
               </View>
               <Text
                 style={[
                   styles.allNetworksText,
-                  {fontSize: 23, fontWeight: '400'},
-                ]}>
+                  { fontSize: 23, fontWeight: "400" },
+                ]}
+              >
                 ETH
               </Text>
               <Image
-                source={require('../assets/images/dropdown.png')}
+                source={require("../assets/images/dropdown.png")}
                 style={[
                   styles.dropdownImage,
-                  {marginLeft: '-1%', marginTop: '4%'},
+                  { marginLeft: "-1%", marginTop: "4%" },
                 ]}
               />
             </View>
@@ -63,7 +65,7 @@ const SendScreen = ({placeholder, onChangeText, value}) => {
           <View style={styles.inputContainer}>
             <TextInput
               caretColor="red"
-              placeholderTextColor={'grey'}
+              placeholderTextColor={"grey"}
               placeholder={placeholder}
               onChangeText={onChangeText}
               value={value}
@@ -79,7 +81,7 @@ const SendScreen = ({placeholder, onChangeText, value}) => {
             <View style={styles.divider} />
             <View style={styles.swapImageContainer}>
               <Image
-                source={require('../assets/images/Send.png')}
+                source={require("../assets/images/Send.png")}
                 style={styles.image}
                 resizeMode="contain"
               />
@@ -93,8 +95,8 @@ const SendScreen = ({placeholder, onChangeText, value}) => {
           <View style={styles.inputContainer}>
             <TextInput
               caretColor="red"
-              placeholderTextColor={'grey'}
-              placeholder={'Address or Domain'}
+              placeholderTextColor={"grey"}
+              placeholder={"Address or Domain"}
               onChangeText={onChangeText}
               value={value}
               style={styles.input}
