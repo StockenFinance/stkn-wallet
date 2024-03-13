@@ -115,10 +115,6 @@ const BackupPhrase = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.termsConsentContainer}>
-        {/* <Image
-          source={require("../assets/images/checkBox.png")}
-         
-        /> */}
         <CheckBox
           isChecked={isChecked}
           onClick={() => setIsChecked(!isChecked)}
