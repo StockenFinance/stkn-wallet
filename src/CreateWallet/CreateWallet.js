@@ -1,7 +1,16 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { ethers } from "ethers";
 
 const CreateWallet = ({ navigation }) => {
+  const createWallet = () => {
+    const wallet = ethers.Wallet.createRandom(); // Generates a new random wallet
+    const mnemonic = wallet.mnemonic.phrase;
+    console.log("New Wallet Address:", wallet.address);
+    console.log("Private Key:", wallet.privateKey);
+    console.log("Generated Mnemonic:", mnemonic);
+    navigation.navigate("BackupPhrase", { mnemonic });
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -10,7 +19,8 @@ const CreateWallet = ({ navigation }) => {
       />
       <TouchableOpacity
         style={styles.createWalletView}
-        onPress={() => navigation.navigate("BackupPhrase")}
+        // onPress={() => navigation.navigate("BackupPhrase")}
+        onPress={createWallet}
       >
         <Image
           source={require("../assets/images/createWallet.png")}

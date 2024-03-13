@@ -2,7 +2,9 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import CheckBox from "react-native-check-box";
 
-const BackupPhrase = ({ navigation }) => {
+const BackupPhrase = ({ navigation, route }) => {
+  const { mnemonic } = route.params;
+  const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -35,8 +37,24 @@ const BackupPhrase = ({ navigation }) => {
       </View>
       <View style={styles.securityPhraseContainer}>
         <View style={styles.securityPhraseTextContainer}>
-          <View>
-            <View style={{ flexDirection: "row" }}>
+          <View style={styles.namesTextRow}>
+            {mnemonicWords.slice(0, 6).map((word, index) => (
+              <View style={styles.namesTextContainer} key={index}>
+                <Text style={styles.countingText}>{index + 1}</Text>
+                <Text style={styles.namesText}>{word}</Text>
+              </View>
+            ))}
+          </View>
+          <View style={styles.namesTextRow}>
+            {mnemonicWords.slice(6).map((word, index) => (
+              <View style={styles.namesTextContainer} key={index}>
+                <Text style={styles.countingText}>{index + 7}</Text>
+                <Text style={styles.namesText}>{word}</Text>
+              </View>
+            ))}
+          </View>
+          {/* <View> */}
+          {/* <View style={{ flexDirection: "row" }}>
               <Text style={styles.countingText}>1</Text>
               <Text style={styles.namesText}>animal</Text>
             </View>
@@ -111,7 +129,7 @@ const BackupPhrase = ({ navigation }) => {
                 history
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
       </View>
       <View style={styles.termsConsentContainer}>
@@ -227,7 +245,7 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     justifyContent: "space-between",
-    marginTop: "8%",
+    marginTop: "3%",
   },
   countingText: {
     fontSize: 18,
@@ -278,5 +296,10 @@ const styles = StyleSheet.create({
   },
   importTextEnabled: {
     color: "#FFFFFF", // Change the text color when button is enabled
+  },
+  namesTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
   },
 });
