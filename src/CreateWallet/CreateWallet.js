@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 
 const CreateWallet = ({ navigation }) => {
   const createWallet = () => {
-    const wallet = ethers.Wallet.createRandom(); // Generates a new random wallet
+    const wallet = ethers.Wallet.createRandom();
     const mnemonic = wallet.mnemonic.phrase;
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
