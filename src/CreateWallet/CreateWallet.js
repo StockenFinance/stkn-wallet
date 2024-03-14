@@ -1,15 +1,28 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 
 const CreateWallet = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+
   const createWallet = () => {
+    setLoading(true);
     const wallet = ethers.Wallet.createRandom();
     const mnemonic = wallet.mnemonic.phrase;
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
     console.log("Generated Mnemonic:", mnemonic);
-    navigation.navigate("BackupPhrase", { mnemonic });
+    setTimeout(() => {
+      navigation.navigate("BackupPhrase", { mnemonic });
+      setLoading(false);
+    }, 2000);
   };
   return (
     <View style={styles.container}>
@@ -17,11 +30,7 @@ const CreateWallet = ({ navigation }) => {
         source={require("../assets/images/welcome.png")}
         style={styles.image}
       />
-      <TouchableOpacity
-        style={styles.createWalletView}
-        // onPress={() => navigation.navigate("BackupPhrase")}
-        onPress={createWallet}
-      >
+      <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
         <Image
           source={require("../assets/images/createWallet.png")}
           style={styles.createWalletImage}
@@ -43,6 +52,9 @@ const CreateWallet = ({ navigation }) => {
           <Text style={styles.subText}>Private key or recovery phrase</Text>
         </View>
       </TouchableOpacity>
+      {loading && (
+        <ActivityIndicator style={styles.loader} size="large" color="#F19220" />
+      )}
     </View>
   );
 };
@@ -92,5 +104,15 @@ const styles = StyleSheet.create({
     height: "70%",
     width: 1,
     backgroundColor: "#000000",
+  },
+  loader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
   },
 });

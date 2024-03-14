@@ -38,7 +38,7 @@ const BackupPhrase = ({ navigation, route }) => {
       </View>
       <View style={styles.securityPhraseContainer}>
         <View style={styles.securityPhraseTextContainer}>
-          <View style={styles.namesTextRow}>
+          <View>
             {mnemonicWords.slice(0, 6).map((word, index) => (
               <View style={styles.namesTextContainer} key={index}>
                 <Text style={styles.countingText}>{index + 1}</Text>
@@ -46,7 +46,7 @@ const BackupPhrase = ({ navigation, route }) => {
               </View>
             ))}
           </View>
-          <View style={styles.namesTextRow}>
+          <View>
             {mnemonicWords.slice(6).map((word, index) => (
               <View style={styles.namesTextContainer} key={index}>
                 <Text style={styles.countingText}>{index + 7}</Text>
