@@ -9,12 +9,31 @@ import {
 import React from "react";
 import { styles } from "./styles";
 
-const ConfirmBackupPhrase = ({
-  placeholder,
-  onChangeText,
-  value,
-  navigation,
-}) => {
+const ConfirmBackupPhrase = ({ navigation, route }) => {
+  const { mnemonicWords } = route.params;
+  const generateRandomNumbers = () => {
+    const randomNumbers = new Set(); // Using Set to ensure uniqueness
+    while (randomNumbers.size < 4) {
+      const randomNumber = Math.floor(Math.random() * 12) + 1;
+      randomNumbers.add(randomNumber);
+    }
+    return Array.from(randomNumbers); // Convert Set back to array
+  };
+
+  // Generate random numbers
+  const randomNumbers = generateRandomNumbers();
+
+  const getRandomIndices = (length, count) => {
+    const indices = new Set();
+    while (indices.size < count) {
+      const randomIndex = Math.floor(Math.random() * length);
+      indices.add(randomIndex);
+    }
+    return Array.from(indices);
+  };
+
+  // Get random indices
+  const randomIndices = getRandomIndices(mnemonicWords.length, 3);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -43,46 +62,32 @@ const ConfirmBackupPhrase = ({
         <View style={styles.securityPhraseTextContainer}>
           <View>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.countingText}>1</Text>
-              <Text style={styles.namesText}>history</Text>
+              <Text style={styles.countingText}>{randomNumbers[0]}</Text>
             </View>
             <View style={{ flexDirection: "row", marginVertical: "10%" }}>
-              <Text style={styles.countingText}>2</Text>
-              <Text style={styles.namesText}>novel</Text>
+              <Text style={styles.countingText}>{randomNumbers[1]}</Text>
             </View>
           </View>
           <View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                placeholderTextColor={"grey"}
-                placeholder={placeholder}
-                onChangeText={onChangeText}
-                value={value}
-                style={styles.input}
-              />
+            <View>
+              <Text style={[styles.countingText, { marginRight: "27%" }]}>
+                {randomNumbers[2]}
+              </Text>
             </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                placeholderTextColor={"grey"}
-                placeholder={placeholder}
-                onChangeText={onChangeText}
-                value={value}
-                style={styles.input}
-              />
+            <View>
+              <Text style={[styles.countingText, { marginTop: "7%" }]}>
+                {randomNumbers[3]}
+              </Text>
             </View>
           </View>
         </View>
       </View>
       <View style={styles.phrasesSuggestionContainer}>
-        <TouchableOpacity style={styles.choiceView}>
-          <Text style={styles.choiceText}>choice</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.choiceView}>
-          <Text style={[styles.choiceText]}>much</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.choiceView}>
-          <Text style={[styles.choiceText]}>animal</Text>
-        </TouchableOpacity>
+        {randomIndices.map((index) => (
+          <TouchableOpacity key={index} style={styles.choiceView}>
+            <Text style={styles.choiceText}>{mnemonicWords[index]}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
       <View style={styles.importButton}>
         <View style={styles.alertContainer}>

@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
   choiceView: {
     alignItems: "center",
     justifyContent: "center",
-    width: "22%",
+    width: "23%",
     height: 35,
     backgroundColor: "#F19220",
     borderRadius: 10,
@@ -70,6 +70,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#ffffff",
+    padding: 2,
   },
   securityMessageContainer: {
     alignItems: "center",

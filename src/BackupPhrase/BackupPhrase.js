@@ -69,7 +69,9 @@ const BackupPhrase = ({ navigation, route }) => {
         </Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("ConfirmBackupPhrase")}
+        onPress={() =>
+          navigation.navigate("ConfirmBackupPhrase", { mnemonicWords })
+        }
         style={[
           styles.importButton,
           isChecked ? styles.importButtonEnabled : null,
