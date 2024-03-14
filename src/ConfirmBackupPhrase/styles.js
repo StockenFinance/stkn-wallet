@@ -52,12 +52,12 @@ export const styles = StyleSheet.create({
     marginTop: "7%",
     backgroundColor: "#F4F7FA",
   },
-  languageButtonContainer: {
+  phrasesSuggestionContainer: {
     alignSelf: "center",
     flexDirection: "row",
     marginTop: "3%",
   },
-  languageButton: {
+  choiceView: {
     alignItems: "center",
     justifyContent: "center",
     width: "22%",
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: "2%",
   },
-  englishText: {
+  choiceText: {
     fontSize: 18,
     fontWeight: "700",
     color: "#ffffff",

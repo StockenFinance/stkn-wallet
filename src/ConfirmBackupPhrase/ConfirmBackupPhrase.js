@@ -73,16 +73,16 @@ const ConfirmBackupPhrase = ({
           </View>
         </View>
       </View>
-      <View style={styles.languageButtonContainer}>
-        <View style={styles.languageButton}>
-          <Text style={styles.englishText}>choice</Text>
-        </View>
-        <View style={styles.languageButton}>
-          <Text style={[styles.englishText]}>much</Text>
-        </View>
-        <View style={styles.languageButton}>
-          <Text style={[styles.englishText]}>animal</Text>
-        </View>
+      <View style={styles.phrasesSuggestionContainer}>
+        <TouchableOpacity style={styles.choiceView}>
+          <Text style={styles.choiceText}>choice</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.choiceView}>
+          <Text style={[styles.choiceText]}>much</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.choiceView}>
+          <Text style={[styles.choiceText]}>animal</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.importButton}>
         <View style={styles.alertContainer}>
