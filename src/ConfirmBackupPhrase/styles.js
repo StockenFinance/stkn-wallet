@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
   choiceView: {
     alignItems: "center",
     justifyContent: "center",
-    width: "23%",
+    width: "27%",
     height: 35,
     backgroundColor: "#F19220",
     borderRadius: 10,
@@ -106,12 +106,14 @@ export const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     justifyContent: "space-between",
-    marginTop: "8%",
+    marginTop: "3%",
   },
   countingText: {
     fontSize: 18,
     fontWeight: "700",
     color: "#B7BECD",
+    // color: "red",
+
     marginHorizontal: "8%",
   },
   namesText: {

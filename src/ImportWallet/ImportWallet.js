@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import CustomTextInput from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { ethers } from "ethers";
 
 const ImportWallet = ({ navigation }) => {
   const [text, setText] = useState("");
@@ -9,6 +10,12 @@ const ImportWallet = ({ navigation }) => {
   const handleChangeText = (newText) => {
     setText(newText);
   };
+
+  const handleOnImport = () => {
+    const wallet = ethers.Wallet.fromPhrase(text);
+    console.log("check import::::", wallet);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -48,48 +55,10 @@ const ImportWallet = ({ navigation }) => {
           value={text}
         />
       </View>
-      <View style={{ marginTop: "5%" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "85%",
-            alignSelf: "center",
-            marginBottom: "3%",
-          }}
-        >
-          <Text style={styles.inputHeaderText}>New Password</Text>
-          <Text style={styles.inputHeaderText}>Show</Text>
-        </View>
-
-        <CustomTextInput
-          placeholder="New Password"
-          onChangeText={handleChangeText}
-          value={text}
-        />
-      </View>
-      <View style={{ marginTop: "5%" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "85%",
-            alignSelf: "center",
-            marginBottom: "3%",
-          }}
-        >
-          <Text style={styles.inputHeaderText}>confirm Password</Text>
-        </View>
-
-        <CustomTextInput
-          place
-          holder="Confirm Password"
-          onChangeText={handleChangeText}
-          value={text}
-        />
-      </View>
       <View style={styles.importButton}>
-        <Text style={styles.importText}>Import</Text>
+        <TouchableOpacity onPress={() => handleOnImport()}>
+          <Text style={styles.importText}>Import</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -16,6 +16,11 @@ const CreateWallet = ({ navigation }) => {
     setLoading(true);
     const wallet = ethers.Wallet.createRandom();
     const mnemonic = wallet.mnemonic.phrase;
+    const phrase = ethers.Wallet.fromPhrase(mnemonic);
+
+    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
+    console.log("Phrase wallet: ", phrase?.privateKey);
+    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
     console.log("Generated Mnemonic:", mnemonic);
