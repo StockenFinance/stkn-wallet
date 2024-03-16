@@ -11,7 +11,7 @@ import { styles } from "./styles";
 
 const ConfirmBackupPhrase = ({ navigation, route }) => {
   const [isChoose, setIsChoose] = useState([]);
-  const inputRefs = useRef([]);
+  const [randomIndicess, setRandomIndicess] = useState([]);
 
   const { mnemonicWords } = route.params;
   const generateRandomNumbers = () => {
@@ -28,15 +28,18 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
     const randomNumbers = generateRandomNumbers();
   }, []);
 
-  const getRandomIndices = (length, count) => {
-    const indices = new Set();
-    while (indices.size < count) {
-      const randomIndex = Math.floor(Math.random() * length);
-      indices.add(randomIndex);
-    }
-    return Array.from(indices);
-  };
-  const randomIndices = getRandomIndices(mnemonicWords.length, 3);
+  useEffect(() => {
+    const generateRandomIndices = () => {
+      const indices = new Set();
+      while (indices.size < 4) {
+        const randomIndex = Math.floor(Math.random() * mnemonicWords.length);
+        indices.add(randomIndex);
+      }
+      setRandomIndicess(Array.from(indices));
+    };
+
+    generateRandomIndices();
+  }, []);
 
   const confirmInput = useCallback(
     (index) => {
@@ -71,45 +74,48 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
     [isChoose]
   );
 
+  // const handleBoxPress = (index) => {
+  //   let updatedValues = [...isChoose];
+  //   console.log(isChoose, "ISChoose", index);
+  //   let final = [];
+  //   for (let i = 0; i < updatedValues.length; i++) {
+  //     if (typeof updatedValues[i] === "number") {
+  //       final.push(updatedValues[i] + " " + mnemonicWords[index]);
+  //       break;
+  //     }
+  //     final.push(Number(updatedValues[i]));
+  //   }
+  //   for (let i = 0; i < updatedValues.length; i++) {
+  //     console.log(i);
+
+  //     if (final.length - 1 >= i) {
+  //       continue;
+  //     }
+  //     final.push(Number(updatedValues[i]));
+  //   }
+  //   // let final = updatedValues.map((val, idx) => {
+  //   //   console.log(val, idx, updatedValues[idx], typeof updatedValues[idx]);
+
+  //   //   return Number(val);
+  //   // });
+  //   console.log(final, "Updated Value");
+  //   setIsChoose(final);
+  // };
+
   const handleBoxPress = (index) => {
     let updatedValues = [...isChoose];
-    console.log(isChoose, "ISChoose", index);
-    let final = [];
-    for (let i = 0; i < updatedValues.length; i++) {
-      if (typeof updatedValues[i] === "number") {
-        final.push(updatedValues[i] + " " + mnemonicWords[index]);
-        break;
+    let final = updatedValues.map((val, idx) => {
+      if (idx === index) {
+        return mnemonicWords[index];
+      } else {
+        return val;
       }
-      final.push(Number(updatedValues[i]));
-    }
-    for (let i = 0; i < updatedValues.length; i++) {
-      console.log(i);
-
-      if (final.length - 1 >= i) {
-        continue;
-      }
-      final.push(Number(updatedValues[i]));
-    }
-    // let final = updatedValues.map((val, idx) => {
-    //   console.log(val, idx, updatedValues[idx], typeof updatedValues[idx]);
-
-    //   return Number(val);
-    // });
-    console.log(final, "Updated Value");
+    });
     setIsChoose(final);
   };
 
-  // const handleBoxPress = (index) => {
-  //   let updatedValues = [...isChoose];
-  //   let final = updatedValues.map((val, idx) => {
-  //     if (idx === index) {
-  //       return mnemonicWords[index];
-  //     } else {
-  //       return val;
-  //     }
-  //   });
-  //   setIsChoose(final);
-  // };
+  console.log("check indeces", randomIndicess);
+  console.log("check :::::", mnemonicWords);
 
   return (
     <View style={styles.container}>
@@ -166,11 +172,11 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
         </View>
       </View>
       <View style={styles.phrasesSuggestionContainer}>
-        {randomIndices.map((index) => (
+        {randomIndicess.map((index) => (
           <TouchableOpacity
             key={index}
             style={styles.choiceView}
-            onPress={() => handleBoxPress(index)}
+            onPress={() => handleBoxPress(index, mnemonicWords[index])}
           >
             <Text style={styles.choiceText}>{mnemonicWords[index]}</Text>
           </TouchableOpacity>

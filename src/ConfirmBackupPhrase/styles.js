@@ -55,16 +55,20 @@ export const styles = StyleSheet.create({
   phrasesSuggestionContainer: {
     alignSelf: "center",
     flexDirection: "row",
-    marginTop: "3%",
+    marginTop: "5%",
+    flexWrap: "wrap",
+    gap: 10,
+    marginLeft: "15%",
   },
   choiceView: {
     alignItems: "center",
     justifyContent: "center",
-    width: "27%",
+    width: "35%",
     height: 35,
     backgroundColor: "#F19220",
     borderRadius: 10,
     marginHorizontal: "2%",
+    alignSelf: "center",
   },
   choiceText: {
     fontSize: 18,
@@ -141,7 +145,7 @@ export const styles = StyleSheet.create({
   importButton: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "80%",
+    marginTop: "70%",
     width: "85%",
     height: "6.5%",
     alignSelf: "center",
