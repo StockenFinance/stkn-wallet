@@ -10,6 +10,7 @@ MERGED from [:react-native-async-storage_async-storage] /home/aasim/Desktop/Stoc
 MERGED from [:react-native-community_checkbox] /home/aasim/Desktop/Stocken-Mobile/node_modules/@react-native-community/checkbox/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-community_netinfo] /home/aasim/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-10:12
 MERGED from [:walletconnect_react-native-compat] /home/aasim/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-fs] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-gesture-handler] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-get-random-values] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-linear-gradient] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -192,6 +193,8 @@ MERGED from [:react-native-community_netinfo] /home/aasim/Desktop/Stocken-Mobile
 MERGED from [:react-native-community_netinfo] /home/aasim/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:walletconnect_react-native-compat] /home/aasim/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:walletconnect_react-native-compat] /home/aasim/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-fs] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-fs] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-get-random-values] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
@@ -356,6 +359,12 @@ MERGED from [com.facebook.flipper:flipper:0.201.0] /home/aasim/.gradle/caches/tr
 MERGED from [com.facebook.flipper:flipper:0.201.0] /home/aasim/.gradle/caches/transforms-3/9b2c28bd5719adb7e465469e2ca76c12/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:14:5-76
 	android:name
 		ADDED from [:react-native-community_netinfo] /home/aasim/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:8:22-73
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from [:react-native-fs] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-81
+	android:name
+		ADDED from [:react-native-fs] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+IMPLIED from /home/aasim/Desktop/Stocken-Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12 reason: com.rnfs requested WRITE_EXTERNAL_STORAGE
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
 ADDED from [com.facebook.react:react-android:0.73.5] /home/aasim/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:16:5-78
 	android:name

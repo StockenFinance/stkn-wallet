@@ -19,6 +19,8 @@ import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 // @walletconnect/react-native-compat
 import com.walletconnect.reactnativemodule.RNWalletConnectModulePackage;
+// react-native-fs
+import com.rnfs.RNFSPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-get-random-values
@@ -80,6 +82,7 @@ public class PackageList {
       new ReactCheckBoxPackage(),
       new NetInfoPackage(),
       new RNWalletConnectModulePackage(),
+      new RNFSPackage(),
       new RNGestureHandlerPackage(),
       new RNGetRandomValuesPackage(),
       new LinearGradientPackage(),

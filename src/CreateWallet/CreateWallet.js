@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import { bitcoin, bip32, bip39, ecc } from "bitcoinjs-lib";
 
 const CreateWallet = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,8 @@ const CreateWallet = ({ navigation }) => {
     const mnemonic = wallet.mnemonic.phrase;
     const phrase = ethers.Wallet.fromPhrase(mnemonic);
 
+    // Generate Bitcoin wallet
+    generateMnemonicandBtcWallet(mnemonic);
     console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
     console.log("Phrase wallet: ", phrase?.privateKey);
     console.log("Wallet: ", JSON.stringify(wallet, null, 2));
@@ -29,6 +32,33 @@ const CreateWallet = ({ navigation }) => {
       setLoading(false);
     }, 2000);
   };
+
+  function generateMnemonicandBtcWallet(mnemonic) {
+    try {
+      const network = bitcoin?.networks?.bitcoin;
+      const path = `m/44'/0'/0'/0'`;
+      const seed = bip39?.mnemonicToSeedSync(mnemonic);
+      let root = bip32?.fromSeed(seed, network);
+
+      let account = root?.derivePath(path);
+      let node = account?.derive(0).derive(0);
+
+      let btcAddress = bitcoin?.payments.p2pkh({
+        pubkey: node?.publicKey,
+        network: network,
+      }).address;
+
+      console.log(`
+       Bitcoin Wallet generated:
+         - Address  : ${btcAddress},
+         - Key : ${node?.toWIF()},
+         - Mnemonic : ${mnemonic} 
+      `);
+    } catch (error) {
+      console.error("Error generating Bitcoin wallet:", error);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Image

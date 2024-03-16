@@ -14,6 +14,11 @@ const ImportWallet = ({ navigation }) => {
   const handleOnImport = () => {
     const wallet = ethers.Wallet.fromPhrase(text);
     console.log("check import::::", wallet);
+    if (wallet) {
+      navigation.navigate("RecoveryPhraseConfirmation");
+    } else {
+      console.error("Warning: Recovery phrase does not match");
+    }
   };
 
   return (

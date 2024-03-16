@@ -145,7 +145,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
         <View style={styles.securityPhraseTextContainer}>
           <View style={{ width: "50%" }}>
             <View style={{ flexDirection: "row" }}>
-              {/* <Text style={styles.countingText}>{randomNumbers[0]}</Text> */}
+              {/* {/ <Text style={styles.countingText}>{randomNumbers[0]}</Text> /} */}
               {confirmInput(0)}
             </View>
             <View
@@ -154,7 +154,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
                 marginVertical: "10%",
               }}
             >
-              {/* <Text style={styles.countingText}>{isChoose[1]}</Text> */}
+              {/* {/ <Text style={styles.countingText}>{isChoose[1]}</Text> /} */}
               {confirmInput(1)}
             </View>
           </View>
