@@ -284,7 +284,12 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
             <Text style={styles.alertText}>!</Text>
           </View>
           <Text style={styles.importText}>
-            Please select word #6 from the list
+            {/* Please select word #6 from the list */}
+            Please select word #
+            {selected.findIndex((item) => item.isFocus) !== -1
+              ? questionNumber[selected.findIndex((item) => item.isFocus)] + 1
+              : ""}{" "}
+            from the list
           </Text>
         </View>
       </View>
