@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckBox from "react-native-check-box";
 import { styles } from "./styles";
 
@@ -7,7 +7,21 @@ const BackupPhrase = ({ navigation, route }) => {
   const { mnemonic } = route.params;
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
+  const [randomIndexes, setRandomIndexes] = useState([]);
 
+  const getRandomIndexes = () => {
+    const allIndexes = Array.from(
+      { length: mnemonicWords.length },
+      (_, i) => i
+    );
+    const shuffledIndexes = allIndexes.sort(() => Math.random() - 0.5);
+    setRandomIndexes(shuffledIndexes.slice(0, 4));
+  };
+
+  // Call getRandomIndexes when the component mounts to generate random indexes
+  useEffect(() => {
+    getRandomIndexes();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -70,7 +84,10 @@ const BackupPhrase = ({ navigation, route }) => {
       </View>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ConfirmBackupPhrase", { mnemonicWords })
+          navigation.navigate("ConfirmBackupPhrase", {
+            mnemonicWords,
+            randomIndexes,
+          })
         }
         style={[
           styles.importButton,

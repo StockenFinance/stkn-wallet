@@ -13,7 +13,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
   const [isChoose, setIsChoose] = useState([]);
   const [randomIndicess, setRandomIndicess] = useState([]);
 
-  const { mnemonicWords } = route.params;
+  const { mnemonicWords, randomIndexes } = route.params;
   const generateRandomNumbers = () => {
     const randomNumbers = new Set();
     while (randomNumbers.size < 4) {

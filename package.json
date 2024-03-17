@@ -8,9 +8,10 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "node_modules/.bin/rn-nodeify --install fs, --hack"
+    "postinstall": "rn-nodeify --install buffer,stream,assert,events,crypto,vm,process,fs,path --hack"
   },
   "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.1.1",
     "@react-native-async-storage/async-storage": "^1.22.3",
     "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/netinfo": "^11.3.1",
@@ -18,15 +19,20 @@
     "@react-navigation/stack": "^6.3.28",
     "@walletconnect/react-native-compat": "^2.11.2",
     "@web3modal/wagmi-react-native": "^1.2.1",
+    "assert": "^1.5.1",
     "bip32": "^4.0.0",
     "bip39": "^3.1.0",
     "bitcoinjs-lib": "^6.1.5",
     "bs58": "^5.0.0",
+    "buffer": "^6.0.3",
     "ecc": "^0.0.2",
+    "ecpair": "^2.1.0",
     "ethereumjs-wallet": "^1.0.2",
     "ethers": "^6.11.1",
     "events": "^3.3.0",
     "hdkey": "^2.1.0",
+    "path-browserify": "^0.0.0",
+    "process": "^0.11.10",
     "react": "18.2.0",
     "react-native": "0.73.5",
     "react-native-check-box": "^2.1.7",
@@ -38,13 +44,17 @@
     "react-native-level-fs": "^3.0.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-modal": "^13.0.1",
+    "react-native-randombytes": "^3.6.1",
     "react-native-safe-area-context": "^4.9.0",
     "react-native-screens": "^3.29.0",
     "react-native-svg": "^15.1.0",
+    "readable-stream": "^4.5.2",
     "rn-nodeify": "^10.3.0",
     "stream": "^0.0.2",
+    "stream-browserify": "^1.0.0",
     "tiny-secp256k1": "^2.2.3",
     "viem": "^1.21.4",
+    "vm-browserify": "^0.0.4",
     "wagmi": "^1.4.13",
     "web3": "^4.6.0"
   },
@@ -69,9 +79,27 @@
     "node": ">=18"
   },
   "react-native": {
-    "fs": "react-native-level-fs"
+    "fs": "react-native-level-fs",
+    "crypto": "react-native-crypto",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify",
+    "vm": "vm-browserify",
+    "path": "path-browserify"
   },
   "browser": {
-    "fs": "react-native-level-fs"
+    "fs": "react-native-level-fs",
+    "crypto": "react-native-crypto",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify",
+    "vm": "vm-browserify",
+    "path": "path-browserify"
   }
 }

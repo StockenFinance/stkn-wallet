@@ -27,6 +27,8 @@ import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 import org.linusu.RNGetRandomValuesPackage;
 // react-native-linear-gradient
 import com.BV.LinearGradient.LinearGradientPackage;
+// react-native-randombytes
+import com.bitgo.randombytes.RandomBytesPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
@@ -86,6 +88,7 @@ public class PackageList {
       new RNGestureHandlerPackage(),
       new RNGetRandomValuesPackage(),
       new LinearGradientPackage(),
+      new RandomBytesPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new SvgPackage()

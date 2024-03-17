@@ -8,19 +8,29 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import { bitcoin, bip32, bip39, ecc } from "bitcoinjs-lib";
+// import ecc from "tiny-secp256k1";
+// import bip32 from "bip32";
+// import bip39 from "bip39";
+// import bitcoin from "bitcoinjs-lib";
+// import base58 from "bs58";
+// import { bitcoin, bip32, bip39, ecc } from "bitcoinjs-lib";
 
 const CreateWallet = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const createWallet = () => {
     setLoading(true);
+    // const ecc = require("tiny-secp256k1");
+    // const bip32 = require("bip32");
+    // const bip39 = require("bip39");
+    // const bitcoin = require("bitcoinjs-lib");
+    // const base58 = require("bs58");
     const wallet = ethers.Wallet.createRandom();
     const mnemonic = wallet.mnemonic.phrase;
     const phrase = ethers.Wallet.fromPhrase(mnemonic);
 
     // Generate Bitcoin wallet
-    generateMnemonicandBtcWallet(mnemonic);
+    // generateMnemonicandBtcWallet(mnemonic);
     console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
     console.log("Phrase wallet: ", phrase?.privateKey);
     console.log("Wallet: ", JSON.stringify(wallet, null, 2));
@@ -33,31 +43,29 @@ const CreateWallet = ({ navigation }) => {
     }, 2000);
   };
 
-  function generateMnemonicandBtcWallet(mnemonic) {
-    try {
-      const network = bitcoin?.networks?.bitcoin;
-      const path = `m/44'/0'/0'/0'`;
-      const seed = bip39?.mnemonicToSeedSync(mnemonic);
-      let root = bip32?.fromSeed(seed, network);
+  // function generateMnemonicandBtcWallet(mnemonic) {
+  //   const network = bitcoin.networks.bitcoin;
+  //   const path = `m/44'/0'/0'/0'`;
+  //   const seed = bip39.mnemonicToSeedSync(mnemonic);
+  //   let root = bip32.BIP32Factory(ecc).fromSeed(seed, network);
 
-      let account = root?.derivePath(path);
-      let node = account?.derive(0).derive(0);
+  //   let account = root.derivePath(path);
+  //   let node = account.derive(0).derive(0);
 
-      let btcAddress = bitcoin?.payments.p2pkh({
-        pubkey: node?.publicKey,
-        network: network,
-      }).address;
+  //   let btcAddress = bitcoin.payments.p2pkh({
+  //     pubkey: node.publicKey,
+  //     network: network,
+  //   }).address;
 
-      console.log(`
-       Bitcoin Wallet generated:
-         - Address  : ${btcAddress},
-         - Key : ${node?.toWIF()},
-         - Mnemonic : ${mnemonic} 
-      `);
-    } catch (error) {
-      console.error("Error generating Bitcoin wallet:", error);
-    }
-  }
+  //   console.log(`
+  //     Bitcoin Wallet generated:
+  //      - Address  : ${btcAddress},
+  //      - Key : ${node.toWIF()},
+  //      - Mnemonic : ${mnemonic}
+  //     `);
+  // }
+
+  // generateMnemonicandBtcWallet()
 
   return (
     <View style={styles.container}>

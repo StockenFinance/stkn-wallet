@@ -14,6 +14,7 @@ MERGED from [:react-native-fs] /home/aasim/Desktop/Stocken-Mobile/node_modules/r
 MERGED from [:react-native-gesture-handler] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-get-random-values] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-linear-gradient] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-randombytes] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-randombytes/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-safe-area-context] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-screens] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-svg] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -201,6 +202,8 @@ MERGED from [:react-native-get-random-values] /home/aasim/Desktop/Stocken-Mobile
 MERGED from [:react-native-get-random-values] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-linear-gradient] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-linear-gradient] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-randombytes] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-randombytes/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-randombytes] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-randombytes/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-safe-area-context] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-safe-area-context] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-screens] /home/aasim/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
