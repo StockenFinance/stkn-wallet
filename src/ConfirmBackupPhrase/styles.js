@@ -117,8 +117,9 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#B7BECD",
     // color: "red",
+    padding: 10,
 
-    marginHorizontal: "8%",
+    // marginHorizontal: "8%",
   },
   namesText: {
     fontSize: 18,
