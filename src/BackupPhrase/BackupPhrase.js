@@ -91,13 +91,14 @@ const BackupPhrase = ({ navigation, route }) => {
         }
         style={[
           styles.importButton,
-          isChecked ? styles.importButtonEnabled : null,
+          isChecked ? styles.importButtonEnabled : styles.importButtonDisabled,
         ]}
+        disabled={!isChecked}
       >
         <Text
           style={[
             styles.importText,
-            isChecked ? styles.importTextEnabled : null,
+            isChecked ? styles.importTextEnabled : styles.importTextDisabled,
           ]}
         >
           Continue

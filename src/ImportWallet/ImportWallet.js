@@ -4,6 +4,7 @@ import CustomTextInput from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { ethers } from "ethers";
+import "react-native-get-random-values";
 
 const ImportWallet = ({ navigation }) => {
   const [text, setText] = useState("");
@@ -82,11 +83,17 @@ const ImportWallet = ({ navigation }) => {
           value={text}
         /> */}
       </View>
-      <View style={[styles.importButton, importButtonStyle]}>
-        <TouchableOpacity onPress={() => handleOnImport()}>
-          <Text style={[styles.importText, importButtonStyle]}>Import</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={[styles.importButton, importButtonStyle]}
+        onPress={
+          importButtonStyle === styles.importButtonActive
+            ? handleOnImport
+            : null
+        }
+        disabled={importButtonStyle !== styles.importButtonActive}
+      >
+        <Text style={[styles.importText, importButtonStyle]}>Import</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
   },
   copyPasteIcon: {
     position: "absolute",
-    marginTop: "63%",
+    marginTop: "53%",
     right: 13,
   },
   copyPasteImage: {
