@@ -14,8 +14,9 @@ const CreateWallet = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const createWallet = () => {
-    setLoading(true);
+    console.log("checking loader", loading);
 
+    setLoading(true);
     const wallet = ethers.Wallet.createRandom();
     const mnemonic = wallet.mnemonic.phrase;
     const phrase = ethers.Wallet.fromPhrase(mnemonic);
@@ -31,14 +32,22 @@ const CreateWallet = ({ navigation }) => {
       setLoading(false);
     }, 2000);
   };
-
   return (
     <View style={styles.container}>
       <Image
         source={require("../assets/images/welcome.png")}
         style={styles.image}
       />
-      <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
+      {loading ? (
+        <ActivityIndicator style={styles.loader} size="large" color="#F19220" />
+      ) : null}
+      <TouchableOpacity
+        style={styles.createWalletView}
+        onPress={() => {
+          setLoading((previous) => !previous);
+          createWallet();
+        }}
+      >
         <Image
           source={require("../assets/images/createWallet.png")}
           style={styles.createWalletImage}
@@ -60,9 +69,6 @@ const CreateWallet = ({ navigation }) => {
           <Text style={styles.subText}>Private key or recovery phrase</Text>
         </View>
       </TouchableOpacity>
-      {loading && (
-        <ActivityIndicator style={styles.loader} size="large" color="#F19220" />
-      )}
     </View>
   );
 };
