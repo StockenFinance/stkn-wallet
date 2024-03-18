@@ -137,7 +137,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           //   },
           // ]);
         } else {
-          Alert.alert("Incorrect value placement!", "", [
+          Alert.alert("Incorrect phrases placement!", "", [
             { text: "OK", onPress: () => navigation.goBack() },
           ]);
         }

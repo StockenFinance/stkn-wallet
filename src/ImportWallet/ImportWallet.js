@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Image, Clipboard } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import CustomTextInput from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Clipboard from "@react-native-clipboard/clipboard";
 import { ethers } from "ethers";
 
 const ImportWallet = ({ navigation }) => {
