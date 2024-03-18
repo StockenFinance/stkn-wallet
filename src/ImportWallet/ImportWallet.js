@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Clipboard } from "react-native";
 import React, { useState } from "react";
 import CustomTextInput from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -6,7 +6,6 @@ import { ethers } from "ethers";
 
 const ImportWallet = ({ navigation }) => {
   const [text, setText] = useState("");
-
   const handleChangeText = (newText) => {
     setText(newText);
   };
@@ -21,6 +20,14 @@ const ImportWallet = ({ navigation }) => {
     }
   };
 
+  const importButtonStyle = text
+    ? styles.importButtonActive
+    : styles.importButtonInactive;
+
+  const handlePaste = async () => {
+    const clipboardContent = await Clipboard.getString();
+    setText(clipboardContent);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -37,32 +44,46 @@ const ImportWallet = ({ navigation }) => {
           style={styles.scanIcon}
         />
       </View>
-      <View style={styles.headerTextContainer}>
+      {/* <View style={styles.headerTextContainer}>
         <Text style={styles.headerText}>Private Key/Recovery Phrase</Text>
-      </View>
+      </View> */}
       <View style={styles.inputContainer}>
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
+            // flexDirection: "row",
+            // justifyContent: "space-between",
             width: "85%",
             alignSelf: "center",
             marginBottom: "3%",
           }}
         >
-          <Text style={styles.inputHeaderText}>Secret Recovery Phrase</Text>
-          <Text style={styles.inputHeaderText}>Show</Text>
+          <Text style={styles.inputHeaderText}>
+            Private Key/recovery Phrase
+          </Text>
+        </View>
+        <View style={styles.EnterInputContainer}>
+          <CustomTextInput
+            placeholder="Private key or Recovery Phase"
+            onChangeText={handleChangeText}
+            value={text}
+          />
+          <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
+            <Image
+              source={require("../assets/images/paste.png")}
+              style={styles.copyPasteImage}
+            />
+          </TouchableOpacity>
         </View>
 
-        <CustomTextInput
+        {/* <CustomTextInput
           placeholder="Enter your Secret Recovery Phase"
           onChangeText={handleChangeText}
           value={text}
-        />
+        /> */}
       </View>
-      <View style={styles.importButton}>
+      <View style={[styles.importButton, importButtonStyle]}>
         <TouchableOpacity onPress={() => handleOnImport()}>
-          <Text style={styles.importText}>Import</Text>
+          <Text style={[styles.importText, importButtonStyle]}>Import</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -113,12 +134,19 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    marginTop: "20%",
+    marginTop: "10%",
+  },
+  EnterInputContainer: {
+    width: "87%",
+    height: 550,
+    backgroundColor: "#D5DFEB",
+    alignSelf: "center",
+    borderRadius: 15,
   },
   importButton: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "40%",
+    marginTop: "5%",
     width: "85%",
     height: 50,
     alignSelf: "center",
@@ -129,5 +157,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#979797",
+  },
+  importButtonActive: {
+    backgroundColor: "#F19220", // Change this to the desired active color
+    color: "#ffffff",
+  },
+  importButtonInactive: {
+    backgroundColor: "#D5DFEB", // Default background color
+  },
+  copyPasteIcon: {
+    position: "absolute",
+    marginTop: "63%",
+    right: 13,
+  },
+  copyPasteImage: {
+    width: 30,
+    height: 30,
   },
 });

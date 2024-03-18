@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {TextInput, View, StyleSheet} from 'react-native';
+import React, { useState } from "react";
+import { TextInput, View, StyleSheet } from "react-native";
 
-const CustomTextInput = ({placeholder, onChangeText, value}) => {
+const CustomTextInput = ({ placeholder, onChangeText, value }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -15,7 +15,7 @@ const CustomTextInput = ({placeholder, onChangeText, value}) => {
   return (
     <View style={[styles.inputContainer, isFocused && styles.focusedContainer]}>
       <TextInput
-        placeholderTextColor={'grey'}
+        placeholderTextColor={"grey"}
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={value}
@@ -29,13 +29,16 @@ const CustomTextInput = ({placeholder, onChangeText, value}) => {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    width: '85%',
+    width: "85%",
     height: 50,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    // borderWidth: 1,
+    // borderColor: '#ccc',
     marginBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "70%",
   },
   // focusedContainer: {
   //   borderBottomColor: 'blue', // Change the border color when focused
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 16,
     paddingHorizontal: 8,
-    color: '#000000',
+    color: "#000000",
   },
 });
 
