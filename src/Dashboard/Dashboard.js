@@ -13,12 +13,18 @@ import CustomModal from "../../components/customModal";
 import { styles } from "./styles";
 import { currencyData } from "../../components/coinDetailsData";
 import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
+import EnterTokenModal from "../../components/EnterTokenModal";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
+    useState(false);
 
+  const toggleEnterTokenModal = () => {
+    setIsTokenDetailsModalVisible(!isTokenDetailsModalVisible);
+  };
   const handleScroll = (event) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const pageIndex = Math.round(contentOffsetX / 335);
@@ -27,7 +33,7 @@ const Dashboard = () => {
 
   const data = [];
 
-  const renderItem = ({ item }) => <CurrencyDetailsCard />;
+  const renderItem = ({ item }) => <CurrencyDetailsCard item={item} />;
 
   return (
     <View style={styles.container}>
@@ -183,7 +189,7 @@ const Dashboard = () => {
           ))}
         </View>
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 0.8 }}>
         <FlatList
           data={currencyData}
           keyExtractor={(item) => item.id}
@@ -192,6 +198,19 @@ const Dashboard = () => {
           scrollEventThrottle={16}
         />
       </View>
+      <TouchableOpacity
+        style={{ alignItems: "flex-end" }}
+        onPress={toggleEnterTokenModal}
+      >
+        <Image
+          source={require("../assets/images/plus.png")}
+          style={styles.plusImage}
+        />
+      </TouchableOpacity>
+      <EnterTokenModal
+        isVisible={isTokenDetailsModalVisible}
+        onClose={toggleEnterTokenModal}
+      />
     </View>
   );
 };
