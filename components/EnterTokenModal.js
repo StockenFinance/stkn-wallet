@@ -42,9 +42,10 @@ const EnterTokenModal = ({
   //     fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
   //   }, []);
 
-  const handleFetchData = () => {
-    fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
-  };
+  //   const handleFetchData = () => {
+  //     fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
+  //   };
+
   const isButtonDisabled = value.trim() === "";
   return (
     <Modal

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { styles } from "../src/Dashboard/styles";
 
-const CurrencyDetailsCard = ({ item }) => {
+const CurrencyDetailsCard = ({ item, isLast }) => {
   const [containerHeight, setContainerHeight] = useState(95);
 
   const handleContainerClick = () => {
@@ -21,7 +21,7 @@ const CurrencyDetailsCard = ({ item }) => {
                 height: 35,
                 borderRadius: 10,
                 backgroundColor: "#F2A13F",
-                marginTop: containerHeight === 95 ? "-12%" : "-45%",
+                marginTop: containerHeight === 95 ? "-12%" : "-38%",
                 marginLeft: "8%",
                 alignItems: "center",
                 justifyContent: "center",

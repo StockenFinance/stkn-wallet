@@ -28,15 +28,15 @@ const Dashboard = () => {
   const [tokenInput, setTokenInput] = useState(
     "0xf0F161fDA2712DB8b566946122a5af183995e2eD"
   );
-  const [walletBalance, setWalletBalance] = useState(0);
+  // const [walletBalance, setWalletBalance] = useState(0);
 
-  useEffect(() => {
-    let sum = 0;
-    apiResponse.forEach((item) => {
-      sum += parseFloat(item.priceUsd);
-    });
-    setWalletBalance(sum); // Update wallet balance state
-  }, [apiResponse]);
+  // useEffect(() => {
+  //   let sum = 0;
+  //   apiResponse.forEach((item) => {
+  //     sum += parseFloat(item.priceUsd);
+  //   });
+  //   setWalletBalance(sum); // Update wallet balance state
+  // }, [apiResponse]);
 
   const toggleEnterTokenModal = () => {
     setIsTokenDetailsModalVisible(!isTokenDetailsModalVisible);
@@ -49,7 +49,13 @@ const Dashboard = () => {
 
   const data = [];
 
-  const renderItem = ({ item }) => <CurrencyDetailsCard item={item} />;
+  const renderItem = ({ item, index }) => (
+    <View
+      style={{ marginBottom: index === apiResponse.length - 1 ? "10%" : 0 }}
+    >
+      <CurrencyDetailsCard item={item} />
+    </View>
+  );
 
   const handleToken = async () => {
     console.log("checking token::::", tokenInput);
@@ -131,7 +137,8 @@ const Dashboard = () => {
             <View>
               <Text style={styles.yourBalanceText}>Your balance</Text>
               <Text style={styles.balanceText}>
-                ${walletBalance.toFixed(2)}
+                USD 78,092.01
+                {/* ${walletBalance.toFixed(2)} */}
               </Text>
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -236,13 +243,21 @@ const Dashboard = () => {
         </View> */}
       </View>
       <View style={{ flex: 0.8 }}>
-        <FlatList
-          data={apiResponse}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-        />
+        {apiResponse.length > 0 ? (
+          <FlatList
+            data={apiResponse}
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+          />
+        ) : (
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text style={styles.noDataMessage}>No data available</Text>
+          </View>
+        )}
       </View>
       <TouchableOpacity
         style={{ alignItems: "flex-end" }}

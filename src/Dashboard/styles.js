@@ -139,7 +139,7 @@ export const styles = StyleSheet.create({
     height: 95,
     borderRadius: 15,
     alignSelf: "center",
-    marginTop: "10%",
+    marginTop: "7%",
   },
   coinNameText: {
     fontSize: 15,
@@ -176,5 +176,11 @@ export const styles = StyleSheet.create({
     height: 40,
     right: "5%",
     top: "35%",
+  },
+  noDataMessage: {
+    textAlign: "center",
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#253452",
   },
 });
