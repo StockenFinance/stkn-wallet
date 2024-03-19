@@ -14,11 +14,14 @@ import { styles } from "./styles";
 import { currencyData } from "../../components/coinDetailsData";
 import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
 import EnterTokenModal from "../../components/EnterTokenModal";
+import AllNetworksModal from "../../components/AllNetworksModal";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
+
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
 
@@ -43,68 +46,77 @@ const Dashboard = () => {
             source={require("../assets/images/allNetwork.png")}
             style={styles.allNetworksImage}
           />
-          <Text style={styles.allNetworksText}>All Networks</Text>
-          <Image
-            source={require("../assets/images/dropdown.png")}
-            style={styles.dropdownImage}
-          />
+          <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
+            <Text style={styles.allNetworksText}>All Networks</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
+            <Image
+              source={require("../assets/images/dropdown.png")}
+              style={styles.dropdownImage}
+            />
+            <AllNetworksModal
+              transparent={true}
+              isVisible={allNetworksModalVisible}
+              onClose={() => setAllNetworksModalVisible(false)}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.timerImage}>
           <Image source={require("../assets/images/timer.png")} />
         </View>
       </View>
       <View>
-        <ScrollView
+        {/* <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           onScroll={handleScroll}
           scrollEventThrottle={16}
+        > */}
+        <LinearGradient
+          colors={["#F19220", "#BE6800"]}
+          start={{ x: -0.2, y: 0.1 }}
+          end={{ x: 1, y: 0 }}
+          style={[styles.wallet, { borderRadius: 10, overflow: "hidden" }]}
         >
-          <LinearGradient
-            colors={["#F19220", "#BE6800"]}
-            start={{ x: -0.2, y: 0.1 }}
-            end={{ x: 1, y: 0 }}
-            style={[styles.wallet, { borderRadius: 10, overflow: "hidden" }]}
-          >
-            <View style={styles.walletContentContainer}>
-              <View>
-                <Text style={styles.walletName}>Wallet 1</Text>
-                <Text style={styles.walletCode}>0Wefsxc584sfg </Text>
-              </View>
+          <View style={styles.walletContentContainer}>
+            <View>
+              <Text style={styles.walletName}>Wallet 1</Text>
+              <Text style={styles.walletCode}>0Wefsxc584sfg </Text>
             </View>
+          </View>
 
-            <Image
-              source={require("../assets/images/walletImage.png")}
-              style={styles.walletImage}
-            />
+          <Image
+            source={require("../assets/images/walletImage.png")}
+            style={styles.walletImage}
+          />
 
-            <Text style={styles.receiveText}>Receive</Text>
-            <Image
-              source={require("../assets/images/receiveScanner.png")}
-              style={{ position: "absolute", top: 27, right: 18 }}
-            />
-            <View style={styles.walletBalanceContainer}>
-              <View>
-                <Text style={styles.yourBalanceText}>Your balance</Text>
-                <Text style={styles.balanceText}>USD 78,071.01</Text>
-              </View>
-              <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <View style={styles.modalIconContainer}>
-                  <Image
-                    source={require("../assets/images/modalDot.png")}
-                    style={styles.modalDotImage}
-                  />
-
-                  <CustomModal
-                    transparent={true}
-                    isVisible={modalVisible}
-                    onClose={() => setModalVisible(false)}
-                  />
-                </View>
-              </TouchableOpacity>
+          <Text style={styles.receiveText}>Receive</Text>
+          <Image
+            source={require("../assets/images/receiveScanner.png")}
+            style={{ position: "absolute", top: 27, right: 18 }}
+          />
+          <View style={styles.walletBalanceContainer}>
+            <View>
+              <Text style={styles.yourBalanceText}>Your balance</Text>
+              <Text style={styles.balanceText}>USD 78,071.01</Text>
             </View>
-          </LinearGradient>
-          <LinearGradient
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <View style={styles.modalIconContainer}>
+                <Image
+                  source={require("../assets/images/modalDot.png")}
+                  style={styles.modalDotImage}
+                />
+
+                <CustomModal
+                  transparent={true}
+                  isVisible={modalVisible}
+                  onClose={() => setModalVisible(false)}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+        {/* <LinearGradient
             colors={["#F19220", "#BE6800"]}
             start={{ x: -0.2, y: 0.1 }}
             end={{ x: 1, y: 0 }}
@@ -139,8 +151,8 @@ const Dashboard = () => {
                 />
               </View>
             </View>
-          </LinearGradient>
-          <LinearGradient
+          </LinearGradient> */}
+        {/* <LinearGradient
             colors={["#F19220", "#BE6800"]}
             start={{ x: -0.2, y: 0.1 }}
             end={{ x: 1, y: 0 }}
@@ -175,9 +187,9 @@ const Dashboard = () => {
                 />
               </View>
             </View>
-          </LinearGradient>
-        </ScrollView>
-        <View style={styles.dotContainer}>
+          </LinearGradient> */}
+        {/* </ScrollView> */}
+        {/* <View style={styles.dotContainer}>
           {[...Array(3)].map((_, index) => (
             <View
               key={index}
@@ -187,7 +199,7 @@ const Dashboard = () => {
               ]}
             />
           ))}
-        </View>
+        </View> */}
       </View>
       <View style={{ flex: 0.8 }}>
         <FlatList

@@ -10,11 +10,18 @@ import {
 } from "react-native";
 
 const EnterTokenModal = ({ isVisible, onClose }) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [tokenNumber, setTokenNumber] = useState("");
   const handleOverlayPress = () => {
-    setPhoneNumber("");
+    setTokenNumber("");
     onClose();
   };
+
+  const handleDonePress = () => {
+    // Add any validation logic here if needed
+    onClose(); // Close the modal
+  };
+
+  const isButtonDisabled = tokenNumber.trim() === ""; // Check if input is empty
   return (
     <Modal
       animationType="fade"
@@ -25,21 +32,28 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
       <TouchableWithoutFeedback onPress={handleOverlayPress}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.HeaderText}>Enter Token Number</Text>
+            <Text style={styles.HeaderText}>Enter Token Address</Text>
 
             <View style={styles.TokenInputContainer}>
               <TextInput
                 placeholderTextColor={"#7483A1"}
                 style={styles.input}
                 placeholder="Enter Token "
-                value={phoneNumber}
-                onChangeText={(text) => setPhoneNumber(text)}
+                value={tokenNumber}
+                onChangeText={(text) => setTokenNumber(text)}
               />
             </View>
 
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.doneButton}>
-                <Text style={styles.doneButtonText}>DONE</Text>
+              <TouchableOpacity
+                style={[
+                  styles.doneButton,
+                  isButtonDisabled && styles.disabledButton,
+                ]}
+                disabled={isButtonDisabled}
+                onPress={handleDonePress}
+              >
+                <Text style={styles.doneButtonText}>Import Token</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -108,6 +122,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginRight: 10,
     color: "black",
+  },
+  disabledButton: {
+    backgroundColor: "#ccc",
   },
 });
 

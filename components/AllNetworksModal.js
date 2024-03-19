@@ -2,27 +2,27 @@ import React, { useState } from "react";
 import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 
-const CustomModal = ({ isVisible, onClose }) => {
+const AllNetworksModal = ({ isVisible, onClose }) => {
   return (
     <Modal animationType="fade" isVisible={isVisible} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
         <TouchableOpacity onPress={() => console.log("Copy address")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Copy address
+            Bitcoin
           </Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Turn off notification")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Turn off notifications
+            Ethereum
           </Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Customize")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Customize
+            Polygon
           </Text>
         </TouchableOpacity>
       </View>
@@ -30,7 +30,7 @@ const CustomModal = ({ isVisible, onClose }) => {
   );
 };
 
-export default CustomModal;
+export default AllNetworksModal;
 const styles = StyleSheet.create({
   modalContent: {
     width: 160,
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignSelf: "center",
     position: "absolute",
-    top: 115,
-    right: 60,
+    top: 60,
+    left: 20,
   },
   modalSeparator: {
     height: 1,

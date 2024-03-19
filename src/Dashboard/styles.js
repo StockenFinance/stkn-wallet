@@ -39,13 +39,13 @@ export const styles = StyleSheet.create({
   },
 
   wallet: {
-    width: 335,
+    width: "89%",
     height: 169,
     backgroundColor: "#f0f0f0",
-    marginLeft: 10,
     borderRadius: 10,
     padding: 10,
     marginTop: 30,
+    alignSelf: "center",
   },
   walletName: {
     fontSize: 13,
