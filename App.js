@@ -4,7 +4,7 @@ import AppNavigator from "./src/AppNavigator";
 import Dashboard from "./src/Dashboard/Dashboard";
 
 const App = () => {
-  return <Dashboard />;
+  return <AppNavigator />;
 };
 
 export default App;

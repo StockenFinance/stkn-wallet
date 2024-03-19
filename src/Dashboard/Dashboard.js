@@ -6,8 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  Button,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import CustomModal from "../../components/customModal";
 import { styles } from "./styles";
@@ -21,9 +22,21 @@ const Dashboard = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
-
+  const [apiResponse, setApiResponse] = useState([]);
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
+  const [tokenInput, setTokenInput] = useState(
+    "0xf0F161fDA2712DB8b566946122a5af183995e2eD"
+  );
+  const [walletBalance, setWalletBalance] = useState(0);
+
+  useEffect(() => {
+    let sum = 0;
+    apiResponse.forEach((item) => {
+      sum += parseFloat(item.priceUsd);
+    });
+    setWalletBalance(sum); // Update wallet balance state
+  }, [apiResponse]);
 
   const toggleEnterTokenModal = () => {
     setIsTokenDetailsModalVisible(!isTokenDetailsModalVisible);
@@ -37,6 +50,25 @@ const Dashboard = () => {
   const data = [];
 
   const renderItem = ({ item }) => <CurrencyDetailsCard item={item} />;
+
+  const handleToken = async () => {
+    console.log("checking token::::", tokenInput);
+    try {
+      const response = await fetch(
+        `https://api.dexscreener.com/latest/dex/tokens/${tokenInput}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch token data");
+      }
+      const data = await response.json();
+      toggleEnterTokenModal();
+      setApiResponse(data.pairs);
+
+      console.log("API call successfull:", data);
+    } catch (error) {
+      console.error("Error fetching token data:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -80,7 +112,7 @@ const Dashboard = () => {
         >
           <View style={styles.walletContentContainer}>
             <View>
-              <Text style={styles.walletName}>Wallet 1</Text>
+              <Text style={styles.walletName}>Wallet</Text>
               <Text style={styles.walletCode}>0Wefsxc584sfg </Text>
             </View>
           </View>
@@ -98,7 +130,9 @@ const Dashboard = () => {
           <View style={styles.walletBalanceContainer}>
             <View>
               <Text style={styles.yourBalanceText}>Your balance</Text>
-              <Text style={styles.balanceText}>USD 78,071.01</Text>
+              <Text style={styles.balanceText}>
+                ${walletBalance.toFixed(2)}
+              </Text>
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.modalIconContainer}>
@@ -203,7 +237,7 @@ const Dashboard = () => {
       </View>
       <View style={{ flex: 0.8 }}>
         <FlatList
-          data={currencyData}
+          data={apiResponse}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           onScroll={handleScroll}
@@ -213,6 +247,7 @@ const Dashboard = () => {
       <TouchableOpacity
         style={{ alignItems: "flex-end" }}
         onPress={toggleEnterTokenModal}
+        // onPress={handleFetchData}
       >
         <Image
           source={require("../assets/images/plus.png")}
@@ -220,6 +255,9 @@ const Dashboard = () => {
         />
       </TouchableOpacity>
       <EnterTokenModal
+        value={tokenInput}
+        onChangeText={(text) => setTokenInput(text)}
+        onPress={() => handleToken()}
         isVisible={isTokenDetailsModalVisible}
         onClose={toggleEnterTokenModal}
       />

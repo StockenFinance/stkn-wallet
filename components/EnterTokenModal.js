@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   View,
@@ -9,19 +9,43 @@ import {
   TextInput,
 } from "react-native";
 
-const EnterTokenModal = ({ isVisible, onClose }) => {
+const EnterTokenModal = ({
+  isVisible,
+  onClose,
+  onChangeText,
+  value,
+  onPress,
+}) => {
   const [tokenNumber, setTokenNumber] = useState("");
   const handleOverlayPress = () => {
     setTokenNumber("");
     onClose();
   };
 
-  const handleDonePress = () => {
-    // Add any validation logic here if needed
-    onClose(); // Close the modal
-  };
+  //   const fetchTokenData = async (tokenAddresses) => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://api.dexscreener.com/latest/dex/tokens/${tokenAddresses}`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch token data");
+  //       }
+  //       const data = await response.json();
 
-  const isButtonDisabled = tokenNumber.trim() === ""; // Check if input is empty
+  //       console.log("API call successfull:", data);
+  //     } catch (error) {
+  //       console.error("Error fetching token data:", error);
+  //     }
+  //   };
+
+  //   useEffect(() => {
+  //     fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
+  //   }, []);
+
+  const handleFetchData = () => {
+    fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
+  };
+  const isButtonDisabled = value.trim() === "";
   return (
     <Modal
       animationType="fade"
@@ -39,8 +63,9 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
                 placeholderTextColor={"#7483A1"}
                 style={styles.input}
                 placeholder="Enter Token "
-                value={tokenNumber}
-                onChangeText={(text) => setTokenNumber(text)}
+                value={value}
+                // onChangeText={(text) => setTokenNumber(text)}
+                onChangeText={onChangeText}
               />
             </View>
 
@@ -51,7 +76,7 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
                   isButtonDisabled && styles.disabledButton,
                 ]}
                 disabled={isButtonDisabled}
-                onPress={handleDonePress}
+                onPress={onPress}
               >
                 <Text style={styles.doneButtonText}>Import Token</Text>
               </TouchableOpacity>

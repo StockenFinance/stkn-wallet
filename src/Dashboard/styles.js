@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
     fontSize: 29,
     fontWeight: "900",
     color: "#ffffff",
-    marginLeft: 17,
+    marginLeft: 15,
     marginTop: "-2%",
   },
   modalIconContainer: {
