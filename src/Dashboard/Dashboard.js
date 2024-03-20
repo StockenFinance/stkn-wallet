@@ -16,6 +16,8 @@ import { currencyData } from "../../components/coinDetailsData";
 import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
 import EnterTokenModal from "../../components/EnterTokenModal";
 import AllNetworksModal from "../../components/AllNetworksModal";
+import { useContractRead } from "wagmi";
+import { erc20ABI } from "wagmi";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -28,15 +30,6 @@ const Dashboard = () => {
   const [tokenInput, setTokenInput] = useState(
     "0xf0F161fDA2712DB8b566946122a5af183995e2eD"
   );
-  // const [walletBalance, setWalletBalance] = useState(0);
-
-  // useEffect(() => {
-  //   let sum = 0;
-  //   apiResponse.forEach((item) => {
-  //     sum += parseFloat(item.priceUsd);
-  //   });
-  //   setWalletBalance(sum); // Update wallet balance state
-  // }, [apiResponse]);
 
   const toggleEnterTokenModal = () => {
     setIsTokenDetailsModalVisible(!isTokenDetailsModalVisible);
@@ -75,6 +68,13 @@ const Dashboard = () => {
       console.error("Error fetching token data:", error);
     }
   };
+
+  // const { data: amount } = useContractRead({
+  //   abi: erc20ABI,
+  //   functionName: "name",
+  // });
+
+  // console.log("checking amouta::::", amount);
 
   return (
     <View style={styles.container}>
@@ -255,7 +255,7 @@ const Dashboard = () => {
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <Text style={styles.noDataMessage}>No data available</Text>
+            <Text style={styles.noDataMessage}>No Data Available</Text>
           </View>
         )}
       </View>

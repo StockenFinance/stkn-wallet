@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CustomTextInput from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Clipboard from "@react-native-clipboard/clipboard";
+// import DocumentScanner from "react-native-document-scanner";
 import { ethers } from "ethers";
 import "react-native-get-random-values";
 import { styles } from "./styles";
@@ -15,6 +16,7 @@ const ImportWallet = ({ navigation }) => {
 
   const handleOnImport = () => {
     const wallet = ethers.Wallet.fromPhrase(text);
+
     console.log("check import::::", wallet);
     if (wallet) {
       navigation.navigate("RecoveryPhraseConfirmation");

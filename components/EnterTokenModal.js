@@ -22,30 +22,6 @@ const EnterTokenModal = ({
     onClose();
   };
 
-  //   const fetchTokenData = async (tokenAddresses) => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://api.dexscreener.com/latest/dex/tokens/${tokenAddresses}`
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch token data");
-  //       }
-  //       const data = await response.json();
-
-  //       console.log("API call successfull:", data);
-  //     } catch (error) {
-  //       console.error("Error fetching token data:", error);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
-  //   }, []);
-
-  //   const handleFetchData = () => {
-  //     fetchTokenData("0xf0F161fDA2712DB8b566946122a5af183995e2eD");
-  //   };
-
   const isButtonDisabled = value.trim() === "";
   return (
     <Modal
@@ -65,10 +41,28 @@ const EnterTokenModal = ({
                 style={styles.input}
                 placeholder="Enter Token "
                 value={value}
-                // onChangeText={(text) => setTokenNumber(text)}
                 onChangeText={onChangeText}
               />
             </View>
+
+            {/* Read-only TextInputs */}
+            {/* <View style={styles.readOnlyInputsContainer}>
+              <TextInput
+                style={styles.readOnlyInput}
+                value="Read-only 1"
+                editable={false}
+              />
+              <TextInput
+                style={styles.readOnlyInput}
+                value="Read-only 2"
+                editable={false}
+              />
+              <TextInput
+                style={styles.readOnlyInput}
+                value="Read-only 3"
+                editable={false}
+              />
+            </View> */}
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -98,21 +92,19 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: "73%",
-    height: 240,
+    height: 380, // Increased height to accommodate read-only inputs
     backgroundColor: "white",
     padding: "5%",
     borderRadius: 12,
     alignItems: "center",
     marginTop: "10%",
   },
-
   HeaderText: {
     fontSize: 16,
     fontWeight: "500",
     color: "#494949",
-    marginTop: "5%",
+    // marginTop: "2%",
   },
-
   buttonContainer: {
     flexDirection: "row",
     marginTop: "13%",
@@ -137,7 +129,6 @@ const styles = StyleSheet.create({
   TokenInputContainer: {
     marginTop: "8%",
   },
-
   input: {
     width: 220,
     height: 50,
@@ -149,6 +140,19 @@ const styles = StyleSheet.create({
     marginRight: 10,
     color: "black",
   },
+  // readOnlyInputsContainer: {
+  //   marginTop: 10, // Adjust as needed
+  // },
+  // readOnlyInput: {
+  //   width: 150,
+  //   height: 45,
+  //   borderColor: "#E9E9E9",
+  //   borderWidth: 1,
+  //   borderRadius: 8,
+  //   padding: 10,
+  //   color: "black",
+  //   marginVertical: "2%",
+  // },
   disabledButton: {
     backgroundColor: "#ccc",
   },

@@ -4,7 +4,15 @@ import Modal from "react-native-modal";
 
 const AllNetworksModal = ({ isVisible, onClose }) => {
   return (
-    <Modal animationType="fade" isVisible={isVisible} onBackdropPress={onClose}>
+    <Modal
+      animationType="none"
+      animationIn="fadeIn"
+      animationOut="fadeOut"
+      backdropOpacity={0}
+      style={styles.modalContainer}
+      isVisible={isVisible}
+      onBackdropPress={onClose}
+    >
       <View style={styles.modalContent}>
         <TouchableOpacity onPress={() => console.log("Copy address")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
@@ -40,12 +48,16 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignSelf: "center",
     position: "absolute",
-    top: 60,
-    left: 20,
+    top: 100,
+    left: 30,
   },
   modalSeparator: {
     height: 1,
     backgroundColor: "gray",
     marginVertical: 5,
+  },
+  modalContainer: {
+    justifyContent: "flex-end",
+    margin: 0,
   },
 });
