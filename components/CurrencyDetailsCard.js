@@ -34,14 +34,14 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 width: 33,
                 height: 35,
                 borderRadius: 10,
-                backgroundColor: "#F2A13F",
+                backgroundColor: "#5C80E7",
                 marginTop: containerHeight === 95 ? "-12%" : "-38%",
                 marginLeft: "8%",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Image source={require("../src/assets/images/bitcoin.png")} />
+              <Image source={require("../src/assets/images/ETH.png")} />
             </View>
 
             <View style={{ marginLeft: "8%", marginTop: "-12%" }}>

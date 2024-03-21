@@ -5,12 +5,12 @@ export const currencyData = [
     coinNameSubText: "Ether",
     priceText: "0.00",
     priceSubText: "0.000000000",
-    additionalContent: [
-      { action: "Send", icon: "send.png" },
-      { action: "Receive", icon: "receive.png" },
-      { action: "Swap", icon: "swap.png" },
-      { action: "Chart", icon: "chart.png" },
-    ],
+    // additionalContent: [
+    //   { action: "Send", icon: "send.png" },
+    //   { action: "Receive", icon: "receive.png" },
+    //   { action: "Swap", icon: "swap.png" },
+    //   { action: "Chart", icon: "chart.png" },
+    // ],
     balance: "$51,895.70",
   },
   // {

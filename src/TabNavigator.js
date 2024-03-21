@@ -16,15 +16,17 @@ const BottomNavigator = () => {
       initialRouteName="Dashboard"
       screenOptions={{
         tabBarShowLabel: false,
+        headerShown: false,
         tabBarStyle: {
           position: "absolute",
           bottom: 10,
-          left: 20,
+          left: 27,
           right: 20,
           backgroundColor: "#F4F7FA",
           width: "87%",
           height: 64,
           borderRadius: 15,
+          alignSelf: "center",
         },
       }}
     >
