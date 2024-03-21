@@ -25,6 +25,7 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
     if (event.target === event.currentTarget) {
       // Clicked outside the modal, so close it
       setTokenNumber("");
+      setTokenDetails({ name: "", decimals: "", symbol: "" });
       onClose();
     }
   };
@@ -187,7 +188,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#494949",
-    // marginTop: "2%",
   },
   buttonContainer: {
     flexDirection: "row",

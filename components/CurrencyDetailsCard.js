@@ -1,13 +1,28 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "../src/Dashboard/styles";
+import { fetchDynamicDetailsOfToken, provider } from "../src/utils/helper";
+import { ethers } from "ethers";
 
 const CurrencyDetailsCard = ({ item, isLast }) => {
   const [containerHeight, setContainerHeight] = useState(95);
-
+  const [userEtherBalance, setUserEtherBalance] = useState(0);
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
+
+  const getUserBalance = async (userAddress) => {
+    const result = await provider.getBalance(userAddress);
+    const balance = ethers.formatEther(result);
+    console.log("Balance: ", balance);
+    setUserEtherBalance(balance);
+    console.log("Balance: ", userEtherBalance);
+    return balance;
+  };
+  useEffect(() => {
+    getUserBalance("0x28C6c06298d514Db089934071355E5743bf21d60");
+    fetchDynamicDetailsOfToken("0xdAC17F958D2ee523a2206206994597C13D831ec7");
+  }, [userEtherBalance]);
 
   return (
     <TouchableOpacity onPress={handleContainerClick}>
@@ -55,8 +70,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 { bottom: containerHeight === 95 ? null : "22%" },
               ]}
             >
-              {" "}
-              {item.priceText}
+              {parseFloat(userEtherBalance).toFixed(6)}
             </Text>
             <Text
               style={[

@@ -161,6 +161,7 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "400",
     color: "#344567",
+    textAlign: "right",
   },
   additionalContent: {
     marginTop: 10,
