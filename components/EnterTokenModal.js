@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Modal,
   View,
@@ -7,22 +7,66 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { tokenDetail } from "../src/utils/helper";
+import { ethers } from "ethers";
 
-const EnterTokenModal = ({
-  isVisible,
-  onClose,
-  onChangeText,
-  value,
-  onPress,
-}) => {
+const EnterTokenModal = ({ isVisible, onClose }) => {
   const [tokenNumber, setTokenNumber] = useState("");
-  const handleOverlayPress = () => {
-    setTokenNumber("");
-    onClose();
+  const [tokenDetails, setTokenDetails] = useState({
+    name: "",
+    decimals: "",
+    symbol: "",
+  });
+
+  const handleOverlayPress = (event) => {
+    if (event.target === event.currentTarget) {
+      // Clicked outside the modal, so close it
+      setTokenNumber("");
+      onClose();
+    }
+  };
+  const handlePaste = async () => {
+    const clipboardContent = await Clipboard.getString();
+    console.log("clipb", clipboardContent);
+    setTokenNumber(clipboardContent);
+    handleInputChange(clipboardContent);
   };
 
-  const isButtonDisabled = value.trim() === "";
+  const isButtonDisabled = tokenNumber.trim() === "";
+  const debounceAsync = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      return new Promise((resolve, reject) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(async () => {
+          try {
+            const result = await func(...args);
+            resolve(result);
+          } catch (error) {
+            reject(error);
+          }
+        }, delay);
+      });
+    };
+  };
+
+  const handleInputChange = useCallback(async (clipboardContent) => {
+    console.log("first", tokenNumber);
+    console.log("clipboardContent", clipboardContent);
+    let res = await tokenDetail(clipboardContent);
+    console.log("res", res);
+
+    if (res.success) {
+      const { tokenName, decimals, symbol } = res.success;
+      setTokenDetails({ name: tokenName, decimals, symbol });
+    }
+  });
+
+  const debouncedTokenDetail = debounceAsync(tokenDetail, 3000);
+
   return (
     <Modal
       animationType="fade"
@@ -40,29 +84,69 @@ const EnterTokenModal = ({
                 placeholderTextColor={"#7483A1"}
                 style={styles.input}
                 placeholder="Enter Token "
-                value={value}
-                onChangeText={onChangeText}
+                value={tokenNumber}
+                onChangeText={(text) => {
+                  setTokenNumber(text);
+                  handleInputChange(text);
+                }}
               />
             </View>
 
             {/* Read-only TextInputs */}
-            {/* <View style={styles.readOnlyInputsContainer}>
+            <View style={styles.readOnlyInputsContainer}>
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  marginTop: "-3%",
+                  fontWeight: "900",
+                }}
+              >
+                Name
+              </Text>
               <TextInput
                 style={styles.readOnlyInput}
-                value="Read-only 1"
+                value={tokenDetails.name}
                 editable={false}
               />
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  fontWeight: "900",
+                }}
+              >
+                Symbol
+              </Text>
               <TextInput
                 style={styles.readOnlyInput}
-                value="Read-only 2"
+                value={tokenDetails.symbol}
                 editable={false}
               />
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  fontWeight: "900",
+                }}
+              >
+                Decimal
+              </Text>
               <TextInput
                 style={styles.readOnlyInput}
-                value="Read-only 3"
+                value={tokenDetails.decimals.toString()}
                 editable={false}
               />
-            </View> */}
+            </View>
+            <TouchableOpacity
+              style={styles.copyPasteIcon}
+              onPress={handlePaste}
+            >
+              <Image
+                source={require("../src/assets/images/paste.png")}
+                style={styles.copyPasteImage}
+              />
+            </TouchableOpacity>
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -71,7 +155,7 @@ const EnterTokenModal = ({
                   isButtonDisabled && styles.disabledButton,
                 ]}
                 disabled={isButtonDisabled}
-                onPress={onPress}
+                onPress={handleOverlayPress}
               >
                 <Text style={styles.doneButtonText}>Import Token</Text>
               </TouchableOpacity>
@@ -92,7 +176,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: "73%",
-    height: 380, // Increased height to accommodate read-only inputs
+    height: 420,
     backgroundColor: "white",
     padding: "5%",
     borderRadius: 12,
@@ -118,7 +202,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#F19220",
-    marginTop: "2%",
+    marginTop: "-15%",
   },
   doneButtonText: {
     color: "#ffffff",
@@ -127,6 +211,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   TokenInputContainer: {
+    marginRight: "35%",
+    width: "70%",
     marginTop: "8%",
   },
   input: {
@@ -140,21 +226,34 @@ const styles = StyleSheet.create({
     marginRight: 10,
     color: "black",
   },
-  // readOnlyInputsContainer: {
-  //   marginTop: 10, // Adjust as needed
-  // },
-  // readOnlyInput: {
-  //   width: 150,
-  //   height: 45,
-  //   borderColor: "#E9E9E9",
-  //   borderWidth: 1,
-  //   borderRadius: 8,
-  //   padding: 10,
-  //   color: "black",
-  //   marginVertical: "2%",
-  // },
+  readOnlyInputsContainer: {
+    // flexDirection: "row",
+    margin: 20,
+    // alignSelf: "center",
+  },
+  readOnlyInput: {
+    width: 120,
+    height: 45,
+    borderColor: "#E9E9E9",
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    color: "black",
+    marginVertical: "2%",
+    marginHorizontal: "2%",
+    textAlign: "center",
+  },
   disabledButton: {
     backgroundColor: "#ccc",
+  },
+  copyPasteIcon: {
+    position: "absolute",
+    marginTop: "30%",
+    right: 15,
+  },
+  copyPasteImage: {
+    width: 25,
+    height: 25,
   },
 });
 

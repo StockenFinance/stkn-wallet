@@ -19,18 +19,17 @@ import AllNetworksModal from "../../components/AllNetworksModal";
 import { useContractRead } from "wagmi";
 import { erc20ABI } from "wagmi";
 import { ethers } from "ethers";
+import Erc20Contract from "../contracts/Erc20";
+import { tokenDetail } from "../utils/helper";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
-
   const [modalVisible, setModalVisible] = useState(false);
   const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
   const [apiResponse, setApiResponse] = useState([]);
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
-  const [tokenInput, setTokenInput] = useState(
-    "0xf0F161fDA2712DB8b566946122a5af183995e2eD"
-  );
+  const [tokenInput, setTokenInput] = useState("");
 
   const toggleEnterTokenModal = () => {
     setIsTokenDetailsModalVisible(!isTokenDetailsModalVisible);
@@ -41,58 +40,54 @@ const Dashboard = () => {
     setActiveDotIndex(pageIndex);
   };
 
-  const data = [];
-
   const renderItem = ({ item, index }) => (
     <View
-      style={{ marginBottom: index === apiResponse.length - 1 ? "10%" : 0 }}
+      style={{ marginBottom: index === currencyData.length - 1 ? "10%" : 0 }}
     >
       <CurrencyDetailsCard item={item} />
     </View>
   );
 
-  const handleToken = async () => {
-    console.log("checking token::::", tokenInput);
-    try {
-      const response = await fetch(
-        `https://api.dexscreener.com/latest/dex/tokens/${tokenInput}`
+  useEffect(() => {
+    async function testIntegration() {
+      const provider = new ethers.JsonRpcProvider(
+        "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch token data");
-      }
-      const data = await response.json();
-      toggleEnterTokenModal();
-      setApiResponse(data.pairs);
+      const erc20Prov = new Erc20Contract(
+        "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        provider
+      );
 
-      console.log("API call successfull:", data);
-    } catch (error) {
-      console.error("Error fetching token data:", error);
+      console.log(
+        "Test function:",
+
+        await erc20Prov.balanceOf("0x28C6c06298d514Db089934071355E5743bf21d60"),
+        await erc20Prov.symbol(),
+        await erc20Prov.name(),
+        await erc20Prov.decimals()
+      );
+      // console.log("erc20Prov", JSON.stringify(erc20Prov, null, 2));
+      console.log(" erc20Prov.symbol()");
+      console.log("provider.getSigner()", provider.getSigner());
+
+      provider
+        .getBlockNumber()
+        .then((blockNumber) => {
+          console.log("Current block number:", blockNumber);
+        })
+        .catch((err) => {
+          console.error("Error fetching block number:", err);
+        });
     }
-  };
+    testIntegration()
+      .then((blockNumber) => {
+        console.log("main", blockNumber);
+      })
+      .catch((err) => {
+        console.error("main error:", err);
+      });
+  }, []);
 
-  // const { data: amount } = useContractRead({
-  //   abi: erc20ABI,
-  //   functionName: "name",
-  // });
-
-  // console.log("checking amouta::::", amount);
-
-  // useEffect(() => {
-  //   // Create a provider for the Ethereum mainnet
-  //   const provider = new ethers.providers.JsonRpcProvider(
-  //     "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
-  //   );
-
-  //   console.log("Provider test:::", provider);
-  //   provider
-  //     .getBlockNumber()
-  //     .then((blockNumber) => {
-  //       console.log("Current block number:", blockNumber);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error fetching block number:", err);
-  //     });
-  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -257,21 +252,13 @@ const Dashboard = () => {
         </View> */}
       </View>
       <View style={{ flex: 0.8 }}>
-        {apiResponse.length > 0 ? (
-          <FlatList
-            data={apiResponse}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-          />
-        ) : (
-          <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-          >
-            <Text style={styles.noDataMessage}>No Data Available</Text>
-          </View>
-        )}
+        <FlatList
+          data={currencyData}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+        />
       </View>
       <TouchableOpacity
         style={{ alignItems: "flex-end" }}
@@ -286,7 +273,7 @@ const Dashboard = () => {
       <EnterTokenModal
         value={tokenInput}
         onChangeText={(text) => setTokenInput(text)}
-        onPress={() => handleToken()}
+        // onPress={() => handleToken()}
         isVisible={isTokenDetailsModalVisible}
         onClose={toggleEnterTokenModal}
       />

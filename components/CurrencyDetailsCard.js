@@ -9,7 +9,6 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
 
-  console.log("checking item:::", item);
   return (
     <TouchableOpacity onPress={handleContainerClick}>
       <View>
@@ -37,7 +36,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                   { bottom: containerHeight === 95 ? null : "100%" },
                 ]}
               >
-                {item.baseToken.symbol}
+                {item.coinName}
               </Text>
               <Text
                 style={[
@@ -45,7 +44,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                   { bottom: containerHeight === 95 ? null : "100%" },
                 ]}
               >
-                {item.baseToken.name}
+                {item.coinNameSubText}
               </Text>
             </View>
           </View>
@@ -56,7 +55,8 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 { bottom: containerHeight === 95 ? null : "22%" },
               ]}
             >
-              {/* {item.priceUsd} */}
+              {" "}
+              {item.priceText}
             </Text>
             <Text
               style={[
@@ -64,7 +64,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 { bottom: containerHeight === 95 ? null : "23%" },
               ]}
             >
-              {/* {item.priceNative} */}
+              {item.priceSubText}
             </Text>
           </View>
         </View>
@@ -86,7 +86,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
             marginLeft: "20%",
           }}
         >
-          ${item.priceUsd}
+          {item.balance}
         </Text>
       </View>
       {containerHeight === 170 && (
