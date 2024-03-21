@@ -13,7 +13,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { tokenDetail } from "../src/utils/helper";
 import { ethers } from "ethers";
 
-const EnterTokenModal = ({ isVisible, onClose }) => {
+const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const [tokenNumber, setTokenNumber] = useState("");
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
@@ -23,8 +23,8 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
 
   const handleOverlayPress = (event) => {
     if (event.target === event.currentTarget) {
-      // Clicked outside the modal, so close it
       setTokenNumber("");
+      modalValues(tokenDetails);
       setTokenDetails({ name: "", decimals: "", symbol: "" });
       onClose();
     }
@@ -36,7 +36,11 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
     handleInputChange(clipboardContent);
   };
 
-  const isButtonDisabled = tokenNumber.trim() === "";
+  const isButtonDisabled =
+    tokenNumber.trim() === "" ||
+    tokenDetails.name.trim() === "" ||
+    (!tokenDetails.decimals && tokenDetails.decimals !== 0) ||
+    tokenDetails.symbol.trim() === "";
   const debounceAsync = (func, delay) => {
     let timeoutId;
     return (...args) => {
@@ -62,7 +66,7 @@ const EnterTokenModal = ({ isVisible, onClose }) => {
 
     if (res.success) {
       const { tokenName, decimals, symbol } = res.success;
-      setTokenDetails({ name: tokenName, decimals, symbol });
+      setTokenDetails({ name: tokenName, decimals: decimals, symbol: symbol });
     }
   });
 

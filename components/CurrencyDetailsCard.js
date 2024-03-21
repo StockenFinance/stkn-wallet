@@ -51,7 +51,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                   { bottom: containerHeight === 95 ? null : "100%" },
                 ]}
               >
-                {item.coinName}
+                {item.symbol}
               </Text>
               <Text
                 style={[
@@ -59,7 +59,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                   { bottom: containerHeight === 95 ? null : "100%" },
                 ]}
               >
-                {item.coinNameSubText}
+                {item.name}
               </Text>
             </View>
           </View>
@@ -78,7 +78,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 { bottom: containerHeight === 95 ? null : "23%" },
               ]}
             >
-              {item.priceSubText}
+              {item.decimals}
             </Text>
           </View>
         </View>

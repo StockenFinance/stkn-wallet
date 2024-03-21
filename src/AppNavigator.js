@@ -9,6 +9,7 @@ import ImportWallet from "./ImportWallet/ImportWallet";
 import ConfirmBackupPhrase from "./ConfirmBackupPhrase/ConfirmBackupPhrase";
 import RecoveryPhraseConfirmation from "./RecoveryPhraseConfirmation/RecoveryPhraseConfirmation";
 import Dashboard from "./Dashboard/Dashboard";
+import BottomNavigator from "./TabNavigator";
 
 const Stack = createStackNavigator();
 
@@ -48,7 +49,7 @@ const AppNavigator = () => {
         />
         <Stack.Screen
           name="Dashboard"
-          component={Dashboard}
+          component={BottomNavigator}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

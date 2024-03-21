@@ -150,7 +150,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
             </Text>
           </View>
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             alignSelf: "center",
@@ -172,7 +172,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
           <View style={styles.languageButton}>
             <Text style={styles.englishText}>Buy ETH</Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.importButton}>
           <Text style={styles.importText}>Confirm</Text>
         </View>
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   importButton: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "10%",
+    marginTop: "7%",
     width: "87%",
     height: 55,
     alignSelf: "center",

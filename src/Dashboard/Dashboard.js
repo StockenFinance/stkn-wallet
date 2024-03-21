@@ -30,10 +30,76 @@ const Dashboard = () => {
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
   const [tokenInput, setTokenInput] = useState("");
+  const [cardData, setCardData] = useState([
+    {
+      id: "1",
+      symbol: "ETH",
+      name: "Ether",
+      priceText: "0.00",
+      decimals: "0.000000000",
+      balance: "$51,895.70",
+    },
+  ]);
 
+  const addTokenBtn = (value) => {
+    toggleEnterTokenModal();
+    // Check if any field in the value object is empty
+    if (
+      value.name.trim() === "" ||
+      // value.decimals.trim() === "" ||
+      value.symbol.trim() === ""
+    ) {
+      alert("Value contains empty fields. Not adding to array.");
+      // alert("value is alrady exit we can not allow to import same value");
+      return; // Exit the function without adding to the array
+    }
+
+    // Format the decimals value to have 5 decimal places
+    const formattedValue = {
+      ...value,
+      decimals: parseFloat(value.decimals).toFixed(5),
+    };
+
+    // Check if the value object already exists in cardData
+    const isDuplicate = cardData.some((item) => isEqual(item, formattedValue));
+
+    if (isDuplicate) {
+      alert("Value already exists in cardData. Not adding to array.");
+      return; // Exit the function without adding to the array
+    }
+
+    console.log("token input value", formattedValue);
+    // If the value is not a duplicate and all fields are filled, add it to cardData
+    setCardData((prevData) => [...prevData, formattedValue]);
+  };
+
+  function isEqual(obj1, obj2) {
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+
+    for (const key of keys1) {
+      const val1 = obj1[key];
+      const val2 = obj2[key];
+
+      if (typeof val1 === "object" && typeof val2 === "object") {
+        if (!isEqual(val1, val2)) {
+          return false;
+        }
+      } else if (val1 !== val2) {
+        return false;
+      }
+    }
+
+    return true;
+  }
   const toggleEnterTokenModal = () => {
     setIsTokenDetailsModalVisible(!isTokenDetailsModalVisible);
   };
+
   const handleScroll = (event) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const pageIndex = Math.round(contentOffsetX / 335);
@@ -41,9 +107,7 @@ const Dashboard = () => {
   };
 
   const renderItem = ({ item, index }) => (
-    <View
-      style={{ marginBottom: index === currencyData.length - 1 ? "10%" : 0 }}
-    >
+    <View style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}>
       <CurrencyDetailsCard item={item} />
     </View>
   );
@@ -253,7 +317,7 @@ const Dashboard = () => {
       </View>
       <View style={{ flex: 0.8 }}>
         <FlatList
-          data={currencyData}
+          data={cardData}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           onScroll={handleScroll}
@@ -272,6 +336,7 @@ const Dashboard = () => {
       </TouchableOpacity>
       <EnterTokenModal
         value={tokenInput}
+        modalValues={(value) => addTokenBtn(value)}
         onChangeText={(text) => setTokenInput(text)}
         // onPress={() => handleToken()}
         isVisible={isTokenDetailsModalVisible}
