@@ -16,6 +16,7 @@
     "@react-native-clipboard/clipboard": "^1.13.2",
     "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/netinfo": "^11.3.1",
+    "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.16",
     "@react-navigation/stack": "^6.3.28",
     "@walletconnect/react-native-compat": "^2.11.3",

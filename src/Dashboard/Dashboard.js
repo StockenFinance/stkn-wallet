@@ -18,6 +18,7 @@ import EnterTokenModal from "../../components/EnterTokenModal";
 import AllNetworksModal from "../../components/AllNetworksModal";
 import { useContractRead } from "wagmi";
 import { erc20ABI } from "wagmi";
+import { ethers } from "ethers";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -76,6 +77,22 @@ const Dashboard = () => {
 
   // console.log("checking amouta::::", amount);
 
+  // useEffect(() => {
+  //   // Create a provider for the Ethereum mainnet
+  //   const provider = new ethers.providers.JsonRpcProvider(
+  //     "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+  //   );
+
+  //   console.log("Provider test:::", provider);
+  //   provider
+  //     .getBlockNumber()
+  //     .then((blockNumber) => {
+  //       console.log("Current block number:", blockNumber);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error fetching block number:", err);
+  //     });
+  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -136,10 +153,7 @@ const Dashboard = () => {
           <View style={styles.walletBalanceContainer}>
             <View>
               <Text style={styles.yourBalanceText}>Your balance</Text>
-              <Text style={styles.balanceText}>
-                USD 78,092.01
-                {/* ${walletBalance.toFixed(2)} */}
-              </Text>
+              <Text style={styles.balanceText}>USD 78,092.01</Text>
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.modalIconContainer}>

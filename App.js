@@ -10,6 +10,10 @@ import {
   defaultWagmiConfig,
   Web3Modal,
 } from "@web3modal/wagmi-react-native";
+import BuyScreen from "./src/BuyScreen/BuyScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import BottomNavigator from "./src/TabNavigator";
+// import BottomTabNavigation from "./src/TabNavigator";
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = "20eb0c483bb4801ec4004dea1a843576";
@@ -41,6 +45,10 @@ createWeb3Modal({
 const App = () => {
   return (
     <WagmiConfig config={wagmiConfig}>
+      {/* <NavigationContainer>
+        <BottomNavigator />
+      </NavigationContainer> */}
+      {/* <AppNavigator /> */}
       <Dashboard />
     </WagmiConfig>
   );
