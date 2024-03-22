@@ -35,9 +35,9 @@ const Dashboard = () => {
       id: "1",
       symbol: "ETH",
       name: "Ether",
-      priceText: "0.00",
-      decimals: "0.000000000",
-      balance: "$51,895.70",
+      balance: "0.00",
+      decimals: "0",
+      price: "$51,895.70",
     },
   ]);
 
@@ -57,7 +57,7 @@ const Dashboard = () => {
     // Format the decimals value to have 5 decimal places
     const formattedValue = {
       ...value,
-      decimals: parseFloat(value.decimals).toFixed(5),
+      decimals: parseFloat(value.decimals).toFixed(0),
     };
 
     // Check if the value object already exists in cardData
@@ -124,7 +124,6 @@ const Dashboard = () => {
 
       console.log(
         "Test function:",
-
         await erc20Prov.balanceOf("0x28C6c06298d514Db089934071355E5743bf21d60"),
         await erc20Prov.symbol(),
         await erc20Prov.name(),

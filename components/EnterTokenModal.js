@@ -19,13 +19,14 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     name: "",
     decimals: "",
     symbol: "",
+    balance: "",
   });
 
   const handleOverlayPress = (event) => {
     if (event.target === event.currentTarget) {
       setTokenNumber("");
       modalValues(tokenDetails);
-      setTokenDetails({ name: "", decimals: "", symbol: "" });
+      setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
       onClose();
     }
   };
@@ -58,17 +59,38 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     };
   };
 
-  const handleInputChange = useCallback(async (clipboardContent) => {
-    console.log("first", tokenNumber);
-    console.log("clipboardContent", clipboardContent);
-    let res = await tokenDetail(clipboardContent);
-    console.log("res", res);
+  // const handleInputChange = useCallback(async (clipboardContent) => {
+  //   console.log("first", tokenNumber);
+  //   console.log("clipboardContent", clipboardContent);
+  //   let res = await tokenDetail(clipboardContent);
+  //   console.log("res", res);
 
-    if (res.success) {
-      const { tokenName, decimals, symbol } = res.success;
-      setTokenDetails({ name: tokenName, decimals: decimals, symbol: symbol });
+  //   if (res.success) {
+  //     const { tokenName, decimals, symbol } = res.success;
+  //     setTokenDetails({ name: tokenName, decimals: decimals, symbol: symbol });
+  //   }
+  // });
+
+  const handleInputChange = async (text) => {
+    setTokenNumber(text);
+    if (text.trim() !== "") {
+      try {
+        const res = await tokenDetail(text);
+        if (res.success) {
+          const { tokenName, decimals, symbol, balance } = res.success;
+          console.log("Balance test::::", tokenName, decimals, symbol, balance);
+          setTokenDetails({ name: tokenName, decimals, symbol, balance });
+        } else {
+          setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+        }
+      } catch (error) {
+        console.error("Error fetching token details:", error);
+        setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+      }
+    } else {
+      setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
     }
-  });
+  };
 
   const debouncedTokenDetail = debounceAsync(tokenDetail, 3000);
 

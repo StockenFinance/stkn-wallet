@@ -11,7 +11,7 @@ export const currencyData = [
     //   { action: "Swap", icon: "swap.png" },
     //   { action: "Chart", icon: "chart.png" },
     // ],
-    balance: "$51,895.70",
+    price: "$51,895.70",
   },
   // {
   //   id: "2",

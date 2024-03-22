@@ -24,6 +24,9 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
     fetchDynamicDetailsOfToken("0xdAC17F958D2ee523a2206206994597C13D831ec7");
   }, [userEtherBalance]);
 
+  function formatBalance(balance, decimals) {
+    return ethers.formatUnits(balance, parseInt(decimals, 10));
+  }
   return (
     <TouchableOpacity onPress={handleContainerClick}>
       <View>
@@ -70,7 +73,12 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 { bottom: containerHeight === 95 ? null : "22%" },
               ]}
             >
-              {parseFloat(userEtherBalance).toFixed(6)}
+              {/* {item.balance} */}
+              {/* {parseFloat(userEtherBalance).toFixed(6)} */}
+              {/* {parseFloat(item.decimals).toFixed(2)} */}
+              {item.symbol === "ETH"
+                ? parseFloat(userEtherBalance).toFixed(6)
+                : formatBalance(item.balance, item.decimals)}
             </Text>
             <Text
               style={[
@@ -100,7 +108,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
             marginLeft: "20%",
           }}
         >
-          {item.balance}
+          {item.price}
         </Text>
       </View>
       {containerHeight === 170 && (

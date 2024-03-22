@@ -48,8 +48,8 @@ const App = () => {
       {/* <NavigationContainer>
         <BottomNavigator />
       </NavigationContainer> */}
-      <AppNavigator />
-      {/* <Dashboard /> */}
+      {/* <AppNavigator /> */}
+      <Dashboard />
     </WagmiConfig>
   );
 };
