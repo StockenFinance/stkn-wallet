@@ -43,6 +43,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
     }
   };
 
+  console.log("item:::", item);
   return (
     <TouchableOpacity onPress={handleContainerClick}>
       <View>
@@ -125,10 +126,8 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
             marginLeft: "20%",
           }}
         >
-          {/* {item.price} */}
-          {cryptoPrice[item.symbol] && cryptoPrice[item.symbol].USD
-            ? `$ ${cryptoPrice[item.symbol].USD}`
-            : "$ 1265.878"}
+          {item?.price}
+          {/* {cryptoPrice[item.symbol] ? cryptoPrice.USD : "$ 1265.878"} */}
         </Text>
       </View>
       {containerHeight === 170 && (

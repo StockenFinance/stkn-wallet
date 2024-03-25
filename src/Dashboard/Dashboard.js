@@ -1,12 +1,10 @@
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   ScrollView,
   TouchableOpacity,
   FlatList,
-  Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
@@ -16,8 +14,6 @@ import { currencyData } from "../../components/coinDetailsData";
 import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
 import EnterTokenModal from "../../components/EnterTokenModal";
 import AllNetworksModal from "../../components/AllNetworksModal";
-import { useContractRead } from "wagmi";
-import { erc20ABI } from "wagmi";
 import { ethers } from "ethers";
 import Erc20Contract from "../contracts/Erc20";
 import { tokenDetail } from "../utils/helper";
@@ -36,18 +32,16 @@ const Dashboard = () => {
 
   const [cardData, setCardData] = useState([
     {
-      id: "1",
       symbol: "ETH",
       name: "Ether",
       balance: "0.00",
       decimals: "0",
-      price: "$51,895.70",
+      price: "$1233.80",
     },
   ]);
 
   const addTokenBtn = (value) => {
     toggleEnterTokenModal();
-    // Check if any field in the value object is empty
     if (
       value.name.trim() === "" ||
       // value.decimals.trim() === "" ||
@@ -55,25 +49,22 @@ const Dashboard = () => {
     ) {
       alert("Value contains empty fields. Not adding to array.");
       // alert("value is alrady exit we can not allow to import same value");
-      return; // Exit the function without adding to the array
+      return;
     }
 
-    // Format the decimals value to have 5 decimal places
     const formattedValue = {
       ...value,
       decimals: parseFloat(value.decimals).toFixed(0),
     };
 
-    // Check if the value object already exists in cardData
     const isDuplicate = cardData.some((item) => isEqual(item, formattedValue));
 
     if (isDuplicate) {
       alert("Value already exists in cardData. Not adding to array.");
-      return; // Exit the function without adding to the array
+      return;
     }
 
     console.log("token input value", formattedValue);
-    // If the value is not a duplicate and all fields are filled, add it to cardData
     setCardData((prevData) => [...prevData, formattedValue]);
   };
 
@@ -133,7 +124,6 @@ const Dashboard = () => {
         await erc20Prov.name(),
         await erc20Prov.decimals()
       );
-      // console.log("erc20Prov", JSON.stringify(erc20Prov, null, 2));
       console.log(" erc20Prov.symbol()");
       console.log("provider.getSigner()", provider.getSigner());
       provider
@@ -186,38 +176,38 @@ const Dashboard = () => {
   //   fetchCryptoPrice();
   // }, []);
 
-  const fetchCryptoPrice = async (symbol) => {
-    try {
-      const response = await fetch(
-        `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
-        {
-          method: "GET",
-          headers: {
-            authorization:
-              "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729", // Replace your_api_key_here with your actual API key
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  // const fetchCryptoPrice = async (symbol) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           authorization:
+  //             "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
 
-      const data = await response.json();
-      console.log("Crypto price data in USD for TRON:", data);
+  //     const data = await response.json();
+  //     console.log("Crypto price data in USD Test:", data);
 
-      return data.USD; // Return the USD price
-    } catch (error) {
-      console.error("Error fetching crypto price:", error);
-    }
-  };
+  //     return data.USD;
+  //   } catch (error) {
+  //     console.error("Error fetching crypto price:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchCryptoPrice("BTC").then((usdPrice) => {
-      setCryptoPrice({ ...cryptoPrice, BTC: { USD: usdPrice } });
-    });
-  }, []);
+  // useEffect(() => {
+  //   fetchCryptoPrice("BTC").then((usdPrice) => {
+  //     setCryptoPrice({ ...cryptoPrice, BTC: { USD: usdPrice } });
+  //   });
+  // }, []);
 
   return (
     <View style={styles.container}>

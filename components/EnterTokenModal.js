@@ -20,6 +20,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     decimals: "",
     symbol: "",
     balance: "",
+    price: "",
   });
 
   const handleOverlayPress = (event) => {
@@ -79,20 +80,75 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
         if (res.success) {
           const { tokenName, decimals, symbol, balance } = res.success;
           console.log("Balance test::::", tokenName, decimals, symbol, balance);
-          setTokenDetails({ name: tokenName, decimals, symbol, balance });
+          fetchCryptoPrice(symbol).then((usdPrice) => {
+            console.log("UES ReS:::", usdPrice);
+            // setCryptoPrice(usdPrice);
+            setTokenDetails({
+              name: tokenName,
+              decimals: decimals,
+              symbol: symbol,
+              balance: balance,
+              price: usdPrice?.USD,
+            });
+          });
         } else {
-          setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+          setTokenDetails({
+            name: "",
+            decimals: "",
+            symbol: "",
+            balance: "",
+            price: "",
+          });
         }
       } catch (error) {
         console.error("Error fetching token details:", error);
-        setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+        setTokenDetails({
+          name: "",
+          decimals: "",
+          symbol: "",
+          balance: "",
+          price: "",
+        });
       }
     } else {
-      setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+      setTokenDetails({
+        name: "",
+        decimals: "",
+        symbol: "",
+        balance: "",
+        price: "",
+      });
     }
   };
 
   const debouncedTokenDetail = debounceAsync(tokenDetail, 3000);
+
+  const fetchCryptoPrice = async (symbol) => {
+    try {
+      const response = await fetch(
+        `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
+        {
+          method: "GET",
+          headers: {
+            authorization:
+              "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+      console.log("Crypto price data in USD Test:", data);
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching crypto price:", error);
+    }
+  };
 
   return (
     <Modal
