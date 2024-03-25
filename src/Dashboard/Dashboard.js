@@ -36,7 +36,7 @@ const Dashboard = () => {
       name: "Ether",
       balance: "0.00",
       decimals: "0",
-      price: "$1233.80",
+      price: "3547.41",
     },
   ]);
 

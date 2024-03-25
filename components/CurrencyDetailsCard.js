@@ -126,8 +126,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
             marginLeft: "20%",
           }}
         >
-          {item?.price}
-          {/* {cryptoPrice[item.symbol] ? cryptoPrice.USD : "$ 1265.878"} */}
+          ${item?.price}
         </Text>
       </View>
       {containerHeight === 170 && (
