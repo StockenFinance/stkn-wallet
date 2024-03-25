@@ -7,6 +7,8 @@ import { ethers } from "ethers";
 const CurrencyDetailsCard = ({ item, isLast }) => {
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
+  const [cryptoPrice, setCryptoPrice] = useState({});
+
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
@@ -27,6 +29,20 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
   function formatBalance(balance, decimals) {
     return ethers.formatUnits(balance, parseInt(decimals, 10));
   }
+
+  // Dynamically require the image based on item.symbol
+  const getImageSource = (symbol) => {
+    switch (symbol) {
+      case "ETH":
+        return require("../src/assets/images/ETH.png");
+      case "USDT":
+        return require("../src/assets/images/usdt.png");
+      // Add cases for other symbols as needed
+      default:
+        return require("../src/assets/images/ETH.png"); // Default image
+    }
+  };
+
   return (
     <TouchableOpacity onPress={handleContainerClick}>
       <View>
@@ -44,7 +60,8 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
                 justifyContent: "center",
               }}
             >
-              <Image source={require("../src/assets/images/ETH.png")} />
+              {/* <Image source={require("../src/assets/images/ETH.png")} /> */}
+              <Image source={getImageSource(item.symbol)} />
             </View>
 
             <View style={{ marginLeft: "8%", marginTop: "-12%" }}>
@@ -108,7 +125,10 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
             marginLeft: "20%",
           }}
         >
-          {item.price}
+          {/* {item.price} */}
+          {cryptoPrice[item.symbol] && cryptoPrice[item.symbol].USD
+            ? `$ ${cryptoPrice[item.symbol].USD}`
+            : "$ 1265.878"}
         </Text>
       </View>
       {containerHeight === 170 && (

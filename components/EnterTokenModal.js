@@ -23,7 +23,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   });
 
   const handleOverlayPress = (event) => {
-    if (event.target === event.currentTarget) {
+    if (event?.target === event?.currentTarget) {
       setTokenNumber("");
       modalValues(tokenDetails);
       setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
@@ -176,13 +176,26 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
             </TouchableOpacity>
 
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[
                   styles.doneButton,
                   isButtonDisabled && styles.disabledButton,
                 ]}
                 disabled={isButtonDisabled}
                 onPress={handleOverlayPress}
+              >
+                <Text style={styles.doneButtonText}>Import Token</Text>
+              </TouchableOpacity> */}
+              <TouchableOpacity
+                style={[
+                  styles.doneButton,
+                  isButtonDisabled && styles.disabledButton,
+                ]}
+                disabled={isButtonDisabled}
+                onPress={() => {
+                  handleOverlayPress();
+                  // Additional logic if needed
+                }}
               >
                 <Text style={styles.doneButtonText}>Import Token</Text>
               </TouchableOpacity>

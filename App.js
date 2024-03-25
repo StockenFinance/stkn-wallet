@@ -13,6 +13,7 @@ import {
 import BuyScreen from "./src/BuyScreen/BuyScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import BottomNavigator from "./src/TabNavigator";
+import SwapScreen from "./src/SwapScreen/SwapScreen";
 // import BottomTabNavigation from "./src/TabNavigator";
 
 // 1. Get projectId at https://cloud.walletconnect.com

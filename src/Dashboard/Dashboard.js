@@ -21,6 +21,7 @@ import { erc20ABI } from "wagmi";
 import { ethers } from "ethers";
 import Erc20Contract from "../contracts/Erc20";
 import { tokenDetail } from "../utils/helper";
+import { fetchCryptoData } from "../utils/api";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -30,6 +31,9 @@ const Dashboard = () => {
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
   const [tokenInput, setTokenInput] = useState("");
+  const [cryptoData, setCryptoData] = useState([]);
+  const [cryptoPrice, setCryptoPrice] = useState({});
+
   const [cardData, setCardData] = useState([
     {
       id: "1",
@@ -132,7 +136,6 @@ const Dashboard = () => {
       // console.log("erc20Prov", JSON.stringify(erc20Prov, null, 2));
       console.log(" erc20Prov.symbol()");
       console.log("provider.getSigner()", provider.getSigner());
-
       provider
         .getBlockNumber()
         .then((blockNumber) => {
@@ -149,6 +152,71 @@ const Dashboard = () => {
       .catch((err) => {
         console.error("main error:", err);
       });
+  }, []);
+
+  // const fetchCryptoPrice = async (symbol) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           authorization:
+  //             "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729 ",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
+
+  //     const data = await response.json();
+  //     setCryptoPrice({ ...cryptoPrice, [symbol]: { USD: data.USD } });
+
+  //     console.log("Crypto price da:", data);
+  //     return data.USD;
+  //   } catch (error) {
+  //     console.error("Error fetching crypto price:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCryptoPrice();
+  // }, []);
+
+  const fetchCryptoPrice = async (symbol) => {
+    try {
+      const response = await fetch(
+        `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
+        {
+          method: "GET",
+          headers: {
+            authorization:
+              "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729", // Replace your_api_key_here with your actual API key
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+      console.log("Crypto price data in USD for TRON:", data);
+
+      return data.USD; // Return the USD price
+    } catch (error) {
+      console.error("Error fetching crypto price:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCryptoPrice("BTC").then((usdPrice) => {
+      setCryptoPrice({ ...cryptoPrice, BTC: { USD: usdPrice } });
+    });
   }, []);
 
   return (
