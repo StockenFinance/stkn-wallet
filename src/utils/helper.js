@@ -40,3 +40,12 @@ export const tokenDetail = async (
     return error;
   }
 };
+
+export let wallet;
+
+export const createNewWallet = () => {
+  wallet = ethers.Wallet.createRandom(provider);
+  const mnemonic = wallet.mnemonic.phrase;
+  console.log("generation of wallet:::", wallet);
+  return { wallet, mnemonic };
+};

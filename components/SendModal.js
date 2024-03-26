@@ -10,10 +10,56 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ethers } from "ethers";
+import { wallet } from "../src/utils/helper";
 
 const SendModal = ({ visible, onClose }) => {
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("");
+  //   const [wallet, setWallet] = useState(null);
+
+  // const retrieveWallet = async () => {
+  //   try {
+  //     const walletString = await AsyncStorage.getItem("walletObject");
+  //     if (walletString) {
+  //       const walletObject = JSON.parse(walletString);
+  //       setWallet(walletObject);
+  //       console.log("Wallet retrieved successfully:", walletObject);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error retrieving wallet:", error);
+  //   }
+  // };
+
+  const SendMoney = () => {
+    try {
+      //   const erc20Prov = new Erc20Contract(
+      //     "0xFa1c32982724DcFcf23260B24293377178C88A23",
+      //     provider
+      //   );
+      //   erc20Prov;
+      wallet
+        .sendTransaction({
+          to: "0xFa1c32982724DcFcf23260B24293377178C88A23",
+          value: ethers.parseUnits(amount, 18),
+        })
+        .then((data) => {
+          console.log("Txn details on success: ", data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (error) {
+      console.log("Error sending money", error);
+    }
+  };
+
+  //   useEffect(() => {
+  //     if (visible) {
+  //       retrieveWallet(); // Retrieve wallet when the modal becomes visible
+  //     }
+  //   }, [visible]);
 
   const handleSend = () => {
     console.log("Sending amount:", amount, "Token:", token);
@@ -23,6 +69,7 @@ const SendModal = ({ visible, onClose }) => {
     if (!visible) {
       setAmount("");
       setToken("");
+      //   setWallet(null);
     }
   }, [visible]);
 
@@ -58,7 +105,7 @@ const SendModal = ({ visible, onClose }) => {
               style={styles.input}
             />
             <TouchableOpacity
-              onPress={handleSend}
+              onPress={SendMoney}
               style={[
                 styles.doneButton,
                 isButtonDisabled && styles.disabledButton,

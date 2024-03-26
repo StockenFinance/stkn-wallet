@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { styles } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createNewWallet, provider } from "../utils/helper";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -17,6 +18,9 @@ const storeWalletAddress = async (walletAddress, wallet) => {
       walletAddress.slice(0, 6) + walletAddress.slice(-6);
     await AsyncStorage.setItem("walletAddress", shortenedAddress);
     console.log("wallet address stored:::", walletAddress);
+
+    await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
+    console.log("wallet  stored:::", wallet);
   } catch (error) {
     console.error("Error storing wallet address:", error);
   }
@@ -25,12 +29,16 @@ const storeWalletAddress = async (walletAddress, wallet) => {
 const CreateWallet = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
+  const [walletStore, setWalletStore] = useState("");
 
   const createWallet = () => {
     setLoading(true);
-    const wallet = ethers.Wallet.createRandom();
-    const mnemonic = wallet.mnemonic.phrase;
+    const { wallet, mnemonic } = createNewWallet();
     const phrase = ethers.Wallet.fromPhrase(mnemonic);
+    // wallet.sendTransaction({
+    //   to: "0xFa1c32982724DcFcf23260B24293377178C88A23",
+    //   value: ethers.parseUnits(item.balance, item.decimals),
+    // });
 
     console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
     console.log("Phrase wallet: ", phrase?.privateKey);
@@ -41,6 +49,7 @@ const CreateWallet = ({ navigation }) => {
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
+    setWalletStore(wallet);
     setTimeout(() => {
       navigation.navigate("BackupPhrase", { mnemonic });
       setLoading(false);
@@ -48,8 +57,8 @@ const CreateWallet = ({ navigation }) => {
   };
 
   useEffect(() => {
-    storeWalletAddress(generatedWalletAddress);
-  }, [generatedWalletAddress]);
+    storeWalletAddress(generatedWalletAddress, walletStore);
+  }, [generatedWalletAddress, walletStore]);
 
   return (
     <View style={styles.container}>

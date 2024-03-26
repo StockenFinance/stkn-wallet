@@ -49,6 +49,7 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
   };
 
   console.log("item:::", item);
+
   return (
     <TouchableOpacity onPress={handleContainerClick}>
       <View>
