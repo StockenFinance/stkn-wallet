@@ -16,13 +16,13 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
           <View style={styles.allNetworksView}>
             <View style={styles.coinImageContainer}>
               <Image
-                source={require("../assets/images/ethereum.png")}
+                source={require("../../assets/images/ethereum.png")}
                 style={styles.coinImage}
               />
             </View>
             <Text style={styles.allNetworksText}>Ethereum</Text>
             <Image
-              source={require("../assets/images/dropdown.png")}
+              source={require("../../assets/images/dropdown.png")}
               style={styles.dropdownImage}
             />
           </View>
@@ -38,7 +38,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
             >
               <View style={[styles.coinImageContainer, { width: 40 }]}>
                 <Image
-                  source={require("../assets/images/ethereum.png")}
+                  source={require("../../assets/images/ethereum.png")}
                   style={styles.coinImage}
                 />
               </View>
@@ -51,7 +51,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
                 ETH
               </Text>
               <Image
-                source={require("../assets/images/dropdown.png")}
+                source={require("../../assets/images/dropdown.png")}
                 style={[
                   styles.dropdownImage,
                   { marginLeft: "-1%", marginTop: "4%" },
@@ -80,7 +80,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
             <View style={styles.divider} />
             <View style={styles.swapImageContainer}>
               <Image
-                source={require("../assets/images/swap.png")}
+                source={require("../../assets/images/swap.png")}
                 style={styles.image}
                 resizeMode="contain"
               />
@@ -104,7 +104,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
                 ]}
               >
                 <Image
-                  source={require("../assets/images/usdt.png")}
+                  source={require("../../assets/images/usdt.png")}
                   style={{ width: 24, height: 20 }}
                 />
               </View>
@@ -117,7 +117,7 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
                 USDT
               </Text>
               <Image
-                source={require("../assets/images/dropdown.png")}
+                source={require("../../assets/images/dropdown.png")}
                 style={[
                   styles.dropdownImage,
                   { marginLeft: "-1%", marginTop: "4%" },

@@ -12,7 +12,7 @@ const Welcome = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.imageTextContainer}>
         <Image
-          source={require("../assets/images/welcome.png")}
+          source={require("../../assets/images/welcome.png")}
           style={styles.image}
         />
         <Text style={styles.welcomeText}> Welcome</Text>

@@ -27,7 +27,7 @@ const BackupPhrase = ({ navigation, route }) => {
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={require("../assets/images/backIcon.png")}
+            source={require("../../assets/images/backIcon.png")}
             style={styles.backIcon}
           />
         </TouchableOpacity>
@@ -43,7 +43,7 @@ const BackupPhrase = ({ navigation, route }) => {
       </View>
       <View style={styles.securityMessageContainer}>
         <Image
-          source={require("../assets/images/alert.png")}
+          source={require("../../assets/images/alert.png")}
           style={styles.alertImage}
         />
         <Text style={styles.securityText}>

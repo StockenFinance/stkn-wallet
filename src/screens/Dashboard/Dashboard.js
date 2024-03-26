@@ -8,16 +8,16 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
-import CustomModal from "../../components/customModal";
+import CustomModal from "../../../components/customModal";
 import { styles } from "./styles";
-import { currencyData } from "../../components/coinDetailsData";
-import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
-import EnterTokenModal from "../../components/EnterTokenModal";
-import AllNetworksModal from "../../components/AllNetworksModal";
+import { currencyData } from "../../../components/coinDetailsData";
+import CurrencyDetailsCard from "../../../components/CurrencyDetailsCard";
+import EnterTokenModal from "../../../components/EnterTokenModal";
+import AllNetworksModal from "../../../components/AllNetworksModal";
 import { ethers } from "ethers";
-import Erc20Contract from "../contracts/Erc20";
-import { tokenDetail } from "../utils/helper";
-import { fetchCryptoData } from "../utils/api";
+import Erc20Contract from "../../contracts/Erc20";
+import { tokenDetail } from "../../utils/helper";
+import { fetchCryptoData } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Dashboard = () => {
@@ -182,7 +182,7 @@ const Dashboard = () => {
       <View style={styles.headerContainer}>
         <View style={styles.allNetworksView}>
           <Image
-            source={require("../assets/images/allNetwork.png")}
+            source={require("../../assets/images/allNetwork.png")}
             style={styles.allNetworksImage}
           />
           <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
@@ -190,7 +190,7 @@ const Dashboard = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
             <Image
-              source={require("../assets/images/dropdown.png")}
+              source={require("../../assets/images/dropdown.png")}
               style={styles.dropdownImage}
             />
             <AllNetworksModal
@@ -201,7 +201,7 @@ const Dashboard = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.timerImage}>
-          <Image source={require("../assets/images/timer.png")} />
+          <Image source={require("../../assets/images/timer.png")} />
         </View>
       </View>
       <View>
@@ -225,13 +225,13 @@ const Dashboard = () => {
           </View>
 
           <Image
-            source={require("../assets/images/walletImage.png")}
+            source={require("../../assets/images/walletImage.png")}
             style={styles.walletImage}
           />
 
           <Text style={styles.receiveText}>Receive</Text>
           <Image
-            source={require("../assets/images/receiveScanner.png")}
+            source={require("../../assets/images/receiveScanner.png")}
             style={{ position: "absolute", top: 27, right: 18 }}
           />
           <View style={styles.walletBalanceContainer}>
@@ -242,7 +242,7 @@ const Dashboard = () => {
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.modalIconContainer}>
                 <Image
-                  source={require("../assets/images/modalDot.png")}
+                  source={require("../../assets/images/modalDot.png")}
                   style={styles.modalDotImage}
                 />
 
@@ -355,7 +355,7 @@ const Dashboard = () => {
         // onPress={handleFetchData}
       >
         <Image
-          source={require("../assets/images/plus.png")}
+          source={require("../../assets/images/plus.png")}
           style={styles.plusImage}
         />
       </TouchableOpacity>

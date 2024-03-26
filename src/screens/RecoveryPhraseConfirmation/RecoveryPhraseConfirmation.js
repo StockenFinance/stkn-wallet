@@ -6,7 +6,7 @@ const RecoveryPhraseConfirmation = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.imageTextContainer}>
         <Image
-          source={require("../assets/images/confirmationImage.png")}
+          source={require("../../assets/images/confirmationImage.png")}
           style={styles.image}
         />
         <Text style={styles.welcomeText}>

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import AppNavigator from "./src/AppNavigator";
-import Dashboard from "./src/Dashboard/Dashboard";
+import Dashboard from "./src/screens/Dashboard/Dashboard";
 import "@walletconnect/react-native-compat";
 import { WagmiConfig } from "wagmi";
 import { mainnet, polygon, arbitrum } from "viem/chains";
@@ -10,10 +10,10 @@ import {
   defaultWagmiConfig,
   Web3Modal,
 } from "@web3modal/wagmi-react-native";
-import BuyScreen from "./src/BuyScreen/BuyScreen";
+import BuyScreen from "./src/screens/BuyScreen/BuyScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import BottomNavigator from "./src/TabNavigator";
-import SwapScreen from "./src/SwapScreen/SwapScreen";
+import SwapScreen from "./src/screens/SwapScreen/SwapScreen";
 // import BottomTabNavigation from "./src/TabNavigator";
 
 // 1. Get projectId at https://cloud.walletconnect.com

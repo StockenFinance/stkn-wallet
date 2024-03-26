@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { styles } from "../src/Dashboard/styles";
+import { styles } from "../src/screens/Dashboard/styles";
 import { fetchDynamicDetailsOfToken, provider } from "../src/utils/helper";
 import { ethers } from "ethers";
 import SendModal from "./SendModal";

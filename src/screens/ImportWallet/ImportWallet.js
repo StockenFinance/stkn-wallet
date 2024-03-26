@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
-import CustomTextInput from "../../components/CustomText";
+import CustomTextInput from "../../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Clipboard from "@react-native-clipboard/clipboard";
 // import DocumentScanner from "react-native-document-scanner";
@@ -38,14 +38,14 @@ const ImportWallet = ({ navigation }) => {
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={require("../assets/images/backIcon.png")}
+            source={require("../../assets/images/backIcon.png")}
             style={styles.backIcon}
           />
         </TouchableOpacity>
 
         <Text style={styles.walletText}>Import Wallet</Text>
         <Image
-          source={require("../assets/images/scanner.png")}
+          source={require("../../assets/images/scanner.png")}
           style={styles.scanIcon}
         />
       </View>
@@ -69,7 +69,7 @@ const ImportWallet = ({ navigation }) => {
           />
           <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
             <Image
-              source={require("../assets/images/paste.png")}
+              source={require("../../assets/images/paste.png")}
               style={styles.copyPasteImage}
             />
           </TouchableOpacity>

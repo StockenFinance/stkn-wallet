@@ -155,7 +155,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={require("../assets/images/backIcon.png")}
+            source={require("../../assets/images/backIcon.png")}
             style={styles.backIcon}
           />
         </TouchableOpacity>
