@@ -18,17 +18,16 @@ import { ethers } from "ethers";
 import Erc20Contract from "../contracts/Erc20";
 import { tokenDetail } from "../utils/helper";
 import { fetchCryptoData } from "../utils/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Dashboard = () => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
-  const [apiResponse, setApiResponse] = useState([]);
+  const [walletAddress, setWalletAddress] = useState("");
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
   const [tokenInput, setTokenInput] = useState("");
-  const [cryptoData, setCryptoData] = useState([]);
-  const [cryptoPrice, setCryptoPrice] = useState({});
 
   const [cardData, setCardData] = useState([
     {
@@ -40,6 +39,27 @@ const Dashboard = () => {
     },
   ]);
 
+  const retrieveWalletAddress = async () => {
+    try {
+      const walletAddress = await AsyncStorage.getItem("walletAddress");
+      console.log("wallet address fetched::", walletAddress);
+      return walletAddress;
+    } catch (error) {
+      console.error("Error retrieving wallet address:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    retrieveWalletAddress().then((address) => {
+      if (address) {
+        setWalletAddress(address);
+      } else {
+        console.log("Wallet address not found.");
+      }
+    });
+  }, []);
+
   const addTokenBtn = (value) => {
     toggleEnterTokenModal();
     if (
@@ -48,7 +68,7 @@ const Dashboard = () => {
       value.symbol.trim() === ""
     ) {
       alert("Value contains empty fields. Not adding to array.");
-      // alert("value is alrady exit we can not allow to import same value");
+      // alert("value is alrady exist we can not allow to import same value");
       return;
     }
 
@@ -144,71 +164,6 @@ const Dashboard = () => {
       });
   }, []);
 
-  // const fetchCryptoPrice = async (symbol) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           authorization:
-  //             "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729 ",
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch data");
-  //     }
-
-  //     const data = await response.json();
-  //     setCryptoPrice({ ...cryptoPrice, [symbol]: { USD: data.USD } });
-
-  //     console.log("Crypto price da:", data);
-  //     return data.USD;
-  //   } catch (error) {
-  //     console.error("Error fetching crypto price:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchCryptoPrice();
-  // }, []);
-
-  // const fetchCryptoPrice = async (symbol) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           authorization:
-  //             "Apikey e57b6c192b0fbff2e8d9b70d69c431241cafb59da93761a188ab02bd1591c729",
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch data");
-  //     }
-
-  //     const data = await response.json();
-  //     console.log("Crypto price data in USD Test:", data);
-
-  //     return data.USD;
-  //   } catch (error) {
-  //     console.error("Error fetching crypto price:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchCryptoPrice("BTC").then((usdPrice) => {
-  //     setCryptoPrice({ ...cryptoPrice, BTC: { USD: usdPrice } });
-  //   });
-  // }, []);
-
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -252,7 +207,7 @@ const Dashboard = () => {
           <View style={styles.walletContentContainer}>
             <View>
               <Text style={styles.walletName}>Wallet</Text>
-              <Text style={styles.walletCode}>0Wefsxc584sfg </Text>
+              <Text style={styles.walletCode}>{walletAddress} </Text>
             </View>
           </View>
 

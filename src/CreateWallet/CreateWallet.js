@@ -6,12 +6,24 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { styles } from "./style";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const storeWalletAddress = async (walletAddress) => {
+  try {
+    const shortenedAddress =
+      walletAddress.slice(0, 6) + walletAddress.slice(-6);
+    await AsyncStorage.setItem("walletAddress", shortenedAddress);
+  } catch (error) {
+    console.error("Error storing wallet address:", error);
+  }
+};
 
 const CreateWallet = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
 
   const createWallet = () => {
     setLoading(true);
@@ -25,11 +37,18 @@ const CreateWallet = ({ navigation }) => {
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
     console.log("Generated Mnemonic:", mnemonic);
+    const shortenedAddress =
+      wallet.address.slice(0, 6) + wallet.address.slice(-6);
+    setGeneratedWalletAddress(shortenedAddress);
     setTimeout(() => {
       navigation.navigate("BackupPhrase", { mnemonic });
       setLoading(false);
     }, 2000);
   };
+
+  useEffect(() => {
+    storeWalletAddress(generatedWalletAddress);
+  }, [generatedWalletAddress]);
 
   return (
     <View style={styles.container}>
