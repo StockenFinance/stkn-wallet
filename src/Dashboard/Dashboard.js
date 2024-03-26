@@ -28,6 +28,7 @@ const Dashboard = () => {
   const [isTokenDetailsModalVisible, setIsTokenDetailsModalVisible] =
     useState(false);
   const [tokenInput, setTokenInput] = useState("");
+  const [totalBalance, setTotalBalance] = useState(0);
 
   const [cardData, setCardData] = useState([
     {
@@ -58,7 +59,16 @@ const Dashboard = () => {
         console.log("Wallet address not found.");
       }
     });
+    calculateTotalBalance();
   }, []);
+
+  const calculateTotalBalance = () => {
+    let sum = 0;
+    cardData.forEach((item) => {
+      sum += parseFloat(item.price);
+    });
+    setTotalBalance(sum);
+  };
 
   const addTokenBtn = (value) => {
     toggleEnterTokenModal();
@@ -69,6 +79,9 @@ const Dashboard = () => {
     ) {
       alert("Value contains empty fields. Not adding to array.");
       // alert("value is alrady exist we can not allow to import same value");
+      // setCardData((prevData) => [...prevData, value]);
+
+      calculateTotalBalance(); // Recalculate total balance after adding a new token
       return;
     }
 
@@ -224,7 +237,7 @@ const Dashboard = () => {
           <View style={styles.walletBalanceContainer}>
             <View>
               <Text style={styles.yourBalanceText}>Your balance</Text>
-              <Text style={styles.balanceText}>USD 78,092.01</Text>
+              <Text style={styles.balanceText}>${totalBalance.toFixed(2)}</Text>
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.modalIconContainer}>

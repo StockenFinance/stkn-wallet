@@ -3,14 +3,19 @@ import React, { useEffect, useState } from "react";
 import { styles } from "../src/Dashboard/styles";
 import { fetchDynamicDetailsOfToken, provider } from "../src/utils/helper";
 import { ethers } from "ethers";
+import SendModal from "./SendModal";
 
 const CurrencyDetailsCard = ({ item, isLast }) => {
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
-  const [cryptoPrice, setCryptoPrice] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
+  };
+
+  const handleSendButtonClick = () => {
+    setShowModal(true);
   };
 
   const getUserBalance = async (userAddress) => {
@@ -140,129 +145,141 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
             }}
           >
             <View>
-              <View
-                style={{
-                  width: 35,
-                  height: 32,
-                  borderWidth: 1,
-                  borderColor: "#808BA0",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 11,
-                  marginTop: "20%",
-                }}
-              >
-                <Image
-                  source={require("../src/assets/images/send.png")}
-                  style={{}}
-                />
-              </View>
+              <TouchableOpacity onPress={handleSendButtonClick}>
+                <View
+                  style={{
+                    width: 35,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: "#808BA0",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 11,
+                    marginTop: "20%",
+                  }}
+                >
+                  <Image
+                    source={require("../src/assets/images/send.png")}
+                    style={{}}
+                  />
+                </View>
 
-              <Text
-                style={{
-                  color: "#344567",
-                  fontSize: 8,
-                  fontWeight: "600",
-                  alignSelf: "center",
-                }}
-              >
-                Send
-              </Text>
+                <Text
+                  style={{
+                    color: "#344567",
+                    fontSize: 8,
+                    fontWeight: "600",
+                    alignSelf: "center",
+                  }}
+                >
+                  Send
+                </Text>
+              </TouchableOpacity>
+              <SendModal
+                visible={showModal}
+                onClose={() => setShowModal(false)}
+              />
             </View>
 
             <View>
-              <View
-                style={{
-                  width: 35,
-                  height: 32,
-                  borderWidth: 1,
-                  borderColor: "#808BA0",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 11,
-                  marginTop: "20%",
-                }}
-              >
-                <Image
-                  source={require("../src/assets/images/send.png")}
-                  style={{}}
-                />
-              </View>
+              <TouchableOpacity>
+                <View
+                  style={{
+                    width: 35,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: "#808BA0",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 11,
+                    marginTop: "20%",
+                  }}
+                >
+                  <Image
+                    source={require("../src/assets/images/send.png")}
+                    style={{}}
+                  />
+                </View>
 
-              <Text
-                style={{
-                  color: "#344567",
-                  fontSize: 8,
-                  fontWeight: "600",
-                  alignSelf: "center",
-                }}
-              >
-                Receive
-              </Text>
+                <Text
+                  style={{
+                    color: "#344567",
+                    fontSize: 8,
+                    fontWeight: "600",
+                    alignSelf: "center",
+                  }}
+                >
+                  Receive
+                </Text>
+              </TouchableOpacity>
             </View>
             <View>
-              <View
-                style={{
-                  width: 35,
-                  height: 32,
-                  borderWidth: 1,
-                  borderColor: "#808BA0",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 11,
-                  marginTop: "20%",
-                }}
-              >
-                <Image
-                  source={require("../src/assets/images/send.png")}
-                  style={{}}
-                />
-              </View>
+              <TouchableOpacity>
+                <View
+                  style={{
+                    width: 35,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: "#808BA0",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 11,
+                    marginTop: "20%",
+                  }}
+                >
+                  <Image
+                    source={require("../src/assets/images/send.png")}
+                    style={{}}
+                  />
+                </View>
 
-              <Text
-                style={{
-                  color: "#344567",
-                  fontSize: 8,
-                  fontWeight: "600",
-                  alignSelf: "center",
-                }}
-              >
-                Swap
-              </Text>
+                <Text
+                  style={{
+                    color: "#344567",
+                    fontSize: 8,
+                    fontWeight: "600",
+                    alignSelf: "center",
+                  }}
+                >
+                  Swap
+                </Text>
+              </TouchableOpacity>
             </View>
             <View>
-              <View
-                style={{
-                  width: 35,
-                  height: 32,
-                  borderWidth: 1,
-                  borderColor: "#808BA0",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 11,
-                  marginTop: "20%",
-                }}
-              >
-                <Image
-                  source={require("../src/assets/images/Chart.png")}
-                  style={{ width: 18, height: 18 }}
-                />
-              </View>
+              <TouchableOpacity>
+                <View
+                  style={{
+                    width: 35,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: "#808BA0",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 11,
+                    marginTop: "20%",
+                  }}
+                >
+                  <Image
+                    source={require("../src/assets/images/Chart.png")}
+                    style={{ width: 18, height: 18 }}
+                  />
+                </View>
 
-              <Text
-                style={{
-                  color: "#344567",
-                  fontSize: 8,
-                  fontWeight: "600",
-                  alignSelf: "center",
-                }}
-              >
-                Chart
-              </Text>
+                <Text
+                  style={{
+                    color: "#344567",
+                    fontSize: 8,
+                    fontWeight: "600",
+                    alignSelf: "center",
+                  }}
+                >
+                  Chart
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

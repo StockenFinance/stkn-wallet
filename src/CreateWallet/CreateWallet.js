@@ -11,11 +11,12 @@ import { ethers } from "ethers";
 import { styles } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const storeWalletAddress = async (walletAddress) => {
+const storeWalletAddress = async (walletAddress, wallet) => {
   try {
     const shortenedAddress =
       walletAddress.slice(0, 6) + walletAddress.slice(-6);
     await AsyncStorage.setItem("walletAddress", shortenedAddress);
+    console.log("wallet address stored:::", walletAddress);
   } catch (error) {
     console.error("Error storing wallet address:", error);
   }

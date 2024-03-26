@@ -140,6 +140,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     marginTop: "7%",
+    // overflow: "hidden",
   },
   coinNameText: {
     fontSize: 15,

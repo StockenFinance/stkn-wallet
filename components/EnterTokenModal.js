@@ -232,16 +232,6 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
             </TouchableOpacity>
 
             <View style={styles.buttonContainer}>
-              {/* <TouchableOpacity
-                style={[
-                  styles.doneButton,
-                  isButtonDisabled && styles.disabledButton,
-                ]}
-                disabled={isButtonDisabled}
-                onPress={handleOverlayPress}
-              >
-                <Text style={styles.doneButtonText}>Import Token</Text>
-              </TouchableOpacity> */}
               <TouchableOpacity
                 style={[
                   styles.doneButton,
@@ -250,7 +240,6 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                 disabled={isButtonDisabled}
                 onPress={() => {
                   handleOverlayPress();
-                  // Additional logic if needed
                 }}
               >
                 <Text style={styles.doneButtonText}>Import Token</Text>
