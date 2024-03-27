@@ -69,11 +69,12 @@ const Welcome = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.getStartedContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("CreateWallet")}>
-            <Text style={styles.getStartedText}>Get Started</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CreateWallet")}
+          style={styles.getStartedContainer}
+        >
+          <Text style={styles.getStartedText}>Get Started</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
