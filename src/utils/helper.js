@@ -2,7 +2,8 @@ import { ethers } from "ethers";
 import Erc20Contract from "../contracts/Erc20";
 
 const providerInstance = new ethers.JsonRpcProvider(
-  "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+  // "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+  "https://sepolia.infura.io/v3/60a31a9e69a940f98d0935f01c122d4e"
 );
 export const provider = providerInstance;
 export const fetchDynamicDetailsOfToken = async (tokenAddress) => {
@@ -48,4 +49,9 @@ export const createNewWallet = () => {
   const mnemonic = wallet.mnemonic.phrase;
   console.log("generation of wallet:::", wallet);
   return { wallet, mnemonic };
+};
+
+export const erc20Instance = (tokenAddress) => {
+  const erc20Prov = new Erc20Contract(tokenAddress, provider);
+  return erc20Prov;
 };

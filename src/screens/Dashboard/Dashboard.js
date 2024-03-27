@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
-import CustomModal from "../../../components/customModal";
+import CustomModal from "../../components/customModal";
 import { styles } from "./styles";
-import { currencyData } from "../../../components/coinDetailsData";
-import CurrencyDetailsCard from "../../../components/CurrencyDetailsCard";
-import EnterTokenModal from "../../../components/EnterTokenModal";
-import AllNetworksModal from "../../../components/AllNetworksModal";
+import { currencyData } from "../../components/coinDetailsData";
+import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
+import EnterTokenModal from "../../components/EnterTokenModal";
+import AllNetworksModal from "../../components/AllNetworksModal";
 import { ethers } from "ethers";
 import Erc20Contract from "../../contracts/Erc20";
 import { tokenDetail } from "../../utils/helper";

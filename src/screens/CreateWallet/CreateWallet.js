@@ -35,10 +35,6 @@ const CreateWallet = ({ navigation }) => {
     setLoading(true);
     const { wallet, mnemonic } = createNewWallet();
     const phrase = ethers.Wallet.fromPhrase(mnemonic);
-    // wallet.sendTransaction({
-    //   to: "0xFa1c32982724DcFcf23260B24293377178C88A23",
-    //   value: ethers.parseUnits(item.balance, item.decimals),
-    // });
 
     console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
     console.log("Phrase wallet: ", phrase?.privateKey);

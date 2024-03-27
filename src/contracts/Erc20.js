@@ -26,6 +26,9 @@ class Erc20Contract {
   approve(spender, value) {
     return this.contact.approve(spender, value);
   }
+  transfer(to, value) {
+    return this.contact.transfer(to, value);
+  }
 }
 
 export default Erc20Contract;
