@@ -44,9 +44,9 @@ createWeb3Modal({
 const App = () => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      {/* <AppNavigator /> */}
+      <AppNavigator />
       {/* <SwapScreen /> */}
-      <Dashboard />
+      {/* <Dashboard /> */}
     </WagmiConfig>
   );
 };
