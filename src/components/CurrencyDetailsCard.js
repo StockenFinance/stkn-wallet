@@ -5,7 +5,7 @@ import { fetchDynamicDetailsOfToken, provider } from "../utils/helper";
 import { ethers } from "ethers";
 import SendModal from "./SendModal";
 
-const CurrencyDetailsCard = ({ item, isLast }) => {
+const CurrencyDetailsCard = ({ item }) => {
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -42,9 +42,8 @@ const CurrencyDetailsCard = ({ item, isLast }) => {
         return require("../assets/images/ETH.png");
       case "USDT":
         return require("../assets/images/usdt.png");
-      // Add cases for other symbols as needed
       default:
-        return require("../assets/images/ETH.png"); // Default image
+        return require("../assets/images/ETH.png");
     }
   };
 

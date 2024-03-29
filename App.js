@@ -10,6 +10,7 @@ import {
   defaultWagmiConfig,
   Web3Modal,
 } from "@web3modal/wagmi-react-native";
+import SwapScreen from "./src/screens/SwapScreen/SwapScreen";
 
 // import BottomTabNavigation from "./src/TabNavigator";
 
@@ -43,11 +44,9 @@ createWeb3Modal({
 const App = () => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      {/* <NavigationContainer>
-        <BottomNavigator />
-      </NavigationContainer> */}
-      <AppNavigator />
-      {/* <Dashboard /> */}
+      {/* <AppNavigator /> */}
+      {/* <SwapScreen /> */}
+      <Dashboard />
     </WagmiConfig>
   );
 };

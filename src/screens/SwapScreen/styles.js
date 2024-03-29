@@ -83,12 +83,21 @@ export const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   input: {
+    width: "80%",
     height: 50,
     fontSize: 23,
     fontWeight: "400",
     paddingHorizontal: 8,
     marginTop: "3%",
     color: "#253452",
+  },
+  usdPrice: {
+    top: "-60%",
+    left: "82%",
+    fontSize: 16,
+    fontWeight: "400",
+    color: "#253452",
+    textAlign: "center",
   },
   amountRangeView: {
     flexDirection: "row",

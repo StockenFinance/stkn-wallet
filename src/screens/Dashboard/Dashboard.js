@@ -205,12 +205,6 @@ const Dashboard = () => {
         </View>
       </View>
       <View>
-        {/* <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-        > */}
         <LinearGradient
           colors={["#F19220", "#BE6800"]}
           start={{ x: -0.2, y: 0.1 }}
@@ -255,90 +249,6 @@ const Dashboard = () => {
             </TouchableOpacity>
           </View>
         </LinearGradient>
-        {/* <LinearGradient
-            colors={["#F19220", "#BE6800"]}
-            start={{ x: -0.2, y: 0.1 }}
-            end={{ x: 1, y: 0 }}
-            style={[styles.wallet, { borderRadius: 10, overflow: "hidden" }]}
-          >
-            <View style={styles.walletContentContainer}>
-              <View>
-                <Text style={styles.walletName}>Wallet 2</Text>
-                <Text style={styles.walletCode}>0Wefsxc584sfg </Text>
-              </View>
-            </View>
-
-            <Image
-              source={require("../assets/images/walletImage.png")}
-              style={styles.walletImage}
-            />
-
-            <Text style={styles.receiveText}>Receive</Text>
-            <Image
-              source={require("../assets/images/receiveScanner.png")}
-              style={{ position: "absolute", top: 27, right: 18 }}
-            />
-            <View style={styles.walletBalanceContainer}>
-              <View>
-                <Text style={styles.yourBalanceText}>Your balance</Text>
-                <Text style={styles.balanceText}>USD 78,071.01</Text>
-              </View>
-              <View style={styles.modalIconContainer}>
-                <Image
-                  source={require("../assets/images/modalDot.png")}
-                  style={styles.modalDotImage}
-                />
-              </View>
-            </View>
-          </LinearGradient> */}
-        {/* <LinearGradient
-            colors={["#F19220", "#BE6800"]}
-            start={{ x: -0.2, y: 0.1 }}
-            end={{ x: 1, y: 0 }}
-            style={[styles.wallet, { borderRadius: 10, marginRight: 10 }]}
-          >
-            <View style={styles.walletContentContainer}>
-              <View>
-                <Text style={styles.walletName}>Wallet 3</Text>
-                <Text style={styles.walletCode}>0Wesfsxc584sfg </Text>
-              </View>
-            </View>
-
-            <Image
-              source={require("../assets/images/walletImage.png")}
-              style={styles.walletImage}
-            />
-
-            <Text style={styles.receiveText}>Receive</Text>
-            <Image
-              source={require("../assets/images/receiveScanner.png")}
-              style={{ position: "absolute", top: 27, right: 18 }}
-            />
-            <View style={styles.walletBalanceContainer}>
-              <View>
-                <Text style={styles.yourBalanceText}>Your balance</Text>
-                <Text style={styles.balanceText}>USD 78,071.01</Text>
-              </View>
-              <View style={styles.modalIconContainer}>
-                <Image
-                  source={require("../assets/images/modalDot.png")}
-                  style={styles.modalDotImage}
-                />
-              </View>
-            </View>
-          </LinearGradient> */}
-        {/* </ScrollView> */}
-        {/* <View style={styles.dotContainer}>
-          {[...Array(3)].map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.dot,
-                index === activeDotIndex ? styles.activeDot : null,
-              ]}
-            />
-          ))}
-        </View> */}
       </View>
       <View style={{ flex: 0.8 }}>
         <FlatList

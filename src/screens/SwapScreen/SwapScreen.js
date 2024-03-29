@@ -5,27 +5,121 @@ import {
   Image,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { styles } from "./styles";
+import ChainSelectionModal from "../../components/ChainSelectionModal";
+import axios from "axios";
 
-const SwapScreen = ({ placeholder, onChangeText, value }) => {
+// import { TouchableOpacity } from "react-native-gesture-handler";
+
+const SwapScreen = ({}) => {
+  const [chainSelectionModalVisible, setChainSelectionModalVisible] =
+    useState(false);
+  const [selectedChain, setSelectedChain] = useState(null);
+
+  const [inputValue, setInputValue] = useState({
+    to: "",
+    from: "",
+  });
+
+  const handleChainSelect = (chain) => {
+    setSelectedChain(chain);
+    setChainSelectionModalVisible(false);
+  };
+
+  const handleChangeText = (text) => {
+    setInputValue((prevState) => ({
+      ...prevState,
+      from: text,
+    }));
+    httpCall(text);
+  };
+
+  // function httpCall(text) {
+  //   const url = "https://api.1inch.dev/swap/v6.0/1/quote";
+  //   const token = "BAJDKr3ufrEEEoqXT7HFJoNCUss9AIX9"; // Adjust the authorization token as needed
+
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open("GET", url, true);
+  //   xhr.setRequestHeader("Authorization", "Bearer " + token);
+
+  //   xhr.onload = function () {
+  //     if (xhr.readyState === 4) {
+  //       if (xhr.status === 200) {
+  //         console.log("api response", JSON.parse(xhr.responseText));
+  //         const data = JSON.parse(xhr.responseText);
+  //         // Process the data here
+  //       } else {
+  //         console.log("Error fetching data:", xhr.statusText);
+  //       }
+  //     }
+  //   };
+
+  //   xhr.onerror = function () {
+  //     console.log("Network error occurred");
+  //   };
+
+  //   xhr.send();
+  // }
+
+  async function httpCall(text) {
+    const url = "https://api.1inch.dev/swap/v6.0/1/quote";
+
+    const config = {
+      headers: {
+        Authorization: "Bearer BAJDKr3ufrEEEoqXT7HFJoNCUss9AIX9",
+      },
+      params: {
+        src: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        dst: "0x111111111117dc0aa78b770fa6a738034120c302",
+        amount: "5",
+      },
+    };
+
+    try {
+      const response = await axios.get(url, config);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.headerContainer}>
           <View style={styles.allNetworksView}>
-            <View style={styles.coinImageContainer}>
+            <View>
               <Image
-                source={require("../../assets/images/ethereum.png")}
-                style={styles.coinImage}
+                source={require("../../assets/images/allNetwork.png")}
+                style={styles.allNetworksImage}
               />
             </View>
-            <Text style={styles.allNetworksText}>Ethereum</Text>
-            <Image
-              source={require("../../assets/images/dropdown.png")}
-              style={styles.dropdownImage}
-            />
+            <TouchableOpacity
+              onPress={() => setChainSelectionModalVisible(true)}
+            >
+              <Text style={styles.allNetworksText}>
+                {" "}
+                {selectedChain ? selectedChain : "All Networks"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setChainSelectionModalVisible(true)}
+            >
+              <Image
+                source={require("../../assets/images/dropdown.png")}
+                style={styles.dropdownImage}
+              />
+              <ChainSelectionModal
+                transparent={true}
+                isVisible={chainSelectionModalVisible}
+                onClose={() => setChainSelectionModalVisible(false)}
+                onSelect={handleChainSelect}
+                value={selectedChain}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.parentView}>
@@ -64,13 +158,13 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
-              caretColor="red"
               placeholderTextColor={"grey"}
-              placeholder={placeholder}
-              onChangeText={onChangeText}
-              value={value}
+              placeholder={"0.00"}
+              onChangeText={(text) => handleChangeText(text)}
+              value={inputValue.from}
               style={styles.input}
             />
+            <Text style={styles.usdPrice}>$0.00</Text>
           </View>
           <View style={styles.amountRangeView}>
             <Text style={styles.amountRangeText}>MIN</Text>
@@ -128,13 +222,14 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
-              caretColor="red"
               placeholderTextColor={"grey"}
-              placeholder={placeholder}
-              onChangeText={onChangeText}
-              value={value}
+              placeholder={"0.00"}
+              // onChangeText={onChangeText}
+              value={inputValue.to}
               style={styles.input}
+              editable={false}
             />
+            <Text style={styles.usdPrice}>$0.00</Text>
           </View>
           <View style={styles.currencyConvertView}>
             <Text style={styles.currencyConverterText}>
@@ -174,9 +269,9 @@ const SwapScreen = ({ placeholder, onChangeText, value }) => {
             <Text style={styles.englishText}>Buy ETH</Text>
           </View>
         </View> */}
-        <View style={styles.importButton}>
+        <TouchableOpacity style={styles.importButton}>
           <Text style={styles.importText}>Confirm</Text>
-        </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
