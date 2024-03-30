@@ -165,12 +165,12 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
       <View style={styles.recoveryPharseTextContainer}>
         <Text style={styles.recoveryPhraseText}>
           {" "}
-          Confirm your Recovery Phrase
+          Confirm your recovery phrase
         </Text>
 
         <Text style={styles.subText}>
-          To be sure you backed up your recovery phrase correctly, please enter
-          its words in the fields below in the right order
+          To be sure you backed up your recovery phrase correctly, please, enter
+          its words in the fields below in the right order.
         </Text>
       </View>
 

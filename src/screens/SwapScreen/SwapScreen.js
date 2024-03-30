@@ -11,13 +11,15 @@ import React, { useState } from "react";
 import { styles } from "./styles";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
 import axios from "axios";
-
-// import { TouchableOpacity } from "react-native-gesture-handler";
+import SwapCurrencyModal from "../../components/SwapCurrencyModal";
 
 const SwapScreen = ({}) => {
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
   const [selectedChain, setSelectedChain] = useState(null);
+  const [swapCurrencyModalVisible, setSwapCurrencyModalVisible] =
+    useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState(null);
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -29,6 +31,11 @@ const SwapScreen = ({}) => {
     setChainSelectionModalVisible(false);
   };
 
+  const handleCurrencySelect = (chain) => {
+    setSelectedCurrency(chain);
+    setSwapCurrencyModalVisible(false);
+  };
+
   const handleChangeText = (text) => {
     setInputValue((prevState) => ({
       ...prevState,
@@ -36,33 +43,6 @@ const SwapScreen = ({}) => {
     }));
     httpCall(text);
   };
-
-  // function httpCall(text) {
-  //   const url = "https://api.1inch.dev/swap/v6.0/1/quote";
-  //   const token = "BAJDKr3ufrEEEoqXT7HFJoNCUss9AIX9"; // Adjust the authorization token as needed
-
-  //   const xhr = new XMLHttpRequest();
-  //   xhr.open("GET", url, true);
-  //   xhr.setRequestHeader("Authorization", "Bearer " + token);
-
-  //   xhr.onload = function () {
-  //     if (xhr.readyState === 4) {
-  //       if (xhr.status === 200) {
-  //         console.log("api response", JSON.parse(xhr.responseText));
-  //         const data = JSON.parse(xhr.responseText);
-  //         // Process the data here
-  //       } else {
-  //         console.log("Error fetching data:", xhr.statusText);
-  //       }
-  //     }
-  //   };
-
-  //   xhr.onerror = function () {
-  //     console.log("Network error occurred");
-  //   };
-
-  //   xhr.send();
-  // }
 
   async function httpCall(text) {
     const url = "https://api.1inch.dev/swap/v6.0/1/quote";
@@ -137,20 +117,35 @@ const SwapScreen = ({}) => {
                   style={styles.coinImage}
                 />
               </View>
-              <Text
-                style={[
-                  styles.allNetworksText,
-                  { fontSize: 23, fontWeight: "400" },
-                ]}
+              <TouchableOpacity
+                onPress={() => setSwapCurrencyModalVisible(true)}
               >
-                ETH
-              </Text>
-              <Image
-                source={require("../../assets/images/dropdown.png")}
-                style={[
-                  styles.dropdownImage,
-                  { marginLeft: "-1%", marginTop: "4%" },
-                ]}
+                <Text
+                  style={[
+                    styles.allNetworksText,
+                    { fontSize: 23, fontWeight: "400" },
+                  ]}
+                >
+                  {selectedCurrency ? selectedCurrency : "All Networks"}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setSwapCurrencyModalVisible(true)}
+              >
+                <Image
+                  source={require("../../assets/images/dropdown.png")}
+                  style={[
+                    styles.dropdownImage,
+                    { marginLeft: "-1%", marginTop: "4%" },
+                  ]}
+                />
+              </TouchableOpacity>
+              <SwapCurrencyModal
+                transparent={true}
+                isVisible={swapCurrencyModalVisible}
+                onClose={() => setSwapCurrencyModalVisible(false)}
+                onSelect={handleCurrencySelect}
+                value={selectedCurrency}
               />
             </View>
 

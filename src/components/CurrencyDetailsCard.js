@@ -5,7 +5,7 @@ import { fetchDynamicDetailsOfToken, provider } from "../utils/helper";
 import { ethers } from "ethers";
 import SendModal from "./SendModal";
 
-const CurrencyDetailsCard = ({ item }) => {
+const CurrencyDetailsCard = ({ item, navigation }) => {
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -216,7 +216,9 @@ const CurrencyDetailsCard = ({ item }) => {
               </TouchableOpacity>
             </View>
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SwapScreen")}
+              >
                 <View
                   style={{
                     width: 35,

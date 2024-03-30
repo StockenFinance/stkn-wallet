@@ -10,6 +10,8 @@ import ConfirmBackupPhrase from "./screens/ConfirmBackupPhrase/ConfirmBackupPhra
 import RecoveryPhraseConfirmation from "./screens/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation";
 import Dashboard from "./screens/Dashboard/Dashboard";
 import BottomNavigator from "./TabNavigator";
+import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
+import SwapScreen from "./screens/SwapScreen/SwapScreen";
 
 const Stack = createStackNavigator();
 
@@ -45,6 +47,16 @@ const AppNavigator = () => {
         <Stack.Screen
           name="RecoveryPhraseConfirmation"
           component={RecoveryPhraseConfirmation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CurrencyDetailsCard"
+          component={CurrencyDetailsCard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SwapScreen"
+          component={SwapScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

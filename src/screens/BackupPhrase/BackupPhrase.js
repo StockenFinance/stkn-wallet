@@ -34,7 +34,7 @@ const BackupPhrase = ({ navigation, route }) => {
         <Text style={styles.walletText}>Backup Phrase</Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
-        <Text style={styles.recoveryPhraseText}> Your Recovery Phrase</Text>
+        <Text style={styles.recoveryPhraseText}> Your recovery phrase</Text>
 
         <Text style={styles.subText}>
           Write down or copy these words in the right order and save them
@@ -78,7 +78,7 @@ const BackupPhrase = ({ navigation, route }) => {
           style={styles.checkBox}
         />
         <Text style={styles.consentText}>
-          I undestand that if i loose my recovery words, I will not be able to
+          I understand that if i loose my recovery words, I will not be able to
           access my wallet
         </Text>
       </View>

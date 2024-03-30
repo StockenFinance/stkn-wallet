@@ -20,7 +20,7 @@ import { tokenDetail } from "../../utils/helper";
 import { fetchCryptoData } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
@@ -70,7 +70,9 @@ const Dashboard = () => {
     setTotalBalance(sum);
   };
 
-  const addTokenBtn = (value) => {
+  const addTokenBtn = async (value) => {
+    // Store updated tokens in AsyncStorage
+    storeTokens([...cardData, value]);
     toggleEnterTokenModal();
     if (
       value.name.trim() === "" ||
@@ -136,7 +138,7 @@ const Dashboard = () => {
 
   const renderItem = ({ item, index }) => (
     <View style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}>
-      <CurrencyDetailsCard item={item} />
+      <CurrencyDetailsCard item={item} navigation={navigation} />
     </View>
   );
 
@@ -175,6 +177,45 @@ const Dashboard = () => {
       .catch((err) => {
         console.error("main error:", err);
       });
+  }, []);
+
+  const storeTokens = async (tokens) => {
+    try {
+      const serializedTokens = JSON.stringify(tokens, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+      await AsyncStorage.setItem("importedTokens", serializedTokens);
+      console.log("Tokens stored successfully.", serializedTokens);
+    } catch (error) {
+      console.error("Error storing tokens:", error);
+    }
+  };
+
+  // Function to retrieve tokens from AsyncStorage
+  const retrieveTokens = async () => {
+    try {
+      const serializedTokens = await AsyncStorage.getItem("importedTokens");
+      if (serializedTokens !== null) {
+        const tokens = JSON.parse(serializedTokens);
+        console.log("Tokens retrieved successfully:", tokens);
+        return tokens;
+      } else {
+        console.log("No tokens found in storage.");
+        return [];
+      }
+    } catch (error) {
+      console.error("Error retrieving tokens:", error);
+      return [];
+    }
+  };
+
+  // Call retrieveTokens on app load to get stored tokens
+  useEffect(() => {
+    retrieveTokens().then((tokens) => {
+      if (tokens.length > 0) {
+        setCardData(tokens);
+      }
+    });
   }, []);
 
   return (
