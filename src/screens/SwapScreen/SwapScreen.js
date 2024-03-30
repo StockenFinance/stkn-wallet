@@ -126,7 +126,7 @@ const SwapScreen = ({}) => {
                     { fontSize: 23, fontWeight: "400" },
                   ]}
                 >
-                  {selectedCurrency ? selectedCurrency : "All Networks"}
+                  {selectedCurrency ? selectedCurrency : "ETH"}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
