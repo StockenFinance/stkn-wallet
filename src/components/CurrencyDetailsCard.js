@@ -217,7 +217,11 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
             </View>
             <View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("SwapScreen")}
+                onPress={() =>
+                  navigation.navigate("SwapScreen", {
+                    selectedSymbol: item.symbol,
+                  })
+                }
               >
                 <View
                   style={{

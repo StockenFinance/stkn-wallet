@@ -13,7 +13,8 @@ import ChainSelectionModal from "../../components/ChainSelectionModal";
 import axios from "axios";
 import SwapCurrencyModal from "../../components/SwapCurrencyModal";
 
-const SwapScreen = ({}) => {
+const SwapScreen = ({ route }) => {
+  const { selectedSymbol } = route.params;
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
   const [selectedChain, setSelectedChain] = useState(null);
@@ -126,7 +127,8 @@ const SwapScreen = ({}) => {
                     { fontSize: 23, fontWeight: "400" },
                   ]}
                 >
-                  {selectedCurrency ? selectedCurrency : "ETH"}
+                  {selectedSymbol}
+                  {/* {selectedCurrency ? selectedCurrency : "ETH"} */}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
