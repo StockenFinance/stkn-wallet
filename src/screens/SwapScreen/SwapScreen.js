@@ -15,7 +15,8 @@ import SwapCurrencyModal from "../../components/SwapCurrencyModal";
 import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
 
 const SwapScreen = ({ route }) => {
-  const { selectedSymbol } = route.params;
+  const { selectedSymbol, tokens } = route.params;
+  const [selectedToken, setSelectedToken] = useState(null);
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
   const [selectedChain, setSelectedChain] = useState(null);
@@ -31,6 +32,11 @@ const SwapScreen = ({ route }) => {
     to: "",
     from: "",
   });
+
+  const handleTokenSelect = (token) => {
+    setSelectedToken(token);
+    setSwapCurrencyModalVisible(false);
+  };
 
   const handleChainSelect = (chain) => {
     setSelectedChain(chain);
@@ -156,8 +162,10 @@ const SwapScreen = ({ route }) => {
                 transparent={true}
                 isVisible={swapCurrencyModalVisible}
                 onClose={() => setSwapCurrencyModalVisible(false)}
-                onSelect={handleCurrencySelect}
+                // onSelect={handleCurrencySelect}
                 value={selectedCurrency}
+                tokens={tokens}
+                onSelect={handleTokenSelect}
               />
             </View>
 

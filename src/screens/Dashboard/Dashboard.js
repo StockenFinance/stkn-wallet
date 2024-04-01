@@ -101,6 +101,8 @@ const Dashboard = ({ navigation }) => {
 
     console.log("token input value", formattedValue);
     setCardData((prevData) => [...prevData, formattedValue]);
+    const newBalance = totalBalance + parseFloat(value.price);
+    setTotalBalance(newBalance);
   };
 
   function isEqual(obj1, obj2) {
