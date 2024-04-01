@@ -10,7 +10,7 @@ import {
 
 import Modal from "react-native-modal";
 
-const SwapCurrencyModal = ({
+const ConvertCurrencyModal = ({
   isVisible,
   onClose,
   selectedCurrency,
@@ -62,17 +62,18 @@ const SwapCurrencyModal = ({
   );
 };
 
-export default SwapCurrencyModal;
+export default ConvertCurrencyModal;
+
 const styles = StyleSheet.create({
   modalContent: {
     width: "60%",
-    height: "27%",
+    height: "20%",
     backgroundColor: "white",
     padding: 15,
     borderRadius: 15,
     alignSelf: "center",
     position: "absolute",
-    top: "22%",
+    top: "55%",
     left: "10%",
     borderWidth: 1,
     borderColor: "#253452",

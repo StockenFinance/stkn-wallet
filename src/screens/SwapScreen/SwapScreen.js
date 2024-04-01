@@ -12,6 +12,7 @@ import { styles } from "./styles";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
 import axios from "axios";
 import SwapCurrencyModal from "../../components/SwapCurrencyModal";
+import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
 
 const SwapScreen = ({ route }) => {
   const { selectedSymbol } = route.params;
@@ -21,6 +22,10 @@ const SwapScreen = ({ route }) => {
   const [swapCurrencyModalVisible, setSwapCurrencyModalVisible] =
     useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(null);
+
+  const [convertCurrencyModalVisible, setConvertCurrencyModalVisible] =
+    useState(false);
+  const [convertedCurrency, setConvertedCurrency] = useState(null);
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -35,6 +40,11 @@ const SwapScreen = ({ route }) => {
   const handleCurrencySelect = (chain) => {
     setSelectedCurrency(chain);
     setSwapCurrencyModalVisible(false);
+  };
+
+  const handleConvertCurrencySelect = (chain) => {
+    setConvertedCurrency(chain);
+    setConvertCurrencyModalVisible(false);
   };
 
   const handleChangeText = (text) => {
@@ -200,20 +210,35 @@ const SwapScreen = ({ route }) => {
                   style={{ width: 24, height: 20 }}
                 />
               </View>
-              <Text
-                style={[
-                  styles.allNetworksText,
-                  { fontSize: 23, fontWeight: "400" },
-                ]}
+              <TouchableOpacity
+                onPress={() => setConvertCurrencyModalVisible(true)}
               >
-                USDT
-              </Text>
-              <Image
-                source={require("../../assets/images/dropdown.png")}
-                style={[
-                  styles.dropdownImage,
-                  { marginLeft: "-1%", marginTop: "4%" },
-                ]}
+                <Text
+                  style={[
+                    styles.allNetworksText,
+                    { fontSize: 23, fontWeight: "400" },
+                  ]}
+                >
+                  {convertedCurrency ? convertedCurrency : "USDT"}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setConvertCurrencyModalVisible(true)}
+              >
+                <Image
+                  source={require("../../assets/images/dropdown.png")}
+                  style={[
+                    styles.dropdownImage,
+                    { marginLeft: "-1%", marginTop: "4%" },
+                  ]}
+                />
+              </TouchableOpacity>
+              <ConvertCurrencyModal
+                transparent={true}
+                isVisible={convertCurrencyModalVisible}
+                onClose={() => setConvertCurrencyModalVisible(false)}
+                onSelect={handleConvertCurrencySelect}
+                value={convertedCurrency}
               />
             </View>
           </View>
