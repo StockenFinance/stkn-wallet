@@ -19,6 +19,7 @@ import Erc20Contract from "../../contracts/Erc20";
 import { tokenDetail } from "../../utils/helper";
 import { fetchCryptoData } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createNewWallet, provider } from "../../utils/helper";
 
 const Dashboard = ({ navigation }) => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -29,6 +30,9 @@ const Dashboard = ({ navigation }) => {
     useState(false);
   const [tokenInput, setTokenInput] = useState("");
   const [totalBalance, setTotalBalance] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
+  const [walletStore, setWalletStore] = useState("");
 
   const [cardData, setCardData] = useState([
     {
@@ -220,6 +224,45 @@ const Dashboard = ({ navigation }) => {
     });
   }, []);
 
+  const createWallet = () => {
+    setLoading(true);
+    const { wallet, mnemonic } = createNewWallet();
+    const phrase = ethers.Wallet.fromPhrase(mnemonic);
+
+    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
+    console.log("Phrase wallet: ", phrase?.privateKey);
+    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
+    console.log("New Wallet Address:", wallet.address);
+    console.log("Private Key:", wallet.privateKey);
+    console.log("Generated Mnemonic:", mnemonic);
+    const shortenedAddress =
+      wallet.address.slice(0, 6) + wallet.address.slice(-6);
+    setGeneratedWalletAddress(shortenedAddress);
+    setWalletStore(wallet);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  const storeWalletAddress = async (walletAddress, wallet) => {
+    try {
+      const shortenedAddress =
+        walletAddress.slice(0, 6) + walletAddress.slice(-6);
+      await AsyncStorage.clear();
+      await AsyncStorage.setItem("walletAddress", shortenedAddress);
+      console.log("wallet address stored:::", walletAddress);
+
+      await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
+      console.log("wallet  stored:::", wallet);
+    } catch (error) {
+      console.error("Error storing wallet address:", error);
+    }
+  };
+
+  useEffect(() => {
+    storeWalletAddress(generatedWalletAddress, walletStore);
+  }, [generatedWalletAddress, walletStore]);
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -244,7 +287,9 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.timerImage}>
-          <Image source={require("../../assets/images/timer.png")} />
+          <TouchableOpacity onPress={createWallet}>
+            <Image source={require("../../assets/images/timer.png")} />
+          </TouchableOpacity>
         </View>
       </View>
       <View>
