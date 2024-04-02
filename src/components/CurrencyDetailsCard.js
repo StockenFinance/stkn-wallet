@@ -4,6 +4,10 @@ import { styles } from "../screens/Dashboard/styles";
 import { fetchDynamicDetailsOfToken, provider } from "../utils/helper";
 import { ethers } from "ethers";
 import SendModal from "./SendModal";
+import ChartIcon from "../SvgIcon/ChartIcon";
+import SwapIcon from "../SvgIcon/SwapIcon";
+import SendIcon from "../SvgIcon/SendIcon";
+import ReceiveScannerIcon from "../SvgIcon/ReceiveScannerIcon";
 
 const CurrencyDetailsCard = ({ item, navigation }) => {
   const [containerHeight, setContainerHeight] = useState(95);
@@ -159,10 +163,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/send.png")}
-                    style={{}}
-                  />
+                  <SendIcon />
                 </View>
 
                 <Text
@@ -197,10 +198,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/send.png")}
-                    style={{}}
-                  />
+                  <ReceiveScannerIcon color={"#F19220"} />
                 </View>
 
                 <Text
@@ -236,10 +234,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/send.png")}
-                    style={{}}
-                  />
+                  <SwapIcon color={"#F19220"} />
                 </View>
 
                 <Text
@@ -269,10 +264,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/Chart.png")}
-                    style={{ width: 18, height: 18 }}
-                  />
+                  <ChartIcon style={{ width: 18, height: 18 }} />
                 </View>
 
                 <Text

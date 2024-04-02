@@ -7,6 +7,9 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { ethers } from "ethers";
 import "react-native-get-random-values";
 import { styles } from "./styles";
+import ScanIcon from "../../SvgIcon/ScanIcon";
+import BackIcon from "../../SvgIcon/BackIcon";
+import PasteIcon from "../../SvgIcon/PasteIcon";
 
 const ImportWallet = ({ navigation }) => {
   const [text, setText] = useState("");
@@ -37,17 +40,10 @@ const ImportWallet = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require("../../assets/images/backIcon.png")}
-            style={styles.backIcon}
-          />
+          <BackIcon />
         </TouchableOpacity>
-
         <Text style={styles.walletText}>Import Wallet</Text>
-        <Image
-          source={require("../../assets/images/scanner.png")}
-          style={styles.scanIcon}
-        />
+        <ScanIcon style={styles.scanIcon} />
       </View>
       <View style={styles.inputContainer}>
         <View
@@ -58,20 +54,21 @@ const ImportWallet = ({ navigation }) => {
           }}
         >
           <Text style={styles.inputHeaderText}>
-            Private Key/recovery Phrase
+            Private Key / Recovery Phrase
           </Text>
         </View>
         <View style={styles.EnterInputContainer}>
           <CustomTextInput
-            placeholder="Private key or Recovery Phase"
+            placeholder="Private Key or Recovery Phrase"
             onChangeText={handleChangeText}
             value={text}
           />
           <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
-            <Image
+            {/* <Image
               source={require("../../assets/images/paste.png")}
               style={styles.copyPasteImage}
-            />
+            /> */}
+            <PasteIcon style={styles.copyPasteImage} />
           </TouchableOpacity>
         </View>
       </View>

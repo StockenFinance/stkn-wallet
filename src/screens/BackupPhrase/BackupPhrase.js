@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import CheckBox from "react-native-check-box";
 import { styles } from "./styles";
+import BackIcon from "../../SvgIcon/BackIcon";
+import AlertIcon from "../../SvgIcon/AlertIcon";
 
 const BackupPhrase = ({ navigation, route }) => {
   const { mnemonic } = route.params;
@@ -26,10 +28,7 @@ const BackupPhrase = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require("../../assets/images/backIcon.png")}
-            style={styles.backIcon}
-          />
+          <BackIcon style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.walletText}>Backup Phrase</Text>
       </View>
@@ -42,10 +41,7 @@ const BackupPhrase = ({ navigation, route }) => {
         </Text>
       </View>
       <View style={styles.securityMessageContainer}>
-        <Image
-          source={require("../../assets/images/alert.png")}
-          style={styles.alertImage}
-        />
+        <AlertIcon style={styles.alertImage} />
         <Text style={styles.securityText}>
           Never share recovery phrase with anyone, store it securely!
         </Text>

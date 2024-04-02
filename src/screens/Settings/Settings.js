@@ -1,31 +1,32 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { styles } from "./styles";
+import RightArrowIcon from "../../SvgIcon/RightArrowIcon";
+import WalletIcon from "../../SvgIcon/WalletIcon";
 
 const Settings = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
+        {/* <Image
           source={require("../../assets/images/backIcon.png")}
           style={styles.backIcon}
-        />
+        /> */}
         <Text style={styles.walletText}>Settings</Text>
       </View>
       <View style={styles.createWalletView}>
         <View style={styles.swapImageContainer}>
-          <Image
+          {/* <Image
             source={require("../../assets/images/settingsWallet.png")}
             style={styles.image}
             resizeMode="contain"
-          />
+          /> */}
+          <WalletIcon color={"white"} />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Wallets Management</Text>
-        <Image
-          source={require("../../assets/images/forward.png")}
-          style={styles.forwardIcon}
-        />
+
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -57,10 +58,8 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Wallet Connect</Text>
-        <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "13%" }]}
-        />
+
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -72,10 +71,8 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Custom Tokens</Text>
-        <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "11%" }]}
-        />
+
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -87,10 +84,8 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Passcode & Face ID</Text>
-        <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "1%" }]}
-        />
+
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -102,10 +97,8 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>View Recovery Phrase</Text>
-        <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "-5%" }]}
-        />
+
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -117,10 +110,8 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>View Private Key</Text>
-        <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "7%" }]}
-        />
+
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
     </View>
   );

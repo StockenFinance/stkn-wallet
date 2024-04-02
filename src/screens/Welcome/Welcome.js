@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
+import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
 
 const Welcome = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
@@ -12,10 +13,7 @@ const Welcome = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageTextContainer}>
-        <Image
-          source={require("../../assets/images/welcome.png")}
-          style={styles.image}
-        />
+        <HomeLogoIcon style={styles.image} />
         <Text style={styles.welcomeText}> Welcome</Text>
         <Text style={styles.restoreWalletText}>
           You can restore a wallet or create a new one

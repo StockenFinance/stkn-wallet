@@ -13,6 +13,9 @@ import ChainSelectionModal from "../../components/ChainSelectionModal";
 import axios from "axios";
 import SwapCurrencyModal from "../../components/SwapCurrencyModal";
 import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
+import AllNetworkIcon from "../../SvgIcon/AllNetworkIcon";
+import DropDownIcon from "../../SvgIcon/DropDownIcon";
+import SwapIcon from "../../SvgIcon/SwapIcon";
 
 const SwapScreen = ({ route }) => {
   const { selectedSymbol, tokens } = route.params;
@@ -89,10 +92,7 @@ const SwapScreen = ({ route }) => {
         <View style={styles.headerContainer}>
           <View style={styles.allNetworksView}>
             <View>
-              <Image
-                source={require("../../assets/images/allNetwork.png")}
-                style={styles.allNetworksImage}
-              />
+              <AllNetworkIcon style={styles.allNetworksImage} />
             </View>
             <TouchableOpacity
               onPress={() => setChainSelectionModalVisible(true)}
@@ -105,10 +105,7 @@ const SwapScreen = ({ route }) => {
             <TouchableOpacity
               onPress={() => setChainSelectionModalVisible(true)}
             >
-              <Image
-                source={require("../../assets/images/dropdown.png")}
-                style={styles.dropdownImage}
-              />
+              <DropDownIcon style={styles.dropdownImage} />
               <ChainSelectionModal
                 transparent={true}
                 isVisible={chainSelectionModalVisible}
@@ -140,7 +137,7 @@ const SwapScreen = ({ route }) => {
                 <Text
                   style={[
                     styles.allNetworksText,
-                    { fontSize: 23, fontWeight: "400" },
+                    { fontSize: 23, fontWeight: "400", marginLeft: 8 },
                   ]}
                 >
                   {selectedSymbol}
@@ -150,8 +147,7 @@ const SwapScreen = ({ route }) => {
               <TouchableOpacity
                 onPress={() => setSwapCurrencyModalVisible(true)}
               >
-                <Image
-                  source={require("../../assets/images/dropdown.png")}
+                <DropDownIcon
                   style={[
                     styles.dropdownImage,
                     { marginLeft: "-1%", marginTop: "4%" },
@@ -189,11 +185,7 @@ const SwapScreen = ({ route }) => {
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
             <View style={styles.swapImageContainer}>
-              <Image
-                source={require("../../assets/images/swap.png")}
-                style={styles.image}
-                resizeMode="contain"
-              />
+              <SwapIcon color={"white"} />
             </View>
 
             <View style={styles.divider} />
@@ -224,7 +216,7 @@ const SwapScreen = ({ route }) => {
                 <Text
                   style={[
                     styles.allNetworksText,
-                    { fontSize: 23, fontWeight: "400" },
+                    { fontSize: 23, fontWeight: "400", marginLeft: 8 },
                   ]}
                 >
                   {convertedCurrency ? convertedCurrency : "USDT"}
@@ -233,8 +225,7 @@ const SwapScreen = ({ route }) => {
               <TouchableOpacity
                 onPress={() => setConvertCurrencyModalVisible(true)}
               >
-                <Image
-                  source={require("../../assets/images/dropdown.png")}
+                <DropDownIcon
                   style={[
                     styles.dropdownImage,
                     { marginLeft: "-1%", marginTop: "4%" },

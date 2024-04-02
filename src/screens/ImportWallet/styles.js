@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#253452",
     marginTop: "-1%",
+    marginLeft: 20,
   },
   scanIcon: {
     width: 25,
@@ -75,8 +76,8 @@ export const styles = StyleSheet.create({
   },
   copyPasteIcon: {
     position: "absolute",
-    marginTop: "53%",
-    right: 13,
+    marginTop: "64%",
+    right: 10,
   },
   copyPasteImage: {
     width: 30,

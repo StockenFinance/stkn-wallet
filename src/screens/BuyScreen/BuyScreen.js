@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
+import DropDownIcon from "../../SvgIcon/DropDownIcon";
+import DebitCardIcon from "../../SvgIcon/DebitCardIcon";
 
 const BuyScreen = () => {
   const [selectedRange, setSelectedRange] = useState(null);
@@ -55,8 +57,8 @@ const BuyScreen = () => {
               >
                 USD
               </Text>
-              <Image
-                source={require("../../assets/images/dropdown.png")}
+
+              <DropDownIcon
                 style={[
                   styles.dropdownImage,
                   { marginLeft: "-1%", marginTop: "4%" },
@@ -98,8 +100,7 @@ const BuyScreen = () => {
               >
                 USDT
               </Text>
-              <Image
-                source={require("../../assets/images/dropdown.png")}
+              <DropDownIcon
                 style={[
                   styles.dropdownImage,
                   { marginLeft: "-1%", marginTop: "4%" },
@@ -173,18 +174,12 @@ const BuyScreen = () => {
         <Text style={styles.paymentMethodText}>Payment Method</Text>
         <View style={styles.createWalletView}>
           <View style={styles.swapImageContainer}>
-            <Image
-              source={require("../../assets/images/debitCard.png")}
-              style={styles.image}
-              resizeMode="contain"
-            />
+            <DebitCardIcon style={styles.image} />
           </View>
           <View style={styles.divider}></View>
           <Text style={styles.createWalletText}>Debit Card</Text>
-          <Image
-            source={require("../../assets/images/dropdown.png")}
-            style={styles.forwardIcon}
-          />
+
+          <DropDownIcon style={styles.forwardIcon} />
         </View>
         <Text style={styles.paymentMethod}>Fulfilled by Moonpay</Text>
         <View style={styles.importButton}>

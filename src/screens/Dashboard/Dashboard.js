@@ -19,6 +19,12 @@ import Erc20Contract from "../../contracts/Erc20";
 import { tokenDetail } from "../../utils/helper";
 import { fetchCryptoData } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AllNetworkIcon from "../../SvgIcon/AllNetworkIcon";
+import DropDownIcon from "../../SvgIcon/DropDownIcon";
+import TimerIcon from "../../SvgIcon/TimerIcon";
+import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
+import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
+import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 
 const Dashboard = ({ navigation }) => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -224,18 +230,12 @@ const Dashboard = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.allNetworksView}>
-          <Image
-            source={require("../../assets/images/allNetwork.png")}
-            style={styles.allNetworksImage}
-          />
+          <AllNetworkIcon style={styles.allNetworksImage} />
           <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
             <Text style={styles.allNetworksText}>All Networks</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
-            <Image
-              source={require("../../assets/images/dropdown.png")}
-              style={styles.dropdownImage}
-            />
+            <DropDownIcon style={styles.dropdownImage} />
             <AllNetworksModal
               transparent={true}
               isVisible={allNetworksModalVisible}
@@ -243,9 +243,10 @@ const Dashboard = ({ navigation }) => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.timerImage}>
+        {/* <View style={styles.timerImage}>
           <Image source={require("../../assets/images/timer.png")} />
-        </View>
+        </View> */}
+        <TimerIcon style={styles.timerImage} />
       </View>
       <View>
         <LinearGradient
@@ -261,14 +262,15 @@ const Dashboard = ({ navigation }) => {
             </View>
           </View>
 
-          <Image
+          {/* <Image
             source={require("../../assets/images/walletImage.png")}
             style={styles.walletImage}
-          />
+          /> */}
+          <WalletImageSvg style={styles.walletImage} />
 
           <Text style={styles.receiveText}>Receive</Text>
-          <Image
-            source={require("../../assets/images/receiveScanner.png")}
+          <ReceiveScannerIcon
+            color={"white"}
             style={{ position: "absolute", top: 27, right: 18 }}
           />
           <View style={styles.walletBalanceContainer}>
@@ -278,10 +280,11 @@ const Dashboard = ({ navigation }) => {
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.modalIconContainer}>
-                <Image
+                {/* <Image
                   source={require("../../assets/images/modalDot.png")}
                   style={styles.modalDotImage}
-                />
+                /> */}
+                <ModalDotIcon style={styles.modalDotImage} />
 
                 <CustomModal
                   transparent={true}

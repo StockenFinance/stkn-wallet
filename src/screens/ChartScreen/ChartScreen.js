@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
+import BackIcon from "../../SvgIcon/BackIcon";
 
 const ChartScreen = () => {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -12,10 +13,7 @@ const ChartScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={require("../../assets/images/backIcon.png")}
-          style={styles.backIcon}
-        />
+        <BackIcon />
         <View style={{ flexDirection: "row" }}>
           <View style={styles.swapImageContainer}>
             <Image

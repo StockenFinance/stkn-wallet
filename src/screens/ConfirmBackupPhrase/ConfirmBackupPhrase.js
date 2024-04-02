@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { styles } from "./styles";
+import BackIcon from "../../SvgIcon/BackIcon";
 
 const ConfirmBackupPhrase = ({ navigation, route }) => {
   const [isChoose, setIsChoose] = useState([]);
@@ -154,10 +155,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require("../../assets/images/backIcon.png")}
-            style={styles.backIcon}
-          />
+          <BackIcon style={styles.backIcon} />
         </TouchableOpacity>
 
         <Text style={styles.walletText}>Backup Phrase</Text>

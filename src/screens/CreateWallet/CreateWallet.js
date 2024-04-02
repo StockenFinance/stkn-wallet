@@ -11,6 +11,9 @@ import { ethers } from "ethers";
 import { styles } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNewWallet, provider } from "../../utils/helper";
+import ImportIcon from "../../SvgIcon/ImportIcon";
+import CreateIcon from "../../SvgIcon/CreateIcon";
+import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -59,15 +62,13 @@ const CreateWallet = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
+      {/* <Image
         source={require("../../assets/images/welcome.png")}
         style={styles.image}
-      />
+      /> */}
+      <HomeLogoIcon style={styles.image} />
       <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
-        <Image
-          source={require("../../assets/images/createWallet.png")}
-          style={styles.createWalletImage}
-        />
+        <CreateIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Create New Wallet</Text>
       </TouchableOpacity>
@@ -75,10 +76,7 @@ const CreateWallet = ({ navigation }) => {
         style={[styles.createWalletView, { marginTop: "5%" }]}
         onPress={() => navigation.navigate("ImportWallet")}
       >
-        <Image
-          source={require("../../assets/images/importWallet.png")}
-          style={styles.createWalletImage}
-        />
+        <ImportIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
         <View style={{ marginLeft: "5%" }}>
           <Text style={styles.createWalletText}>Import Wallet</Text>
