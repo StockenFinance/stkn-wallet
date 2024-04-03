@@ -33,6 +33,12 @@ const Dashboard = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
+  const [newAccount, setNewAccount] = useState([
+    {
+      newWalletAddress: "",
+      newWalletBalance: "",
+    },
+  ]);
 
   const [cardData, setCardData] = useState([
     {
@@ -43,6 +49,8 @@ const Dashboard = ({ navigation }) => {
       price: "3547.41",
     },
   ]);
+
+  console.log("wallet addresss>>>>", walletAddress);
 
   const retrieveWalletAddress = async () => {
     try {
@@ -224,6 +232,19 @@ const Dashboard = ({ navigation }) => {
     });
   }, []);
 
+  useEffect(() => {
+    const { wallet } = createNewWallet();
+    setNewAccount((prevAccount) => {
+      return [
+        {
+          ...prevAccount[0], // Keep other properties unchanged
+          newWalletAddress:
+            wallet?.address.slice(0, 6) + wallet?.address?.slice(-6), // Update newWalletAddress
+        },
+      ];
+    });
+  }, []);
+
   const createWallet = () => {
     setLoading(true);
     const { wallet, mnemonic } = createNewWallet();
@@ -239,6 +260,15 @@ const Dashboard = ({ navigation }) => {
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     setWalletStore(wallet);
+    setNewAccount((prevAccount) => [
+      ...prevAccount,
+      {
+        newWalletAddress: shortenedAddress,
+        newWalletBalance: "", // You can set the initial balance here if needed
+      },
+    ]);
+    console.log("walet response?????", wallet);
+
     setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -250,6 +280,7 @@ const Dashboard = ({ navigation }) => {
         walletAddress.slice(0, 6) + walletAddress.slice(-6);
       await AsyncStorage.clear();
       await AsyncStorage.setItem("walletAddress", shortenedAddress);
+
       console.log("wallet address stored:::", walletAddress);
 
       await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
@@ -263,6 +294,7 @@ const Dashboard = ({ navigation }) => {
     storeWalletAddress(generatedWalletAddress, walletStore);
   }, [generatedWalletAddress, walletStore]);
 
+  console.log("new wallet account>>>>>>", newAccount);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -287,56 +319,74 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.timerImage}>
-          <TouchableOpacity onPress={createWallet}>
-            <Image source={require("../../assets/images/timer.png")} />
+          <TouchableOpacity onPress={() => createWallet()}>
+            <Text style={{ color: "#253452", fontSize: 14, fontWeight: "600" }}>
+              Add New Wallet
+            </Text>
+            {/* <Image source={require("../../assets/images/timer.png")} /> */}
           </TouchableOpacity>
         </View>
       </View>
       <View>
-        <LinearGradient
-          colors={["#F19220", "#BE6800"]}
-          start={{ x: -0.2, y: 0.1 }}
-          end={{ x: 1, y: 0 }}
-          style={[styles.wallet, { borderRadius: 10, overflow: "hidden" }]}
-        >
-          <View style={styles.walletContentContainer}>
-            <View>
-              <Text style={styles.walletName}>Wallet</Text>
-              <Text style={styles.walletCode}>{walletAddress} </Text>
-            </View>
-          </View>
+        <ScrollView>
+          {newAccount.map((item) => {
+            return (
+              <>
+                <LinearGradient
+                  colors={["#F19220", "#BE6800"]}
+                  start={{ x: -0.2, y: 0.1 }}
+                  end={{ x: 1, y: 0 }}
+                  style={[
+                    styles.wallet,
+                    { borderRadius: 10, overflow: "hidden" },
+                  ]}
+                >
+                  <View style={styles.walletContentContainer}>
+                    <View>
+                      <Text style={styles.walletName}>Wallet</Text>
+                      <Text style={styles.walletCode}>
+                        {item?.newWalletAddress}
+                      </Text>
+                    </View>
+                  </View>
 
-          <Image
-            source={require("../../assets/images/walletImage.png")}
-            style={styles.walletImage}
-          />
+                  <Image
+                    source={require("../../assets/images/walletImage.png")}
+                    style={styles.walletImage}
+                  />
 
-          <Text style={styles.receiveText}>Receive</Text>
-          <Image
-            source={require("../../assets/images/receiveScanner.png")}
-            style={{ position: "absolute", top: 27, right: 18 }}
-          />
-          <View style={styles.walletBalanceContainer}>
-            <View>
-              <Text style={styles.yourBalanceText}>Your balance</Text>
-              <Text style={styles.balanceText}>${totalBalance.toFixed(2)}</Text>
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <View style={styles.modalIconContainer}>
-                <Image
-                  source={require("../../assets/images/modalDot.png")}
-                  style={styles.modalDotImage}
-                />
+                  <Text style={styles.receiveText}>Receive</Text>
+                  <Image
+                    source={require("../../assets/images/receiveScanner.png")}
+                    style={{ position: "absolute", top: 27, right: 18 }}
+                  />
+                  <View style={styles.walletBalanceContainer}>
+                    <View>
+                      <Text style={styles.yourBalanceText}>Your balance</Text>
+                      <Text style={styles.balanceText}>
+                        ${totalBalance.toFixed(2)}
+                      </Text>
+                    </View>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <View style={styles.modalIconContainer}>
+                        <Image
+                          source={require("../../assets/images/modalDot.png")}
+                          style={styles.modalDotImage}
+                        />
 
-                <CustomModal
-                  transparent={true}
-                  isVisible={modalVisible}
-                  onClose={() => setModalVisible(false)}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
+                        <CustomModal
+                          transparent={true}
+                          isVisible={modalVisible}
+                          onClose={() => setModalVisible(false)}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </LinearGradient>
+              </>
+            );
+          })}
+        </ScrollView>
       </View>
       <View style={{ flex: 0.8 }}>
         <FlatList
