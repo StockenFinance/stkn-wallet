@@ -13,7 +13,7 @@ import Modal from "react-native-modal";
 const SwapCurrencyModal = ({
   isVisible,
   onClose,
-  selectedSymbol,
+  selectedCurrency,
   value,
   onSelect,
 }) => {
@@ -55,7 +55,7 @@ const SwapCurrencyModal = ({
           ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
         />
       </View>
-      {selectedSymbol && (
+      {selectedCurrency && (
         <Text style={styles.selectedText}>Selected Chain: {value}</Text>
       )}
     </Modal>
