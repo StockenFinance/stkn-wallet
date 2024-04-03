@@ -22,15 +22,15 @@ const SwapCurrencyModal = ({
     onClose();
   };
   const chains = [
-    { id: 1, name: "BTC" },
-    { id: 2, name: "ETH" },
-    { id: 3, name: "USDT" },
-    { id: 4, name: "BNB" },
-    { id: 5, name: "DAI" },
-    { id: 6, name: "MKR" },
-    { id: 7, name: "VEN" },
-    { id: 8, name: "FTM" },
-    { id: 9, name: "APE" },
+    { id: 1, symbol: "BTC" },
+    { id: 2, symbol: "ETH" },
+    { id: 3, symbol: "USDT" },
+    { id: 4, symbol: "BNB" },
+    { id: 5, symbol: "DAI" },
+    { id: 6, symbol: "MKR" },
+    { id: 7, symbol: "VEN" },
+    { id: 8, symbol: "FTM" },
+    { id: 9, symbol: "APE" },
   ];
   return (
     <Modal
@@ -47,8 +47,8 @@ const SwapCurrencyModal = ({
           showsVerticalScrollIndicator={false}
           data={chains}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleChainSelect(item.name)}>
-              <Text style={styles.chainText}>{item.name}</Text>
+            <TouchableOpacity onPress={() => handleChainSelect(item.symbol)}>
+              <Text style={styles.chainText}>{item.symbol}</Text>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id.toString()}

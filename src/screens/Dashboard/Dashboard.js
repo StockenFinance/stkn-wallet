@@ -95,7 +95,7 @@ const Dashboard = ({ navigation }) => {
       // alert("value is alrady exist we can not allow to import same value");
       // setCardData((prevData) => [...prevData, value]);
 
-      calculateTotalBalance(); // Recalculate total balance after adding a new token
+      calculateTotalBalance();
       return;
     }
 

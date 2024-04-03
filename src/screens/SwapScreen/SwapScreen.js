@@ -14,7 +14,7 @@ import axios from "axios";
 import SwapCurrencyModal from "../../components/SwapCurrencyModal";
 import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
 
-const SwapScreen = ({ route }) => {
+const SwapScreen = ({ route, tokenList }) => {
   const { selectedSymbol, tokens } = route.params;
   const [selectedToken, setSelectedToken] = useState(null);
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
@@ -27,6 +27,7 @@ const SwapScreen = ({ route }) => {
   const [convertCurrencyModalVisible, setConvertCurrencyModalVisible] =
     useState(false);
   const [convertedCurrency, setConvertedCurrency] = useState(null);
+  const [selectedLogo, setSelectedLogo] = useState(null);
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -247,6 +248,7 @@ const SwapScreen = ({ route }) => {
                 onClose={() => setConvertCurrencyModalVisible(false)}
                 onSelect={handleConvertCurrencySelect}
                 value={convertedCurrency}
+                tokenList={tokenList}
               />
             </View>
           </View>
