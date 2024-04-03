@@ -328,7 +328,7 @@ const Dashboard = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <ScrollView>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {newAccount.map((item) => {
             return (
               <>
