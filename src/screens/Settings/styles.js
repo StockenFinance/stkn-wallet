@@ -54,10 +54,9 @@ export const styles = StyleSheet.create({
     opacity: 0.3,
   },
   forwardIcon: {
-    width: 20,
-    height: 20,
-    left: "150%",
     marginTop: "1%",
+    marginLeft: "auto",
+    marginRight: "3%",
   },
   swapImageContainer: {
     width: 35,

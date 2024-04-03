@@ -25,6 +25,7 @@ import TimerIcon from "../../SvgIcon/TimerIcon";
 import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
 import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
+import PlusIcon from "../../SvgIcon/PlusIcon";
 
 const Dashboard = ({ navigation }) => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -285,7 +286,6 @@ const Dashboard = ({ navigation }) => {
                   style={styles.modalDotImage}
                 /> */}
                 <ModalDotIcon style={styles.modalDotImage} />
-
                 <CustomModal
                   transparent={true}
                   isVisible={modalVisible}
@@ -310,10 +310,11 @@ const Dashboard = ({ navigation }) => {
         onPress={toggleEnterTokenModal}
         // onPress={handleFetchData}
       >
-        <Image
+        {/* <Image
           source={require("../../assets/images/plus.png")}
           style={styles.plusImage}
-        />
+        /> */}
+        <PlusIcon style={styles.plusImage} />
       </TouchableOpacity>
       <EnterTokenModal
         value={tokenInput}

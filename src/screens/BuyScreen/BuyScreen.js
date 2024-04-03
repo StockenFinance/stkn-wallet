@@ -52,7 +52,7 @@ const BuyScreen = () => {
               <Text
                 style={[
                   styles.allNetworksText,
-                  { fontSize: 23, fontWeight: "400" },
+                  { fontSize: 23, fontWeight: "400", marginLeft: 10 },
                 ]}
               >
                 USD
@@ -95,7 +95,7 @@ const BuyScreen = () => {
               <Text
                 style={[
                   styles.allNetworksText,
-                  { fontSize: 23, fontWeight: "400" },
+                  { fontSize: 23, fontWeight: "400", marginLeft: 10 },
                 ]}
               >
                 USDT

@@ -3,6 +3,12 @@ import React from "react";
 import { styles } from "./styles";
 import RightArrowIcon from "../../SvgIcon/RightArrowIcon";
 import WalletIcon from "../../SvgIcon/WalletIcon";
+import KeyIcon from "../../SvgIcon/KeyIcon";
+import WalletConnectIcon from "../../SvgIcon/WalletConnectIcon";
+import LanguageIcon from "../../SvgIcon/LanguageIcon";
+import LockIcon from "../../SvgIcon/LockIcon";
+import RecoveryPhraseIcon from "../../SvgIcon/RecoveryPhraseIcon";
+import CustomTokenIcon from "../../SvgIcon/CustomTokenIcon";
 
 const Settings = () => {
   return (
@@ -16,16 +22,10 @@ const Settings = () => {
       </View>
       <View style={styles.createWalletView}>
         <View style={styles.swapImageContainer}>
-          {/* <Image
-            source={require("../../assets/images/settingsWallet.png")}
-            style={styles.image}
-            resizeMode="contain"
-          /> */}
           <WalletIcon color={"white"} />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Wallets Management</Text>
-
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
@@ -38,11 +38,7 @@ const Settings = () => {
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
-          <Image
-            source={require("../../assets/images/language.png")}
-            style={styles.languageImage}
-            resizeMode="contain"
-          />
+          <LanguageIcon style={styles.languageImage} />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Language</Text>
@@ -50,11 +46,7 @@ const Settings = () => {
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
-          <Image
-            source={require("../../assets/images/walletConnect.png")}
-            style={styles.image}
-            resizeMode="contain"
-          />
+          <WalletConnectIcon style={styles.image} />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Wallet Connect</Text>
@@ -63,11 +55,7 @@ const Settings = () => {
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
-          <Image
-            source={require("../../assets/images/customTokens.png")}
-            style={{ height: 29, width: 22 }}
-            resizeMode="contain"
-          />
+          <CustomTokenIcon />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Custom Tokens</Text>
@@ -76,11 +64,7 @@ const Settings = () => {
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
-          <Image
-            source={require("../../assets/images/lock.png")}
-            style={{ width: 22, height: 22 }}
-            resizeMode="contain"
-          />
+          <LockIcon />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Passcode & Face ID</Text>
@@ -89,11 +73,7 @@ const Settings = () => {
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
-          <Image
-            source={require("../../assets/images/recoveryPhrase.png")}
-            style={{ width: 22, height: 22 }}
-            resizeMode="contain"
-          />
+          <RecoveryPhraseIcon />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>View Recovery Phrase</Text>
@@ -102,11 +82,7 @@ const Settings = () => {
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
-          <Image
-            source={require("../../assets/images/key.png")}
-            style={{ width: 22, height: 25 }}
-            resizeMode="contain"
-          />
+          <KeyIcon />
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>View Private Key</Text>

@@ -125,6 +125,7 @@ export const styles = StyleSheet.create({
   modalDotImage: {
     width: 3,
     height: 15,
+    marginTop: 22,
   },
   currencyContainer: {
     flexDirection: "row",

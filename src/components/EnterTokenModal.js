@@ -12,6 +12,7 @@ import {
 import Clipboard from "@react-native-clipboard/clipboard";
 import { tokenDetail } from "../utils/helper";
 import { ethers } from "ethers";
+import PasteIcon from "../SvgIcon/PasteIcon";
 
 const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const [tokenNumber, setTokenNumber] = useState("");
@@ -225,10 +226,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
               style={styles.copyPasteIcon}
               onPress={handlePaste}
             >
-              <Image
-                source={require("../assets/images/paste.png")}
-                style={styles.copyPasteImage}
-              />
+              <PasteIcon style={styles.copyPasteImage} />
             </TouchableOpacity>
 
             <View style={styles.buttonContainer}>

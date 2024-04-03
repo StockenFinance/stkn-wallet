@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
 import BackIcon from "../../SvgIcon/BackIcon";
+import OptionIcon from "../../SvgIcon/OptionIcon";
 
 const ChartScreen = () => {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -24,11 +25,7 @@ const ChartScreen = () => {
           </View>
           <Text style={styles.walletText}>Bitcoin</Text>
         </View>
-
-        <Image
-          source={require("../../assets/images/options.png")}
-          style={styles.scanIcon}
-        />
+        <OptionIcon />
       </View>
       <View style={styles.rangeSelectionView}>
         <TouchableOpacity onPress={() => handleRangePress("24H")}>
