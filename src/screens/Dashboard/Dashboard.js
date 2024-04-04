@@ -233,16 +233,30 @@ const Dashboard = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const { wallet } = createNewWallet();
-    setNewAccount((prevAccount) => {
-      return [
-        {
-          ...prevAccount[0], // Keep other properties unchanged
-          newWalletAddress:
-            wallet?.address.slice(0, 6) + wallet?.address?.slice(-6), // Update newWalletAddress
-        },
-      ];
-    });
+    const fetchWalletAddress = async () => {
+      try {
+        const walletAddress = await AsyncStorage.getItem("walletAddress");
+        console.log("local storage >>>", walletAddress);
+        if (walletAddress) {
+          setNewAccount((prevAccount) => {
+            return [
+              {
+                ...prevAccount[0], // Keep other properties unchanged
+                newWalletAddress: walletAddress,
+              },
+              ...prevAccount.slice(1), // Keep other accounts unchanged
+            ];
+          });
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching wallet address from AsyncStorage:",
+          error
+        );
+      }
+    };
+
+    fetchWalletAddress();
   }, []);
 
   const createWallet = () => {
