@@ -42,7 +42,7 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Language</Text>
-        <Text style={[styles.currencyText, { marginLeft: "38%" }]}>EN</Text>
+        <Text style={[styles.currencyText]}>EN</Text>
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -68,7 +68,16 @@ const Settings = () => {
         </View>
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>Passcode & Face ID</Text>
-
+        <Text
+          style={{
+            color: "#B6BDC8",
+            fontSize: 17,
+            fontWeight: "800",
+            marginLeft: 68,
+          }}
+        >
+          On
+        </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>

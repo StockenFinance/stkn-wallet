@@ -42,14 +42,14 @@ export default AllNetworksModal;
 const styles = StyleSheet.create({
   modalContent: {
     width: 160,
-    height: 110,
+    height: "auto",
     backgroundColor: "white",
     padding: 15,
     borderRadius: 6,
     alignSelf: "center",
     position: "absolute",
-    top: 100,
-    left: 30,
+    top: 103,
+    left: 25,
   },
   modalSeparator: {
     height: 1,

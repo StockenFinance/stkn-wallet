@@ -69,9 +69,10 @@ const BuyScreen = () => {
             <Text style={styles.balanceText}>500</Text>
           </View>
 
-          <View style={styles.dividerContainer}>
+          {/* <View style={styles.dividerContainer}>
             <View style={styles.divider} />
-          </View>
+          </View> */}
+          <View style={styles.dividerContainer}></View>
 
           <Text style={styles.headerText}>I want</Text>
           <View style={styles.coinDetailsParent}>

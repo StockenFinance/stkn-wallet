@@ -120,11 +120,12 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
         <View
           style={{
             width: "70%",
-            borderWidth: 0.5,
+            borderWidth: 0.3,
             borderColor: "#344567",
             alignSelf: "center",
             marginTop: containerHeight === 95 ? "-8%" : "-28%",
             marginLeft: "9%",
+            opacity: 0.3,
           }}
         ></View>
         <Text

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
 import BackIcon from "../../SvgIcon/BackIcon";
-import OptionIcon from "../../SvgIcon/OptionIcon";
+import OptionIcon from "../../SvgIcon/ThreeDotIcon";
 
 const ChartScreen = () => {
   const [selectedTime, setSelectedTime] = useState(null);

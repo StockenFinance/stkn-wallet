@@ -4,7 +4,7 @@
             "outputFile": "com.stockenmobile.app-mergeReleaseResources-32:/values-fr/values-fr.xml",
             "map": [
                 {
-                    "source": "/home/aasim/.gradle/caches/transforms-3/b3627ca143232ec2ceb6e319eb18971d/transformed/appcompat-1.6.1/res/values-fr/values-fr.xml",
+                    "source": "/home/rahul/.gradle/caches/transforms-3/b3627ca143232ec2ceb6e319eb18971d/transformed/appcompat-1.6.1/res/values-fr/values-fr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/aasim/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/res/values-fr/values-fr.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "116",
-                        "startColumns": "4",
-                        "startOffsets": "9827",
-                        "endColumns": "100",
-                        "endOffsets": "9923"
-                    }
-                },
-                {
-                    "source": "/home/aasim/.gradle/caches/transforms-3/d3a8a24834f295d8078f18b8298041f7/transformed/material-1.9.0/res/values-fr/values-fr.xml",
+                    "source": "/home/rahul/.gradle/caches/transforms-3/d3a8a24834f295d8078f18b8298041f7/transformed/material-1.9.0/res/values-fr/values-fr.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -57,7 +40,7 @@
                     }
                 },
                 {
-                    "source": "/home/aasim/.gradle/caches/transforms-3/4fb76773a75baa5b9ef47d3116f7ddda/transformed/jetified-react-android-0.73.5-release/res/values-fr/values-fr.xml",
+                    "source": "/home/rahul/.gradle/caches/transforms-3/4fb76773a75baa5b9ef47d3116f7ddda/transformed/jetified-react-android-0.73.5-release/res/values-fr/values-fr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -71,6 +54,23 @@
                         "startOffsets": "3075,3593,3994,4240,4393,4542,5614,5693,8762,8852,8944,9015,9189,9264,9351,9431,9511,9586,9663,9736,9928,10007,10088,10160",
                         "endColumns": "69,87,82,69,82,66,78,81,89,91,70,86,74,86,79,79,74,76,72,90,78,80,71,79",
                         "endOffsets": "3140,3676,4072,4305,4471,4604,5688,5770,8847,8939,9010,9097,9259,9346,9426,9506,9581,9658,9731,9822,10002,10083,10155,10235"
+                    }
+                },
+                {
+                    "source": "/home/rahul/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/res/values-fr/values-fr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "116",
+                        "startColumns": "4",
+                        "startOffsets": "9827",
+                        "endColumns": "100",
+                        "endOffsets": "9923"
                     }
                 }
             ]

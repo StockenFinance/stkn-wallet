@@ -78,7 +78,7 @@ const CreateWallet = ({ navigation }) => {
       >
         <ImportIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
-        <View style={{ marginLeft: "5%" }}>
+        <View style={{ marginLeft: "2.8%" }}>
           <Text style={styles.createWalletText}>Import Wallet</Text>
           <Text style={styles.subText}>Private key or recovery phrase</Text>
         </View>

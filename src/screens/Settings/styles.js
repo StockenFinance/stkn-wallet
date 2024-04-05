@@ -79,9 +79,10 @@ export const styles = StyleSheet.create({
   },
   currencyText: {
     color: "#253452",
-    marginLeft: "30%",
+    marginLeft: "auto",
     fontSize: 17,
     fontWeight: "800",
+    marginRight: "4%",
   },
   dollarText: { fontSize: 16, fontWeight: "800", color: "#ffffff" },
 });

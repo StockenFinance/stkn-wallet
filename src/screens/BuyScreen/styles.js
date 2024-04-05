@@ -129,13 +129,15 @@ export const styles = StyleSheet.create({
     width: "87%",
     alignSelf: "center",
     marginTop: "15%",
+    borderBottomWidth: 1,
+    paddingHorizontal: 3,
+    borderColor: "#808BA0",
   },
-  divider: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#808BA0",
-    opacity: 0.3,
-  },
+  // divider: {
+  //   height: 1,
+  //   backgroundColor: "#808BA0",
+  //   opacity: 0.3,
+  // },
   swapImageContainer: {
     width: 45,
     height: 40,
@@ -219,7 +221,7 @@ export const styles = StyleSheet.create({
     marginLeft: "8%",
     marginTop: "10%",
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: "600",
     color: "#253452",
   },
   createWalletView: {
@@ -255,7 +257,7 @@ export const styles = StyleSheet.create({
   forwardIcon: {
     width: 20,
     height: 20,
-    marginLeft: "38%",
+    marginLeft: "45%",
     marginTop: "1%",
   },
   paymentMethod: {

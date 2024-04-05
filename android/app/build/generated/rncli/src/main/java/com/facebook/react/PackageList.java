@@ -21,6 +21,8 @@ import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 // @walletconnect/react-native-compat
 import com.walletconnect.reactnativemodule.RNWalletConnectModulePackage;
+// react-native-detector
+import com.reactnativedetector.DetectorPackage;
 // react-native-fs
 import com.rnfs.RNFSPackage;
 // react-native-gesture-handler
@@ -33,6 +35,8 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+// react-native-screen-capture
+import com.recepkocur.screencapture.ScreenCapturePackage;
 // react-native-screens
 import com.swmansion.rnscreens.RNScreensPackage;
 // react-native-svg
@@ -87,12 +91,14 @@ public class PackageList {
       new ReactCheckBoxPackage(),
       new NetInfoPackage(),
       new RNWalletConnectModulePackage(),
+      new DetectorPackage(),
       new RNFSPackage(),
       new RNGestureHandlerPackage(),
       new RNGetRandomValuesPackage(),
       new LinearGradientPackage(),
       new RandomBytesPackage(),
       new SafeAreaContextPackage(),
+      new ScreenCapturePackage(),
       new RNScreensPackage(),
       new SvgPackage()
     ));

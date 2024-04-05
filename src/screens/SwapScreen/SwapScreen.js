@@ -117,7 +117,7 @@ const SwapScreen = ({ route }) => {
           </View>
         </View>
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>I want to Swap</Text>
+          <Text style={styles.headerText}>I want to swap</Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -191,7 +191,7 @@ const SwapScreen = ({ route }) => {
             <View style={styles.divider} />
           </View>
 
-          <Text style={styles.headerText}>I want to Get</Text>
+          <Text style={styles.headerText}>I want to get</Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[

@@ -18,7 +18,7 @@ const ImportWallet = ({ navigation }) => {
   };
 
   const handleOnImport = () => {
-    const wallet = ethers.Wallet.fromPhrase(text);
+    const wallet = ethers.Wallet?.fromPhrase(text);
 
     console.log("check import::::", wallet);
     if (wallet) {
@@ -28,9 +28,8 @@ const ImportWallet = ({ navigation }) => {
     }
   };
 
-  const importButtonStyle = text
-    ? styles.importButtonActive
-    : styles.importButtonInactive;
+  const importButtonStyle =
+    text.length > 12 ? styles.importButtonActive : styles.importButtonInactive;
 
   const handlePaste = async () => {
     const clipboardContent = await Clipboard.getString();

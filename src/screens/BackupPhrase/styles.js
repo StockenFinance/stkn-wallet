@@ -99,6 +99,14 @@ export const styles = StyleSheet.create({
     marginTop: "13%",
     marginLeft: "5%",
   },
+
+  copyIcon: {
+    justifyContent: "center",
+    marginTop: "3%",
+    width: "85%",
+    alignSelf: "center",
+    marginLeft: "155%",
+  },
   checkBox: {
     alignSelf: "center",
     marginLeft: "-3%",

@@ -1,15 +1,67 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+  PermissionsAndroid,
+} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import CheckBox from "react-native-check-box";
 import { styles } from "./styles";
 import BackIcon from "../../SvgIcon/BackIcon";
 import AlertIcon from "../../SvgIcon/AlertIcon";
+import PasteIcon from "../../SvgIcon/PasteIcon";
+import ScreenshotModal from "../../components/ScreenshotModal";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { addScreenshotListener } from "react-native-detector";
 
 const BackupPhrase = ({ navigation, route }) => {
   const { mnemonic } = route.params;
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
   const [randomIndexes, setRandomIndexes] = useState([]);
+
+  const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    const userDidScreenshot = () => {
+      console.log("User took screenshot");
+    };
+    const unsubscribe = addScreenshotListener(userDidScreenshot);
+    // return () => {
+    //   unsubscribe();
+    // };
+  }, []);
+
+  const requestPermission = async () => {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      {
+        title: "Get Read External Storage Access",
+        message: "get read external storage access for detecting screenshots",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK",
+      }
+    );
+  };
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+  const copyToClipboard = async () => {
+    try {
+      Clipboard.setString(mnemonic);
+      Alert.alert("Success", "Your recovery phrase copied to clipboard!", [
+        { text: "OK" },
+      ]);
+    } catch (error) {
+      console.error("Failed to copy text: ", error);
+      Alert.alert("Error", "Failed to copy text!", [{ text: "OK" }]);
+    }
+  };
 
   const getRandomIndexes = () => {
     const allIndexes = Array.from(
@@ -21,6 +73,7 @@ const BackupPhrase = ({ navigation, route }) => {
   };
 
   // Call getRandomIndexes when the component mounts to generate random indexes
+
   useEffect(() => {
     getRandomIndexes();
   }, []);
@@ -66,6 +119,11 @@ const BackupPhrase = ({ navigation, route }) => {
           </View>
         </View>
       </View>
+      <View style={styles.copyIcon}>
+        <TouchableOpacity onPress={copyToClipboard}>
+          <PasteIcon />
+        </TouchableOpacity>
+      </View>
       <View style={styles.termsConsentContainer}>
         <CheckBox
           isChecked={isChecked}
@@ -100,6 +158,7 @@ const BackupPhrase = ({ navigation, route }) => {
           Continue
         </Text>
       </TouchableOpacity>
+      {status && <ScreenshotModal setStatus={setStatus} />}
     </View>
   );
 };

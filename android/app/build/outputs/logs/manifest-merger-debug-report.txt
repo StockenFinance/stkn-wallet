@@ -11,12 +11,14 @@ MERGED from [:react-native-clipboard_clipboard] /home/rahul/Desktop/Stocken-Mobi
 MERGED from [:react-native-community_checkbox] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/checkbox/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-community_netinfo] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-10:12
 MERGED from [:walletconnect_react-native-compat] /home/rahul/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-detector] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-detector/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-fs] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-gesture-handler] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-get-random-values] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-linear-gradient] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-randombytes] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-randombytes/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-safe-area-context] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-screen-capture] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screen-capture/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:3:1-8:12
 MERGED from [:react-native-screens] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-svg] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:2:1-24:12
@@ -197,6 +199,8 @@ MERGED from [:react-native-community_netinfo] /home/rahul/Desktop/Stocken-Mobile
 MERGED from [:react-native-community_netinfo] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:walletconnect_react-native-compat] /home/rahul/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:walletconnect_react-native-compat] /home/rahul/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-detector] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-detector/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-detector] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-detector/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-fs] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-fs] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
@@ -209,6 +213,8 @@ MERGED from [:react-native-randombytes] /home/rahul/Desktop/Stocken-Mobile/node_
 MERGED from [:react-native-randombytes] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-randombytes/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-safe-area-context] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-safe-area-context] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-screen-capture] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screen-capture/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-44
+MERGED from [:react-native-screen-capture] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screen-capture/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-44
 MERGED from [:react-native-screens] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-screens] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-svg] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44

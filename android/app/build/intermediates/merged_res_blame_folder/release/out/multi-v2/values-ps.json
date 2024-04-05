@@ -4,7 +4,7 @@
             "outputFile": "com.stockenmobile.app-mergeReleaseResources-32:/values-ps/values-ps.xml",
             "map": [
                 {
-                    "source": "/home/aasim/.gradle/caches/transforms-3/4fb76773a75baa5b9ef47d3116f7ddda/transformed/jetified-react-android-0.73.5-release/res/values-ps/values-ps.xml",
+                    "source": "/home/rahul/.gradle/caches/transforms-3/4fb76773a75baa5b9ef47d3116f7ddda/transformed/jetified-react-android-0.73.5-release/res/values-ps/values-ps.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",
