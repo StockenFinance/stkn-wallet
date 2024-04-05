@@ -10,19 +10,74 @@ import React, { useState } from "react";
 import { styles } from "./styles";
 import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import DebitCardIcon from "../../SvgIcon/DebitCardIcon";
+import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
+import BuyCurrancyModal from "../../components/BuyCurrancyModal";
 
 const BuyScreen = () => {
   const [selectedRange, setSelectedRange] = useState(null);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState(null);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleCurrencySelect = (currency) => {
+    setSelectedCurrency(currency);
+  };
+  // const [faitCurrency, setFaitCurrency] = useState([]);
+  // const [cryptoCurrency, setCryptoCurrency] = useState([]);
+  // const makeAPICall = () => {
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       accept: "application/json",
+  //     },
+  //   };
+
+  //   fetch("https://api.moonpay.com/v3/currencies", options)
+  //     .then((response) => response.json())
+  //     .then((response) => {
+  //       // Filter fiat and crypto currencies
+  //       const fiatCurrencies = [];
+  //       const cryptoCurrencies = [];
+
+  //       response.forEach((currency) => {
+  //         if (currency.type === "fiat") {
+  //           fiatCurrencies.push(currency.code);
+  //         } else if (currency.type === "crypto") {
+  //           cryptoCurrencies.push(currency.code);
+  //         }
+  //       });
+  //       setFaitCurrency(fiatCurrencies);
+  //       setCryptoCurrency(cryptoCurrencies);
+  //     })
+  //     .catch((err) => {
+  //       setResponseData(null);
+  //       setError(err);
+  //       console.error(err);
+  //     });
+  // };
 
   const handleRangePress = (range) => {
     setSelectedRange(range);
   };
 
+  // console.log("faitCurrency", faitCurrency);
+  // console.log("cryptoCurrency", cryptoCurrency);
+
   return (
     <View style={styles.container}>
       <View style={styles.buySellButtonView}>
         <View style={styles.languageButton}>
-          <Text style={styles.englishText}>Buy</Text>
+          <TouchableOpacity>
+            <Text style={styles.englishText}>Buy</Text>
+          </TouchableOpacity>
         </View>
         <View
           style={[
@@ -49,15 +104,32 @@ const BuyScreen = () => {
                 source={require("../../assets/images/USD.png")}
                 style={styles.coinImage}
               />
-              <Text
+              {/* <Text
                 style={[
                   styles.allNetworksText,
                   { fontSize: 23, fontWeight: "400", marginLeft: 10 },
                 ]}
               >
                 USD
-              </Text>
-
+              </Text> */}
+              <TouchableOpacity onPress={openModal}>
+                <Text
+                  style={[
+                    styles.allNetworksText,
+                    { fontSize: 23, fontWeight: "400", marginLeft: 10 },
+                  ]}
+                  onPress={openModal}
+                >
+                  USDT
+                </Text>
+              </TouchableOpacity>
+              <BuyCurrancyModal
+                isVisible={modalVisible}
+                onClose={closeModal}
+                selectedCurrency={selectedCurrency}
+                value="USDT"
+                onSelect={handleCurrencySelect}
+              />
               <DropDownIcon
                 style={[
                   styles.dropdownImage,
