@@ -36,7 +36,7 @@ const storeWalletAddress = async (walletAddress, wallet) => {
 const storeFullWalletAddress = async (fullWalletAddress) => {
   try {
     await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
-    alert("Data is set successfully ");
+    // alert("Data is set successfully ");
     console.log(
       "Full wallet address stored on create wallet:",
       fullWalletAddress

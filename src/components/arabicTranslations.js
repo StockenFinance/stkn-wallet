@@ -10,9 +10,16 @@ const ArabicTranslation = {
   importWallet: "استيراد المحفظة",
   privateKeyText: "المفتاح الخاص أو عبارة الاسترداد",
 
-  // Landing screen string
-  bedtimeStories: "Bedtijd Verhalen",
-  letsBegin: "Start hier",
+  // Backup Phrase screen Strings
+  backupPhrase: "عبارة النسخ الاحتياطي",
+  yourRecoveryPhraseText: "عبارة الاسترداد الخاصة بك",
+  secutiryMessageText:
+    "اكتب هذه الكلمات أو انسخها بالترتيب الصحيح واحفظها في مكان آمن.",
+  warningText:
+    "!لا تشارك عبارة الاسترداد مع أي شخص أبداً، قم بتخزينها بشكل آمن",
+  consentText:
+    ".أفهم أنه إذا فقدت كلمات الاسترداد الخاصة بي، فلن أتمكن من الوصول إلى محفظتي",
+  continueText: "تابع",
 
   //Reset password screen
   resetPassword: "Wachtwoord opnieuw instellen",

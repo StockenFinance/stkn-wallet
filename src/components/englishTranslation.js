@@ -4,14 +4,20 @@ const EnglishTranslation = {
   restoreWalletText: "  You can restore a wallet or create a new one",
   getStarted: "Get Started",
 
-  //   Creatw Wallet  screen strings
+  // Creatw Wallet  screen strings
   createNewWallet: "Create New Wallet",
   importWallet: "Import Wallet",
   privateKeyText: "Private key or recovery phrase",
-  //Landing screen string
 
-  bedtimeStories: "Bedtime Stories",
-  letsBegin: "Let's Begin",
+  // Backup Phrase Screen strings
+  backupPhrase: "Backup Phrase",
+  yourRecoveryPhraseText: "Your recovery phrase",
+  secutiryMessageText:
+    "Write down or copy these words in the right order and save them somewhere safe.",
+  warningText: "Never share recovery phrase with anyone, store it securely!",
+  consentText:
+    "I understand that if i loose my recovery words, I will not be able to access my wallet.",
+  continueText: "Continue",
 
   //Reset password screen
   resetPassword: "Reset password",

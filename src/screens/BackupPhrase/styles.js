@@ -96,13 +96,14 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     width: "85%",
     alignSelf: "center",
-    marginTop: "13%",
+    marginTop: "10%",
     marginLeft: "5%",
   },
   checkBox: {
     alignSelf: "center",
     marginLeft: "-3%",
     marginHorizontal: "3%",
+    // width: "15%",
   },
   consentText: {
     fontSize: 13,

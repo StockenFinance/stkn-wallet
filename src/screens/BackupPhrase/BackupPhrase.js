@@ -12,6 +12,9 @@ const BackupPhrase = ({ navigation, route }) => {
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
   const [randomIndexes, setRandomIndexes] = useState([]);
+  const [toggleLanguage, setToggleLanguage] = useState(true);
+
+  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
   const getRandomIndexes = () => {
     const allIndexes = Array.from(
@@ -41,19 +44,34 @@ const BackupPhrase = ({ navigation, route }) => {
             style={styles.backIcon}
           />
         </TouchableOpacity>
-        <Text style={styles.walletText}>
-          {" "}
+        <Text
+          style={[
+            styles.walletText,
+            { left: selectedLanguage === "arabic" ? "35%" : null },
+          ]}
+        >
           {selectedLanguage === "english"
-            ? EnglishTranslation.welcome
-            : ArabicTranslation.welcome}
+            ? EnglishTranslation.backupPhrase
+            : ArabicTranslation.backupPhrase}
         </Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
-        <Text style={styles.recoveryPhraseText}> Your recovery phrase</Text>
+        <Text style={styles.recoveryPhraseText}>
+          {""}
+          {selectedLanguage === "english"
+            ? EnglishTranslation.yourRecoveryPhraseText
+            : ArabicTranslation.yourRecoveryPhraseText}
+        </Text>
 
-        <Text style={styles.subText}>
-          Write down or copy these words in the right order and save them
-          somewhere safe.
+        <Text
+          style={[
+            styles.subText,
+            { width: selectedLanguage === "arabic" ? "105%" : null },
+          ]}
+        >
+          {selectedLanguage === "english"
+            ? EnglishTranslation.secutiryMessageText
+            : ArabicTranslation.secutiryMessageText}
         </Text>
       </View>
       <View style={styles.securityMessageContainer}>
@@ -62,7 +80,9 @@ const BackupPhrase = ({ navigation, route }) => {
           style={styles.alertImage}
         />
         <Text style={styles.securityText}>
-          Never share recovery phrase with anyone, store it securely!
+          {selectedLanguage === "english"
+            ? EnglishTranslation.warningText
+            : ArabicTranslation.warningText}
         </Text>
       </View>
       <View style={styles.securityPhraseContainer}>
@@ -90,11 +110,20 @@ const BackupPhrase = ({ navigation, route }) => {
           isChecked={isChecked}
           onClick={() => setIsChecked(!isChecked)}
           checkedCheckBoxColor="#F19220"
-          style={styles.checkBox}
+          style={[
+            styles.checkBox,
+            { width: selectedLanguage === "arabic" ? "15%" : null },
+          ]}
         />
-        <Text style={styles.consentText}>
-          I understand that if i loose my recovery words, I will not be able to
-          access my wallet
+        <Text
+          style={[
+            styles.consentText,
+            { right: selectedLanguage === "arabic" ? "105%" : null },
+          ]}
+        >
+          {selectedLanguage === "english"
+            ? EnglishTranslation.consentText
+            : ArabicTranslation.consentText}
         </Text>
       </View>
       <TouchableOpacity
@@ -116,7 +145,9 @@ const BackupPhrase = ({ navigation, route }) => {
             isChecked ? styles.importTextEnabled : styles.importTextDisabled,
           ]}
         >
-          Continue
+          {selectedLanguage === "english"
+            ? EnglishTranslation.continueText
+            : ArabicTranslation.continueText}
         </Text>
       </TouchableOpacity>
     </View>
