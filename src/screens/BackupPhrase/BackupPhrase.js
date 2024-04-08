@@ -2,8 +2,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import CheckBox from "react-native-check-box";
 import { styles } from "./styles";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
+import { Utils } from "../../utils/LocalStorage";
 
 const BackupPhrase = ({ navigation, route }) => {
+  const { selectedLanguage } = route.params;
   const { mnemonic } = route.params;
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
@@ -22,6 +26,12 @@ const BackupPhrase = ({ navigation, route }) => {
   useEffect(() => {
     getRandomIndexes();
   }, []);
+
+  useEffect(() => {
+    Utils.getStoreData("changeLanguage").then((res) => {
+      setToggleLanguage(res);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -31,7 +41,12 @@ const BackupPhrase = ({ navigation, route }) => {
             style={styles.backIcon}
           />
         </TouchableOpacity>
-        <Text style={styles.walletText}>Backup Phrase</Text>
+        <Text style={styles.walletText}>
+          {" "}
+          {selectedLanguage === "english"
+            ? EnglishTranslation.welcome
+            : ArabicTranslation.welcome}
+        </Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
         <Text style={styles.recoveryPhraseText}> Your recovery phrase</Text>

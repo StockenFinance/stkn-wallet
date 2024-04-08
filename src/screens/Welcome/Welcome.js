@@ -1,13 +1,61 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Welcome = ({ navigation }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const [selectedLanguage, setSelectedLanguage] = useState("english");
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
   };
+
+  const translations =
+    selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+
+  console.log("language selected:::::", selectedLanguage);
+
+  const saveSelectedLanguage = async (language) => {
+    try {
+      await AsyncStorage.setItem("selectedLanguage", language);
+    } catch (error) {
+      console.error("Error saving selected language to AsyncStorage:", error);
+    }
+  };
+  const toggleLanguage = async () => {
+    if (selectedLanguage === "english") {
+      setSelectedLanguage("english");
+      try {
+        await AsyncStorage.setItem("changeLanguage", "true");
+      } catch (error) {
+        console.error("Error saving selected language to AsyncStorage:", error);
+      }
+      saveSelectedLanguage("english");
+    } else {
+      try {
+        await AsyncStorage.setItem("changeLanguage", "false");
+      } catch (error) {
+        console.error("Error saving selected language to AsyncStorage:", error);
+      }
+      setSelectedLanguage("english");
+      saveSelectedLanguage("english");
+    }
+  };
+
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    toggleLanguage();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -16,21 +64,28 @@ const Welcome = ({ navigation }) => {
           source={require("../../assets/images/welcome.png")}
           style={styles.image}
         />
-        <Text style={styles.welcomeText}> Welcome</Text>
+        <Text style={styles.welcomeText}>
+          {" "}
+          {selectedLanguage === "english"
+            ? EnglishTranslation.welcome
+            : ArabicTranslation.welcome}
+        </Text>
         <Text style={styles.restoreWalletText}>
-          You can restore a wallet or create a new one
+          {selectedLanguage === "english"
+            ? EnglishTranslation.restoreWalletText
+            : ArabicTranslation.restoreWalletText}
         </Text>
       </View>
       <View style={styles.languageViewContainer}>
         <Text style={styles.languageText}>Language</Text>
         <View style={[styles.languageButtonContainer, { marginLeft: "-5%" }]}>
           <TouchableOpacity
-            onPress={() => handleLanguageChange("English")}
+            onPress={() => handleLanguageChange("english")}
             style={[
               styles.languageButton,
               {
                 backgroundColor:
-                  selectedLanguage === "English" ? "#F19220" : "#F4F7FA",
+                  selectedLanguage === "english" ? "#F19220" : "#F4F7FA",
               },
             ]}
           >
@@ -38,7 +93,7 @@ const Welcome = ({ navigation }) => {
               style={[
                 styles.englishText,
                 {
-                  color: selectedLanguage === "English" ? "#ffffff" : "#000000",
+                  color: selectedLanguage === "english" ? "#ffffff" : "#000000",
                 },
               ]}
             >
@@ -46,12 +101,12 @@ const Welcome = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleLanguageChange("Arabic")}
+            onPress={() => handleLanguageChange("arabic")}
             style={[
               styles.languageButton,
               {
                 backgroundColor:
-                  selectedLanguage === "Arabic" ? "#F19220" : "#F4F7FA",
+                  selectedLanguage === "arabic" ? "#F19220" : "#F4F7FA",
               },
             ]}
           >
@@ -59,7 +114,7 @@ const Welcome = ({ navigation }) => {
               style={[
                 styles.englishText,
                 {
-                  color: selectedLanguage === "Arabic" ? "#ffffff" : "#000000",
+                  color: selectedLanguage === "arabic" ? "#ffffff" : "#000000",
                   fontSize: 21,
                   marginBottom: "5%",
                 },
@@ -70,10 +125,18 @@ const Welcome = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("CreateWallet")}
+          onPress={() =>
+            navigation.navigate("CreateWallet", {
+              selectedLanguage: selectedLanguage,
+            })
+          }
           style={styles.getStartedContainer}
         >
-          <Text style={styles.getStartedText}>Get Started</Text>
+          <Text style={styles.getStartedText}>
+            {selectedLanguage === "english"
+              ? EnglishTranslation.getStarted
+              : ArabicTranslation.getStarted}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

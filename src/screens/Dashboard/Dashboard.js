@@ -283,9 +283,9 @@ const Dashboard = ({ navigation }) => {
     ]);
     console.log("walet response?????", wallet);
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 2000);
   };
 
   const storeWalletAddress = async (walletAddress, wallet) => {
