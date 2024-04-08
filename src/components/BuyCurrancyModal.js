@@ -11,34 +11,13 @@ import Modal from "react-native-modal";
 const BuyCurrancyModal = ({
   isVisible,
   onClose,
-  selectedCurrency,
   value,
   onSelect,
+  data: fiatCurrencies,
+  height,
 }) => {
-  const [fiatCurrencies, setFiatCurrencies] = useState([]);
-  const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
-
-  useEffect(() => {
-    makeAPICall();
-  }, []);
-
-  const makeAPICall = async () => {
-    try {
-      const response = await fetch("https://api.moonpay.com/v3/currencies");
-      const data = await response.json();
-
-      const fiat = data.filter((currency) => currency.type === "fiat");
-      const crypto = data.filter((currency) => currency.type === "crypto");
-
-      setFiatCurrencies(fiat);
-      setCryptoCurrencies(crypto);
-    } catch (error) {
-      console.error("Error fetching currencies: ", error);
-    }
-  };
-
-  const handleChainSelect = (chain) => {
-    onSelect(chain);
+  const handleChainSelect = (currency) => {
+    onSelect(currency);
     onClose();
   };
 
@@ -48,26 +27,26 @@ const BuyCurrancyModal = ({
       animationIn="fadeIn"
       animationOut="fadeOut"
       backdropOpacity={0}
-      style={styles.modalContainer}
+      style={[styles.modalContainer, { height: height }]}
       isVisible={isVisible}
       onBackdropPress={onClose}
     >
       <View style={styles.modalContent}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={[...fiatCurrencies, ...cryptoCurrencies]}
+          data={[...fiatCurrencies]}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleChainSelect(item.name)}>
-              <Text style={styles.chainText}>{item.name}</Text>
+            <TouchableOpacity onPress={() => handleChainSelect(item.code)}>
+              <Text style={[styles.chainText, { textTransform: "uppercase" }]}>
+                {item.code}
+              </Text>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
         />
       </View>
-      {selectedCurrency && (
-        <Text style={styles.selectedText}>Selected Chain: {value}</Text>
-      )}
+      {/* {<Text style={styles.selectedText}>{value}</Text>} */}
     </Modal>
   );
 };
@@ -83,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     position: "absolute",
-    top: "55%",
+    top: "30%",
     left: "10%",
     borderWidth: 1,
     borderColor: "#253452",
