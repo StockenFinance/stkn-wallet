@@ -31,6 +31,9 @@ const EnglishTranslation = {
   // Import wallet screen strings
   privateKeyText: "Private Key/recovery Phrase",
   import: "Import",
+
+  // Dashboard screen strings
+  addNewWallet: "Add New Wallet",
 };
 
 export default EnglishTranslation;

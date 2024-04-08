@@ -32,7 +32,11 @@ const RecoveryPhraseConfirmation = ({ navigation, route }) => {
       </View>
       <TouchableOpacity
         style={styles.getStartedContainer}
-        onPress={() => navigation.navigate("Dashboard")}
+        onPress={() =>
+          navigation.navigate("Dashboard", {
+            selectedLanguage: selectedLanguage,
+          })
+        }
       >
         <Text style={styles.getStartedText}>
           {" "}

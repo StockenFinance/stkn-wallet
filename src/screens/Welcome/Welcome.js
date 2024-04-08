@@ -12,8 +12,7 @@ const Welcome = ({ navigation }) => {
     setSelectedLanguage(language);
   };
 
-  const translations =
-    selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
   console.log("language selected:::::", selectedLanguage);
 
@@ -26,13 +25,13 @@ const Welcome = ({ navigation }) => {
   };
   const toggleLanguage = async () => {
     if (selectedLanguage === "english") {
-      setSelectedLanguage("english");
+      setSelectedLanguage("arabic");
       try {
         await AsyncStorage.setItem("changeLanguage", "true");
       } catch (error) {
         console.error("Error saving selected language to AsyncStorage:", error);
       }
-      saveSelectedLanguage("english");
+      saveSelectedLanguage("arabic");
     } else {
       try {
         await AsyncStorage.setItem("changeLanguage", "false");

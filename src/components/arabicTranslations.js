@@ -33,6 +33,9 @@ const ArabicTranslation = {
   // Import Wallet screen strings
   privateKeyText: "المفتاح الخاص/عبارة الاسترداد",
   import: "الاستيراد",
+
+  // Dashboard screen strings
+  addNewWallet: "إضافة محفظة جديدة",
 };
 
 export default ArabicTranslation;
