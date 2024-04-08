@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomTextInput from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Clipboard from "@react-native-clipboard/clipboard";
@@ -7,8 +7,15 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { ethers } from "ethers";
 import "react-native-get-random-values";
 import { styles } from "./styles";
+import { Utils } from "../../utils/LocalStorage";
+import ArabicTranslation from "../../components/arabicTranslations";
+import EnglishTranslation from "../../components/englishTranslation";
 
-const ImportWallet = ({ navigation }) => {
+const ImportWallet = ({ navigation, route }) => {
+  const { selectedLanguage } = route.params;
+  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+
+  const [toggleLanguage, setToggleLanguage] = useState(true);
   const [text, setText] = useState("");
   const handleChangeText = (newText) => {
     setText(newText);
@@ -33,6 +40,12 @@ const ImportWallet = ({ navigation }) => {
     const clipboardContent = await Clipboard.getString();
     setText(clipboardContent);
   };
+
+  useEffect(() => {
+    Utils.getStoreData("changeLanguage").then((res) => {
+      setToggleLanguage(res);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -43,7 +56,11 @@ const ImportWallet = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <Text style={styles.walletText}>Import Wallet</Text>
+        <Text style={styles.walletText}>
+          {selectedLanguage === "english"
+            ? EnglishTranslation.importWallet
+            : ArabicTranslation.importWallet}
+        </Text>
         <Image
           source={require("../../assets/images/scanner.png")}
           style={styles.scanIcon}
@@ -57,13 +74,24 @@ const ImportWallet = ({ navigation }) => {
             marginBottom: "3%",
           }}
         >
-          <Text style={styles.inputHeaderText}>
-            Private Key/recovery Phrase
+          <Text
+            style={[
+              styles.inputHeaderText,
+              { right: selectedLanguage === "arabic" ? "2%" : null },
+            ]}
+          >
+            {selectedLanguage === "english"
+              ? EnglishTranslation.privateKeyText
+              : ArabicTranslation.privateKeyText}
           </Text>
         </View>
         <View style={styles.EnterInputContainer}>
           <CustomTextInput
-            placeholder="Private key or Recovery Phase"
+            placeholder={
+              selectedLanguage === "english"
+                ? " Private key or Recovery Phase"
+                : "المفتاح الخاص أو مرحلة الاسترداد"
+            }
             onChangeText={handleChangeText}
             value={text}
           />
@@ -84,7 +112,12 @@ const ImportWallet = ({ navigation }) => {
         }
         disabled={importButtonStyle !== styles.importButtonActive}
       >
-        <Text style={[styles.importText, importButtonStyle]}>Import</Text>
+        <Text style={[styles.importText, importButtonStyle]}>
+          {" "}
+          {selectedLanguage === "english"
+            ? EnglishTranslation.import
+            : ArabicTranslation.import}
+        </Text>
       </TouchableOpacity>
     </View>
   );

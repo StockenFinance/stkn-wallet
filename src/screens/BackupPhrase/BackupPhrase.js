@@ -131,6 +131,7 @@ const BackupPhrase = ({ navigation, route }) => {
           navigation.navigate("ConfirmBackupPhrase", {
             mnemonicWords,
             randomIndexes,
+            selectedLanguage: selectedLanguage,
           })
         }
         style={[

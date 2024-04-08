@@ -9,12 +9,20 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { styles } from "./styles";
+import ArabicTranslation from "../../components/arabicTranslations";
+import EnglishTranslation from "../../components/englishTranslation";
+import { Utils } from "../../utils/LocalStorage";
 
 const ConfirmBackupPhrase = ({ navigation, route }) => {
+  const { selectedLanguage } = route.params;
+  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+
   const [isChoose, setIsChoose] = useState([]);
   const [randomIndicess, setRandomIndicess] = useState([]);
   const [questionNumber, setQuestionNumber] = useState([]);
   const [questionValue, setQuestionValue] = useState([]);
+  const [toggleLanguage, setToggleLanguage] = useState(true);
+
   const [selected, setSelected] = useState([
     {
       value: "",
@@ -129,7 +137,9 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           JSON.stringify(questionNumberArray) ===
           JSON.stringify(selectedIndices)
         ) {
-          navigation.navigate("RecoveryPhraseConfirmation");
+          navigation.navigate("RecoveryPhraseConfirmation", {
+            selectedLanguage: selectedLanguage,
+          });
           // Alert.alert("You have completed the section!", "", [
           //   {
           //     text: "OK",
@@ -150,6 +160,11 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
   console.log("check indeces", randomIndicess);
   console.log("check :::::", mnemonicWords);
 
+  useEffect(() => {
+    Utils.getStoreData("changeLanguage").then((res) => {
+      setToggleLanguage(res);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -160,17 +175,23 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           />
         </TouchableOpacity>
 
-        <Text style={styles.walletText}>Backup Phrase</Text>
+        <Text style={styles.walletText}>
+          {selectedLanguage === "english"
+            ? EnglishTranslation.backupPhrase
+            : ArabicTranslation.backupPhrase}
+        </Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
         <Text style={styles.recoveryPhraseText}>
-          {" "}
-          Confirm your recovery phrase
+          {selectedLanguage === "english"
+            ? EnglishTranslation.confirmInput
+            : ArabicTranslation.confirmPhraseText}
         </Text>
 
         <Text style={styles.subText}>
-          To be sure you backed up your recovery phrase correctly, please, enter
-          its words in the fields below in the right order.
+          {selectedLanguage === "english"
+            ? EnglishTranslation.assurityText
+            : ArabicTranslation.assurityText}
         </Text>
       </View>
 
@@ -285,11 +306,15 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           </View>
           <Text style={styles.importText}>
             {/* Please select word #6 from the list */}
-            Please select word #
+            {selectedLanguage === "english"
+              ? EnglishTranslation.selectWordText
+              : ArabicTranslation.selectWordText}
             {selected.findIndex((item) => item.isFocus) !== -1
               ? questionNumber[selected.findIndex((item) => item.isFocus)] + 1
               : ""}{" "}
-            from the list
+            {selectedLanguage === "english"
+              ? EnglishTranslation.listText
+              : ArabicTranslation.listText}
           </Text>
         </View>
       </View>

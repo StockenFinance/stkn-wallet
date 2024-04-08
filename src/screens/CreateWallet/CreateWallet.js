@@ -115,7 +115,11 @@ const CreateWallet = ({ navigation, route }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.createWalletView, { marginTop: "5%" }]}
-        onPress={() => navigation.navigate("ImportWallet")}
+        onPress={() =>
+          navigation.navigate("ImportWallet", {
+            selectedLanguage: selectedLanguage,
+          })
+        }
       >
         <Image
           source={require("../../assets/images/importWallet.png")}
