@@ -18,7 +18,9 @@ import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 
 const SwapScreen = ({ route, tokenList }) => {
-  const { selectedSymbol, tokens } = route?.params;
+  // const { selectedSymbol, tokens } = route?.params;
+  // const { tokens } = route?.params;
+
   const [selectedToken, setSelectedToken] = useState(null);
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
@@ -176,8 +178,8 @@ const SwapScreen = ({ route, tokenList }) => {
                     { fontSize: 23, fontWeight: "400" },
                   ]}
                 >
-                  {selectedSymbol}
-                  {/* {selectedCurrency ? selectedCurrency : "ETH"} */}
+                  {/* {selectedSymbol} */}
+                  {selectedCurrency ? selectedCurrency : "ETH"}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -197,7 +199,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 onClose={() => setSwapCurrencyModalVisible(false)}
                 // onSelect={handleCurrencySelect}
                 value={selectedCurrency}
-                tokens={tokens}
+                // tokens={tokens}
                 onSelect={handleTokenSelect}
               />
             </View>
