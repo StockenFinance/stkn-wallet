@@ -37,6 +37,54 @@ const EnglishTranslation = {
   wallet: "Wallet",
   receive: "Receive",
   yourBalance: "Your Balance",
+  send: "Send",
+  receive: "Receive",
+  swap: "Swap",
+  chart: "Chart",
+  allNetworkText: "All Network",
+  copyAddress: "Copy Address",
+  turnOffNotifications: "Turn off notifications",
+  customize: "Customize",
+  enterToken: "Enter Token Address",
+  name: "Name",
+  symbol: "Symbol",
+  decimal: "Decimal",
+  importToken: "Import Token",
+
+  // Swap screen strings
+  wantToSwap: "I want to Swap",
+  min: "MIN",
+  half: "HALF",
+  max: "MAX",
+  wantToGet: "I want to Get",
+  swapServicesMessage:
+    "Swap services are available through third-party API providers",
+  confirm: "Confirm",
+
+  // Buy screen strings
+  buy: "Buy",
+  sell: "Sell",
+  iHave: "I have",
+  iWant: "I want",
+  paymentMethod: "Payment Method",
+  moonPay: "Fulfilled by Moonpay",
+
+  // Chart screen strings
+  all: "ALL",
+  marketCap: "Market cap",
+  volume: "24h volume",
+  popularity: "Popularity",
+
+  // Settings screen strings
+  settings: "Settings",
+  walletManagement: "Wallet Management",
+  setCurrency: "Set Currency",
+  language: "Language",
+  walletConnect: "Wallet Connect",
+  customTokens: "Custom Tokens",
+  passcode: "Passcode & Face ID",
+  viewPhrase: "View Recovery Phrase",
+  viewKey: "View Private Key",
 };
 
 export default EnglishTranslation;

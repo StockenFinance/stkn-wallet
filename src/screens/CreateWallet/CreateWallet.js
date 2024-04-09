@@ -23,7 +23,6 @@ const storeWalletAddress = async (walletAddress, wallet) => {
     const shortenedAddress =
       walletAddress.slice(0, 6) + walletAddress.slice(-6);
 
-    // await AsyncStorage.clear();
     await AsyncStorage.setItem("walletAddress", shortenedAddress);
 
     console.log("wallet address stored on create wallet:::", walletAddress);
@@ -101,6 +100,7 @@ const CreateWallet = ({ navigation, route }) => {
     });
   }, []);
 
+  console.log("checking loading>>>>", loading);
   return (
     <View style={styles.container}>
       <Image

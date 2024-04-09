@@ -1,8 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
+import EnglishTranslation from "./englishTranslation";
+import ArabicTranslation from "./arabicTranslations";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CustomModal = ({ isVisible, onClose }) => {
+  const [toggleLanguage, setToggleLanguage] = useState(null);
+
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
+  };
+
   return (
     <Modal
       animationType="none"
@@ -16,21 +41,27 @@ const CustomModal = ({ isVisible, onClose }) => {
       <View style={styles.modalContent}>
         <TouchableOpacity onPress={() => console.log("Copy address")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Copy Address
+            {toggleLanguage
+              ? EnglishTranslation.addNewWallet
+              : ArabicTranslation.addNewWallet}
           </Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Turn off notification")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Turn off notifications
+            {toggleLanguage
+              ? EnglishTranslation.turnOffNotifications
+              : ArabicTranslation.turnOffNotifications}
           </Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Customize")}>
           <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Customize
+            {toggleLanguage
+              ? EnglishTranslation.customize
+              : ArabicTranslation.customize}
           </Text>
         </TouchableOpacity>
       </View>

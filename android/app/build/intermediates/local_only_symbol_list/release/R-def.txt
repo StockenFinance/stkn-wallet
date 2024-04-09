@@ -18,7 +18,6 @@ drawable src_assets_images_debitcard
 drawable src_assets_images_dropdown
 drawable src_assets_images_eth
 drawable src_assets_images_ethereum
-drawable src_assets_images_forward
 drawable src_assets_images_hometab
 drawable src_assets_images_importwallet
 drawable src_assets_images_key
@@ -35,7 +34,6 @@ drawable src_assets_images_send
 drawable src_assets_images_settings
 drawable src_assets_images_settingswallet
 drawable src_assets_images_swap
-drawable src_assets_images_timer
 drawable src_assets_images_usd
 drawable src_assets_images_usdt
 drawable src_assets_images_walletconnect

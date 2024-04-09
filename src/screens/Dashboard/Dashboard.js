@@ -286,31 +286,27 @@ const Dashboard = ({ navigation }) => {
       },
     ]);
     console.log("walet response?????", wallet);
-
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 2000);
   };
 
-  const storeWalletAddress = async (walletAddress, wallet) => {
-    try {
-      const shortenedAddress =
-        walletAddress.slice(0, 6) + walletAddress.slice(-6);
-      // await AsyncStorage.clear();
-      await AsyncStorage.setItem("walletAddress", shortenedAddress);
+  // const storeWalletAddress = async (walletAddress, wallet) => {
+  //   try {
+  //     const shortenedAddress =
+  //       walletAddress.slice(0, 6) + walletAddress.slice(-6);
+  //     // await AsyncStorage.clear();
+  //     await AsyncStorage.setItem("walletAddress", shortenedAddress);
 
-      console.log("wallet address stored:::", walletAddress);
+  //     console.log("wallet address stored on Dashboard:::", walletAddress);
 
-      await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
-      console.log("wallet  stored:::", wallet);
-    } catch (error) {
-      console.error("Error storing wallet address:", error);
-    }
-  };
+  //     await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
+  //     console.log("wallet  stored:::", wallet);
+  //   } catch (error) {
+  //     console.error("Error storing wallet address:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    storeWalletAddress(generatedWalletAddress, walletStore);
-  }, [generatedWalletAddress, walletStore]);
+  // useEffect(() => {
+  //   storeWalletAddress(generatedWalletAddress, walletStore);
+  // }, [generatedWalletAddress, walletStore]);
 
   console.log("new wallet account>>>>>>", newAccount);
 
@@ -342,7 +338,7 @@ const Dashboard = ({ navigation }) => {
       // Loop through all keys and get their corresponding values
       for (const key of allKeys) {
         const value = await AsyncStorage.getItem(key);
-        console.log(`Value for key "${key}":`, value);
+        console.log(`Value for key"${key}":`, value);
       }
     } catch (error) {
       console.error("Error checking AsyncStorage status:", error);
@@ -357,7 +353,11 @@ const Dashboard = ({ navigation }) => {
             style={styles.allNetworksImage}
           />
           <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
-            <Text style={styles.allNetworksText}>All Networks</Text>
+            <Text style={styles.allNetworksText}>
+              {toggleLanguage
+                ? EnglishTranslation.allNetworkText
+                : ArabicTranslation.allNetrworkText}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
             <Image

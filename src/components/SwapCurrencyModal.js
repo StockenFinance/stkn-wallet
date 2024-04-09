@@ -17,6 +17,7 @@ const SwapCurrencyModal = ({
   selectedCurrency,
   value,
   onSelect,
+  tokens,
 }) => {
   const [isChains, setIsChains] = useState([]);
 

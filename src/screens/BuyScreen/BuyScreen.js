@@ -6,21 +6,47 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
 
 const BuyScreen = () => {
   const [selectedRange, setSelectedRange] = useState(null);
+  const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const handleRangePress = (range) => {
     setSelectedRange(range);
+  };
+
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.buySellButtonView}>
         <View style={styles.languageButton}>
-          <Text style={styles.englishText}>Buy</Text>
+          <Text style={styles.englishText}>
+            {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
+          </Text>
         </View>
         <View
           style={[
@@ -30,12 +56,18 @@ const BuyScreen = () => {
             },
           ]}
         >
-          <Text style={[styles.englishText, { color: "#253452" }]}>Sell</Text>
+          <Text style={[styles.englishText, { color: "#253452" }]}>
+            {toggleLanguage ? EnglishTranslation.sell : ArabicTranslation.sell}
+          </Text>
         </View>
       </View>
       <ScrollView>
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>I have</Text>
+          <Text style={styles.headerText}>
+            {toggleLanguage
+              ? EnglishTranslation.iHave
+              : ArabicTranslation.iHave}
+          </Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -71,7 +103,12 @@ const BuyScreen = () => {
             <View style={styles.divider} />
           </View>
 
-          <Text style={styles.headerText}>I want</Text>
+          <Text style={styles.headerText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.iWant
+              : ArabicTranslation.iWant}
+          </Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -164,13 +201,24 @@ const BuyScreen = () => {
                   },
                 ]}
               >
-                MAX
+                {toggleLanguage
+                  ? EnglishTranslation.max
+                  : ArabicTranslation.max}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Text style={styles.paymentMethodText}>Payment Method</Text>
+        <Text
+          style={[
+            styles.paymentMethodText,
+            { right: !toggleLanguage ? "10%" : null },
+          ]}
+        >
+          {toggleLanguage
+            ? EnglishTranslation.paymentMethod
+            : ArabicTranslation.paymentMethod}
+        </Text>
         <View style={styles.createWalletView}>
           <View style={styles.swapImageContainer}>
             <Image
@@ -186,9 +234,23 @@ const BuyScreen = () => {
             style={styles.forwardIcon}
           />
         </View>
-        <Text style={styles.paymentMethod}>Fulfilled by Moonpay</Text>
+        <Text
+          style={[
+            styles.paymentMethod,
+            { right: !toggleLanguage ? "10%" : null },
+          ]}
+        >
+          {toggleLanguage
+            ? EnglishTranslation.moonPay
+            : ArabicTranslation.moonPay}
+        </Text>
         <View style={styles.importButton}>
-          <Text style={styles.importText}>Continue</Text>
+          <Text style={styles.importText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.continueText
+              : ArabicTranslation.continueText}
+          </Text>
         </View>
       </ScrollView>
     </View>

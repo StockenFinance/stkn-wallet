@@ -12,9 +12,14 @@ import {
 import Clipboard from "@react-native-clipboard/clipboard";
 import { tokenDetail } from "../utils/helper";
 import { ethers } from "ethers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "./englishTranslation";
+import ArabicTranslation from "./arabicTranslations";
 
 const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const [tokenNumber, setTokenNumber] = useState("");
+  const [toggleLanguage, setToggleLanguage] = useState(null);
+
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
     decimals: "",
@@ -150,6 +155,26 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     }
   };
 
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -160,13 +185,19 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
       <TouchableWithoutFeedback onPress={handleOverlayPress}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.HeaderText}>Enter Token Address</Text>
+            <Text style={styles.HeaderText}>
+              {toggleLanguage
+                ? EnglishTranslation.enterToken
+                : ArabicTranslation.enterToken}
+            </Text>
 
             <View style={styles.TokenInputContainer}>
               <TextInput
                 placeholderTextColor={"#7483A1"}
                 style={styles.input}
-                placeholder="Enter Token "
+                placeholder={
+                  toggleLanguage ? "Enter Token" : "أدخل الرمز المميز"
+                }
                 value={tokenNumber}
                 onChangeText={(text) => {
                   setTokenNumber(text);
@@ -185,7 +216,9 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   fontWeight: "900",
                 }}
               >
-                Name
+                {toggleLanguage
+                  ? EnglishTranslation.name
+                  : ArabicTranslation.name}
               </Text>
               <TextInput
                 style={styles.readOnlyInput}
@@ -199,7 +232,9 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   fontWeight: "900",
                 }}
               >
-                Symbol
+                {toggleLanguage
+                  ? EnglishTranslation.symbol
+                  : ArabicTranslation.symbol}
               </Text>
               <TextInput
                 style={styles.readOnlyInput}
@@ -213,7 +248,9 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   fontWeight: "900",
                 }}
               >
-                Decimal
+                {toggleLanguage
+                  ? EnglishTranslation.decimal
+                  : ArabicTranslation.decimal}
               </Text>
               <TextInput
                 style={styles.readOnlyInput}
@@ -242,7 +279,11 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   handleOverlayPress();
                 }}
               >
-                <Text style={styles.doneButtonText}>Import Token</Text>
+                <Text style={styles.doneButtonText}>
+                  {toggleLanguage
+                    ? EnglishTranslation.importToken
+                    : ArabicTranslation.importToken}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

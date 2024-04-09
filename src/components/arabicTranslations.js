@@ -39,6 +39,54 @@ const ArabicTranslation = {
   wallet: "المحفظة",
   receive: "استلم",
   yourBalance: "رصيدك",
+  send: "إرسال",
+  receive: "استلم",
+  swap: "مقايضة",
+  chart: "الرسم البياني",
+  allNetrworkText: "جميع الشبكات",
+  copyAddress: " نسخ العنوان",
+  turnOffNotifications: "إيقاف تشغيل الإشعارات",
+  customize: "التخصيص",
+  enterToken: "أدخل عنوان الرمز المميز",
+  name: "الاسم",
+  symbol: " الرمز",
+  decimal: "عشري",
+  importToken: "رمز الاستيراد",
+
+  // Swap screen strings
+  wantToSwap: "أريد المبادلة",
+  min: "مين",
+  half: "النصف",
+  max: "ماكس",
+  wantToGet: "أريد الحصول على",
+  swapServicesMessage:
+    "تتوفر خدمات المقايضة من خلال موفري واجهة برمجة التطبيقات (API) التابعين لجهات خارجية",
+  confirm: "تأكيد",
+
+  // Buy screen strings
+  buy: "اشترِ",
+  sell: "البيع",
+  iHave: "لدي",
+  iWant: "أريد",
+  paymentMethod: "طريقة الدفع",
+  moonPay: "تم إنجازه بواسطة Moonpay",
+
+  //Chart screen strings
+  all: "كل شيء",
+  marketCap: "القيمة السوقية",
+  volume: "حجم 24 ساعة",
+  popularity: "الشعبية",
+
+  // Settings screen strings
+  settings: "الإعدادات",
+  walletManagement: "إدارة المحافظ",
+  setCurrency: "تعيين العملة",
+  language: "اللغة",
+  walletConnect: "اتصال المحفظة",
+  customTokens: "الرموز المميزة المخصصة",
+  passcode: "رمز المرور ومعرف الوجه",
+  viewPhrase: "عرض عبارة الاسترداد",
+  viewKey: "عرض المفتاح الخاص",
 };
 
 export default ArabicTranslation;
