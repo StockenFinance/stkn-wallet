@@ -20,6 +20,8 @@ import { tokenDetail } from "../../utils/helper";
 import { fetchCryptoData } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNewWallet, provider } from "../../utils/helper";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
 
 const Dashboard = ({ navigation }) => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -33,6 +35,8 @@ const Dashboard = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
+  const [toggleLanguage, setToggleLanguage] = useState(null);
+
   const [newAccount, setNewAccount] = useState([
     {
       newWalletAddress: "",
@@ -292,7 +296,7 @@ const Dashboard = ({ navigation }) => {
     try {
       const shortenedAddress =
         walletAddress.slice(0, 6) + walletAddress.slice(-6);
-      await AsyncStorage.clear();
+      // await AsyncStorage.clear();
       await AsyncStorage.setItem("walletAddress", shortenedAddress);
 
       console.log("wallet address stored:::", walletAddress);
@@ -309,6 +313,41 @@ const Dashboard = ({ navigation }) => {
   }, [generatedWalletAddress, walletStore]);
 
   console.log("new wallet account>>>>>>", newAccount);
+
+  useEffect(() => {
+    retrieveSelectedLanguage();
+    checkAsyncStorageStatus();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
+  };
+  const checkAsyncStorageStatus = async () => {
+    try {
+      const allKeys = await AsyncStorage.getAllKeys();
+      console.log("All AsyncStorage Keys:", allKeys);
+
+      // Loop through all keys and get their corresponding values
+      for (const key of allKeys) {
+        const value = await AsyncStorage.getItem(key);
+        console.log(`Value for key "${key}":`, value);
+      }
+    } catch (error) {
+      console.error("Error checking AsyncStorage status:", error);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -334,8 +373,17 @@ const Dashboard = ({ navigation }) => {
         </View>
         <View style={styles.timerImage}>
           <TouchableOpacity onPress={() => createWallet()}>
-            <Text style={{ color: "#253452", fontSize: 14, fontWeight: "600" }}>
-              Add New Wallet
+            <Text
+              style={{
+                color: "#253452",
+                fontSize: 14,
+                fontWeight: "600",
+                left: "15%",
+              }}
+            >
+              {toggleLanguage
+                ? EnglishTranslation.addNewWallet
+                : ArabicTranslation.addNewWallet}
             </Text>
             {/* <Image source={require("../../assets/images/timer.png")} /> */}
           </TouchableOpacity>
@@ -357,7 +405,11 @@ const Dashboard = ({ navigation }) => {
                 >
                   <View style={styles.walletContentContainer}>
                     <View>
-                      <Text style={styles.walletName}>Wallet</Text>
+                      <Text style={styles.walletName}>
+                        {toggleLanguage
+                          ? EnglishTranslation.wallet
+                          : ArabicTranslation.wallet}
+                      </Text>
                       <Text style={styles.walletCode}>
                         {item?.newWalletAddress}
                       </Text>
@@ -369,14 +421,28 @@ const Dashboard = ({ navigation }) => {
                     style={styles.walletImage}
                   />
 
-                  <Text style={styles.receiveText}>Receive</Text>
+                  <Text
+                    style={[
+                      styles.receiveText,
+                      { right: !toggleLanguage ? 25 : 10 },
+                    ]}
+                  >
+                    {toggleLanguage
+                      ? EnglishTranslation.receive
+                      : ArabicTranslation.receive}
+                  </Text>
                   <Image
                     source={require("../../assets/images/receiveScanner.png")}
                     style={{ position: "absolute", top: 27, right: 18 }}
                   />
                   <View style={styles.walletBalanceContainer}>
                     <View>
-                      <Text style={styles.yourBalanceText}>Your balance</Text>
+                      <Text style={styles.yourBalanceText}>
+                        {" "}
+                        {toggleLanguage
+                          ? EnglishTranslation.yourBalance
+                          : ArabicTranslation.yourBalance}
+                      </Text>
                       <Text style={styles.balanceText}>
                         ${totalBalance.toFixed(2)}
                       </Text>

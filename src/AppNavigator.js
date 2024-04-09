@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Welcome from "./screens/Welcome/Welcome";
@@ -13,11 +13,27 @@ import BottomNavigator from "./TabNavigator";
 import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
 import SwapScreen from "./screens/SwapScreen/SwapScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const [walletAddress, setWalletAddress] = useState("");
+  const walletAddressFromApp = useSelector(
+    (state) => state.wallet.walletAddress
+  );
+
+  console.log("wal", walletAddressFromApp);
+
+  const asyncWrap = useCallback(async () => {
+    console.log("works from appendis and crossober");
+    const value = await AsyncStorage.getItem("fullWalletAddress");
+    console.log("value from wrappppperrrr--------------", value);
+  }, []);
+
+  useEffect(() => {
+    asyncWrap(); // you can't make async calls directly in useEffect
+  }, []); // <-- empty [] is very important!
 
   useEffect(() => {
     const fetchWalletAddress = async () => {

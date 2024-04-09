@@ -34,6 +34,9 @@ const EnglishTranslation = {
 
   // Dashboard screen strings
   addNewWallet: "Add New Wallet",
+  wallet: "Wallet",
+  receive: "Receive",
+  yourBalance: "Your Balance",
 };
 
 export default EnglishTranslation;

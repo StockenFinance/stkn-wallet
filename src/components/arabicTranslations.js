@@ -36,6 +36,9 @@ const ArabicTranslation = {
 
   // Dashboard screen strings
   addNewWallet: "إضافة محفظة جديدة",
+  wallet: "المحفظة",
+  receive: "استلم",
+  yourBalance: "رصيدك",
 };
 
 export default ArabicTranslation;

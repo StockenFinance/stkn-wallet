@@ -4,8 +4,10 @@ import { styles } from "./styles";
 import { Utils } from "../../utils/LocalStorage";
 import ArabicTranslation from "../../components/arabicTranslations";
 import EnglishTranslation from "../../components/englishTranslation";
+import { useDispatch } from "react-redux";
 
 const RecoveryPhraseConfirmation = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const { selectedLanguage } = route.params;
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 

@@ -15,6 +15,8 @@ import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Utils } from "../../utils/LocalStorage";
+import { saveWalletAddress } from "../../redux/actions/walletActions";
+import { useDispatch } from "react-redux";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -36,6 +38,7 @@ const storeWalletAddress = async (walletAddress, wallet) => {
 const storeFullWalletAddress = async (fullWalletAddress) => {
   try {
     await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
+
     // alert("Data is set successfully ");
     console.log(
       "Full wallet address stored on create wallet:",
@@ -59,6 +62,7 @@ const CreateWallet = ({ navigation, route }) => {
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(true);
+  const dispatch = useDispatch();
 
   const createWallet = () => {
     setLoading(true);
@@ -74,6 +78,8 @@ const CreateWallet = ({ navigation, route }) => {
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
+    dispatch(saveWalletAddress(shortenedAddress));
+
     setWalletStore(wallet);
     setTimeout(() => {
       navigation.navigate("BackupPhrase", {

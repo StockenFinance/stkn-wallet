@@ -8,53 +8,91 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Welcome = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("english");
 
-  const handleLanguageChange = (language) => {
+  const handleLanguageChange = async (language) => {
     setSelectedLanguage(language);
+    await saveSelectedLanguage(language);
   };
-
-  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
-
-  console.log("language selected:::::", selectedLanguage);
 
   const saveSelectedLanguage = async (language) => {
     try {
       await AsyncStorage.setItem("selectedLanguage", language);
+      console.log("Selected language saved successfully:", language);
+      // alert("value added ");
     } catch (error) {
       console.error("Error saving selected language to AsyncStorage:", error);
     }
   };
+
   const toggleLanguage = async () => {
     if (selectedLanguage === "english") {
       setSelectedLanguage("arabic");
-      try {
-        await AsyncStorage.setItem("changeLanguage", "true");
-      } catch (error) {
-        console.error("Error saving selected language to AsyncStorage:", error);
-      }
-      saveSelectedLanguage("arabic");
+      await saveSelectedLanguage("arabic");
     } else {
-      try {
-        await AsyncStorage.setItem("changeLanguage", "false");
-      } catch (error) {
-        console.error("Error saving selected language to AsyncStorage:", error);
-      }
       setSelectedLanguage("english");
-      saveSelectedLanguage("english");
+      await saveSelectedLanguage("english");
     }
   };
 
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage
+    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);
+        toggleLanguage();
       }
     });
   }, []);
 
-  useEffect(() => {
-    toggleLanguage();
-  }, []);
+  // const handleLanguageChange = (language) => {
+  //   setSelectedLanguage(language);
+  // };
+
+  // selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+
+  // console.log("language selected:::::", selectedLanguage);
+
+  // const saveSelectedLanguage = async (language) => {
+  //   try {
+  //     await AsyncStorage.setItem("selectedLanguage", language);
+  //     console.log("Selected language saved successfully:", language);
+  //   } catch (error) {
+  //     console.error("Error saving selected language to AsyncStorage:", error);
+  //   }
+  // };
+  // const toggleLanguage = async () => {
+  //   if (selectedLanguage === "english") {
+  //     setSelectedLanguage("english");
+  //     try {
+  //       await AsyncStorage.setItem("changeLanguage", "true");
+  //       console.log("Language changed to Arabic successfully.");
+  //     } catch (error) {
+  //       console.error("Error saving selected language to AsyncStorage:", error);
+  //     }
+  //     saveSelectedLanguage("arabic");
+  //   } else {
+  //     try {
+  //       await AsyncStorage.setItem("changeLanguage", "false");
+  //       console.log("Language changed to English successfully.");
+  //     } catch (error) {
+  //       console.error("Error saving selected language to AsyncStorage:", error);
+  //     }
+  //     setSelectedLanguage("english");
+  //     saveSelectedLanguage("english");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   // Retrieve the selected language from AsyncStorage
+  //   AsyncStorage.getItem("selectedLanguage").then((language) => {
+  //     if (language) {
+  //       setSelectedLanguage(language);
+  //     }
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   toggleLanguage();
+  // }, []);
 
   return (
     <View style={styles.container}>
