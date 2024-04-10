@@ -42,7 +42,9 @@ const ImportWallet = ({ navigation }) => {
           <BackIcon />
         </TouchableOpacity>
         <Text style={styles.walletText}>Import Wallet</Text>
-        <ScanIcon style={styles.scanIcon} />
+        <TouchableOpacity onPress={() => navigation.navigate("QRScanner")}>
+          <ScanIcon style={styles.scanIcon} />
+        </TouchableOpacity>
       </View>
       <View style={styles.inputContainer}>
         <View

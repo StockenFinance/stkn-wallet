@@ -16,28 +16,38 @@ import BuyCurrancyModal from "../../components/BuyCurrancyModal";
 const BuyScreen = () => {
   const [selectedRange, setSelectedRange] = useState(null);
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [fiatModalVisible, setFiatModalVisible] = useState(false);
+  const [cryptoModalVisible, setCryptoModalVisible] = useState(false);
   const [selectedCryptoCurrency, setSelectedCryptoCurrency] = useState("USDT");
   const [selectedFiatCurrency, setSelectedFiatCurrency] = useState("USD");
   const [fiatCurrencies, setFiatCurrencies] = useState([]);
   const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
 
-  const openModal = () => {
-    setModalVisible(true);
+  const openFiatModal = () => {
+    setFiatModalVisible(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const closeFiatModal = () => {
+    setFiatModalVisible(false);
+  };
+
+  const openCryptoModal = () => {
+    setCryptoModalVisible(true);
+  };
+
+  const closeCryptoModal = () => {
+    setCryptoModalVisible(false);
   };
 
   const handleFiatCurrencySelect = (currency) => {
     setSelectedFiatCurrency(currency);
+    closeFiatModal(); // Close fiat modal after selection
   };
 
   const handleCryptoCurrencySelect = (currency) => {
     setSelectedCryptoCurrency(currency);
+    closeCryptoModal(); // Close crypto modal after selection
   };
-
   const handleRangePress = (range) => {
     setSelectedRange(range);
   };
@@ -93,15 +103,7 @@ const BuyScreen = () => {
                 source={require("../../assets/images/USD.png")}
                 style={styles.coinImage}
               />
-              {/* <Text
-                style={[
-                  styles.allNetworksText,
-                  { fontSize: 23, fontWeight: "400", marginLeft: 10 },
-                ]}
-              >
-                USD
-              </Text> */}
-              <TouchableOpacity onPress={openModal}>
+              <TouchableOpacity onPress={openFiatModal}>
                 <Text
                   style={[
                     styles.allNetworksText,
@@ -112,18 +114,18 @@ const BuyScreen = () => {
                       textTransform: "uppercase",
                     },
                   ]}
-                  onPress={openModal}
                 >
                   {selectedFiatCurrency}
                 </Text>
               </TouchableOpacity>
               <BuyCurrancyModal
-                isVisible={modalVisible}
-                onClose={closeModal}
+                isVisible={fiatModalVisible}
+                onClose={closeFiatModal}
                 value={selectedFiatCurrency}
                 onSelect={handleFiatCurrencySelect}
                 data={fiatCurrencies}
               />
+
               <DropDownIcon
                 style={[
                   styles.dropdownImage,
@@ -159,7 +161,7 @@ const BuyScreen = () => {
                   style={{ width: 24, height: 20 }}
                 />
               </View>
-              <TouchableOpacity onPress={openModal}>
+              <TouchableOpacity onPress={openCryptoModal}>
                 <Text
                   style={[
                     styles.allNetworksText,
@@ -170,18 +172,17 @@ const BuyScreen = () => {
                       textTransform: "uppercase",
                     },
                   ]}
-                  onPress={openModal}
                 >
                   {selectedCryptoCurrency}
                 </Text>
               </TouchableOpacity>
               <BuyCurrancyModal
-                isVisible={modalVisible}
-                onClose={closeModal}
+                isVisible={cryptoModalVisible}
+                onClose={closeCryptoModal}
                 value={selectedCryptoCurrency}
                 onSelect={handleCryptoCurrencySelect}
                 data={cryptoCurrencies}
-                height={40}
+                top={100}
               />
               <DropDownIcon
                 style={[

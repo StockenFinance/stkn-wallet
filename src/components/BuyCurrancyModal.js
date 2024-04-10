@@ -14,7 +14,7 @@ const BuyCurrancyModal = ({
   value,
   onSelect,
   data: fiatCurrencies,
-  height,
+  top: height,
 }) => {
   const handleChainSelect = (currency) => {
     onSelect(currency);
@@ -27,7 +27,7 @@ const BuyCurrancyModal = ({
       animationIn="fadeIn"
       animationOut="fadeOut"
       backdropOpacity={0}
-      style={[styles.modalContainer, { height: height }]}
+      style={[styles.modalContainer, { top: height }]}
       isVisible={isVisible}
       onBackdropPress={onClose}
     >
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     position: "absolute",
-    top: "30%",
+    top: "28%",
     left: "10%",
     borderWidth: 1,
     borderColor: "#253452",

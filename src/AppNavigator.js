@@ -12,6 +12,7 @@ import Dashboard from "./screens/Dashboard/Dashboard";
 import BottomNavigator from "./TabNavigator";
 import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
 import SwapScreen from "./screens/SwapScreen/SwapScreen";
+import QRScanner from "./components/QRScanner";
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Dashboard"
           component={BottomNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="QRScanner"
+          component={QRScanner}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
