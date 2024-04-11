@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Modal from "react-native-modal";
 
@@ -16,22 +17,64 @@ const SwapCurrencyModal = ({
   selectedCurrency,
   value,
   onSelect,
+  tokens,
 }) => {
-  const handleChainSelect = (chain) => {
-    onSelect(chain);
+  const [isChains, setIsChains] = useState([]);
+
+  const handleChainSelect = (isChains) => {
+    onSelect(isChains);
     onClose();
   };
-  const chains = [
-    { id: 1, name: "BTC" },
-    { id: 2, name: "ETH" },
-    { id: 3, name: "USDT" },
-    { id: 4, name: "BNB" },
-    { id: 5, name: "DAI" },
-    { id: 6, name: "MKR" },
-    { id: 7, name: "VEN" },
-    { id: 8, name: "FTM" },
-    { id: 9, name: "APE" },
-  ];
+
+  const retrieveTokens = async () => {
+    try {
+      const serializedTokens = await AsyncStorage.getItem("importedTokens");
+      if (serializedTokens !== null) {
+        const tokens = JSON.parse(serializedTokens);
+        console.log("Tokens retrieved successfully>>>>>>", tokens);
+        return tokens;
+      } else {
+        console.log("No tokens found in storage.");
+        return [];
+      }
+    } catch (error) {
+      console.error("Error retrieving tokens:", error);
+      return [];
+    }
+  };
+
+  // const chains = [
+  //   { id: 1, symbol: "BTC" },
+  //   { id: 2, symbol: "ETH" },
+  //   { id: 3, symbol: "USDT" },
+  //   { id: 4, symbol: "BNB" },
+  //   { id: 5, symbol: "DAI" },
+  //   { id: 6, symbol: "MKR" },
+  //   { id: 7, symbol: "VEN" },
+  //   { id: 8, symbol: "FTM" },
+  //   { id: 9, symbol: "APE" },
+  // ];
+
+  useEffect(() => {
+    retrieveTokens().then((tokens) => {
+      if (tokens.length > 0) {
+        setIsChains(tokens);
+        console.log("checking storage:::", tokens);
+        // console.log("checking chains:::::", chains);
+        // const updatedChains = chains.map((chain) => {
+        //   const matchingData = tokens.find(
+        //     (data) => data.symbol === chain.symbol
+        //   );
+        //   if (matchingData) {
+        //     return { ...chain, symbol: matchingData.symbol };
+        //   }
+        //   return chain;
+        // });
+        // console.log("checkkk>>>>>", updatedChains);
+      }
+    });
+  }, []);
+
   return (
     <Modal
       animationType="none"
@@ -45,13 +88,13 @@ const SwapCurrencyModal = ({
       <View style={styles.modalContent}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={chains}
+          data={isChains}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleChainSelect(item.name)}>
-              <Text style={styles.chainText}>{item.name}</Text>
+            <TouchableOpacity onPress={() => handleChainSelect(item.symbol)}>
+              <Text style={styles.chainText}>{item.symbol}</Text>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.symbol}
           ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
         />
       </View>
@@ -65,8 +108,8 @@ const SwapCurrencyModal = ({
 export default SwapCurrencyModal;
 const styles = StyleSheet.create({
   modalContent: {
-    width: "60%",
-    height: "27%",
+    width: "55%",
+    height: "20%",
     backgroundColor: "white",
     padding: 15,
     borderRadius: 15,
@@ -89,8 +132,8 @@ const styles = StyleSheet.create({
   },
   chainText: {
     color: "#253452",
-    fontSize: 20,
-    fontWeight: "900",
+    fontSize: 16,
+    fontWeight: "800",
     textAlign: "center",
     marginVertical: "2%",
     marginRight: "5%",

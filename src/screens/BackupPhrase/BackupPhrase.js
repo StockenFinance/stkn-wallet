@@ -16,12 +16,19 @@ import PasteIcon from "../../SvgIcon/PasteIcon";
 import ScreenshotModal from "../../components/ScreenshotModal";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { addScreenshotListener } from "react-native-detector";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
+import { Utils } from "../../utils/LocalStorage";
 
 const BackupPhrase = ({ navigation, route }) => {
+  const { selectedLanguage } = route.params;
   const { mnemonic } = route.params;
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
   const [randomIndexes, setRandomIndexes] = useState([]);
+  const [toggleLanguage, setToggleLanguage] = useState(true);
+
+  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
   const [status, setStatus] = useState(false);
 
@@ -77,26 +84,54 @@ const BackupPhrase = ({ navigation, route }) => {
   useEffect(() => {
     getRandomIndexes();
   }, []);
+
+  useEffect(() => {
+    Utils.getStoreData("changeLanguage").then((res) => {
+      setToggleLanguage(res);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <BackIcon style={styles.backIcon} />
         </TouchableOpacity>
-        <Text style={styles.walletText}>Backup Phrase</Text>
+        <Text
+          style={[
+            styles.walletText,
+            { left: selectedLanguage === "arabic" ? "35%" : null },
+          ]}
+        >
+          {selectedLanguage === "english"
+            ? EnglishTranslation.backupPhrase
+            : ArabicTranslation.backupPhrase}
+        </Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
-        <Text style={styles.recoveryPhraseText}> Your recovery phrase</Text>
+        <Text style={styles.recoveryPhraseText}>
+          {""}
+          {selectedLanguage === "english"
+            ? EnglishTranslation.yourRecoveryPhraseText
+            : ArabicTranslation.yourRecoveryPhraseText}
+        </Text>
 
-        <Text style={styles.subText}>
-          Write down or copy these words in the right order and save them
-          somewhere safe.
+        <Text
+          style={[
+            styles.subText,
+            { width: selectedLanguage === "arabic" ? "105%" : null },
+          ]}
+        >
+          {selectedLanguage === "english"
+            ? EnglishTranslation.secutiryMessageText
+            : ArabicTranslation.secutiryMessageText}
         </Text>
       </View>
       <View style={styles.securityMessageContainer}>
         <AlertIcon style={styles.alertImage} />
         <Text style={styles.securityText}>
-          Never share recovery phrase with anyone, store it securely!
+          {selectedLanguage === "english"
+            ? EnglishTranslation.warningText
+            : ArabicTranslation.warningText}
         </Text>
       </View>
       <View style={styles.securityPhraseContainer}>
@@ -129,11 +164,20 @@ const BackupPhrase = ({ navigation, route }) => {
           isChecked={isChecked}
           onClick={() => setIsChecked(!isChecked)}
           checkedCheckBoxColor="#F19220"
-          style={styles.checkBox}
+          style={[
+            styles.checkBox,
+            { width: selectedLanguage === "arabic" ? "15%" : null },
+          ]}
         />
-        <Text style={styles.consentText}>
-          I understand that if i loose my recovery words, I will not be able to
-          access my wallet
+        <Text
+          style={[
+            styles.consentText,
+            { right: selectedLanguage === "arabic" ? "105%" : null },
+          ]}
+        >
+          {selectedLanguage === "english"
+            ? EnglishTranslation.consentText
+            : ArabicTranslation.consentText}
         </Text>
       </View>
       <TouchableOpacity
@@ -141,6 +185,7 @@ const BackupPhrase = ({ navigation, route }) => {
           navigation.navigate("ConfirmBackupPhrase", {
             mnemonicWords,
             randomIndexes,
+            selectedLanguage: selectedLanguage,
           })
         }
         style={[
@@ -155,7 +200,9 @@ const BackupPhrase = ({ navigation, route }) => {
             isChecked ? styles.importTextEnabled : styles.importTextDisabled,
           ]}
         >
-          Continue
+          {selectedLanguage === "english"
+            ? EnglishTranslation.continueText
+            : ArabicTranslation.continueText}
         </Text>
       </TouchableOpacity>
       {status && <ScreenshotModal setStatus={setStatus} />}

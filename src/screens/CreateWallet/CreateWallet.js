@@ -14,14 +14,21 @@ import { createNewWallet, provider } from "../../utils/helper";
 import ImportIcon from "../../SvgIcon/ImportIcon";
 import CreateIcon from "../../SvgIcon/CreateIcon";
 import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { Utils } from "../../utils/LocalStorage";
+import { saveWalletAddress } from "../../redux/actions/walletActions";
+import { useDispatch } from "react-redux";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
     const shortenedAddress =
       walletAddress.slice(0, 6) + walletAddress.slice(-6);
-    await AsyncStorage.clear();
+
     await AsyncStorage.setItem("walletAddress", shortenedAddress);
-    console.log("wallet address stored:::", walletAddress);
+
+    console.log("wallet address stored on create wallet:::", walletAddress);
 
     await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
     console.log("wallet  stored:::", wallet);
@@ -30,10 +37,34 @@ const storeWalletAddress = async (walletAddress, wallet) => {
   }
 };
 
-const CreateWallet = ({ navigation }) => {
+const storeFullWalletAddress = async (fullWalletAddress) => {
+  try {
+    await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
+
+    // alert("Data is set successfully ");
+    console.log(
+      "Full wallet address stored on create wallet:",
+      fullWalletAddress
+    );
+  } catch (error) {
+    console.error("Error storing full wallet address:", error);
+  }
+};
+
+const CreateWallet = ({ navigation, route }) => {
+  const { selectedLanguage } = route.params;
+  // const selectedLanguage = props?.route?.params?.selectedLanguage;
+  // const [selectedLanguage, setSelectedLanguage] = useState("english");
+
+  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+
+  // const route = useRoute();
+
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
+  const [toggleLanguage, setToggleLanguage] = useState(true);
+  const dispatch = useDispatch();
 
   const createWallet = () => {
     setLoading(true);
@@ -49,17 +80,30 @@ const CreateWallet = ({ navigation }) => {
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
+    dispatch(saveWalletAddress(shortenedAddress));
+
     setWalletStore(wallet);
     setTimeout(() => {
-      navigation.navigate("BackupPhrase", { mnemonic });
+      navigation.navigate("BackupPhrase", {
+        mnemonic,
+        selectedLanguage: selectedLanguage,
+      });
       setLoading(false);
     }, 2000);
   };
 
   useEffect(() => {
     storeWalletAddress(generatedWalletAddress, walletStore);
+    storeFullWalletAddress(walletStore.address);
   }, [generatedWalletAddress, walletStore]);
 
+  useEffect(() => {
+    Utils.getStoreData("changeLanguage").then((res) => {
+      setToggleLanguage(res);
+    });
+  }, []);
+
+  console.log("checking loading>>>>", loading);
   return (
     <View style={styles.container}>
       {/* <Image
@@ -70,17 +114,43 @@ const CreateWallet = ({ navigation }) => {
       <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
         <CreateIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>Create New Wallet</Text>
+        <Text style={styles.createWalletText}>
+          {selectedLanguage === "english"
+            ? EnglishTranslation.createNewWallet
+            : ArabicTranslation.createNewWallet}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.createWalletView, { marginTop: "5%" }]}
-        onPress={() => navigation.navigate("ImportWallet")}
+        onPress={() =>
+          navigation.navigate("ImportWallet", {
+            selectedLanguage: selectedLanguage,
+          })
+        }
       >
         <ImportIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
-        <View style={{ marginLeft: "2.8%" }}>
-          <Text style={styles.createWalletText}>Import Wallet</Text>
-          <Text style={styles.subText}>Private key or recovery phrase</Text>
+        <View style={{ marginLeft: "5%" }}>
+          <Text
+            style={[
+              styles.createWalletText,
+              { left: selectedLanguage === "arabic" ? "-25%" : null },
+            ]}
+          >
+            {selectedLanguage === "english"
+              ? EnglishTranslation.importWallet
+              : ArabicTranslation.importWallet}
+          </Text>
+          <Text
+            style={[
+              styles.subText,
+              { left: selectedLanguage === "arabic" ? "-12%" : null },
+            ]}
+          >
+            {selectedLanguage === "english"
+              ? EnglishTranslation.privateKeyText
+              : ArabicTranslation.privateKeyText}
+          </Text>
         </View>
       </TouchableOpacity>
       {loading && (

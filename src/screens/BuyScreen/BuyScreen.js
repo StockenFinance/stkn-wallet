@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
@@ -12,16 +13,26 @@ import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import DebitCardIcon from "../../SvgIcon/DebitCardIcon";
 import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
 import BuyCurrancyModal from "../../components/BuyCurrancyModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
+import MoonPayBuy from "../../components/MoonPayBuy";
+import Disclaimer from "../../components/Disclaimer";
 
 const BuyScreen = () => {
   const [selectedRange, setSelectedRange] = useState(null);
+  const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const [fiatModalVisible, setFiatModalVisible] = useState(false);
   const [cryptoModalVisible, setCryptoModalVisible] = useState(false);
-  const [selectedCryptoCurrency, setSelectedCryptoCurrency] = useState("USDT");
-  const [selectedFiatCurrency, setSelectedFiatCurrency] = useState("USD");
+  const [selectedCryptoCurrency, setSelectedCryptoCurrency] = useState("usdt");
+  const [selectedFiatCurrency, setSelectedFiatCurrency] = useState("usd");
   const [fiatCurrencies, setFiatCurrencies] = useState([]);
   const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
+  const [fiatAmount, setFiatAmount] = useState("100");
+  const [cryptoAmount, setCryptoAmount] = useState("");
+  const [quoteData, setQuoteData] = useState(null);
+  const [status, setStatus] = useState(false);
 
   const openFiatModal = () => {
     setFiatModalVisible(true);
@@ -46,37 +57,79 @@ const BuyScreen = () => {
 
   const handleCryptoCurrencySelect = (currency) => {
     setSelectedCryptoCurrency(currency);
-    closeCryptoModal(); // Close crypto modal after selection
+    closeCryptoModal();
   };
   const handleRangePress = (range) => {
     setSelectedRange(range);
   };
 
+  const API_KEY = "pk_live_gCcjfuq2Kqof33l1p4iGPpeZGpwFY1";
+
   useEffect(() => {
+    const makeAPICall = async () => {
+      try {
+        const response = await fetch("https://api.moonpay.com/v3/currencies");
+        const data = await response.json();
+
+        const fiat = data.filter((currency) => currency.type === "fiat");
+        setFiatCurrencies(fiat);
+        const crypto = data.filter((currency) => currency.type === "crypto");
+        setCryptoCurrencies(crypto);
+      } catch (error) {
+        console.error("Error fetching currencies: ", error);
+        retrieveSelectedLanguage();
+      }
+    };
+
     makeAPICall();
   }, []);
 
-  const makeAPICall = async () => {
-    try {
-      const response = await fetch("https://api.moonpay.com/v3/currencies");
-      const data = await response.json();
+  useEffect(() => {
+    const fetchQuoteData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.moonpay.com/v3/currencies/${selectedCryptoCurrency}/buy_quote?apiKey=${API_KEY}&baseCurrencyAmount=${fiatAmount}&baseCurrencyCode=${selectedFiatCurrency}&fixed=true&areFeesIncluded=false&quoteType=principal`
+        );
+        const data = await response.json();
+        setQuoteData(data);
+        setCryptoAmount(data?.quoteCurrencyAmount);
+      } catch (error) {
+        console.error("Error fetching quote data:", error);
+      }
+    };
 
-      const fiat = data.filter((currency) => currency.type === "fiat");
-      setFiatCurrencies(fiat);
-      const crypto = data.filter((currency) => currency.type === "crypto");
-      setCryptoCurrencies(crypto);
+    if (fiatAmount && selectedFiatCurrency && selectedFiatCurrency) {
+      fetchQuoteData();
+    }
+  }, [selectedFiatCurrency, selectedFiatCurrency, fiatAmount]);
+
+  console.log("quoteData", quoteData);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
     } catch (error) {
-      console.error("Error fetching currencies: ", error);
+      console.error("Error retrieving language from AsyncStorage:", error);
     }
   };
+
+  console.log("selectedCryptoCurrency", selectedCryptoCurrency);
 
   return (
     <View style={styles.container}>
       <View style={styles.buySellButtonView}>
         <View style={styles.languageButton}>
-          <TouchableOpacity>
-            <Text style={styles.englishText}>Buy</Text>
-          </TouchableOpacity>
+          <Text style={styles.englishText}>
+            {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
+          </Text>
         </View>
         <View
           style={[
@@ -86,12 +139,18 @@ const BuyScreen = () => {
             },
           ]}
         >
-          <Text style={[styles.englishText, { color: "#253452" }]}>Sell</Text>
+          <Text style={[styles.englishText, { color: "#253452" }]}>
+            {toggleLanguage ? EnglishTranslation.sell : ArabicTranslation.sell}
+          </Text>
         </View>
       </View>
       <ScrollView>
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>I have</Text>
+          <Text style={styles.headerText}>
+            {toggleLanguage
+              ? EnglishTranslation.iHave
+              : ArabicTranslation.iHave}
+          </Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -124,6 +183,7 @@ const BuyScreen = () => {
                 value={selectedFiatCurrency}
                 onSelect={handleFiatCurrencySelect}
                 data={fiatCurrencies}
+                modalHeight={"50%"}
               />
 
               <DropDownIcon
@@ -134,7 +194,12 @@ const BuyScreen = () => {
               />
             </View>
 
-            <Text style={styles.balanceText}>500</Text>
+            <TextInput
+              value={fiatAmount}
+              onChangeText={(text) => setFiatAmount(text)}
+              keyboardType="numeric"
+              style={styles.balanceText}
+            />
           </View>
 
           {/* <View style={styles.dividerContainer}>
@@ -142,7 +207,12 @@ const BuyScreen = () => {
           </View> */}
           <View style={styles.dividerContainer}></View>
 
-          <Text style={styles.headerText}>I want</Text>
+          <Text style={styles.headerText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.iWant
+              : ArabicTranslation.iWant}
+          </Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -192,7 +262,7 @@ const BuyScreen = () => {
               />
             </View>
 
-            <Text style={styles.balanceText}>497.5</Text>
+            <Text style={styles.balanceText}>{cryptoAmount}</Text>
           </View>
           <View style={styles.rangeSelectionView}>
             <TouchableOpacity onPress={() => handleRangePress("$150")}>
@@ -249,26 +319,54 @@ const BuyScreen = () => {
                   },
                 ]}
               >
-                MAX
+                {toggleLanguage
+                  ? EnglishTranslation.max
+                  : ArabicTranslation.max}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Text style={styles.paymentMethodText}>Payment Method</Text>
-        <View style={styles.createWalletView}>
-          <View style={styles.swapImageContainer}>
-            <DebitCardIcon style={styles.image} />
-          </View>
-          <View style={styles.divider}></View>
-          <Text style={styles.createWalletText}>Debit Card</Text>
-
-          <DropDownIcon style={styles.forwardIcon} />
-        </View>
-        <Text style={styles.paymentMethod}>Fulfilled by Moonpay</Text>
+        <Text
+          style={[
+            styles.paymentMethodText,
+            { right: !toggleLanguage ? "10%" : null },
+          ]}
+        >
+          {toggleLanguage
+            ? EnglishTranslation.paymentMethod
+            : ArabicTranslation.paymentMethod}
+        </Text>
+        <TouchableOpacity
+          onPress={() => setStatus(true)}
+          style={styles.createWalletView}
+        >
+          <Text
+            style={[styles.createWalletText, { textTransform: "uppercase" }]}
+          >
+            {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
+            {/* {selectedCryptoCurrency} */}
+          </Text>
+        </TouchableOpacity>
+        <Text
+          style={[
+            styles.paymentMethod,
+            { right: !toggleLanguage ? "10%" : null },
+          ]}
+        >
+          {toggleLanguage
+            ? EnglishTranslation.moonPay
+            : ArabicTranslation.moonPay}
+        </Text>
         <View style={styles.importButton}>
-          <Text style={styles.importText}>Continue</Text>
+          <Text style={styles.importText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.continueText
+              : ArabicTranslation.continueText}
+          </Text>
         </View>
+        {status && <Disclaimer setStatus={setStatus} />}
       </ScrollView>
     </View>
   );

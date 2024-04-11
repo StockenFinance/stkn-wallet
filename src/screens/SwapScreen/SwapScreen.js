@@ -7,7 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
 import axios from "axios";
@@ -16,9 +16,14 @@ import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
 import AllNetworkIcon from "../../SvgIcon/AllNetworkIcon";
 import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import SwapIcon from "../../SvgIcon/SwapIcon";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
 
-const SwapScreen = ({ route }) => {
-  const { selectedSymbol, tokens } = route.params;
+const SwapScreen = ({ route, tokenList }) => {
+  // const { selectedSymbol, tokens } = route?.params;
+  // const { tokens } = route?.params;
+
   const [selectedToken, setSelectedToken] = useState(null);
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
@@ -30,6 +35,8 @@ const SwapScreen = ({ route }) => {
   const [convertCurrencyModalVisible, setConvertCurrencyModalVisible] =
     useState(false);
   const [convertedCurrency, setConvertedCurrency] = useState(null);
+  const [selectedLogo, setSelectedLogo] = useState(null);
+  const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -86,6 +93,26 @@ const SwapScreen = ({ route }) => {
     }
   }
 
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -99,7 +126,11 @@ const SwapScreen = ({ route }) => {
             >
               <Text style={styles.allNetworksText}>
                 {" "}
-                {selectedChain ? selectedChain : "All Networks"}
+                {selectedChain
+                  ? selectedChain
+                  : toggleLanguage
+                  ? "All Networks"
+                  : "جميع الشبكات"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -117,7 +148,11 @@ const SwapScreen = ({ route }) => {
           </View>
         </View>
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>I want to swap</Text>
+          <Text style={styles.headerText}>
+            {toggleLanguage
+              ? EnglishTranslation.wantToSwap
+              : ArabicTranslation.wantToSwap}
+          </Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -140,8 +175,8 @@ const SwapScreen = ({ route }) => {
                     { fontSize: 23, fontWeight: "400", marginLeft: 8 },
                   ]}
                 >
-                  {selectedSymbol}
-                  {/* {selectedCurrency ? selectedCurrency : "ETH"} */}
+                  {/* {selectedSymbol} */}
+                  {selectedCurrency ? selectedCurrency : "ETH"}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -160,7 +195,7 @@ const SwapScreen = ({ route }) => {
                 onClose={() => setSwapCurrencyModalVisible(false)}
                 // onSelect={handleCurrencySelect}
                 value={selectedCurrency}
-                tokens={tokens}
+                // tokens={tokens}
                 onSelect={handleTokenSelect}
               />
             </View>
@@ -178,9 +213,41 @@ const SwapScreen = ({ route }) => {
             <Text style={styles.usdPrice}>$0.00</Text>
           </View>
           <View style={styles.amountRangeView}>
-            <Text style={styles.amountRangeText}>MIN</Text>
-            <Text style={styles.amountRangeText}>HALF</Text>
-            <Text style={styles.amountRangeText}>MAX</Text>
+            <Text
+              style={[
+                styles.amountRangeText,
+                {
+                  fontSize: !toggleLanguage ? 14 : 10,
+                  fontWeight: !toggleLanguage ? "900" : "600",
+                },
+              ]}
+            >
+              {toggleLanguage ? EnglishTranslation.min : ArabicTranslation.min}
+            </Text>
+            <Text
+              style={[
+                styles.amountRangeText,
+                {
+                  fontSize: !toggleLanguage ? 14 : 10,
+                  fontWeight: !toggleLanguage ? "900" : "600",
+                },
+              ]}
+            >
+              {toggleLanguage
+                ? EnglishTranslation.half
+                : ArabicTranslation.half}
+            </Text>
+            <Text
+              style={[
+                styles.amountRangeText,
+                {
+                  fontSize: !toggleLanguage ? 14 : 10,
+                  fontWeight: !toggleLanguage ? "900" : "600",
+                },
+              ]}
+            >
+              {toggleLanguage ? EnglishTranslation.max : ArabicTranslation.max}
+            </Text>
           </View>
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
@@ -191,7 +258,12 @@ const SwapScreen = ({ route }) => {
             <View style={styles.divider} />
           </View>
 
-          <Text style={styles.headerText}>I want to get</Text>
+          <Text style={styles.headerText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.wantToGet
+              : ArabicTranslation.wantToGet}
+          </Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -238,6 +310,7 @@ const SwapScreen = ({ route }) => {
                 onClose={() => setConvertCurrencyModalVisible(false)}
                 onSelect={handleConvertCurrencySelect}
                 value={convertedCurrency}
+                tokenList={tokenList}
               />
             </View>
           </View>
@@ -263,7 +336,9 @@ const SwapScreen = ({ route }) => {
                 { textAlign: "center", width: "120%", marginTop: "-1%" },
               ]}
             >
-              Swap services are available through third-party API providers
+              {toggleLanguage
+                ? EnglishTranslation.swapServicesMessage
+                : ArabicTranslation.swapServicesMessage}
             </Text>
           </View>
         </View>
@@ -291,7 +366,11 @@ const SwapScreen = ({ route }) => {
           </View>
         </View> */}
         <TouchableOpacity style={styles.importButton}>
-          <Text style={styles.importText}>Confirm</Text>
+          <Text style={styles.importText}>
+            {toggleLanguage
+              ? EnglishTranslation.confirm
+              : ArabicTranslation.confirm}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

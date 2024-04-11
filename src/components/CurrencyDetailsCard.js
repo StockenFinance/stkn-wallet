@@ -8,11 +8,15 @@ import ChartIcon from "../SvgIcon/ChartIcon";
 import SwapIcon from "../SvgIcon/SwapIcon";
 import SendIcon from "../SvgIcon/SendIcon";
 import ReceiveScannerIcon from "../SvgIcon/ReceiveScannerIcon";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "./englishTranslation";
+import ArabicTranslation from "./arabicTranslations";
 
 const CurrencyDetailsCard = ({ item, navigation }) => {
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
@@ -52,6 +56,26 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
   };
 
   console.log("item:::", item);
+
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
+  };
 
   return (
     <TouchableOpacity onPress={handleContainerClick}>
@@ -170,12 +194,14 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                 <Text
                   style={{
                     color: "#344567",
-                    fontSize: 8,
-                    fontWeight: "600",
+                    fontSize: !toggleLanguage ? 9 : 8,
+                    fontWeight: !toggleLanguage ? "900" : "600",
                     alignSelf: "center",
                   }}
                 >
-                  Send
+                  {toggleLanguage
+                    ? EnglishTranslation.send
+                    : ArabicTranslation.send}
                 </Text>
               </TouchableOpacity>
               <SendModal
@@ -205,12 +231,14 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                 <Text
                   style={{
                     color: "#344567",
-                    fontSize: 8,
-                    fontWeight: "600",
+                    fontSize: !toggleLanguage ? 9 : 8,
+                    fontWeight: !toggleLanguage ? "900" : "600",
                     alignSelf: "center",
                   }}
                 >
-                  Receive
+                  {toggleLanguage
+                    ? EnglishTranslation.receive
+                    : ArabicTranslation.receive}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -241,12 +269,14 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                 <Text
                   style={{
                     color: "#344567",
-                    fontSize: 8,
-                    fontWeight: "600",
+                    fontSize: !toggleLanguage ? 9 : 8,
+                    fontWeight: !toggleLanguage ? "900" : "600",
                     alignSelf: "center",
                   }}
                 >
-                  Swap
+                  {toggleLanguage
+                    ? EnglishTranslation.swap
+                    : ArabicTranslation.swap}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -271,12 +301,14 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                 <Text
                   style={{
                     color: "#344567",
-                    fontSize: 8,
-                    fontWeight: "600",
+                    fontSize: !toggleLanguage ? 9 : 8,
+                    fontWeight: !toggleLanguage ? "900" : "600",
                     alignSelf: "center",
                   }}
                 >
-                  Chart
+                  {toggleLanguage
+                    ? EnglishTranslation.chart
+                    : ArabicTranslation.chart}
                 </Text>
               </TouchableOpacity>
             </View>

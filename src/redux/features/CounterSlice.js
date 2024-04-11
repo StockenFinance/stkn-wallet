@@ -1,24 +1,20 @@
+// walletSlice.js
+
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  value: 0,
-};
-
-const counterSlice = createSlice({
-  name: "counterSlice",
-  initialState,
+const walletSlice = createSlice({
+  name: "wallet",
+  initialState: {
+    address: null,
+  },
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: () => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, actions) => {
-      state.value = actions.payload;
+    setAddress: (state, action) => {
+      state.address = action.payload;
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { setAddress } = walletSlice.actions;
+export const selectWalletAddress = (state) => state.wallet.address;
+
+export default walletSlice.reducer;

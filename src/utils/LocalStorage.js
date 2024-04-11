@@ -21,7 +21,7 @@ export const Utils = {
   },
   clearStoreData: async () => {
     try {
-      await AsyncStorage.clear();
+      // await AsyncStorage.clear();
     } catch (error) {
       console.log("Error clearing AsyncStorage:", error);
     }

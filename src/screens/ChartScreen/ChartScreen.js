@@ -1,14 +1,38 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import BackIcon from "../../SvgIcon/BackIcon";
 import OptionIcon from "../../SvgIcon/ThreeDotIcon";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "../../components/englishTranslation";
+import ArabicTranslation from "../../components/arabicTranslations";
 
 const ChartScreen = () => {
   const [selectedTime, setSelectedTime] = useState(null);
+  const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const handleRangePress = (range) => {
     setSelectedTime(range);
+  };
+
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
+      if (language !== null) {
+        console.log("Retrieved language:", language);
+        let bool = language === "english" ? true : false;
+        setToggleLanguage(bool);
+      } else {
+        console.log("No language saved in AsyncStorage");
+        setToggleLanguage(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
   };
 
   return (
@@ -120,7 +144,7 @@ const ChartScreen = () => {
               },
             ]}
           >
-            ALL
+            {toggleLanguage ? EnglishTranslation.all : ArabicTranslation.all}
           </Text>
         </TouchableOpacity>
       </View>
@@ -129,15 +153,28 @@ const ChartScreen = () => {
       </View>
       <View style={styles.infoContainer}>
         <View>
-          <Text style={styles.marketInfoText}>Market cap</Text>
+          <Text style={styles.marketInfoText}>
+            {toggleLanguage
+              ? EnglishTranslation.marketCap
+              : ArabicTranslation.marketCap}
+          </Text>
           <Text style={styles.marketInfoSubtext}>$1.22T</Text>
         </View>
         <View>
-          <Text style={styles.marketInfoText}>24h volume</Text>
+          <Text style={styles.marketInfoText}>
+            {toggleLanguage
+              ? EnglishTranslation.volume
+              : ArabicTranslation.volume}
+          </Text>
           <Text style={styles.marketInfoSubtext}>$87.06B</Text>
         </View>
         <View>
-          <Text style={styles.marketInfoText}>Popularity</Text>
+          <Text style={styles.marketInfoText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.popularity
+              : ArabicTranslation.popularity}
+          </Text>
           <Text style={styles.marketInfoSubtext}>#1</Text>
         </View>
       </View>

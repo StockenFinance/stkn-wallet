@@ -15,6 +15,7 @@ const BuyCurrancyModal = ({
   onSelect,
   data: fiatCurrencies,
   top: height,
+  modalHeight,
 }) => {
   const handleChainSelect = (currency) => {
     onSelect(currency);
@@ -27,7 +28,7 @@ const BuyCurrancyModal = ({
       animationIn="fadeIn"
       animationOut="fadeOut"
       backdropOpacity={0}
-      style={[styles.modalContainer, { top: height }]}
+      style={[styles.modalContainer, { top: height, height: modalHeight }]}
       isVisible={isVisible}
       onBackdropPress={onClose}
     >
@@ -46,7 +47,6 @@ const BuyCurrancyModal = ({
           ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
         />
       </View>
-      {/* {<Text style={styles.selectedText}>{value}</Text>} */}
     </Modal>
   );
 };
@@ -56,7 +56,7 @@ export default BuyCurrancyModal;
 const styles = StyleSheet.create({
   modalContent: {
     width: "60%",
-    height: "20%",
+    height: "50%",
     backgroundColor: "white",
     padding: 15,
     borderRadius: 15,
