@@ -103,8 +103,6 @@ const BuyScreen = () => {
     }
   }, [selectedFiatCurrency, selectedFiatCurrency, fiatAmount]);
 
-  console.log("quoteData", quoteData);
-
   const retrieveSelectedLanguage = async () => {
     try {
       const language = await AsyncStorage.getItem("selectedLanguage");
@@ -120,8 +118,6 @@ const BuyScreen = () => {
       console.error("Error retrieving language from AsyncStorage:", error);
     }
   };
-
-  console.log("selectedCryptoCurrency", selectedCryptoCurrency);
 
   return (
     <View style={styles.container}>

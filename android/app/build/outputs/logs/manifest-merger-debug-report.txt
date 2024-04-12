@@ -10,12 +10,14 @@ MERGED from [:react-native-async-storage_async-storage] /home/rahul/Desktop/Stoc
 MERGED from [:react-native-clipboard_clipboard] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-clipboard/clipboard/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-community_checkbox] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/checkbox/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-community_netinfo] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-10:12
+MERGED from [:react-native-picker_picker] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:walletconnect_react-native-compat] /home/rahul/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-camera] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-camera/android/build/intermediates/merged_manifest/generalDebug/AndroidManifest.xml:2:1-16:12
 MERGED from [:react-native-detector] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-detector/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-fs] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-gesture-handler] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-get-random-values] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-22:12
 MERGED from [:react-native-linear-gradient] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-permissions] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-permissions/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-randombytes] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-randombytes/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -23,6 +25,7 @@ MERGED from [:react-native-safe-area-context] /home/rahul/Desktop/Stocken-Mobile
 MERGED from [:react-native-screen-capture] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screen-capture/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:3:1-8:12
 MERGED from [:react-native-screens] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-svg] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-19:12
 MERGED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:2:1-24:12
 MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] /home/rahul/.gradle/caches/transforms-3/2b5ba21ddda073e33e012f0d689623c6/transformed/jetified-flipper-fresco-plugin-3.1.3/AndroidManifest.xml:8:1-13:12
 MERGED from [com.facebook.fresco:flipper:3.1.3] /home/rahul/.gradle/caches/transforms-3/78a2f7f2f5ffb04c17532765310fabea/transformed/jetified-flipper-3.1.3/AndroidManifest.xml:2:1-7:12
@@ -75,7 +78,9 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] /home/rahul/.gradle/cac
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/rahul/.gradle/caches/transforms-3/57875db857c52963776a564122dcb84b/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.1.0] /home/rahul/.gradle/caches/transforms-3/1b375b5e368b03c6f05fa335182ca0d8/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.exifinterface:exifinterface:1.3.2] /home/rahul/.gradle/caches/transforms-3/0443de42996b32d96bd16a734f81ea4b/transformed/exifinterface-1.3.2/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.browser:browser:1.8.0] /home/rahul/.gradle/caches/transforms-3/0d3257a32ac5b28e56d32b90abbbcbb7/transformed/browser-1.8.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /home/rahul/.gradle/caches/transforms-3/f1ad4007c9d50652fdaa15828c92907b/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.webkit:webkit:1.4.0] /home/rahul/.gradle/caches/transforms-3/35973e4bf37b8f4368f9e646e1c09d65/transformed/webkit-1.4.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.autofill:autofill:1.1.0] /home/rahul/.gradle/caches/transforms-3/38344280fe9342d918737701bd2e1811/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/rahul/.gradle/caches/transforms-3/27f32e5559bcd43034d6914ede1dc092/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/rahul/.gradle/caches/transforms-3/56c281bcb8243724411ecc33f6c1bde0/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
@@ -107,7 +112,7 @@ MERGED from [androidx.sqlite:sqlite:2.2.0] /home/rahul/.gradle/caches/transforms
 MERGED from [androidx.documentfile:documentfile:1.0.0] /home/rahul/.gradle/caches/transforms-3/6fab882c1c4696f4a34c8d66981c3728/transformed/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /home/rahul/.gradle/caches/transforms-3/635c327730b2ff9d6991544b258a04a1/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /home/rahul/.gradle/caches/transforms-3/d57a71de353d6f615f194fd1f99fb600/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /home/rahul/.gradle/caches/transforms-3/efce1b44886555346c024fcbf6fda611/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/rahul/.gradle/caches/transforms-3/99b5e1b6b1da8ea5e4bd23ec154c0563/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.fbjni:fbjni:0.5.1] /home/rahul/.gradle/caches/transforms-3/057fda56c2cfc52d70a46042a30c6944/transformed/jetified-fbjni-0.5.1/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.soloader:soloader:0.10.5] /home/rahul/.gradle/caches/transforms-3/03d018e18e7118763cc731de8f689ba0/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:2:1-17:12
 MERGED from [com.android.ndk.thirdparty:openssl:1.1.1l-beta-1] /home/rahul/.gradle/caches/transforms-3/9293682cb53936b0e929c86eac194797/transformed/jetified-openssl-1.1.1l-beta-1/AndroidManifest.xml:1:1-3:12
@@ -124,6 +129,8 @@ MERGED from [com.google.android.odml:image:1.0.0-beta1] /home/rahul/.gradle/cach
 		ADDED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/main/AndroidManifest.xml:1:11-69
 uses-permission#android.permission.INTERNET
 ADDED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/main/AndroidManifest.xml:3:5-67
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-67
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-67
 MERGED from [com.facebook.flipper:flipper:0.201.0] /home/rahul/.gradle/caches/transforms-3/9b2c28bd5719adb7e465469e2ca76c12/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:13:5-67
 MERGED from [com.facebook.flipper:flipper:0.201.0] /home/rahul/.gradle/caches/transforms-3/9b2c28bd5719adb7e465469e2ca76c12/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:13:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] /home/rahul/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:26:5-67
@@ -147,6 +154,10 @@ ADDED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/main/AndroidManife
 MERGED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/main/AndroidManifest.xml:7:5-26:19
 MERGED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/main/AndroidManifest.xml:7:5-26:19
 INJECTED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/debug/AndroidManifest.xml:5:5-8:50
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-20:19
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-20:19
+MERGED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-17:19
+MERGED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-17:19
 MERGED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:18:5-22:19
 MERGED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:18:5-22:19
 MERGED from [com.google.android.material:material:1.9.0] /home/rahul/.gradle/caches/transforms-3/d3a8a24834f295d8078f18b8298041f7/transformed/material-1.9.0/AndroidManifest.xml:24:5-20
@@ -255,6 +266,8 @@ MERGED from [:react-native-community_checkbox] /home/rahul/Desktop/Stocken-Mobil
 MERGED from [:react-native-community_checkbox] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/checkbox/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-community_netinfo] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-community_netinfo] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-picker_picker] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-picker_picker] /home/rahul/Desktop/Stocken-Mobile/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:walletconnect_react-native-compat] /home/rahul/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:walletconnect_react-native-compat] /home/rahul/Desktop/Stocken-Mobile/node_modules/@walletconnect/react-native-compat/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-camera] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-camera/android/build/intermediates/merged_manifest/generalDebug/AndroidManifest.xml:5:5-44
@@ -267,6 +280,8 @@ MERGED from [:react-native-gesture-handler] /home/rahul/Desktop/Stocken-Mobile/n
 MERGED from [:react-native-gesture-handler] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-get-random-values] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-get-random-values] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-get-random-values/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-linear-gradient] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-linear-gradient] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-permissions] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-permissions/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
@@ -281,6 +296,8 @@ MERGED from [:react-native-screens] /home/rahul/Desktop/Stocken-Mobile/node_modu
 MERGED from [:react-native-screens] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-screens/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-svg] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-svg] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:10:5-44
 MERGED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:10:5-44
 MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] /home/rahul/.gradle/caches/transforms-3/2b5ba21ddda073e33e012f0d689623c6/transformed/jetified-flipper-fresco-plugin-3.1.3/AndroidManifest.xml:11:5-44
@@ -385,8 +402,12 @@ MERGED from [androidx.tracing:tracing:1.1.0] /home/rahul/.gradle/caches/transfor
 MERGED from [androidx.tracing:tracing:1.1.0] /home/rahul/.gradle/caches/transforms-3/1b375b5e368b03c6f05fa335182ca0d8/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.2] /home/rahul/.gradle/caches/transforms-3/0443de42996b32d96bd16a734f81ea4b/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.2] /home/rahul/.gradle/caches/transforms-3/0443de42996b32d96bd16a734f81ea4b/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.8.0] /home/rahul/.gradle/caches/transforms-3/0d3257a32ac5b28e56d32b90abbbcbb7/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.browser:browser:1.8.0] /home/rahul/.gradle/caches/transforms-3/0d3257a32ac5b28e56d32b90abbbcbb7/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /home/rahul/.gradle/caches/transforms-3/f1ad4007c9d50652fdaa15828c92907b/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /home/rahul/.gradle/caches/transforms-3/f1ad4007c9d50652fdaa15828c92907b/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.webkit:webkit:1.4.0] /home/rahul/.gradle/caches/transforms-3/35973e4bf37b8f4368f9e646e1c09d65/transformed/webkit-1.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.webkit:webkit:1.4.0] /home/rahul/.gradle/caches/transforms-3/35973e4bf37b8f4368f9e646e1c09d65/transformed/webkit-1.4.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.1.0] /home/rahul/.gradle/caches/transforms-3/38344280fe9342d918737701bd2e1811/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.1.0] /home/rahul/.gradle/caches/transforms-3/38344280fe9342d918737701bd2e1811/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/rahul/.gradle/caches/transforms-3/27f32e5559bcd43034d6914ede1dc092/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -449,8 +470,8 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /home/r
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /home/rahul/.gradle/caches/transforms-3/635c327730b2ff9d6991544b258a04a1/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /home/rahul/.gradle/caches/transforms-3/d57a71de353d6f615f194fd1f99fb600/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /home/rahul/.gradle/caches/transforms-3/d57a71de353d6f615f194fd1f99fb600/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /home/rahul/.gradle/caches/transforms-3/efce1b44886555346c024fcbf6fda611/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /home/rahul/.gradle/caches/transforms-3/efce1b44886555346c024fcbf6fda611/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/rahul/.gradle/caches/transforms-3/99b5e1b6b1da8ea5e4bd23ec154c0563/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/rahul/.gradle/caches/transforms-3/99b5e1b6b1da8ea5e4bd23ec154c0563/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fbjni:fbjni:0.5.1] /home/rahul/.gradle/caches/transforms-3/057fda56c2cfc52d70a46042a30c6944/transformed/jetified-fbjni-0.5.1/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fbjni:fbjni:0.5.1] /home/rahul/.gradle/caches/transforms-3/057fda56c2cfc52d70a46042a30c6944/transformed/jetified-fbjni-0.5.1/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.soloader:soloader:0.10.5] /home/rahul/.gradle/caches/transforms-3/03d018e18e7118763cc731de8f689ba0/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:7:5-9:41
@@ -491,6 +512,36 @@ ADDED from [:react-native-camera] /home/rahul/Desktop/Stocken-Mobile/node_module
 		ADDED from [:react-native-camera] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-camera/android/build/intermediates/merged_manifest/generalDebug/AndroidManifest.xml:13:9-57
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
 IMPLIED from /home/rahul/Desktop/Stocken-Mobile/android/app/src/debug/AndroidManifest.xml:2:1-9:12 reason: com.rnfs requested WRITE_EXTERNAL_STORAGE
+queries
+ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-13:15
+intent#action:name:android.support.customtabs.action.CustomTabsService
+ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-12:18
+action#android.support.customtabs.action.CustomTabsService
+ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-90
+	android:name
+		ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:21-87
+activity#com.proyecto26.inappbrowser.ChromeTabsManagerActivity
+ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:9-19:20
+	android:exported
+		ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-37
+	android:name
+		ADDED from [:react-native-inappbrowser-reborn] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-inappbrowser-reborn/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-81
+provider#com.reactnativecommunity.webview.RNCWebViewFileProvider
+ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
+	android:grantUriPermissions
+		ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
+	android:authorities
+		ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-64
+	android:exported
+		ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
+	android:name
+		ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-83
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:63
+	android:resource
+		ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-60
+	android:name
+		ADDED from [:react-native-webview] /home/rahul/Desktop/Stocken-Mobile/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
 ADDED from [com.facebook.react:react-android:0.73.5] /home/rahul/.gradle/caches/transforms-3/3ce902105a4ff251177e5b9f5c724b87/transformed/jetified-react-android-0.73.5-debug/AndroidManifest.xml:16:5-78
 	android:name

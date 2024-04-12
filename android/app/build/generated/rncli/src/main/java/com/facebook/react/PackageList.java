@@ -19,6 +19,8 @@ import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 // @react-native-community/netinfo
 import com.reactnativecommunity.netinfo.NetInfoPackage;
+// @react-native-picker/picker
+import com.reactnativecommunity.picker.RNCPickerPackage;
 // @walletconnect/react-native-compat
 import com.walletconnect.reactnativemodule.RNWalletConnectModulePackage;
 // react-native-camera
@@ -31,6 +33,8 @@ import com.rnfs.RNFSPackage;
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-get-random-values
 import org.linusu.RNGetRandomValuesPackage;
+// react-native-inappbrowser-reborn
+import com.proyecto26.inappbrowser.RNInAppBrowserPackage;
 // react-native-linear-gradient
 import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-permissions
@@ -45,6 +49,8 @@ import com.recepkocur.screencapture.ScreenCapturePackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 // react-native-svg
 import com.horcrux.svg.SvgPackage;
+// react-native-webview
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 
 public class PackageList {
   private Application application;
@@ -94,19 +100,22 @@ public class PackageList {
       new ClipboardPackage(),
       new ReactCheckBoxPackage(),
       new NetInfoPackage(),
+      new RNCPickerPackage(),
       new RNWalletConnectModulePackage(),
       new RNCameraPackage(),
       new DetectorPackage(),
       new RNFSPackage(),
       new RNGestureHandlerPackage(),
       new RNGetRandomValuesPackage(),
+      new RNInAppBrowserPackage(),
       new LinearGradientPackage(),
       new RNPermissionsPackage(),
       new RandomBytesPackage(),
       new SafeAreaContextPackage(),
       new ScreenCapturePackage(),
       new RNScreensPackage(),
-      new SvgPackage()
+      new SvgPackage(),
+      new RNCWebViewPackage()
     ));
   }
 }

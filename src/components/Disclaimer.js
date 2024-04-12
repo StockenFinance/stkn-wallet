@@ -24,7 +24,7 @@ const Disclaimer = ({ setStatus }) => {
   };
 
   const openBuyCrypto = () => {
-    const url = "https://www.moonpay.com/legal/terms_of_use_row";
+    const url = "https://buy.moonpay.com/";
     Linking.openURL(url).catch((err) =>
       console.error("An error occurred", err)
     );
@@ -100,6 +100,7 @@ const Disclaimer = ({ setStatus }) => {
                 isChecked={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
                 checkedCheckBoxColor="#F19220"
+                openBuyCrypto
                 style={[styles.checkBox]}
               />
               <Text style={[styles.consentText]}>
