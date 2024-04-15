@@ -43,34 +43,11 @@ const SwapCurrencyModal = ({
     }
   };
 
-  // const chains = [
-  //   { id: 1, symbol: "BTC" },
-  //   { id: 2, symbol: "ETH" },
-  //   { id: 3, symbol: "USDT" },
-  //   { id: 4, symbol: "BNB" },
-  //   { id: 5, symbol: "DAI" },
-  //   { id: 6, symbol: "MKR" },
-  //   { id: 7, symbol: "VEN" },
-  //   { id: 8, symbol: "FTM" },
-  //   { id: 9, symbol: "APE" },
-  // ];
-
   useEffect(() => {
     retrieveTokens().then((tokens) => {
       if (tokens.length > 0) {
         setIsChains(tokens);
         console.log("checking storage:::", tokens);
-        // console.log("checking chains:::::", chains);
-        // const updatedChains = chains.map((chain) => {
-        //   const matchingData = tokens.find(
-        //     (data) => data.symbol === chain.symbol
-        //   );
-        //   if (matchingData) {
-        //     return { ...chain, symbol: matchingData.symbol };
-        //   }
-        //   return chain;
-        // });
-        // console.log("checkkk>>>>>", updatedChains);
       }
     });
   }, []);

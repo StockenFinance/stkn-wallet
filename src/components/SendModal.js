@@ -19,20 +19,6 @@ const SendModal = ({ visible, onClose }) => {
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("");
   const [tokenAddress, setTokenAddress] = useState("");
-  //   const [wallet, setWallet] = useState(null);
-
-  // const retrieveWallet = async () => {
-  //   try {
-  //     const walletString = await AsyncStorage.getItem("walletObject");
-  //     if (walletString) {
-  //       const walletObject = JSON.parse(walletString);
-  //       setWallet(walletObject);
-  //       console.log("Wallet retrieved successfully:", walletObject);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error retrieving wallet:", error);
-  //   }
-  // };
 
   const SendMoney = async () => {
     try {
@@ -77,35 +63,6 @@ const SendModal = ({ visible, onClose }) => {
       console.error("Error sending transaction:", error);
     }
   };
-
-  // const SendMoney = () => {
-  //   try {
-  //     //   const erc20Prov = new Erc20Contract(
-  //     //     "0xFa1c32982724DcFcf23260B24293377178C88A23",
-  //     //     provider
-  //     //   );
-  //     //   erc20Prov;
-  //     wallet
-  //       .sendTransaction({
-  //         to: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-  //         value: ethers.parseUnits(amount, 18),
-  //       })
-  //       .then((data) => {
-  //         console.log("Txn details on success: ", data);
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   } catch (error) {
-  //     console.log("Error sending money", error);
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     if (visible) {
-  //       retrieveWallet(); // Retrieve wallet when the modal becomes visible
-  //     }
-  //   }, [visible]);
 
   const handleSend = () => {
     console.log("Sending amount:", amount, "Token:", token);

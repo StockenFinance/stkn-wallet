@@ -11,6 +11,7 @@ import SettingIcon from "./SvgIcon/SettingIcon";
 import SwapIcon from "./SvgIcon/SwapIcon";
 import WalletIcon from "./SvgIcon/WalletIcon";
 import DiamondIcon from "./SvgIcon/DiamondIcon";
+import DashboardStack from "./DashboardStack";
 
 const Bottom = createBottomTabNavigator();
 
@@ -31,6 +32,7 @@ const BottomNavigator = () => {
           height: 64,
           borderRadius: 15,
           alignSelf: "center",
+          // display: false ? "none" : "block",
         },
       }}
     >
@@ -100,7 +102,7 @@ const BottomNavigator = () => {
       />
       <Bottom.Screen
         name="Dashboard"
-        component={Dashboard}
+        component={DashboardStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

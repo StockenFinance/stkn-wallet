@@ -174,7 +174,13 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
             }}
           >
             <View>
-              <TouchableOpacity onPress={handleSendButtonClick}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("SendScreen", {
+                    selectedSymbol: item.symbol,
+                  })
+                }
+              >
                 <View
                   style={{
                     width: 35,
