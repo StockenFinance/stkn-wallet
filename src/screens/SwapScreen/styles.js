@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
   },
   parentView: {
     width: "87%",
-    height: 551,
+    height: 571,
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#808BA0",

@@ -3047,9 +3047,13 @@ drawable src_assets_images_bitcoin
 drawable src_assets_images_dropdown
 drawable src_assets_images_eth
 drawable src_assets_images_ethereum
+drawable src_assets_images_modaldot
+drawable src_assets_images_plus
+drawable src_assets_images_receivescanner
 drawable src_assets_images_send
 drawable src_assets_images_usd
 drawable src_assets_images_usdt
+drawable src_assets_images_walletimage
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light

@@ -37,6 +37,7 @@ const SwapScreen = ({ route, tokenList }) => {
   const [convertedCurrency, setConvertedCurrency] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [calculatedPrice, setCalculatedPrice] = useState(0);
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -73,6 +74,8 @@ const SwapScreen = ({ route, tokenList }) => {
 
   async function httpCall(text) {
     const url = "https://api.1inch.dev/swap/v6.0/1/quote";
+    const calculatedPriceResult = text * 2.9477868; // Sample calculation
+    setCalculatedPrice(calculatedPriceResult);
 
     const config = {
       headers: {
@@ -317,7 +320,8 @@ const SwapScreen = ({ route, tokenList }) => {
           <View style={styles.inputContainer}>
             <TextInput
               placeholderTextColor={"grey"}
-              placeholder={"0.00"}
+              placeholder={calculatedPrice.toFixed(2)}
+              onChangeText={(text) => handleChangeText(text)}
               // onChangeText={onChangeText}
               value={inputValue.to}
               style={styles.input}

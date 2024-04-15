@@ -355,12 +355,12 @@ const BuyScreen = () => {
             : ArabicTranslation.moonPay}
         </Text>
         <View style={styles.importButton}>
-          <Text style={styles.importText}>
+          {/* <Text style={styles.importText}>
             {" "}
             {toggleLanguage
               ? EnglishTranslation.continueText
               : ArabicTranslation.continueText}
-          </Text>
+          </Text> */}
         </View>
         {status && <Disclaimer setStatus={setStatus} />}
       </ScrollView>

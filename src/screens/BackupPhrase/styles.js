@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     width: "85%",
     alignSelf: "center",
-    marginTop: "10%",
+    marginTop: "5%",
     marginLeft: "5%",
   },
 
