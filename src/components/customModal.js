@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CustomModal = ({ isVisible, onClose, walletAddress }) => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
+
   const copyToClipboard = async () => {
     try {
       Clipboard.setString(walletAddress);
@@ -56,17 +57,17 @@ const CustomModal = ({ isVisible, onClose, walletAddress }) => {
       onBackdropPress={onClose}
     >
       <View style={styles.modalContent}>
-        <TouchableOpacity onPress={() => copyToClipboard}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
+        <TouchableOpacity onPress={copyToClipboard}>
+          <Text style={{ color: "#253452", fontSize: 10, fontWeight: "400" }}>
             {toggleLanguage
-              ? EnglishTranslation.addNewWallet
+              ? EnglishTranslation.copyAddress
               : ArabicTranslation.addNewWallet}
           </Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Turn off notification")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
+          <Text style={{ color: "#253452", fontSize: 10, fontWeight: "400" }}>
             {toggleLanguage
               ? EnglishTranslation.turnOffNotifications
               : ArabicTranslation.turnOffNotifications}
@@ -75,7 +76,7 @@ const CustomModal = ({ isVisible, onClose, walletAddress }) => {
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Customize")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
+          <Text style={{ color: "#253452", fontSize: 10, fontWeight: "400" }}>
             {toggleLanguage
               ? EnglishTranslation.customize
               : ArabicTranslation.customize}
@@ -96,8 +97,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignSelf: "center",
     position: "absolute",
-    top: 142,
-    right: 60,
+    top: 145,
+    right: 50,
   },
   modalSeparator: {
     height: 1,

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import RightArrowIcon from "../../SvgIcon/RightArrowIcon";
@@ -12,9 +12,12 @@ import CustomTokenIcon from "../../SvgIcon/CustomTokenIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
+import LanguageChangeModal from "../../components/LanguageChangeModal";
 
 const Settings = () => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
+
+  const [status, setStatus] = useState(false);
 
   useEffect(() => {
     retrieveSelectedLanguage();
@@ -63,6 +66,7 @@ const Settings = () => {
           source={require("../../assets/images/forward.png")}
           style={styles.forwardIcon}
         /> */}
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -75,21 +79,23 @@ const Settings = () => {
             ? EnglishTranslation.setCurrency
             : ArabicTranslation.setCurrency}
         </Text>
-        {/* <Text style={styles.currencyText}>USD</Text> */}
+        <Text style={styles.currencyText}>USD</Text>
       </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-        <View style={styles.swapImageContainer}>
-          <LanguageIcon style={styles.languageImage} />
+      <TouchableOpacity onPress={() => setStatus(true)}>
+        <View style={[styles.createWalletView, { marginTop: "2%" }]}>
+          <View style={styles.swapImageContainer}>
+            <LanguageIcon style={styles.languageImage} />
+          </View>
+          <View style={styles.divider}></View>
+          <Text style={styles.createWalletText}>
+            {" "}
+            {toggleLanguage
+              ? EnglishTranslation.language
+              : ArabicTranslation.language}
+          </Text>
+          <Text style={[styles.currencyText, { marginLeft: "40%" }]}>EN</Text>
         </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>
-          {" "}
-          {toggleLanguage
-            ? EnglishTranslation.language
-            : ArabicTranslation.language}
-        </Text>
-        {/* <Text style={[styles.currencyText, { marginLeft: "38%" }]}>EN</Text> */}
-      </View>
+      </TouchableOpacity>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <WalletConnectIcon style={styles.image} />
@@ -101,10 +107,7 @@ const Settings = () => {
             ? EnglishTranslation.walletConnect
             : ArabicTranslation.walletConnect}
         </Text>
-        {/* <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "13%" }]}
-        /> */}
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -117,10 +120,7 @@ const Settings = () => {
             ? EnglishTranslation.customTokens
             : ArabicTranslation.customTokens}
         </Text>
-        {/* <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "11%" }]}
-        /> */}
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -132,10 +132,17 @@ const Settings = () => {
             ? EnglishTranslation.passcode
             : ArabicTranslation.passcode}
         </Text>
-        {/* <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "1%" }]}
-        /> */}
+        <Text
+          style={{
+            marginLeft: 65,
+            color: "#B6BDC8",
+            fontSize: 17,
+            fontWeight: "800",
+          }}
+        >
+          On
+        </Text>
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -148,10 +155,7 @@ const Settings = () => {
             ? EnglishTranslation.viewPhrase
             : ArabicTranslation.viewPhrase}
         </Text>
-        {/* <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "-5%" }]}
-        /> */}
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
@@ -164,11 +168,9 @@ const Settings = () => {
             ? EnglishTranslation.viewKey
             : ArabicTranslation.viewKey}
         </Text>
-        {/* <Image
-          source={require("../../assets/images/forward.png")}
-          style={[styles.forwardIcon, { marginLeft: "7%" }]}
-        /> */}
+        <RightArrowIcon style={styles.forwardIcon} />
       </View>
+      {status && <LanguageChangeModal setStatus={setStatus} />}
     </View>
   );
 };

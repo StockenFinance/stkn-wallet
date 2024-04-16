@@ -87,17 +87,13 @@ const ImportWallet = ({ navigation, route }) => {
           <CustomTextInput
             placeholder={
               selectedLanguage === "english"
-                ? " Private key or Recovery Phase"
+                ? " Private key or Recovery Phrase"
                 : "المفتاح الخاص أو مرحلة الاسترداد"
             }
             onChangeText={handleChangeText}
             value={text}
           />
           <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
-            {/* <Image
-              source={require("../../assets/images/paste.png")}
-              style={styles.copyPasteImage}
-            /> */}
             <PasteIcon style={styles.copyPasteImage} />
           </TouchableOpacity>
         </View>

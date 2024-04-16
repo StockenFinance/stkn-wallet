@@ -174,7 +174,7 @@ export const styles = StyleSheet.create({
     height: 55,
     alignSelf: "center",
     borderRadius: 10,
-    backgroundColor: "#F4F7FA",
+    backgroundColor: "#ffffff",
     marginBottom: "3%",
   },
   importText: {
@@ -221,7 +221,7 @@ export const styles = StyleSheet.create({
     marginLeft: "8%",
     marginTop: "10%",
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: "700",
     color: "#253452",
   },
   createWalletView: {

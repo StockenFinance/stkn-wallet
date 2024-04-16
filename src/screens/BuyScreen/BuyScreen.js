@@ -33,6 +33,7 @@ const BuyScreen = () => {
   const [cryptoAmount, setCryptoAmount] = useState("");
   const [quoteData, setQuoteData] = useState(null);
   const [status, setStatus] = useState(false);
+  const [buyValues, setBuyValues] = useState({});
 
   const openFiatModal = () => {
     setFiatModalVisible(true);
@@ -98,10 +99,17 @@ const BuyScreen = () => {
       }
     };
 
-    if (fiatAmount && selectedFiatCurrency && selectedFiatCurrency) {
+    if (fiatAmount && selectedFiatCurrency && selectedCryptoCurrency) {
       fetchQuoteData();
     }
-  }, [selectedFiatCurrency, selectedFiatCurrency, fiatAmount]);
+
+    setBuyValues({
+      fiatAmount,
+      selectedFiatCurrency,
+      selectedCryptoCurrency,
+      cryptoAmount,
+    });
+  }, [selectedFiatCurrency, selectedCryptoCurrency, fiatAmount]);
 
   const retrieveSelectedLanguage = async () => {
     try {
@@ -119,28 +127,35 @@ const BuyScreen = () => {
     }
   };
 
+  useEffect(() => {
+    retrieveSelectedLanguage();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.buySellButtonView}>
-        <View style={styles.languageButton}>
-          <Text style={styles.englishText}>
-            {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
-          </Text>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
+        <View style={styles.buySellButtonView}>
+          <View style={styles.languageButton}>
+            <Text style={styles.englishText}>
+              {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
+            </Text>
+          </View>
+          <View
+            style={[
+              styles.languageButton,
+              {
+                backgroundColor: "#F4F7FA",
+              },
+            ]}
+          >
+            <Text style={[styles.englishText, { color: "#253452" }]}>
+              {toggleLanguage
+                ? EnglishTranslation.sell
+                : ArabicTranslation.sell}
+            </Text>
+          </View>
         </View>
-        <View
-          style={[
-            styles.languageButton,
-            {
-              backgroundColor: "#F4F7FA",
-            },
-          ]}
-        >
-          <Text style={[styles.englishText, { color: "#253452" }]}>
-            {toggleLanguage ? EnglishTranslation.sell : ArabicTranslation.sell}
-          </Text>
-        </View>
-      </View>
-      <ScrollView>
+
         <View style={styles.parentView}>
           <Text style={styles.headerText}>
             {toggleLanguage
@@ -148,7 +163,8 @@ const BuyScreen = () => {
               : ArabicTranslation.iHave}
           </Text>
           <View style={styles.coinDetailsParent}>
-            <View
+            <TouchableOpacity
+              onPress={openFiatModal}
               style={[
                 styles.allNetworksView,
                 { marginLeft: "5%", marginTop: "5%" },
@@ -188,7 +204,7 @@ const BuyScreen = () => {
                   { marginLeft: "-1%", marginTop: "4%" },
                 ]}
               />
-            </View>
+            </TouchableOpacity>
 
             <TextInput
               value={fiatAmount}
@@ -199,8 +215,8 @@ const BuyScreen = () => {
           </View>
 
           {/* <View style={styles.dividerContainer}>
-            <View style={styles.divider} />
-          </View> */}
+              <View style={styles.divider} />
+               </View> */}
           <View style={styles.dividerContainer}></View>
 
           <Text style={styles.headerText}>
@@ -210,7 +226,8 @@ const BuyScreen = () => {
               : ArabicTranslation.iWant}
           </Text>
           <View style={styles.coinDetailsParent}>
-            <View
+            <TouchableOpacity
+              onPress={openCryptoModal}
               style={[
                 styles.allNetworksView,
                 { marginLeft: "5%", marginTop: "5%" },
@@ -227,21 +244,21 @@ const BuyScreen = () => {
                   style={{ width: 24, height: 20 }}
                 />
               </View>
-              <TouchableOpacity onPress={openCryptoModal}>
-                <Text
-                  style={[
-                    styles.allNetworksText,
-                    {
-                      fontSize: 23,
-                      fontWeight: "400",
-                      marginLeft: 10,
-                      textTransform: "uppercase",
-                    },
-                  ]}
-                >
-                  {selectedCryptoCurrency}
-                </Text>
-              </TouchableOpacity>
+
+              <Text
+                style={[
+                  styles.allNetworksText,
+                  {
+                    fontSize: 23,
+                    fontWeight: "400",
+                    marginLeft: 10,
+                    textTransform: "uppercase",
+                  },
+                ]}
+              >
+                {selectedCryptoCurrency}
+              </Text>
+
               <BuyCurrancyModal
                 isVisible={cryptoModalVisible}
                 onClose={closeCryptoModal}
@@ -256,7 +273,7 @@ const BuyScreen = () => {
                   { marginLeft: "-1%", marginTop: "4%" },
                 ]}
               />
-            </View>
+            </TouchableOpacity>
 
             <Text style={styles.balanceText}>{cryptoAmount}</Text>
           </View>
@@ -341,7 +358,6 @@ const BuyScreen = () => {
             style={[styles.createWalletText, { textTransform: "uppercase" }]}
           >
             {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
-            {/* {selectedCryptoCurrency} */}
           </Text>
         </TouchableOpacity>
         <Text
@@ -362,9 +378,9 @@ const BuyScreen = () => {
               : ArabicTranslation.continueText}
           </Text>
         </View>
-        {status && <Disclaimer setStatus={setStatus} />}
-      </ScrollView>
-    </View>
+        {status && <Disclaimer buyData={buyValues} setStatus={setStatus} />}
+      </View>
+    </ScrollView>
   );
 };
 

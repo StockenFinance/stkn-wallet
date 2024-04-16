@@ -3,8 +3,8 @@ import Svg, { Path } from "react-native-svg";
 const ImportIcon = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={36}
-    height={36}
+    width={32}
+    height={32}
     fill="none"
     {...props}
   >

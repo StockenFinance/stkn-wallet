@@ -27,7 +27,6 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: "25%",
     width: 307,
-    marginLeft: "-3%",
     height: 49,
     borderRadius: 10,
     backgroundColor: "#F19220",

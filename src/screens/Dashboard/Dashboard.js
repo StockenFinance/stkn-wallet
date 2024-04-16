@@ -22,12 +22,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AllNetworkIcon from "../../SvgIcon/AllNetworkIcon";
 import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import TimerIcon from "../../SvgIcon/TimerIcon";
-import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
 import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 import { createNewWallet, provider } from "../../utils/helper";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
+import PlusIcon from "../../SvgIcon/PluseIcon";
+import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 
 const Dashboard = ({ navigation }) => {
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -385,7 +386,6 @@ const Dashboard = ({ navigation }) => {
                 ? EnglishTranslation.addNewWallet
                 : ArabicTranslation.addNewWallet}
             </Text>
-            {/* <Image source={require("../../assets/images/timer.png")} /> */}
           </TouchableOpacity>
         </View>
       </View>
@@ -400,7 +400,10 @@ const Dashboard = ({ navigation }) => {
                   end={{ x: 1, y: 0 }}
                   style={[
                     styles.wallet,
-                    { borderRadius: 10, overflow: "hidden" },
+                    {
+                      borderRadius: 10,
+                      overflow: "hidden",
+                    },
                   ]}
                 >
                   <View style={styles.walletContentContainer}>
@@ -416,10 +419,7 @@ const Dashboard = ({ navigation }) => {
                     </View>
                   </View>
 
-                  <Image
-                    source={require("../../assets/images/walletImage.png")}
-                    style={styles.walletImage}
-                  />
+                  <WalletImageSvg style={styles.walletImage} />
 
                   <Text
                     style={[
@@ -431,17 +431,13 @@ const Dashboard = ({ navigation }) => {
                       ? EnglishTranslation.receive
                       : ArabicTranslation.receive}
                   </Text>
-                  <Image
-                    source={require("../../assets/images/receiveScanner.png")}
+                  <ReceiveScannerIcon
+                    color={"white"}
                     style={{ position: "absolute", top: 27, right: 18 }}
                   />
-                  {/* <ReceiveScannerIcon
-                    style={{ position: "absolute", top: 27, right: 18 }}
-                  /> */}
                   <View style={styles.walletBalanceContainer}>
                     <View>
                       <Text style={styles.yourBalanceText}>
-                        {" "}
                         {toggleLanguage
                           ? EnglishTranslation.yourBalance
                           : ArabicTranslation.yourBalance}
@@ -452,11 +448,7 @@ const Dashboard = ({ navigation }) => {
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
                       <View style={styles.modalIconContainer}>
-                        <Image
-                          source={require("../../assets/images/modalDot.png")}
-                          style={styles.modalDotImage}
-                        />
-
+                        <ModalDotIcon style={styles.modalDotImage} />
                         <CustomModal
                           transparent={true}
                           isVisible={modalVisible}
@@ -485,11 +477,7 @@ const Dashboard = ({ navigation }) => {
         onPress={toggleEnterTokenModal}
         // onPress={handleFetchData}
       >
-        <Image
-          source={require("../../assets/images/plus.png")}
-          style={styles.plusImage}
-        />
-        {/* <PlusIcon style={styles.plusImage} /> */}
+        <PlusIcon style={styles.plusImage} />
       </TouchableOpacity>
       <EnterTokenModal
         value={tokenInput}

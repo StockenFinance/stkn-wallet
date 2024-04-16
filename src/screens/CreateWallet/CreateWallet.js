@@ -128,9 +128,11 @@ const CreateWallet = ({ navigation, route }) => {
           })
         }
       >
-        <ImportIcon style={styles.createWalletImage} />
+        <ImportIcon
+          style={[styles.createWalletImage, { marginLeft: "10.9%" }]}
+        />
         <View style={styles.divider}></View>
-        <View style={{ marginLeft: "5%" }}>
+        <View style={{ marginLeft: "3%" }}>
           <Text
             style={[
               styles.createWalletText,
