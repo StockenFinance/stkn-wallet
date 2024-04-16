@@ -14,7 +14,7 @@ import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import LanguageChangeModal from "../../components/LanguageChangeModal";
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const [status, setStatus] = useState(false);
@@ -109,19 +109,20 @@ const Settings = () => {
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-        <View style={styles.swapImageContainer}>
-          <CustomTokenIcon />
+      <TouchableOpacity onPress={() => navigation.navigate("CustomToken")}>
+        <View style={[styles.createWalletView, { marginTop: "2%" }]}>
+          <View style={styles.swapImageContainer}>
+            <CustomTokenIcon />
+          </View>
+          <View style={styles.divider}></View>
+          <Text style={styles.createWalletText}>
+            {toggleLanguage
+              ? EnglishTranslation.customTokens
+              : ArabicTranslation.customTokens}
+          </Text>
+          <RightArrowIcon style={styles.forwardIcon} />
         </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>
-          {" "}
-          {toggleLanguage
-            ? EnglishTranslation.customTokens
-            : ArabicTranslation.customTokens}
-        </Text>
-        <RightArrowIcon style={styles.forwardIcon} />
-      </View>
+      </TouchableOpacity>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <LockIcon />

@@ -87,6 +87,7 @@ const EnglishTranslation = {
   passcode: "Passcode & Face ID",
   viewPhrase: "View Recovery Phrase",
   viewKey: "View Private Key",
+  addCustomToken: "Add Custom Token",
 };
 
 export default EnglishTranslation;

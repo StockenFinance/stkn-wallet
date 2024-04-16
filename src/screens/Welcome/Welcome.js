@@ -136,7 +136,7 @@ const Welcome = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleLanguageChange("arabic")}
+            onPress={() => "arabic"}
             style={[
               styles.languageButton,
               {

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     position: "absolute",
     top: 103,
-    left: 25,
+    left: 18,
   },
   modalSeparator: {
     height: 1,

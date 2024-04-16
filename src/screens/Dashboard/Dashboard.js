@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
@@ -31,7 +32,6 @@ import PlusIcon from "../../SvgIcon/PluseIcon";
 import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 
 const Dashboard = ({ navigation }) => {
-  const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
@@ -43,6 +43,7 @@ const Dashboard = ({ navigation }) => {
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const [newAccount, setNewAccount] = useState([
     {
@@ -351,6 +352,31 @@ const Dashboard = ({ navigation }) => {
       console.error("Error checking AsyncStorage status:", error);
     }
   };
+
+  const renderDotIndicator = () => {
+    // const startIndex = Math.max(0, activeIndex - 2); // Ensure the startIndex is not negative
+    // const endIndex = Math.min(newAccount.length - 1, startIndex + 4);
+    //slice(startIndex, endIndex + 1).
+    return newAccount.map((dot, index) => {
+      return (
+        <View
+          key={index}
+          style={{
+            backgroundColor: index === activeIndex ? "#E08416" : "#D9D9D9",
+            width: 6,
+            height: 6,
+            borderRadius: 5,
+            marginHorizontal: 5,
+            marginVertical: 5,
+            gap: 10,
+          }}
+        ></View>
+      );
+    });
+  };
+
+  const screenWidth = Dimensions.get("window").width;
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -390,8 +416,17 @@ const Dashboard = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {newAccount.map((item) => {
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled={true}
+          onScroll={(event) => {
+            const contentOffsetX = event.nativeEvent.contentOffset.x;
+            const index = Math.round(contentOffsetX / screenWidth); // Round to the nearest integer
+            setActiveIndex(index);
+          }}
+        >
+          {newAccount.map((item, index) => {
             return (
               <>
                 <LinearGradient
@@ -462,7 +497,17 @@ const Dashboard = ({ navigation }) => {
             );
           })}
         </ScrollView>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: 10,
+          }}
+        >
+          {renderDotIndicator()}
+        </View>
       </View>
+
       <View style={{ flex: 0.8 }}>
         <FlatList
           data={cardData}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Animated, Pressable } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LanguageChangeModal = ({ setStatus }) => {
@@ -44,7 +43,6 @@ const LanguageChangeModal = ({ setStatus }) => {
   }, []);
 
   const slideUp = () => {
-    // Will change slide up the bottom sheet
     Animated.timing(slide, {
       toValue: 0,
       duration: 200,
@@ -91,10 +89,10 @@ const LanguageChangeModal = ({ setStatus }) => {
               Select Language
             </Text>
             <View style={styles.languageViewContainer}>
-              <TouchableOpacity
+              <Pressable
                 onPress={() => handleLanguageChange("english")}
                 style={[
-                  styles.languageButton,
+                  styles.languageOption,
                   {
                     backgroundColor:
                       selectedLanguage === "english" ? "#F19220" : "#F4F7FA",
@@ -103,20 +101,34 @@ const LanguageChangeModal = ({ setStatus }) => {
               >
                 <Text
                   style={[
-                    styles.englishText,
+                    styles.languageText,
                     {
-                      color:
-                        selectedLanguage === "english" ? "#ffffff" : "#000000",
+                      color: selectedLanguage === "english" ? "#fff" : "#000",
                     },
                   ]}
                 >
                   English
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+                <View
+                  style={[
+                    styles.selectCircle,
+                    {
+                      borderColor:
+                        selectedLanguage === "english" ? "#F19220" : "#ccc",
+                    },
+                  ]}
+                >
+                  {selectedLanguage === "english" && (
+                    <Text style={styles.selectSymbol}>✓</Text>
+                  )}
+                </View>
+              </Pressable>
+            </View>
+            <View style={styles.languageViewContainer}>
+              <Pressable
                 onPress={() => handleLanguageChange("arabic")}
                 style={[
-                  styles.languageButton,
+                  styles.languageOption,
                   {
                     backgroundColor:
                       selectedLanguage === "arabic" ? "#F19220" : "#F4F7FA",
@@ -125,25 +137,29 @@ const LanguageChangeModal = ({ setStatus }) => {
               >
                 <Text
                   style={[
-                    styles.englishText,
+                    styles.languageText,
                     {
-                      color:
-                        selectedLanguage === "arabic" ? "#ffffff" : "#000000",
-                      fontSize: 21,
-                      marginBottom: "5%",
+                      color: selectedLanguage === "arabic" ? "#fff" : "#000",
                     },
                   ]}
                 >
                   عربي
                 </Text>
-              </TouchableOpacity>
+                <View
+                  style={[
+                    styles.selectCircle,
+                    {
+                      borderColor:
+                        selectedLanguage === "arabic" ? "#F19220" : "#ccc",
+                    },
+                  ]}
+                >
+                  {selectedLanguage === "arabic" && (
+                    <Text style={styles.selectSymbol}>✓</Text>
+                  )}
+                </View>
+              </Pressable>
             </View>
-            <TouchableOpacity
-              onPress={closeModal}
-              style={styles.getStartedContainer}
-            >
-              <Text style={styles.getStartedText}>Continue</Text>
-            </TouchableOpacity>
           </View>
         </Animated.View>
       </Pressable>
@@ -178,63 +194,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
   },
-
-  selectLanhg: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-
-  getStartedContainer: {
-    width: 335,
-    height: 55,
-    borderRadius: 10,
-    backgroundColor: "#F19220",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "30%",
-  },
-  getStartedText: {
-    fontSize: 21,
-    fontWeight: "700",
-    color: "#ffffff",
-  },
-  termsConsentContainer: {
-    flexDirection: "row",
-    width: "85%",
-    alignSelf: "center",
-    marginTop: "10%",
-    gap: 230,
-    marginLeft: 50,
-  },
-  checkBox: {
-    alignSelf: "center",
-    marginLeft: "-10%",
-    marginHorizontal: "3%",
-    // width: "15%",
-  },
-  consentText: {
-    fontSize: 14,
-    fontWeight: "400",
-    color: "#9F9FA0",
-    width: "100%",
-  },
-  languageButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: 50,
-    backgroundColor: "#F19220",
-    borderRadius: 5,
-    marginHorizontal: "10%",
-  },
-
   languageViewContainer: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    width: "80%",
-    marginHorizontal: "20%",
-    marginTop: "10%",
+    justifyContent: "space-between",
+    width: "100%",
+    marginVertical: 5,
+  },
+  languageOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    width: 350,
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    marginVertical: 10,
+  },
+  languageText: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  selectCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selectSymbol: {
+    fontSize: 16,
   },
 });

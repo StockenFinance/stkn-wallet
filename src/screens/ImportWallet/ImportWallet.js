@@ -29,7 +29,10 @@ const ImportWallet = ({ navigation, route }) => {
 
     console.log("check import::::", wallet);
     if (wallet) {
-      navigation.navigate("RecoveryPhraseConfirmation");
+      navigation.navigate("RecoveryPhraseConfirmation"),
+        {
+          selectedLanguage: selectedLanguage,
+        };
     } else {
       console.error("Warning: Recovery phrase does not match");
     }

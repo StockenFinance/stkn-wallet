@@ -14,6 +14,7 @@ import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
 import SwapScreen from "./screens/SwapScreen/SwapScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
+import CustomToken from "./screens/CustomToken/CustomToken";
 
 const Stack = createStackNavigator();
 
@@ -108,6 +109,11 @@ const AppNavigator = () => {
             <Stack.Screen
               name="Dashboard"
               component={BottomNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="CustomToken"
+              component={CustomToken}
               options={{ headerShown: false }}
             />
           </>
