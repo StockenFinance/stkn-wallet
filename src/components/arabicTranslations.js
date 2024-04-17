@@ -88,6 +88,7 @@ const ArabicTranslation = {
   passcode: "رمز المرور ومعرف الوجه",
   viewPhrase: "عرض عبارة الاسترداد",
   viewKey: "عرض المفتاح الخاص",
+  addCustomToken: "إضافة رمز مخصص",
 };
 
 export default ArabicTranslation;

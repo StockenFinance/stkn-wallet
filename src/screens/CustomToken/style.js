@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginTop: 5,
     marginBottom: 10,
+    paddingRight: 35,
   },
   pasteIcon: {
     position: "absolute",

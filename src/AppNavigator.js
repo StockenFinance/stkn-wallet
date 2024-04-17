@@ -15,6 +15,7 @@ import SwapScreen from "./screens/SwapScreen/SwapScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
 import CustomToken from "./screens/CustomToken/CustomToken";
+import WalletManagement from "./screens/WalletManagement/WalletManagement";
 
 const Stack = createStackNavigator();
 
@@ -114,6 +115,11 @@ const AppNavigator = () => {
             <Stack.Screen
               name="CustomToken"
               component={CustomToken}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="WalletManagement"
+              component={WalletManagement}
               options={{ headerShown: false }}
             />
           </>

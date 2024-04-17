@@ -63,6 +63,7 @@ const CreateWallet = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
+  <TouchableOpacity></TouchableOpacity>;
   const [toggleLanguage, setToggleLanguage] = useState(true);
   const dispatch = useDispatch();
 
@@ -106,10 +107,6 @@ const CreateWallet = ({ navigation, route }) => {
   console.log("checking loading>>>>", loading);
   return (
     <View style={styles.container}>
-      {/* <Image
-        source={require("../../assets/images/welcome.png")}
-        style={styles.image}
-      /> */}
       <HomeLogoIcon style={styles.image} />
       <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
         <CreateIcon style={styles.createWalletImage} />

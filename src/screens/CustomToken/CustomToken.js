@@ -159,7 +159,12 @@ const CustomToken = ({ navigation }) => {
       </View>
 
       <View style={styles.tokenDetailsContainer}>
-        <Text style={styles.label}>Enter Token</Text>
+        <Text style={styles.label}>
+          {" "}
+          {toggleLanguage
+            ? EnglishTranslation.enterToken
+            : ArabicTranslation.enterToken}
+        </Text>
         <TextInput
           placeholderTextColor={"#7483A1"}
           style={[styles.input]}

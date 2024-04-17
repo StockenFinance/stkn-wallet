@@ -52,22 +52,20 @@ const Settings = ({ navigation }) => {
             : ArabicTranslation.settings}
         </Text>
       </View>
-      <View style={styles.createWalletView}>
-        <View style={styles.swapImageContainer}>
-          <WalletIcon color={"white"} />
+      <TouchableOpacity onPress={() => navigation.navigate("WalletManagement")}>
+        <View style={styles.createWalletView}>
+          <View style={styles.swapImageContainer}>
+            <WalletIcon color={"white"} />
+          </View>
+          <View style={styles.divider}></View>
+          <Text style={styles.createWalletText}>
+            {toggleLanguage
+              ? EnglishTranslation.walletManagement
+              : ArabicTranslation.walletManagement}
+          </Text>
+          <RightArrowIcon style={styles.forwardIcon} />
         </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>
-          {toggleLanguage
-            ? EnglishTranslation.walletManagement
-            : ArabicTranslation.walletManagement}
-        </Text>
-        {/* <Image
-          source={require("../../assets/images/forward.png")}
-          style={styles.forwardIcon}
-        /> */}
-        <RightArrowIcon style={styles.forwardIcon} />
-      </View>
+      </TouchableOpacity>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <Text style={styles.dollarText}>$</Text>

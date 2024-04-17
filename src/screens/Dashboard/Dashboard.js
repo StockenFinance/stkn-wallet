@@ -44,6 +44,7 @@ const Dashboard = ({ navigation }) => {
   const [walletStore, setWalletStore] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [wallets, setWallets] = useState([]);
 
   const [newAccount, setNewAccount] = useState([
     {
@@ -271,6 +272,42 @@ const Dashboard = ({ navigation }) => {
     fetchWalletAddress();
   }, []);
 
+  useEffect(() => {
+    // Function to retrieve wallet data from AsyncStorage
+    const retrieveWallets = async () => {
+      try {
+        const serializedWallets = await AsyncStorage.getItem("wallets");
+        if (serializedWallets !== null) {
+          const parsedWallets = JSON.parse(serializedWallets);
+          setWallets(parsedWallets);
+        }
+      } catch (error) {
+        console.error("Error retrieving wallets:", error);
+      }
+    };
+
+    // Call retrieveWallets on component mount
+    retrieveWallets();
+  }, []);
+
+  // Function to add a new wallet
+  const addWallet = (newWallet) => {
+    setWallets((prevWallets) => [...prevWallets, newWallet]);
+    // Store updated wallets in AsyncStorage
+    storeWallets([...wallets, newWallet]);
+  };
+
+  // Function to store wallets in AsyncStorage
+  const storeWallets = async (walletData) => {
+    try {
+      const serializedWallets = JSON.stringify(walletData);
+      await AsyncStorage.setItem("wallets", serializedWallets);
+      console.log("Wallets stored successfully.");
+    } catch (error) {
+      console.error("Error storing wallets:", error);
+    }
+  };
+
   const createWallet = () => {
     setLoading(true);
     const { wallet, mnemonic } = createNewWallet();
@@ -294,6 +331,7 @@ const Dashboard = ({ navigation }) => {
       },
     ]);
     console.log("walet response?????", wallet);
+    addWallet(wallet);
   };
 
   // const storeWalletAddress = async (walletAddress, wallet) => {
