@@ -13,7 +13,7 @@ import { styles } from "./styles";
 import BackIcon from "../../SvgIcon/BackIcon";
 import AlertIcon from "../../SvgIcon/AlertIcon";
 import PasteIcon from "../../SvgIcon/PasteIcon";
-import ScreenshotModal from "../../components/ScreenshotModal";
+import ScreenshotModal from "../../components/ScreenshotModal/index";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { addScreenshotListener } from "react-native-detector";
 import EnglishTranslation from "../../components/englishTranslation";
