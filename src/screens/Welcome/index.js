@@ -5,9 +5,13 @@ import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import i18n from "../../utils/i18n";
+import { useTranslation } from "react-i18next";
 
 const Welcome = ({ navigation }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState("english");
+  const { t, i18n } = useTranslation();
+
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const handleLanguageChange = async (language) => {
     setSelectedLanguage(language);
@@ -18,28 +22,34 @@ const Welcome = ({ navigation }) => {
     try {
       await AsyncStorage.setItem("selectedLanguage", language);
       console.log("Selected language saved successfully:", language);
-      // alert("value added ");
     } catch (error) {
       console.error("Error saving selected language to AsyncStorage:", error);
     }
   };
 
-  const toggleLanguage = async () => {
-    if (selectedLanguage === "english") {
-      setSelectedLanguage("arabic");
-      await saveSelectedLanguage("arabic");
-    } else {
-      setSelectedLanguage("english");
-      await saveSelectedLanguage("english");
-    }
-  };
+  // const toggleLanguage = async () => {
+  //   if (selectedLanguage === "en") {
+  //     setSelectedLanguage("ar");
+  //     await saveSelectedLanguage("en");
+  //   } else {
+  //     setSelectedLanguage("en");
+  //     await saveSelectedLanguage("en");
+  //   }
+  // };
 
+  const toggleLanguage = async () => {
+    const newLanguage = selectedLanguage === "en" ? "ar" : "en";
+    setSelectedLanguage(newLanguage);
+    await saveSelectedLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage);
+  };
   useEffect(() => {
     // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);
-        toggleLanguage();
+        // toggleLanguage();
+        i18n.changeLanguage(language);
       }
     });
   }, []);
@@ -48,28 +58,22 @@ const Welcome = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.imageTextContainer}>
         <HomeLogoIcon style={styles.image} />
-        <Text style={styles.welcomeText}>
-          {" "}
-          {selectedLanguage === "english"
-            ? EnglishTranslation.welcome
-            : ArabicTranslation.welcome}
-        </Text>
-        <Text style={styles.restoreWalletText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.restoreWalletText
-            : ArabicTranslation.restoreWalletText}
-        </Text>
+        <Text style={styles.welcomeText}>{t("welcome")}</Text>
+        <Text style={styles.restoreWalletText}>{t("restoreWalletText")}</Text>
       </View>
       <View style={styles.languageViewContainer}>
         <Text style={styles.languageText}>Language</Text>
         <View style={[styles.languageButtonContainer, { marginLeft: "-5%" }]}>
           <TouchableOpacity
-            onPress={() => handleLanguageChange("english")}
+            onPress={() => {
+              i18n.changeLanguage("en");
+              toggleLanguage();
+            }}
             style={[
               styles.languageButton,
               {
                 backgroundColor:
-                  selectedLanguage === "english" ? "#F19220" : "#F4F7FA",
+                  selectedLanguage === "en" ? "#F19220" : "#F4F7FA",
               },
             ]}
           >
@@ -77,7 +81,7 @@ const Welcome = ({ navigation }) => {
               style={[
                 styles.englishText,
                 {
-                  color: selectedLanguage === "english" ? "#ffffff" : "#000000",
+                  color: selectedLanguage === "en" ? "#ffffff" : "#000000",
                 },
               ]}
             >
@@ -85,12 +89,15 @@ const Welcome = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleLanguageChange("arabic")}
+            onPress={() => {
+              i18n.changeLanguage("ar");
+              toggleLanguage();
+            }}
             style={[
               styles.languageButton,
               {
                 backgroundColor:
-                  selectedLanguage === "arabic" ? "#F19220" : "#F4F7FA",
+                  selectedLanguage === "ar" ? "#F19220" : "#F4F7FA",
               },
             ]}
           >
@@ -98,7 +105,7 @@ const Welcome = ({ navigation }) => {
               style={[
                 styles.englishText,
                 {
-                  color: selectedLanguage === "arabic" ? "#ffffff" : "#000000",
+                  color: selectedLanguage === "ar" ? "#ffffff" : "#000000",
                   fontSize: 21,
                   marginBottom: "5%",
                 },
@@ -116,11 +123,7 @@ const Welcome = ({ navigation }) => {
           }
           style={styles.getStartedContainer}
         >
-          <Text style={styles.getStartedText}>
-            {selectedLanguage === "english"
-              ? EnglishTranslation.getStarted
-              : ArabicTranslation.getStarted}
-          </Text>
+          <Text style={styles.getStartedText}>{t("getStarted")}</Text>
         </TouchableOpacity>
       </View>
     </View>

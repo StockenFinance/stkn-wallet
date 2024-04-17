@@ -9,7 +9,7 @@ import {
   tokenList,
 } from "react-native";
 import axios from "axios";
-
+import { styles } from "./styles";
 import Modal from "react-native-modal";
 
 const ConvertCurrencyModal = ({
@@ -53,17 +53,7 @@ const ConvertCurrencyModal = ({
     onSelect(chain);
     onClose();
   };
-  // const chains = [
-  //   { id: 1, symbol: "BTC" },
-  //   { id: 2, symbol: "ETH" },
-  //   { id: 3, symbol: "USDT" },
-  //   { id: 4, symbol: "BNB" },
-  //   { id: 5, symbol: "DAI" },
-  //   { id: 6, symbol: "MKR" },
-  //   { id: 7, symbol: "VEN" },
-  //   { id: 8, symbol: "FTM" },
-  //   { id: 9, symbol: "APE" },
-  // ];
+
   return (
     <Modal
       animationType="none"
@@ -75,17 +65,6 @@ const ConvertCurrencyModal = ({
       onBackdropPress={onClose}
     >
       <View style={styles.modalContent}>
-        {/* <FlatList
-          showsVerticalScrollIndicator={false}
-          data={chains}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleChainSelect(item.symbol)}>
-              <Text style={styles.chainText}>{item.symbol}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
-        /> */}
         <FlatList
           showsVerticalScrollIndicator={false}
           data={tokenList}
@@ -97,7 +76,6 @@ const ConvertCurrencyModal = ({
                   style={styles.tokenLogo}
                 />
                 <View style={styles.tokenDetails}>
-                  {/* <Text style={styles.tokenName}>{item.name}</Text> */}
                   <Text style={styles.tokenSymbol}>{item.symbol}</Text>
                 </View>
               </View>
@@ -115,74 +93,3 @@ const ConvertCurrencyModal = ({
 };
 
 export default ConvertCurrencyModal;
-
-const styles = StyleSheet.create({
-  modalContent: {
-    width: "60%",
-    height: "20%",
-    backgroundColor: "white",
-    padding: 15,
-    borderRadius: 15,
-    alignSelf: "center",
-    position: "absolute",
-    top: "55%",
-    left: "10%",
-    borderWidth: 1,
-    borderColor: "#253452",
-    overflow: "hidden",
-  },
-  modalSeparator: {
-    height: 1,
-    backgroundColor: "gray",
-    marginVertical: 5,
-  },
-  modalContainer: {
-    justifyContent: "flex-end",
-    margin: 0,
-  },
-  chainText: {
-    color: "#253452",
-    fontSize: 20,
-    fontWeight: "900",
-    textAlign: "center",
-    marginVertical: "2%",
-    marginRight: "5%",
-  },
-  selectedText: {
-    alignSelf: "center",
-    marginTop: 10,
-    color: "#253452",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  tokenItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: "2%",
-  },
-  tokenLogo: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    marginRight: "3%",
-  },
-  tokenDetails: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  // tokenName: {
-  //   fontSize: 16,
-  //   fontWeight: "bold",
-  //   color: "red",
-  // },
-  tokenSymbol: {
-    fontSize: 16,
-    color: "#253452",
-    fontWeight: "800",
-  },
-  tokenSeparator: {
-    height: 1,
-    backgroundColor: "lightgray",
-    marginVertical: 5,
-  },
-});

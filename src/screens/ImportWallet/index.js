@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import CustomTextInput from "../../components/CustomText";
+import CustomTextInput from "../../components//CustomText/index";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Clipboard from "@react-native-clipboard/clipboard";
 // import DocumentScanner from "react-native-document-scanner";
@@ -13,22 +13,43 @@ import PasteIcon from "../../SvgIcon/PasteIcon";
 import { Utils } from "../../utils/LocalStorage";
 import ArabicTranslation from "../../components/arabicTranslations";
 import EnglishTranslation from "../../components/englishTranslation";
+import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ImportWallet = ({ navigation, route }) => {
-  const { selectedLanguage } = route.params;
-  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+  const { t, i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
-  const [toggleLanguage, setToggleLanguage] = useState(true);
   const [text, setText] = useState("");
   const handleChangeText = (newText) => {
     setText(newText);
   };
 
-  const handleOnImport = () => {
-    const wallet = ethers.Wallet?.fromPhrase(text);
+  const handleOnImport = async () => {
+    const isMnemonic = text.split(" ").length > 1;
+
+    let wallet;
+
+    if (isMnemonic) {
+      wallet = ethers.HDNodeWallet.fromMnemonic(
+        ethers.Mnemonic.fromPhrase(text)
+      );
+    } else {
+      wallet = new ethers.Wallet(text);
+    }
 
     console.log("check import::::", wallet);
     if (wallet) {
+      const shortenedAddress =
+        wallet.address.slice(0, 6) + wallet.address.slice(-6);
+
+      await AsyncStorage.setItem("fullWalletAddress", wallet.address);
+      await AsyncStorage.setItem("walletAddress", shortenedAddress);
+      console.log(
+        "Shortened wallet address stored in import",
+        shortenedAddress
+      );
+      console.log("Wallet address stored in import", wallet.address);
       navigation.navigate("RecoveryPhraseConfirmation");
     } else {
       console.error("Warning: Recovery phrase does not match");
@@ -44,10 +65,15 @@ const ImportWallet = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    Utils.getStoreData("changeLanguage").then((res) => {
-      setToggleLanguage(res);
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
     });
   }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -55,11 +81,7 @@ const ImportWallet = ({ navigation, route }) => {
           <BackIcon />
         </TouchableOpacity>
 
-        <Text style={styles.walletText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.importWallet
-            : ArabicTranslation.importWallet}
-        </Text>
+        <Text style={styles.walletText}>{t("importWallet")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("QRScanner")}>
           <ScanIcon style={styles.scanIcon} />
         </TouchableOpacity>
@@ -78,26 +100,16 @@ const ImportWallet = ({ navigation, route }) => {
               { right: selectedLanguage === "arabic" ? "2%" : null },
             ]}
           >
-            {selectedLanguage === "english"
-              ? EnglishTranslation.privateKeyText
-              : ArabicTranslation.privateKeyText}
+            {t("privateKeyText")}
           </Text>
         </View>
         <View style={styles.EnterInputContainer}>
           <CustomTextInput
-            placeholder={
-              selectedLanguage === "english"
-                ? " Private key or Recovery Phase"
-                : "المفتاح الخاص أو مرحلة الاسترداد"
-            }
+            placeholder={t("privateKeyText")}
             onChangeText={handleChangeText}
             value={text}
           />
           <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
-            {/* <Image
-              source={require("../../assets/images/paste.png")}
-              style={styles.copyPasteImage}
-            /> */}
             <PasteIcon style={styles.copyPasteImage} />
           </TouchableOpacity>
         </View>
@@ -112,10 +124,7 @@ const ImportWallet = ({ navigation, route }) => {
         disabled={importButtonStyle !== styles.importButtonActive}
       >
         <Text style={[styles.importText, importButtonStyle]}>
-          {" "}
-          {selectedLanguage === "english"
-            ? EnglishTranslation.import
-            : ArabicTranslation.import}
+          {t("import")}
         </Text>
       </TouchableOpacity>
     </View>

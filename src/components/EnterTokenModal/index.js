@@ -10,16 +10,21 @@ import {
   Image,
 } from "react-native";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { tokenDetail } from "../utils/helper";
+import { tokenDetail } from "../../utils/helper";
 import { ethers } from "ethers";
-import PasteIcon from "../SvgIcon/PasteIcon";
+import PasteIcon from "../../SvgIcon/PasteIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
+import EnglishTranslation from "../englishTranslation";
+import ArabicTranslation from "../arabicTranslations";
+import { useTranslation } from "react-i18next";
+import { styles } from "./styles";
 
 const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
+  const { t, i18n } = useTranslation();
+
   const [tokenNumber, setTokenNumber] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
@@ -65,18 +70,6 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
       });
     };
   };
-
-  // const handleInputChange = useCallback(async (clipboardContent) => {
-  //   console.log("first", tokenNumber);
-  //   console.log("clipboardContent", clipboardContent);
-  //   let res = await tokenDetail(clipboardContent);
-  //   console.log("res", res);
-
-  //   if (res.success) {
-  //     const { tokenName, decimals, symbol } = res.success;
-  //     setTokenDetails({ name: tokenName, decimals: decimals, symbol: symbol });
-  //   }
-  // });
 
   const handleInputChange = async (text) => {
     setTokenNumber(text);
@@ -176,6 +169,16 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     }
   };
 
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
+
   return (
     <Modal
       animationType="fade"
@@ -186,19 +189,13 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
       <TouchableWithoutFeedback onPress={handleOverlayPress}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.HeaderText}>
-              {toggleLanguage
-                ? EnglishTranslation.enterToken
-                : ArabicTranslation.enterToken}
-            </Text>
+            <Text style={styles.HeaderText}>{t("enterToken")}</Text>
 
             <View style={styles.TokenInputContainer}>
               <TextInput
                 placeholderTextColor={"#7483A1"}
                 style={styles.input}
-                placeholder={
-                  toggleLanguage ? "Enter Token" : "أدخل الرمز المميز"
-                }
+                placeholder={t("enterTokenText")}
                 value={tokenNumber}
                 onChangeText={(text) => {
                   setTokenNumber(text);
@@ -217,9 +214,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   fontWeight: "900",
                 }}
               >
-                {toggleLanguage
-                  ? EnglishTranslation.name
-                  : ArabicTranslation.name}
+                {t("name")}
               </Text>
               <TextInput
                 style={styles.readOnlyInput}
@@ -233,9 +228,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   fontWeight: "900",
                 }}
               >
-                {toggleLanguage
-                  ? EnglishTranslation.symbol
-                  : ArabicTranslation.symbol}
+                {t("symbol")}
               </Text>
               <TextInput
                 style={styles.readOnlyInput}
@@ -249,9 +242,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   fontWeight: "900",
                 }}
               >
-                {toggleLanguage
-                  ? EnglishTranslation.decimal
-                  : ArabicTranslation.decimal}
+                {t("decimal")}
               </Text>
               <TextInput
                 style={styles.readOnlyInput}
@@ -277,11 +268,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   handleOverlayPress();
                 }}
               >
-                <Text style={styles.doneButtonText}>
-                  {toggleLanguage
-                    ? EnglishTranslation.importToken
-                    : ArabicTranslation.importToken}
-                </Text>
+                <Text style={styles.doneButtonText}>{t("importToken")}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -290,94 +277,5 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    width: "73%",
-    height: 420,
-    backgroundColor: "white",
-    padding: "5%",
-    borderRadius: 12,
-    alignItems: "center",
-    marginTop: "10%",
-  },
-  HeaderText: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#494949",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    marginTop: "13%",
-  },
-  doneButton: {
-    width: "55%",
-    height: 45,
-    borderColor: "#ffffff",
-    borderWidth: 0.5,
-    borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F19220",
-    marginTop: "-15%",
-  },
-  doneButtonText: {
-    color: "#ffffff",
-    textAlign: "center",
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  TokenInputContainer: {
-    marginRight: "35%",
-    width: "70%",
-    marginTop: "8%",
-  },
-  input: {
-    width: 220,
-    height: 50,
-    borderColor: "#E9E9E9",
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    paddingVertical: 8,
-    marginRight: 10,
-    color: "black",
-  },
-  readOnlyInputsContainer: {
-    // flexDirection: "row",
-    margin: 20,
-    // alignSelf: "center",
-  },
-  readOnlyInput: {
-    width: 120,
-    height: 45,
-    borderColor: "#E9E9E9",
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    color: "black",
-    marginVertical: "2%",
-    marginHorizontal: "2%",
-    textAlign: "center",
-  },
-  disabledButton: {
-    backgroundColor: "#ccc",
-  },
-  copyPasteIcon: {
-    position: "absolute",
-    marginTop: "30%",
-    right: 15,
-  },
-  copyPasteImage: {
-    width: 25,
-    height: 25,
-  },
-});
 
 export default EnterTokenModal;

@@ -11,16 +11,19 @@ import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
 import axios from "axios";
-import SwapCurrencyModal from "../../components/SwapCurrencyModal";
-import ConvertCurrencyModal from "../../components/ConvertCurrencyModal";
+import SwapCurrencyModal from "../../components/SwapCurrencyModal/index";
+import ConvertCurrencyModal from "../../components/ConvertCurrencyModal/ConvertCurrencyModal";
 import AllNetworkIcon from "../../SvgIcon/AllNetworkIcon";
 import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import SwapIcon from "../../SvgIcon/SwapIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
+import { useTranslation } from "react-i18next";
 
 const SwapScreen = ({ route, tokenList }) => {
+  const { t, i18n } = useTranslation();
+
   const { selectedSymbol, tokens } = route?.params;
   // const { tokens } = route?.params;
 
@@ -38,6 +41,7 @@ const SwapScreen = ({ route, tokenList }) => {
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [calculatedPrice, setCalculatedPrice] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -116,6 +120,16 @@ const SwapScreen = ({ route, tokenList }) => {
     }
   };
 
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -151,11 +165,7 @@ const SwapScreen = ({ route, tokenList }) => {
           </View>
         </View>
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>
-            {toggleLanguage
-              ? EnglishTranslation.wantToSwap
-              : ArabicTranslation.wantToSwap}
-          </Text>
+          <Text style={styles.headerText}>{t("wantToSwap")}</Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -225,7 +235,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 },
               ]}
             >
-              {toggleLanguage ? EnglishTranslation.min : ArabicTranslation.min}
+              {t("min")}
             </Text>
             <Text
               style={[
@@ -236,9 +246,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 },
               ]}
             >
-              {toggleLanguage
-                ? EnglishTranslation.half
-                : ArabicTranslation.half}
+              {t("half")}
             </Text>
             <Text
               style={[
@@ -249,7 +257,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 },
               ]}
             >
-              {toggleLanguage ? EnglishTranslation.max : ArabicTranslation.max}
+              {t("max")}
             </Text>
           </View>
           <View style={styles.dividerContainer}>
@@ -261,12 +269,7 @@ const SwapScreen = ({ route, tokenList }) => {
             <View style={styles.divider} />
           </View>
 
-          <Text style={styles.headerText}>
-            {" "}
-            {toggleLanguage
-              ? EnglishTranslation.wantToGet
-              : ArabicTranslation.wantToGet}
-          </Text>
+          <Text style={styles.headerText}>{t("wantToGet")}</Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -340,9 +343,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 { textAlign: "center", width: "120%", marginTop: "-1%" },
               ]}
             >
-              {toggleLanguage
-                ? EnglishTranslation.swapServicesMessage
-                : ArabicTranslation.swapServicesMessage}
+              {t("swapServicesMessage")}
             </Text>
           </View>
         </View>
@@ -370,11 +371,7 @@ const SwapScreen = ({ route, tokenList }) => {
           </View>
         </View> */}
         <TouchableOpacity style={styles.importButton}>
-          <Text style={styles.importText}>
-            {toggleLanguage
-              ? EnglishTranslation.confirm
-              : ArabicTranslation.confirm}
-          </Text>
+          <Text style={styles.importText}>{t("confirm")}</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

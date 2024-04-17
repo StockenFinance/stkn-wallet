@@ -6,8 +6,9 @@ import OptionIcon from "../../SvgIcon/ThreeDotIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
+import { LineChart } from "react-native-chart-kit";
 
-const ChartScreen = () => {
+const ChartScreen = ({ route }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [toggleLanguage, setToggleLanguage] = useState(null);
 
@@ -35,6 +36,15 @@ const ChartScreen = () => {
     }
   };
 
+  const chartData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+      },
+    ],
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -51,6 +61,38 @@ const ChartScreen = () => {
         </View>
         <OptionIcon />
       </View>
+
+      <LineChart
+        withVerticalLines={false}
+        withHorizontalLines={false}
+        data={chartData}
+        width={400}
+        height={200}
+        chartConfig={{
+          // backgroundColor: "#ffffff",
+          backgroundGradientFrom: "#ffffff",
+          backgroundGradientTo: "#ffffff",
+          // decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          // style: {
+          //   borderRadius: 16,
+          // },
+          // propsForDots: {
+          //   r: "6",
+          //   strokeWidth: "2",
+          //   stroke: "#ffa726",
+          // },
+        }}
+        bezier="monotone"
+        style={{
+          marginTop: "10%",
+          borderRadius: 20,
+          alignSelf: "center",
+          // marginVertical: "5%",
+        }}
+      />
+
       <View style={styles.rangeSelectionView}>
         <TouchableOpacity onPress={() => handleRangePress("24H")}>
           <Text

@@ -6,17 +6,26 @@ import { Utils } from "../../utils/LocalStorage";
 import ArabicTranslation from "../../components/arabicTranslations";
 import EnglishTranslation from "../../components/englishTranslation";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RecoveryPhraseConfirmation = ({ navigation, route }) => {
+  const { t, i18n } = useTranslation();
+
   const dispatch = useDispatch();
-  const { selectedLanguage } = route.params;
+
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
   const [toggleLanguage, setToggleLanguage] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   useEffect(() => {
-    Utils.getStoreData("changeLanguage").then((res) => {
-      setToggleLanguage(res);
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
     });
   }, []);
 
@@ -24,11 +33,7 @@ const RecoveryPhraseConfirmation = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.imageTextContainer}>
         <HomeLogoDoneIcon style={styles.image} />
-        <Text style={styles.welcomeText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.confirmationMessage
-            : ArabicTranslation.confirmationMessage}
-        </Text>
+        <Text style={styles.welcomeText}>{t("confirmationMessage")}</Text>
       </View>
       <TouchableOpacity
         style={styles.getStartedContainer}
@@ -38,12 +43,7 @@ const RecoveryPhraseConfirmation = ({ navigation, route }) => {
           })
         }
       >
-        <Text style={styles.getStartedText}>
-          {" "}
-          {selectedLanguage === "english"
-            ? EnglishTranslation.done
-            : ArabicTranslation.done}
-        </Text>
+        <Text style={styles.getStartedText}> {t("done")}</Text>
       </TouchableOpacity>
     </View>
   );

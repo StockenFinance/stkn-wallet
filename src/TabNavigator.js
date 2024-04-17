@@ -1,12 +1,10 @@
 import { Image, Text, View } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Dashboard from "./screens/Dashboard/Dashboard";
-import SwapScreen from "./screens/SwapScreen/SwapScreen";
-import BuyScreen from "./screens/BuyScreen/BuyScreen";
-import Settings from "./screens/Settings/Settings";
-import SendScreen from "./screens/SendScreen/SendScreen";
-import ChartScreen from "./screens/ChartScreen/ChartScreen";
+import SwapScreen from "./screens/SwapScreen/index";
+import BuyScreen from "./screens/BuyScreen";
+import Settings from "./screens/Settings/index";
+import ChartScreen from "./screens/ChartScreen";
 import SettingIcon from "./SvgIcon/SettingIcon";
 import SwapIcon from "./SvgIcon/SwapIcon";
 import WalletIcon from "./SvgIcon/WalletIcon";

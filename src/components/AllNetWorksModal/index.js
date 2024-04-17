@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
+import { styles } from "./styles";
 
 const AllNetworksModal = ({ isVisible, onClose }) => {
   return (
@@ -15,23 +16,17 @@ const AllNetworksModal = ({ isVisible, onClose }) => {
     >
       <View style={styles.modalContent}>
         <TouchableOpacity onPress={() => console.log("Copy address")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Bitcoin
-          </Text>
+          <Text style={styles.copyText}>Bitcoin</Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Turn off notification")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Ethereum
-          </Text>
+          <Text style={styles.copyText}>Ethereum</Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Customize")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            Polygon
-          </Text>
+          <Text style={styles.copyText}>Polygon</Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -39,25 +34,3 @@ const AllNetworksModal = ({ isVisible, onClose }) => {
 };
 
 export default AllNetworksModal;
-const styles = StyleSheet.create({
-  modalContent: {
-    width: 160,
-    height: "auto",
-    backgroundColor: "white",
-    padding: 15,
-    borderRadius: 6,
-    alignSelf: "center",
-    position: "absolute",
-    top: 103,
-    left: 25,
-  },
-  modalSeparator: {
-    height: 1,
-    backgroundColor: "gray",
-    marginVertical: 5,
-  },
-  modalContainer: {
-    justifyContent: "flex-end",
-    margin: 0,
-  },
-});

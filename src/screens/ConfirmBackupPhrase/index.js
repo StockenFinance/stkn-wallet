@@ -13,9 +13,12 @@ import BackIcon from "../../SvgIcon/BackIcon";
 import ArabicTranslation from "../../components/arabicTranslations";
 import EnglishTranslation from "../../components/englishTranslation";
 import { Utils } from "../../utils/LocalStorage";
+import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ConfirmBackupPhrase = ({ navigation, route }) => {
-  const { selectedLanguage } = route.params;
+  const { t, i18n } = useTranslation();
+
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
   const [isChoose, setIsChoose] = useState([]);
@@ -23,6 +26,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
   const [questionNumber, setQuestionNumber] = useState([]);
   const [questionValue, setQuestionValue] = useState([]);
   const [toggleLanguage, setToggleLanguage] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const [selected, setSelected] = useState([
     {
@@ -162,8 +166,12 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
   console.log("check :::::", mnemonicWords);
 
   useEffect(() => {
-    Utils.getStoreData("changeLanguage").then((res) => {
-      setToggleLanguage(res);
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
     });
   }, []);
   return (
@@ -173,24 +181,12 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           <BackIcon style={styles.backIcon} />
         </TouchableOpacity>
 
-        <Text style={styles.walletText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.backupPhrase
-            : ArabicTranslation.backupPhrase}
-        </Text>
+        <Text style={styles.walletText}>{t("backupPhrase")}</Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
-        <Text style={styles.recoveryPhraseText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.confirmInput
-            : ArabicTranslation.confirmPhraseText}
-        </Text>
+        <Text style={styles.recoveryPhraseText}>{t("confirmPhraseText")}</Text>
 
-        <Text style={styles.subText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.assurityText
-            : ArabicTranslation.assurityText}
-        </Text>
+        <Text style={styles.subText}>{t("assurityText")}</Text>
       </View>
 
       <View style={styles.securityPhraseContainer}>
@@ -303,16 +299,11 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
             <Text style={styles.alertText}>!</Text>
           </View>
           <Text style={styles.importText}>
-            {/* Please select word #6 from the list */}
-            {selectedLanguage === "english"
-              ? EnglishTranslation.selectWordText
-              : ArabicTranslation.selectWordText}
+            {t("selectWordText")}
             {selected.findIndex((item) => item.isFocus) !== -1
               ? questionNumber[selected.findIndex((item) => item.isFocus)] + 1
               : ""}{" "}
-            {selectedLanguage === "english"
-              ? EnglishTranslation.listText
-              : ArabicTranslation.listText}
+            {t("listText")}
           </Text>
         </View>
       </View>

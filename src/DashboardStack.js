@@ -2,19 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Welcome from "./screens/Welcome/Welcome";
-import CreateWallet from "./screens/CreateWallet/CreateWallet";
-import BackupPhrase from "./screens/BackupPhrase/BackupPhrase";
-import ImportWallet from "./screens/ImportWallet/ImportWallet";
-import ConfirmBackupPhrase from "./screens/ConfirmBackupPhrase/ConfirmBackupPhrase";
-import RecoveryPhraseConfirmation from "./screens/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation";
-import Dashboard from "./screens/Dashboard/Dashboard";
-import BottomNavigator from "./TabNavigator";
-import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
-import SwapScreen from "./screens/SwapScreen/SwapScreen";
+import Dashboard from "./screens/Dashboard/index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
-import SendScreen from "./screens/SendScreen/SendScreen";
+import SendScreen from "./screens/SendScreen/index";
 
 const Stack = createStackNavigator();
 

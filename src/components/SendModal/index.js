@@ -12,8 +12,8 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ethers } from "ethers";
-import { erc20Instance, provider, wallet } from "../utils/helper";
-import Erc20Contract from "../contracts/Erc20";
+import { erc20Instance, provider, wallet } from "../../utils/helper";
+import Erc20Contract from "../../contracts/Erc20";
 
 const SendModal = ({ visible, onClose }) => {
   const [amount, setAmount] = useState("");
@@ -87,24 +87,14 @@ const SendModal = ({ visible, onClose }) => {
       <TouchableWithoutFeedback onPress={handleOverlayPress}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={{ color: "black", marginBottom: "5%" }}>
-              Enter Amount:
-            </Text>
+            <Text style={styles.enterAmountText}>Enter Amount:</Text>
             <TextInput
               value={amount}
               onChangeText={setAmount}
               placeholder="Enter amount"
               style={styles.input}
             />
-            <Text
-              style={{
-                color: "black",
-                marginTop: "5%",
-                marginBottom: "3%",
-              }}
-            >
-              Wallet Address:
-            </Text>
+            <Text style={styles.walletAddressText}>Wallet Address:</Text>
             <TextInput
               value={token}
               onChangeText={setToken}
@@ -189,9 +179,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   readOnlyInputsContainer: {
-    // flexDirection: "row",
     margin: 20,
-    // alignSelf: "center",
   },
   readOnlyInput: {
     width: 120,
@@ -216,5 +204,14 @@ const styles = StyleSheet.create({
   copyPasteImage: {
     width: 25,
     height: 25,
+  },
+  enterAmountText: {
+    color: "black",
+    marginBottom: "5%",
+  },
+  walletAddressText: {
+    color: "black",
+    marginTop: "5%",
+    marginBottom: "3%",
   },
 });

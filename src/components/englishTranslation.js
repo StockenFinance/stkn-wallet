@@ -31,6 +31,7 @@ const EnglishTranslation = {
   // Import wallet screen strings
   privateKeyText: "Private Key/recovery Phrase",
   import: "Import",
+  privateKey: "Private key or Recovery Phase",
 
   // Dashboard screen strings
   addNewWallet: "Add New Wallet",
@@ -50,6 +51,10 @@ const EnglishTranslation = {
   symbol: "Symbol",
   decimal: "Decimal",
   importToken: "Import Token",
+  enterTokenText: "Enter Token",
+  bitcoin: "Bitcoin",
+  ethereum: "Ethreum",
+  polygon: "Polygon",
 
   // Swap screen strings
   wantToSwap: "I want to Swap",
@@ -86,6 +91,13 @@ const EnglishTranslation = {
   passcode: "Passcode & Face ID",
   viewPhrase: "View Recovery Phrase",
   viewKey: "View Private Key",
+
+  // Send screen strings
+  wantToSend: "I want to Send",
+  to: "To",
+  transactionApi:
+    "Transactions are irreversible Make sure you are on the right network and sending the right amount to the right address",
+  send: "Send",
 };
 
 export default EnglishTranslation;

@@ -9,17 +9,27 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
-import SwapCurrencyModal from "../../components/SwapCurrencyModal";
+import SwapCurrencyModal from "../../components/SwapCurrencyModal/index";
 import { ethers } from "ethers";
-import { erc20Instance, provider, wallet } from "../../utils/helper";
+import {
+  erc20Instance,
+  provider,
+  decryptWalletFromJson,
+} from "../../utils/helper";
 import Erc20Contract from "../../contracts/Erc20";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
 
 const SendScreen = ({ placeholder, value, route }) => {
+  const { t, i18n } = useTranslation();
+
   const { selectedSymbol, tokens } = route?.params;
   const [swapCurrencyModalVisible, setSwapCurrencyModalVisible] =
     useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(null);
   const [selectedToken, setSelectedToken] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+
   const [inputValue, setInputValue] = useState({
     to: "",
     from: "",
@@ -27,9 +37,10 @@ const SendScreen = ({ placeholder, value, route }) => {
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("");
 
-  const handleTokenSelect = (token) => {
+  const handleTokenSelect = () => {
     setSelectedToken(token);
     setSwapCurrencyModalVisible(false);
+    console.log("Selected Token:", token);
   };
 
   const onChangeText = (text, inputType) => {
@@ -39,20 +50,30 @@ const SendScreen = ({ placeholder, value, route }) => {
     }));
   };
 
+  console.log("check token:::", token);
+
   const SendMoney = async () => {
     try {
-      if (!amount) {
-        console.error("Amount is required.");
+      const encryptedWallet = await AsyncStorage.getItem("encryptedWallet");
+      console.log("get encrypted wallet:::::", encryptedWallet);
+
+      const walletWithoutProvider = decryptWalletFromJson(encryptedWallet);
+      const wallet = walletWithoutProvider.connect(provider);
+      console.log("get encrypted wallet>>>>", wallet);
+      handleTokenSelect();
+      console.log("Amount:", amount);
+      console.log("Selected Token:", selectedToken);
+      if (!amount || !selectedToken) {
+        console.error("Amount and Token are required.");
         return;
       }
 
-      if ("0xdAC17F958D2ee523a2206206994597C13D831ec7") {
-        const erc20Prov = new Erc20Contract(
-          "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          wallet
-        );
+      if (selectedToken.type === "ETH") {
+        console.log("if >>>>>>>>>>>", wallet, amount);
 
-        const amountToSend = ethers.parseUnits(amount, 18);
+        const erc20Prov = new Erc20Contract(selectedToken.address, wallet);
+
+        const amountToSend = ethers.parseUnits(amount, selectedToken.decimals);
         console.log("ERC20:::", erc20Prov);
         console.log("check wallet data::::", wallet);
 
@@ -66,6 +87,7 @@ const SendScreen = ({ placeholder, value, route }) => {
           });
         console.log("ERC20 Transaction details:", tx);
       } else {
+        console.log(">>>>>>>>>>>", wallet, amount);
         wallet
           .sendTransaction({
             to: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -92,7 +114,23 @@ const SendScreen = ({ placeholder, value, route }) => {
     setToken("");
   }, []);
 
+  useEffect(() => {
+    if (token) {
+      setSelectedToken(token);
+    }
+  }, [token]);
+
   const isButtonDisabled = amount.trim() === "" || token.trim() === "";
+
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -112,7 +150,7 @@ const SendScreen = ({ placeholder, value, route }) => {
           </View>
         </View>
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>I want to Send</Text>
+          <Text style={styles.headerText}>{t("wantToSend")}</Text>
           <View style={styles.coinDetailsParent}>
             <View
               style={[
@@ -174,9 +212,9 @@ const SendScreen = ({ placeholder, value, route }) => {
             <Text style={styles.usdPrice}>$0.00</Text>
           </View>
           <View style={styles.amountRangeView}>
-            <Text style={styles.amountRangeText}>MIN</Text>
-            <Text style={styles.amountRangeText}>HALF</Text>
-            <Text style={styles.amountRangeText}>MAX</Text>
+            <Text style={styles.amountRangeText}>{t("min")}</Text>
+            <Text style={styles.amountRangeText}>{t("half")}</Text>
+            <Text style={styles.amountRangeText}>{t("max")}</Text>
           </View>
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
@@ -191,7 +229,7 @@ const SendScreen = ({ placeholder, value, route }) => {
             <View style={styles.divider} />
           </View>
 
-          <Text style={styles.headerText}>To</Text>
+          <Text style={styles.headerText}>{t("to")}</Text>
 
           <View style={styles.inputContainer}>
             <TextInput
@@ -204,8 +242,7 @@ const SendScreen = ({ placeholder, value, route }) => {
           </View>
           <View style={styles.currencyConvertView}>
             <Text style={styles.currencyConverterText}>
-              Transactions are irreversible Make sure you are on the right
-              network and sending the right amount to the right address
+              {t("transactionApi")}
             </Text>
           </View>
         </View>
@@ -218,7 +255,7 @@ const SendScreen = ({ placeholder, value, route }) => {
           <Text
             style={[styles.importText, isButtonDisabled && styles.disabledText]}
           >
-            Send
+            {t("send")}
           </Text>
         </TouchableOpacity>
         {/* </View> */}

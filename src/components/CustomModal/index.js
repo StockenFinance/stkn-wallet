@@ -9,12 +9,18 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
+import EnglishTranslation from "../englishTranslation";
+import ArabicTranslation from "../arabicTranslations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
+import { styles } from "./styles";
 
 const CustomModal = ({ isVisible, onClose, walletAddress }) => {
+  const { t, i18n } = useTranslation();
+
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+
   const copyToClipboard = async () => {
     try {
       Clipboard.setString(walletAddress);
@@ -45,6 +51,16 @@ const CustomModal = ({ isVisible, onClose, walletAddress }) => {
     retrieveSelectedLanguage();
   }, []);
 
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
+
   return (
     <Modal
       animationType="none"
@@ -57,29 +73,19 @@ const CustomModal = ({ isVisible, onClose, walletAddress }) => {
     >
       <View style={styles.modalContent}>
         <TouchableOpacity onPress={() => copyToClipboard}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            {toggleLanguage
-              ? EnglishTranslation.addNewWallet
-              : ArabicTranslation.addNewWallet}
-          </Text>
+          <Text style={styles.copyAddressText}>{t("copyAddress")}</Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Turn off notification")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            {toggleLanguage
-              ? EnglishTranslation.turnOffNotifications
-              : ArabicTranslation.turnOffNotifications}
+          <Text style={styles.copyAddressText}>
+            {t("turnOffNotifications")}
           </Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
 
         <TouchableOpacity onPress={() => console.log("Customize")}>
-          <Text style={{ color: "#253452", fontSize: 12, fontWeight: "400" }}>
-            {toggleLanguage
-              ? EnglishTranslation.customize
-              : ArabicTranslation.customize}
-          </Text>
+          <Text style={styles.copyAddressText}>{t("customize")}</Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -87,25 +93,3 @@ const CustomModal = ({ isVisible, onClose, walletAddress }) => {
 };
 
 export default CustomModal;
-const styles = StyleSheet.create({
-  modalContent: {
-    width: 140,
-    height: "auto",
-    backgroundColor: "white",
-    padding: 15,
-    borderRadius: 6,
-    alignSelf: "center",
-    position: "absolute",
-    top: 142,
-    right: 60,
-  },
-  modalSeparator: {
-    height: 1,
-    backgroundColor: "gray",
-    marginVertical: 5,
-  },
-  modalContainer: {
-    justifyContent: "flex-end",
-    margin: 0,
-  },
-});

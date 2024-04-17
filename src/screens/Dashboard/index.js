@@ -8,12 +8,11 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
-import CustomModal from "../../components/customModal";
+import CustomModal from "../../components/CustomModal/index";
 import { styles } from "./styles";
-import { currencyData } from "../../components/coinDetailsData";
 import CurrencyDetailsCard from "../../components/CurrencyDetailsCard";
-import EnterTokenModal from "../../components/EnterTokenModal";
-import AllNetworksModal from "../../components/AllNetworksModal";
+import EnterTokenModal from "../../components/EnterTokenModal/index";
+import AllNetworksModal from "../../components/AllNetWorksModal/index";
 import { ethers } from "ethers";
 import Erc20Contract from "../../contracts/Erc20";
 import { tokenDetail } from "../../utils/helper";
@@ -21,15 +20,15 @@ import { fetchCryptoData } from "../../utils/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AllNetworkIcon from "../../SvgIcon/AllNetworkIcon";
 import DropDownIcon from "../../SvgIcon/DropDownIcon";
-import TimerIcon from "../../SvgIcon/TimerIcon";
-import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
-import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
-import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 import { createNewWallet, provider } from "../../utils/helper";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
+import { useTranslation } from "react-i18next";
+import ChainSelectionModal from "../../components/ChainSelectionModal";
 
 const Dashboard = ({ navigation }) => {
+  const { t, i18n } = useTranslation();
+
   const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [allNetworksModalVisible, setAllNetworksModalVisible] = useState(false);
@@ -42,6 +41,12 @@ const Dashboard = ({ navigation }) => {
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [chainSelectionModalVisible, setChainSelectionModalVisible] =
+    useState(false);
+  const [selectedChain, setSelectedChain] = useState(null);
+  const [calculatedBalance, setCalculatedBalance] = useState(0);
+  const [calculatedAmount, setCalculatedAmount] = useState(0);
 
   const [newAccount, setNewAccount] = useState([
     {
@@ -162,14 +167,20 @@ const Dashboard = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => (
     <View style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}>
-      <CurrencyDetailsCard item={item} navigation={navigation} />
+      <CurrencyDetailsCard
+        item={item}
+        navigation={navigation}
+        onCalculateAmount={handleCalculateAmount}
+      />
     </View>
   );
 
   useEffect(() => {
     async function testIntegration() {
       const provider = new ethers.JsonRpcProvider(
-        "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+        // "https://sepolia.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+        // "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+        "https://polygon-mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
       );
       const erc20Prov = new Erc20Contract(
         "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -294,26 +305,6 @@ const Dashboard = ({ navigation }) => {
     console.log("walet response?????", wallet);
   };
 
-  // const storeWalletAddress = async (walletAddress, wallet) => {
-  //   try {
-  //     const shortenedAddress =
-  //       walletAddress.slice(0, 6) + walletAddress.slice(-6);
-  //     // await AsyncStorage.clear();
-  //     await AsyncStorage.setItem("walletAddress", shortenedAddress);
-
-  //     console.log("wallet address stored on Dashboard:::", walletAddress);
-
-  //     await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
-  //     console.log("wallet  stored:::", wallet);
-  //   } catch (error) {
-  //     console.error("Error storing wallet address:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   storeWalletAddress(generatedWalletAddress, walletStore);
-  // }, [generatedWalletAddress, walletStore]);
-
   console.log("new wallet account>>>>>>", newAccount);
 
   useEffect(() => {
@@ -350,24 +341,44 @@ const Dashboard = ({ navigation }) => {
       console.error("Error checking AsyncStorage status:", error);
     }
   };
+
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
+
+  const handleChainSelect = (chain) => {
+    setSelectedChain(chain);
+    setChainSelectionModalVisible(false);
+  };
+
+  const handleCalculateAmount = (amount) => {
+    setCalculatedAmount(amount);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.allNetworksView}>
           <AllNetworkIcon style={styles.allNetworksImage} />
-          <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
+          <TouchableOpacity onPress={() => setChainSelectionModalVisible(true)}>
             <Text style={styles.allNetworksText}>
-              {toggleLanguage
-                ? EnglishTranslation.allNetworkText
-                : ArabicTranslation.allNetrworkText}
+              {selectedChain ? selectedChain : t("allNetworkText")}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setAllNetworksModalVisible(true)}>
+          <TouchableOpacity onPress={() => setChainSelectionModalVisible(true)}>
             <DropDownIcon style={styles.dropdownImage} />
-            <AllNetworksModal
+
+            <ChainSelectionModal
               transparent={true}
-              isVisible={allNetworksModalVisible}
-              onClose={() => setAllNetworksModalVisible(false)}
+              isVisible={chainSelectionModalVisible}
+              onClose={() => setChainSelectionModalVisible(false)}
+              onSelect={handleChainSelect}
+              value={selectedChain}
             />
           </TouchableOpacity>
         </View>
@@ -381,11 +392,8 @@ const Dashboard = ({ navigation }) => {
                 left: "15%",
               }}
             >
-              {toggleLanguage
-                ? EnglishTranslation.addNewWallet
-                : ArabicTranslation.addNewWallet}
+              {t("addNewWallet")}
             </Text>
-            {/* <Image source={require("../../assets/images/timer.png")} /> */}
           </TouchableOpacity>
         </View>
       </View>
@@ -405,11 +413,7 @@ const Dashboard = ({ navigation }) => {
                 >
                   <View style={styles.walletContentContainer}>
                     <View>
-                      <Text style={styles.walletName}>
-                        {toggleLanguage
-                          ? EnglishTranslation.wallet
-                          : ArabicTranslation.wallet}
-                      </Text>
+                      <Text style={styles.walletName}>{t("wallet")}</Text>
                       <Text style={styles.walletCode}>
                         {item?.newWalletAddress}
                       </Text>
@@ -427,27 +431,20 @@ const Dashboard = ({ navigation }) => {
                       { right: !toggleLanguage ? 25 : 10 },
                     ]}
                   >
-                    {toggleLanguage
-                      ? EnglishTranslation.receive
-                      : ArabicTranslation.receive}
+                    {t("receive")}
                   </Text>
                   <Image
                     source={require("../../assets/images/receiveScanner.png")}
                     style={{ position: "absolute", top: 27, right: 18 }}
                   />
-                  {/* <ReceiveScannerIcon
-                    style={{ position: "absolute", top: 27, right: 18 }}
-                  /> */}
+
                   <View style={styles.walletBalanceContainer}>
                     <View>
                       <Text style={styles.yourBalanceText}>
-                        {" "}
-                        {toggleLanguage
-                          ? EnglishTranslation.yourBalance
-                          : ArabicTranslation.yourBalance}
+                        {t("yourBalance")}
                       </Text>
                       <Text style={styles.balanceText}>
-                        ${totalBalance.toFixed(2)}
+                        ${calculatedAmount}
                       </Text>
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>

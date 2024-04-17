@@ -19,14 +19,18 @@ import { addScreenshotListener } from "react-native-detector";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import { Utils } from "../../utils/LocalStorage";
+import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BackupPhrase = ({ navigation, route }) => {
-  const { selectedLanguage } = route.params;
+  const { t, i18n } = useTranslation();
+
   const { mnemonic } = route.params;
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [toggleLanguage, setToggleLanguage] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
@@ -86,8 +90,12 @@ const BackupPhrase = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    Utils.getStoreData("changeLanguage").then((res) => {
-      setToggleLanguage(res);
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
     });
   }, []);
   return (
@@ -102,17 +110,12 @@ const BackupPhrase = ({ navigation, route }) => {
             { left: selectedLanguage === "arabic" ? "35%" : null },
           ]}
         >
-          {selectedLanguage === "english"
-            ? EnglishTranslation.backupPhrase
-            : ArabicTranslation.backupPhrase}
+          {t("backupPhrase")}
         </Text>
       </View>
       <View style={styles.recoveryPharseTextContainer}>
         <Text style={styles.recoveryPhraseText}>
-          {""}
-          {selectedLanguage === "english"
-            ? EnglishTranslation.yourRecoveryPhraseText
-            : ArabicTranslation.yourRecoveryPhraseText}
+          {t("yourRecoveryPhraseText")}
         </Text>
 
         <Text
@@ -121,18 +124,12 @@ const BackupPhrase = ({ navigation, route }) => {
             { width: selectedLanguage === "arabic" ? "105%" : null },
           ]}
         >
-          {selectedLanguage === "english"
-            ? EnglishTranslation.secutiryMessageText
-            : ArabicTranslation.secutiryMessageText}
+          {t("secutiryMessageText")}
         </Text>
       </View>
       <View style={styles.securityMessageContainer}>
         <AlertIcon style={styles.alertImage} />
-        <Text style={styles.securityText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.warningText
-            : ArabicTranslation.warningText}
-        </Text>
+        <Text style={styles.securityText}>{t("warningText")}</Text>
       </View>
       <View style={styles.securityPhraseContainer}>
         <View style={styles.securityPhraseTextContainer}>
@@ -175,9 +172,7 @@ const BackupPhrase = ({ navigation, route }) => {
             { right: selectedLanguage === "arabic" ? "105%" : null },
           ]}
         >
-          {selectedLanguage === "english"
-            ? EnglishTranslation.consentText
-            : ArabicTranslation.consentText}
+          {t("consentText")}
         </Text>
       </View>
       <TouchableOpacity
@@ -200,9 +195,7 @@ const BackupPhrase = ({ navigation, route }) => {
             isChecked ? styles.importTextEnabled : styles.importTextDisabled,
           ]}
         >
-          {selectedLanguage === "english"
-            ? EnglishTranslation.continueText
-            : ArabicTranslation.continueText}
+          {t("continueText")}
         </Text>
       </TouchableOpacity>
       {status && <ScreenshotModal setStatus={setStatus} />}

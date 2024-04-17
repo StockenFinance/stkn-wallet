@@ -20,6 +20,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Utils } from "../../utils/LocalStorage";
 import { saveWalletAddress } from "../../redux/actions/walletActions";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -52,24 +53,20 @@ const storeFullWalletAddress = async (fullWalletAddress) => {
 };
 
 const CreateWallet = ({ navigation, route }) => {
-  const { selectedLanguage } = route.params;
-  // const selectedLanguage = props?.route?.params?.selectedLanguage;
-  // const [selectedLanguage, setSelectedLanguage] = useState("english");
-
-  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
-
-  // const route = useRoute();
+  const { t, i18n } = useTranslation();
 
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+
   const dispatch = useDispatch();
 
   const createWallet = () => {
     setLoading(true);
-    const { wallet, mnemonic } = createNewWallet();
-    const phrase = ethers.Wallet.fromPhrase(mnemonic);
+    const { wallet, mnemonic, encryptedWallet } = createNewWallet();
+    const phrase = wallet;
 
     console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
     console.log("Phrase wallet: ", phrase?.privateKey);
@@ -77,6 +74,10 @@ const CreateWallet = ({ navigation, route }) => {
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
     console.log("Generated Mnemonic:", mnemonic);
+    AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
+      console.log("Error while setting encrypted wallet: ", err);
+    });
+
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
@@ -98,27 +99,22 @@ const CreateWallet = ({ navigation, route }) => {
   }, [generatedWalletAddress, walletStore]);
 
   useEffect(() => {
-    Utils.getStoreData("changeLanguage").then((res) => {
-      setToggleLanguage(res);
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
     });
   }, []);
 
-  console.log("checking loading>>>>", loading);
   return (
     <View style={styles.container}>
-      {/* <Image
-        source={require("../../assets/images/welcome.png")}
-        style={styles.image}
-      /> */}
       <HomeLogoIcon style={styles.image} />
       <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
         <CreateIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>
-          {selectedLanguage === "english"
-            ? EnglishTranslation.createNewWallet
-            : ArabicTranslation.createNewWallet}
-        </Text>
+        <Text style={styles.createWalletText}>{t("createNewWallet")}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.createWalletView, { marginTop: "5%" }]}
@@ -137,9 +133,7 @@ const CreateWallet = ({ navigation, route }) => {
               { left: selectedLanguage === "arabic" ? "-25%" : null },
             ]}
           >
-            {selectedLanguage === "english"
-              ? EnglishTranslation.importWallet
-              : ArabicTranslation.importWallet}
+            {t("importWallet")}
           </Text>
           <Text
             style={[
@@ -147,9 +141,7 @@ const CreateWallet = ({ navigation, route }) => {
               { left: selectedLanguage === "arabic" ? "-12%" : null },
             ]}
           >
-            {selectedLanguage === "english"
-              ? EnglishTranslation.privateKeyText
-              : ArabicTranslation.privateKeyText}
+            {t("privateKeyText")}
           </Text>
         </View>
       </TouchableOpacity>
