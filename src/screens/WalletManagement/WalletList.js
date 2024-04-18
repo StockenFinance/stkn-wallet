@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import KeyIcon from "../../SvgIcon/KeyIcon";
 import RecoveryPhraseIcon from "../../SvgIcon/RecoveryPhraseIcon";
 import RemoveIcon from "../../SvgIcon/RemoveIcon";
 import RecoveryPhraseModal from "../../components/RecoveryPhraseModal";
+import PublicKeyModal from "../../components/PublicKeyModal";
+import { useDispatch } from "react-redux";
+import { setModal } from "../../redux/features/CounterSlice";
+import DeleteWalletModal from "../../components/DeleteWalletModal";
 
 const WalletList = ({ wallet, walletNumber }) => {
+  const dispatch = useDispatch();
   const [status, setStatus] = useState(false);
+  const [publicKeyModalStatus, setPublicKeyModalStatus] = useState(false);
+  const [deleteWalletModalStatus, setDeleteWalletModalStatus] = useState(false);
 
   const shortenEthereumAddress = (address) => {
     if (!address) return "";
@@ -17,35 +24,63 @@ const WalletList = ({ wallet, walletNumber }) => {
 
   const mnemonic = wallet?.mnemonic?.phrase;
 
+  const publicKey = wallet?.publicKey;
+
+  const recoveryPharseHandlers = () => {
+    dispatch(setModal(true));
+    setStatus(true);
+  };
+
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.text}>Wallet {walletNumber}</Text>
-        <Text style={styles.addressText}>
-          {shortenEthereumAddress(wallet?.address)}
-        </Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => setStatus(true)}>
-          <View style={styles.swapImageContainer}>
-            <RecoveryPhraseIcon />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.swapImageContainer}>
-            <KeyIcon />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.removeIcon}>
-            <RemoveIcon />
-          </View>
-        </TouchableOpacity>
+    <>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.text}>Wallet {walletNumber}</Text>
+          <Text style={styles.addressText}>
+            {shortenEthereumAddress(wallet?.address)}
+          </Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={recoveryPharseHandlers}>
+            <View style={styles.swapImageContainer}>
+              <RecoveryPhraseIcon />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(setModal(true));
+              setPublicKeyModalStatus(true);
+            }}
+          >
+            <View style={styles.swapImageContainer}>
+              <KeyIcon />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(setModal(true));
+              setDeleteWalletModalStatus(true);
+            }}
+          >
+            <View style={styles.removeIcon}>
+              <RemoveIcon />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
       {status && (
         <RecoveryPhraseModal setStatus={setStatus} mnemonic={mnemonic} />
       )}
-    </View>
+      {publicKeyModalStatus && (
+        <PublicKeyModal
+          setStatus={setPublicKeyModalStatus}
+          publicKey={publicKey}
+        />
+      )}
+      {deleteWalletModalStatus && (
+        <DeleteWalletModal setStatus={setDeleteWalletModalStatus} />
+      )}
+    </>
   );
 };
 
@@ -60,6 +95,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    borderWidth: 1,
   },
   text: {
     fontSize: 16,
@@ -75,7 +111,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 95,
+    justifyContent: "space-around",
+    marginLeft: "auto",
     marginTop: 5,
   },
   swapImageContainer: {

@@ -1,13 +1,22 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Animated,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WalletList from "./WalletList";
 import BackIcon from "../../SvgIcon/BackIcon";
+import { useSelector } from "react-redux";
 
 const WalletManagement = ({ navigation }) => {
   const [wallets, setWallets] = useState([]);
+  const { recoveryModal } = useSelector((state) => state.counter);
+  const scrollY = new Animated.Value(0);
+
   useEffect(() => {
-    // Function to retrieve wallet data from AsyncStorage
     const retrieveWallets = async () => {
       try {
         const serializedWallets = await AsyncStorage.getItem(`wallets`);
@@ -22,22 +31,50 @@ const WalletManagement = ({ navigation }) => {
     retrieveWallets();
   }, []);
 
+  console.log("walltes", wallets);
+
   return (
-    <View style={{ marginTop: 20 }}>
+    <View style={{ marginTop: 30, flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <BackIcon />
         </TouchableOpacity>
         <Text style={styles.heading}>My wallets</Text>
       </View>
-
-      <View>
-        {wallets?.map((wallet, index) => {
-          return (
-            <WalletList key={index} wallet={wallet} walletNumber={index + 1} />
-          );
-        })}
-      </View>
+      {console.log("recoveryMOdal", recoveryModal)}
+      {!recoveryModal ? (
+        <Animated.ScrollView
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true }
+          )}
+          scrollEventThrottle={16}
+        >
+          <View>
+            {wallets?.map((wallet, index) => {
+              return (
+                <WalletList
+                  key={index}
+                  wallet={wallet}
+                  walletNumber={index + 1}
+                />
+              );
+            }) || "Please add your wallet"}
+          </View>
+        </Animated.ScrollView>
+      ) : (
+        <View>
+          {wallets?.map((wallet, index) => {
+            return (
+              <WalletList
+                key={index}
+                wallet={wallet}
+                walletNumber={index + 1}
+              />
+            );
+          }) || "Please add your wallet"}
+        </View>
+      )}
     </View>
   );
 };
@@ -47,7 +84,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 60,
+    marginBottom: 30,
     marginLeft: 20,
   },
   heading: {

@@ -63,7 +63,6 @@ const CreateWallet = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
-  <TouchableOpacity></TouchableOpacity>;
   const [toggleLanguage, setToggleLanguage] = useState(true);
   const dispatch = useDispatch();
 

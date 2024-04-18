@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Animated, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import EnglishTranslation from "./englishTranslation";
+import ArabicTranslation from "./arabicTranslations";
 
 const LanguageChangeModal = ({ setStatus }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
@@ -32,15 +41,17 @@ const LanguageChangeModal = ({ setStatus }) => {
     }
   };
 
-  useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
-    AsyncStorage.getItem("selectedLanguage").then((language) => {
+  const retrieveSelectedLanguage = async () => {
+    try {
+      const language = await AsyncStorage.getItem("selectedLanguage");
       if (language) {
         setSelectedLanguage(language);
         toggleLanguage();
       }
-    });
-  }, []);
+    } catch (error) {
+      console.error("Error retrieving language from AsyncStorage:", error);
+    }
+  };
 
   const slideUp = () => {
     Animated.timing(slide, {
@@ -160,6 +171,16 @@ const LanguageChangeModal = ({ setStatus }) => {
                 </View>
               </Pressable>
             </View>
+            <TouchableOpacity
+              onPress={retrieveSelectedLanguage}
+              style={styles.getStartedContainer}
+            >
+              <Text style={styles.getStartedText}>
+                {selectedLanguage === "english"
+                  ? EnglishTranslation.continueText
+                  : ArabicTranslation.continueText}
+              </Text>
+            </TouchableOpacity>
           </View>
         </Animated.View>
       </Pressable>
@@ -227,5 +248,22 @@ const styles = StyleSheet.create({
   },
   selectSymbol: {
     fontSize: 16,
+  },
+  getStartedContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "25%",
+    width: "97%",
+    marginLeft: "-3%",
+    height: 55,
+    borderRadius: 10,
+    backgroundColor: "#F19220",
+    marginLeft: 5,
+  },
+  getStartedText: {
+    fontSize: 21,
+    fontWeight: "700",
+    color: "#ffffff",
+    textAlign: "center",
   },
 });

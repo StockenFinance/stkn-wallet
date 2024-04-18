@@ -6,6 +6,7 @@ import {
   Animated,
   Pressable,
   Dimensions,
+  Modal,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import EnglishTranslation from "./englishTranslation";
@@ -14,14 +15,16 @@ import AlertIcon from "../SvgIcon/AlertIcon";
 import PasteIcon from "../SvgIcon/PasteIcon";
 import Clipboard from "@react-native-clipboard/clipboard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setModal } from "../redux/features/CounterSlice";
 
 const { height } = Dimensions.get("window");
 
 const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
+  const dispatch = useDispatch();
   const slide = React.useRef(new Animated.Value(height)).current;
 
   const slideUp = () => {
-    // Will change slide up the bottom sheet
     Animated.timing(slide, {
       toValue: 0,
       duration: 200,
@@ -30,9 +33,7 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
   };
 
   const slideDown = () => {
-    // Will slide down the bottom sheet
     Animated.timing(slide, {
-      toValue: height,
       duration: 200,
       useNativeDriver: true,
     }).start();
@@ -40,14 +41,15 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
 
   React.useEffect(() => {
     slideUp();
-  });
+  }, []);
 
   const closeModal = () => {
     slideDown();
 
     setTimeout(() => {
       setStatus(false);
-    }, 0);
+      dispatch(setModal(false));
+    }, 200);
   };
 
   const mnemonicWords = mnemonic.split(" ");
@@ -84,26 +86,13 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
   useEffect(() => {
     retrieveSelectedLanguage();
   }, []);
-
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={{ width: "100%", height: "100%" }}>
+      <Pressable style={{ width: "100%", height: "40%" }}>
         <Animated.View
           style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
         >
           <View style={styles.container}>
-            <View style={styles.header}>
-              <Text
-                style={[
-                  styles.walletText,
-                  { left: toggleLanguage === "arabic" ? "35%" : null },
-                ]}
-              >
-                {toggleLanguage
-                  ? EnglishTranslation.backupPhrase
-                  : ArabicTranslation.backupPhrase}
-              </Text>
-            </View>
             <View style={styles.recoveryPharseTextContainer}>
               <Text style={styles.recoveryPhraseText}>
                 {toggleLanguage
@@ -155,6 +144,12 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
                 <PasteIcon />
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              onPress={closeModal}
+              style={styles.getStartedContainer}
+            >
+              <Text style={styles.getStartedText}>Got It!</Text>
+            </TouchableOpacity>
           </View>
         </Animated.View>
       </Pressable>
@@ -168,33 +163,33 @@ const styles = StyleSheet.create({
   backdrop: {
     position: "absolute",
     flex: 1,
+    bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    height: "375%",
+    justifyContent: "flex-end",
+    zIndex: 999,
   },
   bottomSheet: {
-    width: "90%",
-    height: "90%",
+    width: "100%",
+    height: "100%",
     backgroundColor: "white",
-    borderRadius: 20,
-    paddingHorizontal: 15,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     paddingVertical: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    top: 70,
+    marginBottom: 20,
   },
   container: {
     display: "flex",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "white",
+    paddingBottom: 10,
   },
   header: {
     width: "90%",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: "5%",
-    marginLeft: "-8%",
   },
   backIcon: {
     width: 25,
@@ -204,13 +199,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#253452",
-    marginTop: "-1%",
     marginLeft: "-10%",
+    backgroundColor: "white",
   },
   recoveryPharseTextContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "7%",
     width: "80%",
     alignSelf: "center",
   },
@@ -218,6 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#253452",
+    marginBottom: 20,
   },
   subText: {
     fontSize: 14,
@@ -225,7 +220,6 @@ const styles = StyleSheet.create({
     color: "#9F9FA0",
     textAlign: "center",
     width: "115%",
-    marginTop: "4%",
   },
   securityMessageContainer: {
     alignItems: "center",
@@ -234,7 +228,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#F3AB1D",
     borderRadius: 15,
-    height: "12%",
+    height: 83,
     marginTop: "7%",
     backgroundColor: "#F4F7FA",
   },
@@ -252,8 +246,8 @@ const styles = StyleSheet.create({
   },
   securityPhraseContainer: {
     alignSelf: "center",
-    width: "87%",
-    height: "38.5%",
+    width: 335,
+    height: 310,
     borderRadius: 15,
     marginTop: "10%",
     backgroundColor: "#F4F7FA",
@@ -290,5 +284,24 @@ const styles = StyleSheet.create({
     width: "85%",
     alignSelf: "center",
     marginLeft: "155%",
+  },
+  getStartedContainer: {
+    width: 335,
+    height: 55,
+    borderRadius: 10,
+    backgroundColor: "#F19220",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  getStartedText: {
+    fontSize: 21,
+    fontWeight: "700",
+    color: "#ffffff",
+  },
+  namesTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
   },
 });

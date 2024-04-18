@@ -45,6 +45,7 @@ const Dashboard = ({ navigation }) => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [wallets, setWallets] = useState([]);
+  const [fullWalletAddress, setFullWalletAddress] = useState("");
 
   const [newAccount, setNewAccount] = useState([
     {
@@ -63,7 +64,52 @@ const Dashboard = ({ navigation }) => {
     },
   ]);
 
-  console.log("wallet addresss>>>>", walletAddress);
+  //full wallet address
+
+  useEffect(() => {
+    // Function to retrieve wallet address
+    const retrieveWalletAddress = async () => {
+      try {
+        const walletAddress = await AsyncStorage.getItem("fullWalletAddress");
+        console.log("wallet address fetched::", walletAddress);
+        setFullWalletAddress(walletAddress); // Update state with fetched wallet address
+      } catch (error) {
+        console.error("Error retrieving wallet address:", error);
+      }
+    };
+    retrieveWalletAddress();
+  }, []);
+
+  console.log("Full ______ wallet addresss>>>>", fullWalletAddress);
+
+  const getStoredWalletObject = async () => {
+    try {
+      const walletObject = await AsyncStorage.getItem("walletObject");
+      if (walletObject !== null) {
+        // Wallet object retrieved successfully
+        const firstWallet = JSON.parse(walletObject);
+        setWallets([firstWallet]);
+      } else {
+        // Handle case when wallet object is not found in AsyncStorage
+      }
+    } catch (error) {
+      console.error("Error retrieving wallet object:", error);
+      // Handle error
+    }
+  };
+
+  useEffect(() => {
+    getStoredWalletObject();
+  }, []);
+
+  console.log("Walltes------>>>>>>>_____>>>>>", wallets);
+
+  const shortenEthereumAddress = (address) => {
+    if (!address) return "";
+    return `${address.substring(0, 6)}...${address.substring(
+      address.length - 4
+    )}`;
+  };
 
   const retrieveWalletAddress = async () => {
     try {
@@ -105,9 +151,6 @@ const Dashboard = ({ navigation }) => {
       value.symbol.trim() === ""
     ) {
       alert("Value contains empty fields. Not adding to array.");
-      // alert("value is alrady exist we can not allow to import same value");
-      // setCardData((prevData) => [...prevData, value]);
-
       calculateTotalBalance();
       return;
     }
@@ -268,7 +311,6 @@ const Dashboard = ({ navigation }) => {
         );
       }
     };
-
     fetchWalletAddress();
   }, []);
 
@@ -322,6 +364,7 @@ const Dashboard = ({ navigation }) => {
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
+
     setWalletStore(wallet);
     setNewAccount((prevAccount) => [
       ...prevAccount,
@@ -487,7 +530,8 @@ const Dashboard = ({ navigation }) => {
                           : ArabicTranslation.wallet}
                       </Text>
                       <Text style={styles.walletCode}>
-                        {item?.newWalletAddress}
+                        {/* {item?.newWalletAddress} */}
+                        {shortenEthereumAddress(fullWalletAddress)}
                       </Text>
                     </View>
                   </View>
@@ -526,6 +570,7 @@ const Dashboard = ({ navigation }) => {
                           transparent={true}
                           isVisible={modalVisible}
                           onClose={() => setModalVisible(false)}
+                          walletAddress={fullWalletAddress}
                         />
                       </View>
                     </TouchableOpacity>

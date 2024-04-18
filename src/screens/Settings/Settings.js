@@ -107,7 +107,7 @@ const Settings = ({ navigation }) => {
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("CustomToken")}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate("CustomToken")}>
         <View style={[styles.createWalletView, { marginTop: "2%" }]}>
           <View style={styles.swapImageContainer}>
             <CustomTokenIcon />
@@ -120,7 +120,7 @@ const Settings = ({ navigation }) => {
           </Text>
           <RightArrowIcon style={styles.forwardIcon} />
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <LockIcon />
@@ -143,7 +143,7 @@ const Settings = ({ navigation }) => {
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
+      {/* <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <RecoveryPhraseIcon />
         </View>
@@ -168,7 +168,7 @@ const Settings = ({ navigation }) => {
             : ArabicTranslation.viewKey}
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
-      </View>
+      </View> */}
       {status && <LanguageChangeModal setStatus={setStatus} />}
     </View>
   );
