@@ -181,7 +181,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
 
   return (
     <Modal
-      animationType="fade"
+      animationType="slide"
       transparent={true}
       visible={isVisible}
       onRequestClose={onClose}
@@ -192,58 +192,38 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
             <Text style={styles.HeaderText}>{t("enterToken")}</Text>
 
             <View style={styles.TokenInputContainer}>
-              <TextInput
-                placeholderTextColor={"#7483A1"}
-                style={styles.input}
-                placeholder={t("enterTokenText")}
-                value={tokenNumber}
-                onChangeText={(text) => {
-                  setTokenNumber(text);
-                  handleInputChange(text);
-                }}
-              />
+              <Text style={styles.contractAddressText}>
+                {t("contractAddress")}
+              </Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholderTextColor={"#7483A1"}
+                  style={styles.input}
+                  placeholder={"0x..."}
+                  value={tokenNumber}
+                  onChangeText={(text) => {
+                    setTokenNumber(text);
+                    handleInputChange(text);
+                  }}
+                />
+              </View>
             </View>
 
             {/* Read-only TextInputs */}
             <View style={styles.readOnlyInputsContainer}>
-              <Text
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  marginTop: "-3%",
-                  fontWeight: "900",
-                }}
-              >
-                {t("name")}
-              </Text>
+              <Text style={styles.nameText}>{t("name")}</Text>
               <TextInput
                 style={styles.readOnlyInput}
                 value={tokenDetails.name}
                 editable={false}
               />
-              <Text
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  fontWeight: "900",
-                }}
-              >
-                {t("symbol")}
-              </Text>
+              <Text style={styles.symbolText}>{t("symbol")}</Text>
               <TextInput
                 style={styles.readOnlyInput}
                 value={tokenDetails.symbol}
                 editable={false}
               />
-              <Text
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  fontWeight: "900",
-                }}
-              >
-                {t("decimal")}
-              </Text>
+              <Text style={styles.symbolText}>{t("decimal")}</Text>
               <TextInput
                 style={styles.readOnlyInput}
                 value={tokenDetails.decimals.toString()}

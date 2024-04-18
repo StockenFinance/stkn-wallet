@@ -185,4 +185,21 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#253452",
   },
+  imoprtTokenView: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "87%",
+    backgroundColor: "#F19220",
+    height: 45,
+    alignSelf: "center",
+    borderRadius: 15,
+    // top: "-15%",
+  },
+  importTokenText: {
+    textAlign: "center",
+    color: "#000000",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  contractAddressText: {},
 });

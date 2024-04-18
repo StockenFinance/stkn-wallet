@@ -106,7 +106,7 @@ const Dashboard = ({ navigation }) => {
       // value.decimals.trim() === "" ||
       value.symbol.trim() === ""
     ) {
-      alert("Value contains empty fields. Not adding to array.");
+      // alert("Value contains empty fields. Not adding to array.");
       // alert("value is alrady exist we can not allow to import same value");
       // setCardData((prevData) => [...prevData, value]);
 
@@ -165,15 +165,31 @@ const Dashboard = ({ navigation }) => {
     setActiveDotIndex(pageIndex);
   };
 
-  const renderItem = ({ item, index }) => (
-    <View style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}>
-      <CurrencyDetailsCard
-        item={item}
-        navigation={navigation}
-        onCalculateAmount={handleCalculateAmount}
-      />
-    </View>
-  );
+  const renderItem = ({ item, index }) => {
+    const isLastItem = index === cardData.length - 1;
+    return (
+      <>
+        <View
+          style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}
+        >
+          <CurrencyDetailsCard
+            item={item}
+            navigation={navigation}
+            onCalculateAmount={handleCalculateAmount}
+          />
+        </View>
+        {isLastItem && (
+          <TouchableOpacity
+            style={styles.imoprtTokenView}
+            // onPress={() => console.log("Button pressed for:", item.title)}
+            onPress={toggleEnterTokenModal}
+          >
+            <Text style={styles.importTokenText}>Import New Token</Text>
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  };
 
   useEffect(() => {
     async function testIntegration() {
@@ -470,6 +486,7 @@ const Dashboard = ({ navigation }) => {
       </View>
       <View style={{ flex: 0.8 }}>
         <FlatList
+          // ListFooterComponent={}
           data={cardData}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
@@ -477,16 +494,16 @@ const Dashboard = ({ navigation }) => {
           scrollEventThrottle={16}
         />
       </View>
+
       <TouchableOpacity
         style={{ alignItems: "flex-end" }}
-        onPress={toggleEnterTokenModal}
+        // onPress={toggleEnterTokenModal}
         // onPress={handleFetchData}
       >
-        <Image
+        {/* <Image
           source={require("../../assets/images/plus.png")}
           style={styles.plusImage}
-        />
-        {/* <PlusIcon style={styles.plusImage} /> */}
+        /> */}
       </TouchableOpacity>
       <EnterTokenModal
         value={tokenInput}

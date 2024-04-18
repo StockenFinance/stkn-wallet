@@ -10,6 +10,7 @@ import SwapIcon from "./SvgIcon/SwapIcon";
 import WalletIcon from "./SvgIcon/WalletIcon";
 import DiamondIcon from "./SvgIcon/DiamondIcon";
 import DashboardStack from "./DashboardStack";
+import HomeScreen from "./screens/HomeScreen";
 
 const Bottom = createBottomTabNavigator();
 
@@ -35,8 +36,8 @@ const BottomNavigator = () => {
       }}
     >
       <Bottom.Screen
-        name="ChartScreen"
-        component={ChartScreen}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

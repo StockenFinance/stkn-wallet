@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "./englishTranslation";
 import ArabicTranslation from "./arabicTranslations";
 import { useTranslation } from "react-i18next";
+import { Utils } from "../utils/LocalStorage";
 
 const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
   const { t, i18n } = useTranslation();
@@ -32,7 +33,7 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
   };
 
   const getUserBalance = async (userAddress) => {
-    const result = await provider.getBalance(userAddress);
+    const result = await provider().getBalance(userAddress);
     const balance = ethers.formatEther(result);
     console.log("Balance: ", balance);
     setUserEtherBalance(balance);
@@ -40,15 +41,28 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
     return balance;
   };
   useEffect(() => {
-    getUserBalance("0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141");
-    tokenBalance();
+    Utils.getStoreData("fullWalletAddress").then((res) => {
+      console.log("fullwalletaddress local storage", res);
+      if (res !== null) {
+        getUserBalance(res);
+        // getUserBalance("0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141");
+        tokenBalance(res);
+      }
+    });
   }, [userEtherBalance]);
 
-  const tokenBalance = useCallback(async () => {
-    const x = await fetchDynamicDetailsOfToken(
-      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+  // const tokenBalance = useCallback(async (res) => {
+  //   const x = await fetchDynamicDetailsOfToken(
+  //     "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+  //   );
+  //   setTokenBalanceImported(x);
+  // }, []);
+  const tokenBalance = useCallback(async (tokenAddress) => {
+    const tokenBalance = await fetchDynamicDetailsOfToken(
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      tokenAddress
     );
-    setTokenBalanceImported(x);
+    setTokenBalanceImported(tokenBalance);
   }, []);
 
   function formatBalance(balance, decimals) {
@@ -260,7 +274,9 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
             </View>
 
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ReceiveScreen")}
+              >
                 <View
                   style={{
                     width: 35,
@@ -285,9 +301,6 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {/* {toggleLanguage
-                    ? EnglishTranslation.receive
-                    : ArabicTranslation.receive} */}
                   {t("receive")}
                 </Text>
               </TouchableOpacity>

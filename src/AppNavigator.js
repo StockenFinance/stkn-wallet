@@ -15,6 +15,7 @@ import SwapScreen from "./screens/SendScreen/index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
 import SendScreen from "./screens/SendScreen";
+import ChartScreen from "./screens/ChartScreen/index";
 
 const Stack = createStackNavigator();
 
@@ -109,6 +110,11 @@ const AppNavigator = () => {
             <Stack.Screen
               name="SendScreen"
               component={SendScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ChartScreen"
+              component={ChartScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

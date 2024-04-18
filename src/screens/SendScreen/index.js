@@ -58,7 +58,7 @@ const SendScreen = ({ placeholder, value, route }) => {
       console.log("get encrypted wallet:::::", encryptedWallet);
 
       const walletWithoutProvider = decryptWalletFromJson(encryptedWallet);
-      const wallet = walletWithoutProvider.connect(provider);
+      const wallet = walletWithoutProvider.connect(provider());
       console.log("get encrypted wallet>>>>", wallet);
       handleTokenSelect();
       console.log("Amount:", amount);

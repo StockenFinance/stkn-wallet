@@ -46,7 +46,7 @@ const EnglishTranslation = {
   copyAddress: "Copy Address",
   turnOffNotifications: "Turn off notifications",
   customize: "Customize",
-  enterToken: "Enter Token Address",
+  enterToken: "Add Custom Token",
   name: "Name",
   symbol: "Symbol",
   decimal: "Decimal",
@@ -55,6 +55,7 @@ const EnglishTranslation = {
   bitcoin: "Bitcoin",
   ethereum: "Ethreum",
   polygon: "Polygon",
+  contractAddress: "Contract address",
 
   // Swap screen strings
   wantToSwap: "I want to Swap",

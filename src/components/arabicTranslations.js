@@ -48,7 +48,7 @@ const ArabicTranslation = {
   copyAddress: " نسخ العنوان",
   turnOffNotifications: "إيقاف تشغيل الإشعارات",
   customize: "التخصيص",
-  enterToken: "أدخل عنوان الرمز المميز",
+  enterToken: "إضافة رمز مخصص",
   name: "الاسم",
   symbol: " الرمز",
   decimal: "عشري",
@@ -57,6 +57,7 @@ const ArabicTranslation = {
   bitcoin: "البيتكوين",
   polygon: "مضلع",
   ethereum: "الإيثيريوم",
+  contractAddress: "عنوان العقد",
 
   // Swap screen strings
   wantToSwap: "أريد المبادلة",

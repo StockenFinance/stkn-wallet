@@ -1,15 +1,28 @@
 import { ethers } from "ethers";
 import Erc20Contract from "../contracts/Erc20";
 
-const providerInstance = new ethers.JsonRpcProvider(
+const polygonProviderInstance = new ethers.JsonRpcProvider(
   // "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
   // "https://sepolia.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
   // "https://sepolia.infura.io/v3/60a31a9e69a940f98d0935f01c122d4e"
   "https://polygon-mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
 );
-export const provider = providerInstance;
+
+const etherumProviderInstance = new ethers.JsonRpcProvider(
+  "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
+);
+const SUPPORTED_CHAINS = Object.freeze({
+  ETHEREUM: "Ethereum",
+  POLYGON: "Polygon",
+});
+export const provider = () => {
+  const selectedChain = SUPPORTED_CHAINS.POLYGON;
+  return selectedChain === SUPPORTED_CHAINS.ETHEREUM
+    ? etherumProviderInstance
+    : polygonProviderInstance;
+};
 export const fetchDynamicDetailsOfToken = async (tokenAddress) => {
-  const erc20Prov = new Erc20Contract(tokenAddress, provider);
+  const erc20Prov = new Erc20Contract(tokenAddress, provider());
   try {
     const balance = await erc20Prov.balanceOf(
       "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141"
@@ -24,9 +37,11 @@ export const tokenDetail = async (tokenAddress) => {
   console.log("tokenAddress", tokenAddress);
   console.log("works");
 
-  const erc20Prov = new Erc20Contract(tokenAddress, provider);
+  const erc20Prov = new Erc20Contract(tokenAddress, provider());
+  console.log(erc20Prov);
   try {
     const balance = await erc20Prov.balanceOf(tokenAddress);
+    console.log("In token details...", balance);
     const symbol = await erc20Prov.symbol();
     const tokenName = await erc20Prov.name();
     const decimals = await erc20Prov.decimals();
