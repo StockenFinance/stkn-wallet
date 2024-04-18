@@ -203,6 +203,8 @@ const Dashboard = ({ navigation }) => {
         provider
       );
 
+      console.group("check provider :::::", provider);
+
       console.log(
         "Test function:",
         await erc20Prov.balanceOf("0x28C6c06298d514Db089934071355E5743bf21d60"),

@@ -11,6 +11,7 @@ const polygonProviderInstance = new ethers.JsonRpcProvider(
 const etherumProviderInstance = new ethers.JsonRpcProvider(
   "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
 );
+
 const SUPPORTED_CHAINS = Object.freeze({
   ETHEREUM: "Ethereum",
   POLYGON: "Polygon",

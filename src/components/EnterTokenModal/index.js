@@ -18,6 +18,7 @@ import EnglishTranslation from "../englishTranslation";
 import ArabicTranslation from "../arabicTranslations";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
+import { Utils } from "../../utils/LocalStorage";
 
 const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const { t, i18n } = useTranslation();
@@ -25,6 +26,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const [tokenNumber, setTokenNumber] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [storedTokens, setStoredTokens] = useState([]);
 
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
@@ -71,6 +73,55 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     };
   };
 
+  // const handleInputChange = async (text) => {
+  //   setTokenNumber(text);
+  //   if (text.trim() !== "") {
+  //     try {
+  //       const res = await tokenDetail(text);
+  //       if (res.success) {
+  //         const { tokenName, decimals, symbol, balance } = res.success;
+  //         console.log("Balance test::::", tokenName, decimals, symbol, balance);
+  //         fetchCryptoPrice(symbol).then((usdPrice) => {
+  //           console.log("UES ReS:::", usdPrice);
+  //           // setCryptoPrice(usdPrice);
+  //           setTokenDetails({
+  //             name: tokenName,
+  //             decimals: decimals,
+  //             symbol: symbol,
+  //             balance: balance,
+  //             price: usdPrice?.USD,
+  //           });
+  //         });
+  //       } else {
+  //         setTokenDetails({
+  //           name: "",
+  //           decimals: "",
+  //           symbol: "",
+  //           balance: "",
+  //           price: "",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching token details:", error);
+  //       setTokenDetails({
+  //         name: "",
+  //         decimals: "",
+  //         symbol: "",
+  //         balance: "",
+  //         price: "",
+  //       });
+  //     }
+  //   } else {
+  //     setTokenDetails({
+  //       name: "",
+  //       decimals: "",
+  //       symbol: "",
+  //       balance: "",
+  //       price: "",
+  //     });
+  //   }
+  // };
+
   const handleInputChange = async (text) => {
     setTokenNumber(text);
     if (text.trim() !== "") {
@@ -89,6 +140,8 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
               balance: balance,
               price: usdPrice?.USD,
             });
+            // Add token address to storedTokens array
+            setStoredTokens((prevTokens) => [...prevTokens, text]);
           });
         } else {
           setTokenDetails({
@@ -179,6 +232,15 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (storedTokens.length > 0) {
+      Utils.setStoreData("STOREDTOKEN", storedTokens);
+      console.log("success token::::", storedTokens);
+    }
+  }, [storedTokens]);
+
+  console.log("check token import :::::", storedTokens);
+
   return (
     <Modal
       animationType="slide"
@@ -204,6 +266,9 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   onChangeText={(text) => {
                     setTokenNumber(text);
                     handleInputChange(text);
+                    setStoredTokens((pre) => {
+                      return [...pre, text];
+                    });
                   }}
                 />
               </View>
