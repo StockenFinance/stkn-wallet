@@ -7,17 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { styles } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNewWallet, provider } from "../../utils/helper";
 import ImportIcon from "../../SvgIcon/ImportIcon";
 import CreateIcon from "../../SvgIcon/CreateIcon";
 import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
-import EnglishTranslation from "../../components/englishTranslation";
-import ArabicTranslation from "../../components/arabicTranslations";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Utils } from "../../utils/LocalStorage";
 import { saveWalletAddress } from "../../redux/actions/walletActions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";

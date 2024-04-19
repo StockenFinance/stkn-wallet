@@ -10,11 +10,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import WalletList from "./WalletList";
 import BackIcon from "../../SvgIcon/BackIcon";
 import { useSelector } from "react-redux";
+import AddWalletModal from "../../components/AddWalletModal";
 
 const WalletManagement = ({ navigation }) => {
   const [wallets, setWallets] = useState([]);
   const { recoveryModal } = useSelector((state) => state.counter);
   const scrollY = new Animated.Value(0);
+
+  const [status, setStatus] = useState(false);
 
   useEffect(() => {
     const retrieveWallets = async () => {
@@ -74,6 +77,17 @@ const WalletManagement = ({ navigation }) => {
             );
           }) || "Please add your wallet"}
         </View>
+      )}
+      <TouchableOpacity
+        onPress={() => setStatus(true)}
+        style={{ position: "absolute", top: 400, left: 120 }}
+      >
+        <Text style={{ fontWeight: "bold", color: "#039D00", fontSize: 20 }}>
+          <Text>+</Text>Add Wallet
+        </Text>
+      </TouchableOpacity>
+      {status && (
+        <AddWalletModal setStatus={setStatus} navigation={navigation} />
       )}
     </View>
   );

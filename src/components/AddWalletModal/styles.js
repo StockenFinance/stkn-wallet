@@ -1,0 +1,75 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  backdrop: {
+    position: "absolute",
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: "100%",
+    height: "150%",
+    justifyContent: "flex-end",
+    bottom: 0,
+  },
+  bottomSheet: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+
+  createWalletView: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "88%",
+    height: 61,
+    alignSelf: "center",
+    borderRadius: 15,
+    backgroundColor: "#F4F7FA",
+    marginTop: 30,
+  },
+  createWalletImage: {
+    alignSelf: "center",
+    width: 34,
+    height: 34,
+    marginLeft: "10%",
+    marginHorizontal: "5%",
+  },
+  createWalletText: {
+    fontSize: 18,
+    fontWeight: "400",
+    color: "#233452",
+    marginLeft: "5%",
+  },
+  subText: {
+    color: "#808191",
+    fontSize: 10,
+    fontWeight: "700",
+    marginLeft: "5%",
+  },
+  divider: {
+    height: "60%",
+    width: 1,
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  loader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    zIndex: 50,
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#253452",
+    marginBottom: 20,
+    textAlign: "center",
+    marginTop: 40,
+  },
+});
