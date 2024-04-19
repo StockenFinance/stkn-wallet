@@ -33,6 +33,7 @@ const ArabicTranslation = {
   // Import Wallet screen strings
   privateKeyText: "المفتاح الخاص/عبارة الاسترداد",
   import: "الاستيراد",
+  privateKey: "المفتاح الخاص أو مرحلة الاسترداد",
 
   // Dashboard screen strings
   addNewWallet: "إضافة محفظة جديدة",
@@ -43,7 +44,7 @@ const ArabicTranslation = {
   receive: "استلم",
   swap: "مقايضة",
   chart: "الرسم البياني",
-  allNetrworkText: "جميع الشبكات",
+  allNetworkText: "جميع الشبكات",
   copyAddress: " نسخ العنوان",
   turnOffNotifications: "إيقاف تشغيل الإشعارات",
   customize: "التخصيص",
@@ -52,6 +53,10 @@ const ArabicTranslation = {
   symbol: " الرمز",
   decimal: "عشري",
   importToken: "رمز الاستيراد",
+  enterTokenText: "أدخل الرمز المميز",
+  bitcoin: "البيتكوين",
+  polygon: "مضلع",
+  ethereum: "الإيثيريوم",
 
   // Swap screen strings
   wantToSwap: "أريد المبادلة",
@@ -89,6 +94,13 @@ const ArabicTranslation = {
   viewPhrase: "عرض عبارة الاسترداد",
   viewKey: "عرض المفتاح الخاص",
   addCustomToken: "إضافة رمز مخصص",
+
+  // Send screen strings
+  wantToSend: "أريد إرسال",
+  to: "إلى",
+  transactionApi:
+    "المعاملات لا رجعة فيها تأكد من أنك على الشبكة الصحيحة وأرسل المبلغ الصحيح إلى العنوان الصحيح",
+  send: "إرسال",
 };
 
 export default ArabicTranslation;

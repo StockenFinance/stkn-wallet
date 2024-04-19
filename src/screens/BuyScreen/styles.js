@@ -169,7 +169,7 @@ export const styles = StyleSheet.create({
   importButton: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "25%",
+    marginTop: "12%",
     width: "87%",
     height: 55,
     alignSelf: "center",

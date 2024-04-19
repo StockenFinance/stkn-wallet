@@ -2,20 +2,20 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Welcome from "./screens/Welcome/Welcome";
-import CreateWallet from "./screens/CreateWallet/CreateWallet";
-import BackupPhrase from "./screens/BackupPhrase/BackupPhrase";
-import ImportWallet from "./screens/ImportWallet/ImportWallet";
-import ConfirmBackupPhrase from "./screens/ConfirmBackupPhrase/ConfirmBackupPhrase";
-import RecoveryPhraseConfirmation from "./screens/RecoveryPhraseConfirmation/RecoveryPhraseConfirmation";
-import Dashboard from "./screens/Dashboard/Dashboard";
+import Welcome from "./screens/Welcome/index";
+import CreateWallet from "./screens/CreateWallet/index";
+import BackupPhrase from "./screens/BackupPhrase/index";
+import ImportWallet from "./screens/ImportWallet/index";
+import ConfirmBackupPhrase from "./screens/ConfirmBackupPhrase/index";
+import RecoveryPhraseConfirmation from "./screens/RecoveryPhraseConfirmation/index";
+import Dashboard from "./screens/Dashboard";
 import BottomNavigator from "./TabNavigator";
 import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
-import SwapScreen from "./screens/SwapScreen/SwapScreen";
+import SwapScreen from "./screens/SendScreen/index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
-import CustomToken from "./screens/CustomToken/CustomToken";
 import WalletManagement from "./screens/WalletManagement/WalletManagement";
+import SendScreen from "./screens/SendScreen";
 
 const Stack = createStackNavigator();
 
@@ -108,13 +108,13 @@ const AppNavigator = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Dashboard"
-              component={BottomNavigator}
+              name="SendScreen"
+              component={SendScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="CustomToken"
-              component={CustomToken}
+              name="Dashboard"
+              component={BottomNavigator}
               options={{ headerShown: false }}
             />
             <Stack.Screen
