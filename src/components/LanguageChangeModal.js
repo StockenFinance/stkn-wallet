@@ -16,41 +16,26 @@ const LanguageChangeModal = ({ setStatus }) => {
 
   const [selectedLanguage, setSelectedLanguage] = useState("english");
 
-  const handleLanguageChange = async (language) => {
+  const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
-    await saveSelectedLanguage(language);
   };
 
   const saveSelectedLanguage = async (language) => {
     try {
       await AsyncStorage.setItem("selectedLanguage", language);
       console.log("Selected language saved successfully:", language);
-      // alert("value added ");
+      // Apply language change to the app after saving to AsyncStorage
+      applyLanguageChange(language);
     } catch (error) {
       console.error("Error saving selected language to AsyncStorage:", error);
     }
   };
 
-  const toggleLanguage = async () => {
-    if (selectedLanguage === "english") {
-      setSelectedLanguage("arabic");
-      await saveSelectedLanguage("arabic");
-    } else {
-      setSelectedLanguage("english");
-      await saveSelectedLanguage("english");
-    }
-  };
-
-  const retrieveSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem("selectedLanguage");
-      if (language) {
-        setSelectedLanguage(language);
-        toggleLanguage();
-      }
-    } catch (error) {
-      console.error("Error retrieving language from AsyncStorage:", error);
-    }
+  const applyLanguageChange = (language) => {
+    // Apply language change to the app based on the selected language
+    // For example, you might have a function to update the app's language settings
+    // Replace the following line with your actual logic
+    console.log("Applying language change to:", language);
   };
 
   const slideUp = () => {
@@ -62,24 +47,20 @@ const LanguageChangeModal = ({ setStatus }) => {
   };
 
   const slideDown = () => {
-    // Will slide down the bottom sheet
     Animated.timing(slide, {
-      toValue: 300,
       duration: 200,
       useNativeDriver: true,
-    }).start();
+    }).start(() => {
+      setStatus(false);
+    });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     slideUp();
-  });
+  }, []);
 
   const closeModal = () => {
     slideDown();
-
-    setTimeout(() => {
-      setStatus(false);
-    }, 0);
   };
 
   return (
@@ -172,14 +153,13 @@ const LanguageChangeModal = ({ setStatus }) => {
               </Pressable>
             </View>
             <TouchableOpacity
-              onPress={retrieveSelectedLanguage}
+              onPress={() => {
+                saveSelectedLanguage(selectedLanguage);
+                closeModal();
+              }}
               style={styles.getStartedContainer}
             >
-              <Text style={styles.getStartedText}>
-                {selectedLanguage === "english"
-                  ? EnglishTranslation.continueText
-                  : ArabicTranslation.continueText}
-              </Text>
+              <Text style={styles.getStartedText}>Continue</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
