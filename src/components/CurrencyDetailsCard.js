@@ -13,6 +13,7 @@ import EnglishTranslation from "./englishTranslation";
 import ArabicTranslation from "./arabicTranslations";
 import { useTranslation } from "react-i18next";
 import { Utils } from "../utils/LocalStorage";
+import { useSelector } from "react-redux";
 
 const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
   const { t, i18n } = useTranslation();
@@ -23,6 +24,9 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [tokenBalanceImported, setTokenBalanceImported] = useState();
+  const currentChain = useSelector((state) => state.chain.currentChain);
+
+  console.log("currenChain", currentChain);
 
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
@@ -275,7 +279,7 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
 
             <View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("ReceiveScreen")}
+                onPress={() => navigation.navigate("ReceiveScreen", {})}
               >
                 <View
                   style={{

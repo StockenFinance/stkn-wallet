@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   },
   modalContent: {
     width: "100%",
-    height: "60%",
+    height: "70%",
     backgroundColor: "white",
     padding: "5%",
     borderRadius: 12,
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#F19220",
-    marginTop: "-15%",
+    marginTop: "-10%",
   },
   doneButtonText: {
     color: "#ffffff",
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   input: {
-    width: "80%",
+    width: "73%",
     height: 50,
     borderColor: "#E9E9E9",
     borderWidth: 1,
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     margin: 20,
   },
   readOnlyInput: {
-    width: 390,
+    width: 370,
     height: 45,
     borderColor: "#E9E9E9",
     borderWidth: 1,
@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
   },
   copyPasteIcon: {
     position: "absolute",
-    marginTop: "30%",
+    marginTop: "32%",
     right: 15,
   },
   copyPasteImage: {
@@ -106,5 +106,30 @@ export const styles = StyleSheet.create({
     color: "black",
     marginLeft: "3%",
     fontWeight: "900",
+  },
+  radioButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: "3%",
+    // marginVertical: 10,
+  },
+  radioButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#000",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  radioButtonSelected: {
+    backgroundColor: "#F19220",
+  },
+  radioText: {
+    fontSize: 16,
+    color: "#000000",
+    fontWeight: "700",
   },
 });

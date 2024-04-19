@@ -82,6 +82,7 @@ const CreateWallet = ({ navigation, route }) => {
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(shortenedAddress));
+    storeFullWalletAddress(wallet.address);
 
     setWalletStore(wallet);
     setTimeout(() => {

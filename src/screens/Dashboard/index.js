@@ -25,6 +25,9 @@ import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import { useTranslation } from "react-i18next";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
+import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
+import { setCurrentChain } from "../../redux/reducer/chainReducer";
+import { useDispatch } from "react-redux";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -47,6 +50,7 @@ const Dashboard = ({ navigation }) => {
   const [selectedChain, setSelectedChain] = useState(null);
   const [calculatedBalance, setCalculatedBalance] = useState(0);
   const [calculatedAmount, setCalculatedAmount] = useState(0);
+  const dispatch = useDispatch();
 
   const [newAccount, setNewAccount] = useState([
     {
@@ -371,7 +375,10 @@ const Dashboard = ({ navigation }) => {
   }, []);
 
   const handleChainSelect = (chain) => {
+    console.log("dispatcher chain", chain);
     setSelectedChain(chain);
+    dispatch(setCurrentChain(chain));
+
     setChainSelectionModalVisible(false);
   };
 
@@ -442,19 +449,32 @@ const Dashboard = ({ navigation }) => {
                     source={require("../../assets/images/walletImage.png")}
                     style={styles.walletImage}
                   />
-
-                  <Text
-                    style={[
-                      styles.receiveText,
-                      { right: !toggleLanguage ? 25 : 10 },
-                    ]}
-                  >
-                    {t("receive")}
-                  </Text>
-                  <Image
-                    source={require("../../assets/images/receiveScanner.png")}
-                    style={{ position: "absolute", top: 27, right: 18 }}
-                  />
+                  <View style={{ marginTop: "-12%" }}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("ReceiveScreen")}
+                    >
+                      <Text
+                        style={[
+                          styles.receiveText,
+                          { right: !toggleLanguage ? 25 : 10 },
+                        ]}
+                      >
+                        {t("receive")}
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("ReceiveScreen")}
+                    >
+                      <Image
+                        source={require("../../assets/images/receiveScanner.png")}
+                        style={{
+                          position: "absolute",
+                          top: 3,
+                          right: 18,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
                   <View style={styles.walletBalanceContainer}>
                     <View>
@@ -467,11 +487,11 @@ const Dashboard = ({ navigation }) => {
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
                       <View style={styles.modalIconContainer}>
-                        <Image
+                        {/* <Image
                           source={require("../../assets/images/modalDot.png")}
                           style={styles.modalDotImage}
-                        />
-
+                        /> */}
+                        <ModalDotIcon style={styles.modalDotImage} />
                         <CustomModal
                           transparent={true}
                           isVisible={modalVisible}

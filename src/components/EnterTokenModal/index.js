@@ -19,6 +19,7 @@ import ArabicTranslation from "../arabicTranslations";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
 import { Utils } from "../../utils/LocalStorage";
+import { RadioButton } from "@react-native-paper/radio-button";
 
 const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const { t, i18n } = useTranslation();
@@ -27,6 +28,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [storedTokens, setStoredTokens] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Ethereum");
 
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
@@ -34,13 +36,20 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     symbol: "",
     balance: "",
     price: "",
+    chain: "",
   });
 
   const handleOverlayPress = (event) => {
     if (event?.target === event?.currentTarget) {
       setTokenNumber("");
       modalValues(tokenDetails);
-      setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+      setTokenDetails({
+        name: "",
+        decimals: "",
+        symbol: "",
+        balance: "",
+        chain: "",
+      });
       onClose();
     }
   };
@@ -139,6 +148,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
               symbol: symbol,
               balance: balance,
               price: usdPrice?.USD,
+              chain: selectedOption,
             });
             // Add token address to storedTokens array
             setStoredTokens((prevTokens) => [...prevTokens, text]);
@@ -241,6 +251,10 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
 
   console.log("check token import :::::", storedTokens);
 
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+    console.log("selected option", selectedOption);
+  };
   return (
     <Modal
       animationType="slide"
@@ -294,6 +308,29 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                 value={tokenDetails.decimals.toString()}
                 editable={false}
               />
+            </View>
+            <Text
+              style={{ marginTop: "-3%", color: "#000000", fontWeight: "800" }}
+            >
+              Select Chain
+            </Text>
+            <View style={styles.radioButtonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.radioButton,
+                  selectedOption === "first" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleOptionChange("first")}
+              ></TouchableOpacity>
+              <Text style={styles.radioText}>Ethereum</Text>
+              <TouchableOpacity
+                style={[
+                  styles.radioButton,
+                  selectedOption === "second" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleOptionChange("second")}
+              ></TouchableOpacity>
+              <Text style={styles.radioText}>Polygon</Text>
             </View>
             <TouchableOpacity
               style={styles.copyPasteIcon}
