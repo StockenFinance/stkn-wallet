@@ -3047,8 +3047,6 @@ drawable src_assets_images_bitcoin
 drawable src_assets_images_dropdown
 drawable src_assets_images_eth
 drawable src_assets_images_ethereum
-drawable src_assets_images_modaldot
-drawable src_assets_images_plus
 drawable src_assets_images_receivescanner
 drawable src_assets_images_send
 drawable src_assets_images_usd
@@ -5302,3 +5300,4 @@ styleable ViewStubCompat android_id android_layout android_inflatedId
 xml file_provider_paths
 xml image_share_filepaths
 xml rn_dev_preferences
+xml share_download_paths

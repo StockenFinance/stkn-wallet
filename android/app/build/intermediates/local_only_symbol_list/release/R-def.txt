@@ -10,8 +10,6 @@ drawable src_assets_images_bitcoin
 drawable src_assets_images_dropdown
 drawable src_assets_images_eth
 drawable src_assets_images_ethereum
-drawable src_assets_images_modaldot
-drawable src_assets_images_plus
 drawable src_assets_images_receivescanner
 drawable src_assets_images_send
 drawable src_assets_images_usd

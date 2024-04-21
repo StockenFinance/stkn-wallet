@@ -46,8 +46,9 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginTop: 30,
     alignSelf: "center",
-    marginHorizontal: 10,
-    marginLeft: 25,
+    marginHorizontal: 14,
+    // marginLeft: 17,
+    // marginRight: 4,
   },
   walletName: {
     fontSize: 13,

@@ -16,9 +16,10 @@ const SUPPORTED_CHAINS = Object.freeze({
   ETHEREUM: "Ethereum",
   POLYGON: "Polygon",
 });
-export const provider = () => {
+export const provider = (chain) => {
+  console.log("chain------- from provider selection", chain);
   const selectedChain = SUPPORTED_CHAINS.POLYGON;
-  return selectedChain === SUPPORTED_CHAINS.ETHEREUM
+  return chain === SUPPORTED_CHAINS.ETHEREUM
     ? etherumProviderInstance
     : polygonProviderInstance;
 };
@@ -34,11 +35,12 @@ export const fetchDynamicDetailsOfToken = async (tokenAddress) => {
     return bal;
   } catch (e) {}
 };
-export const tokenDetail = async (tokenAddress) => {
+export const tokenDetail = async (tokenAddress, chain) => {
   console.log("tokenAddress", tokenAddress);
+  console.log("chain fromtokenDetail", chain);
   console.log("works");
 
-  const erc20Prov = new Erc20Contract(tokenAddress, provider());
+  const erc20Prov = new Erc20Contract(tokenAddress, provider(chain));
   console.log(erc20Prov);
   try {
     const balance = await erc20Prov.balanceOf(tokenAddress);
@@ -65,12 +67,13 @@ export const createNewWallet = () => {
   wallet = ethers.Wallet.createRandom(provider);
   const mnemonic = wallet.mnemonic.phrase;
   console.log("generation of wallet:::", wallet);
-  return { wallet, mnemonic, encryptedWallet: wallet.encryptSync("123") };
+  // return { wallet, mnemonic, encryptedWallet: wallet.encryptSync("123") };
+  return { wallet, mnemonic };
 };
 
-export const decryptWalletFromJson = (jsonWallet) => {
-  return ethers.Wallet.fromEncryptedJsonSync(jsonWallet, "123");
-};
+// export const decryptWalletFromJson = (jsonWallet) => {
+//   return ethers.Wallet.fromEncryptedJsonSync(jsonWallet, "123");
+// };
 
 export const erc20Instance = (tokenAddress) => {
   const erc20Prov = new Erc20Contract(tokenAddress, provider);

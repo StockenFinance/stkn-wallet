@@ -14,6 +14,7 @@ import CurrencyDetailsCard from "./components/CurrencyDetailsCard";
 import SwapScreen from "./screens/SendScreen/index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
+import WalletManagement from "./screens/WalletManagement/WalletManagement";
 import SendScreen from "./screens/SendScreen";
 import ChartScreen from "./screens/ChartScreen/index";
 
@@ -120,6 +121,11 @@ const AppNavigator = () => {
             <Stack.Screen
               name="Dashboard"
               component={BottomNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="WalletManagement"
+              component={WalletManagement}
               options={{ headerShown: false }}
             />
           </>

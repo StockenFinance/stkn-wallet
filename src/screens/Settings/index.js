@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import RightArrowIcon from "../../SvgIcon/RightArrowIcon";
@@ -12,33 +12,37 @@ import CustomTokenIcon from "../../SvgIcon/CustomTokenIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
+import LanguageChangeModal from "../../components/LanguageChangeModal";
 import { useTranslation } from "react-i18next";
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
   const { t, i18n } = useTranslation();
 
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
-  useEffect(() => {
-    retrieveSelectedLanguage();
-  }, []);
+  const [status, setStatus] = useState(false);
 
-  const retrieveSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem("selectedLanguage");
-      if (language !== null) {
-        console.log("Retrieved language:", language);
-        let bool = language === "english" ? true : false;
-        setToggleLanguage(bool);
-      } else {
-        console.log("No language saved in AsyncStorage");
-        setToggleLanguage(true);
-      }
-    } catch (error) {
-      console.error("Error retrieving language from AsyncStorage:", error);
-    }
-  };
+  // useEffect(() => {
+  //   retrieveSelectedLanguage();
+  // }, []);
+
+  // const retrieveSelectedLanguage = async () => {
+  //   try {
+  //     const language = await AsyncStorage.getItem("selectedLanguage");
+  //     if (language !== null) {
+  //       console.log("Retrieved language:", language);
+  //       let bool = language === "english" ? true : false;
+  //       setToggleLanguage(bool);
+  //     } else {
+  //       console.log("No language saved in AsyncStorage");
+  //       setToggleLanguage(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error retrieving language from AsyncStorage:", error);
+  //   }
+  // };
+
   useEffect(() => {
     // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
@@ -52,55 +56,102 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.walletText}>{t("settings")}</Text>
-      </View>
-      <View style={styles.createWalletView}>
-        <View style={styles.swapImageContainer}>
-          <WalletIcon color={"white"} />
-        </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>{t("walletManagement")}</Text>
+        {/* <Image
+          source={require("../../assets/images/backIcon.png")}
+          style={styles.backIcon}
+        /> */}
+        <Text style={styles.walletText}>
+          {t("settings")}
 
-        <RightArrowIcon style={styles.forwardIcon} />
+          {/* {toggleLanguage
+            ? EnglishTranslation.settings
+            : ArabicTranslation.settings} */}
+        </Text>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("WalletManagement")}>
+        <View style={styles.createWalletView}>
+          <View style={styles.swapImageContainer}>
+            <WalletIcon color={"white"} />
+          </View>
+          <View style={styles.divider}></View>
+          <Text style={styles.createWalletText}>
+            {/* {toggleLanguage
+              ? EnglishTranslation.walletManagement
+              : ArabicTranslation.walletManagement} */}
+            {t("walletManagement")}
+          </Text>
+          <RightArrowIcon style={styles.forwardIcon} />
+        </View>
+      </TouchableOpacity>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <Text style={styles.dollarText}>$</Text>
         </View>
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}> {t("setCurrency")}</Text>
+        <Text style={styles.createWalletText}>
+          {" "}
+          {/* {toggleLanguage
+            ? EnglishTranslation.setCurrency
+            : ArabicTranslation.setCurrency} */}
+          {t("setCurrency")}
+        </Text>
         <Text style={styles.currencyText}>USD</Text>
       </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-        <View style={styles.swapImageContainer}>
-          <LanguageIcon style={styles.languageImage} />
+      <TouchableOpacity onPress={() => setStatus(true)}>
+        <View style={[styles.createWalletView, { marginTop: "2%" }]}>
+          <View style={styles.swapImageContainer}>
+            <LanguageIcon style={styles.languageImage} />
+          </View>
+          <View style={styles.divider}></View>
+          <Text style={styles.createWalletText}>
+            {" "}
+            {/* {toggleLanguage
+              ? EnglishTranslation.language
+              : ArabicTranslation.language} */}
+            {t("language")}
+          </Text>
+          <Text style={[styles.currencyText, { marginLeft: "40%" }]}>EN</Text>
         </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}> {t("language")}</Text>
-        <Text style={[styles.currencyText, { marginLeft: "40%" }]}>EN</Text>
-      </View>
+      </TouchableOpacity>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <WalletConnectIcon style={styles.image} />
         </View>
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}> {t("walletConnect")}</Text>
+        <Text style={styles.createWalletText}>
+          {" "}
+          {/* {toggleLanguage
+            ? EnglishTranslation.walletConnect
+            : ArabicTranslation.walletConnect} */}
+          {t("walletConnect")}
+        </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-        <View style={styles.swapImageContainer}>
-          <CustomTokenIcon />
+      {/* <TouchableOpacity onPress={() => navigation.navigate("CustomToken")}>
+        <View style={[styles.createWalletView, { marginTop: "2%" }]}>
+          <View style={styles.swapImageContainer}>
+            <CustomTokenIcon />
+          </View>
+          <View style={styles.divider}></View>
+          <Text style={styles.createWalletText}>
+            {toggleLanguage
+              ? EnglishTranslation.customTokens
+              : ArabicTranslation.customTokens}
+          </Text>
+          <RightArrowIcon style={styles.forwardIcon} />
         </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}> {t("customTokens")}</Text>
-        <RightArrowIcon style={styles.forwardIcon} />
-      </View>
+      </TouchableOpacity> */}
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <LockIcon />
         </View>
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>{t("passcode")}</Text>
+        <Text style={styles.createWalletText}>
+          {/* {toggleLanguage
+            ? EnglishTranslation.passcode
+            : ArabicTranslation.passcode} */}
+          {t("passcode")}
+        </Text>
         <Text
           style={{
             marginLeft: 65,
@@ -113,12 +164,17 @@ const Settings = () => {
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
+      {/* <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <RecoveryPhraseIcon />
         </View>
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}> {t("viewPhrase")}</Text>
+        <Text style={styles.createWalletText}>
+          {" "}
+          {toggleLanguage
+            ? EnglishTranslation.viewPhrase
+            : ArabicTranslation.viewPhrase}
+        </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
@@ -126,9 +182,15 @@ const Settings = () => {
           <KeyIcon />
         </View>
         <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}> {t("viewKey")}</Text>
+        <Text style={styles.createWalletText}>
+          {" "}
+          {toggleLanguage
+            ? EnglishTranslation.viewKey
+            : ArabicTranslation.viewKey}
+        </Text>
         <RightArrowIcon style={styles.forwardIcon} />
-      </View>
+      </View> */}
+      {status && <LanguageChangeModal setStatus={setStatus} />}
     </View>
   );
 };

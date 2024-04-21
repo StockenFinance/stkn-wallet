@@ -7,17 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { styles } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNewWallet, provider } from "../../utils/helper";
 import ImportIcon from "../../SvgIcon/ImportIcon";
 import CreateIcon from "../../SvgIcon/CreateIcon";
 import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
-import EnglishTranslation from "../../components/englishTranslation";
-import ArabicTranslation from "../../components/arabicTranslations";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Utils } from "../../utils/LocalStorage";
 import { saveWalletAddress } from "../../redux/actions/walletActions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -74,9 +69,9 @@ const CreateWallet = ({ navigation, route }) => {
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
     console.log("Generated Mnemonic:", mnemonic);
-    AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
-      console.log("Error while setting encrypted wallet: ", err);
-    });
+    // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
+    //   console.log("Error while setting encrypted wallet: ", err);
+    // });
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
@@ -125,9 +120,11 @@ const CreateWallet = ({ navigation, route }) => {
           })
         }
       >
-        <ImportIcon style={styles.createWalletImage} />
+        <ImportIcon
+          style={[styles.createWalletImage, { marginLeft: "10.9%" }]}
+        />
         <View style={styles.divider}></View>
-        <View style={{ marginLeft: "5%" }}>
+        <View style={{ marginLeft: "3%" }}>
           <Text
             style={[
               styles.createWalletText,

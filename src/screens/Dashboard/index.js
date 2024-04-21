@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
@@ -28,6 +29,9 @@ import ChainSelectionModal from "../../components/ChainSelectionModal";
 import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
 import { setCurrentChain } from "../../redux/reducer/chainReducer";
 import { useDispatch } from "react-redux";
+import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
+import PlusIcon from "../../SvgIcon/PluseIcon";
+import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -44,6 +48,9 @@ const Dashboard = ({ navigation }) => {
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [wallets, setWallets] = useState([]);
+  const [fullWalletAddress, setFullWalletAddress] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
@@ -66,10 +73,56 @@ const Dashboard = ({ navigation }) => {
       balance: "0.00",
       decimals: "0",
       price: "3547.41",
+      chain: "Ethereum",
     },
   ]);
 
-  console.log("wallet addresss>>>>", walletAddress);
+  //full wallet address
+
+  useEffect(() => {
+    // Function to retrieve wallet address
+    const retrieveWalletAddress = async () => {
+      try {
+        const walletAddress = await AsyncStorage.getItem("fullWalletAddress");
+        console.log("wallet address fetched::", walletAddress);
+        setFullWalletAddress(walletAddress); // Update state with fetched wallet address
+      } catch (error) {
+        console.error("Error retrieving wallet address:", error);
+      }
+    };
+    retrieveWalletAddress();
+  }, []);
+
+  console.log("Full ______ wallet addresss>>>>", fullWalletAddress);
+
+  const getStoredWalletObject = async () => {
+    try {
+      const walletObject = await AsyncStorage.getItem("walletObject");
+      if (walletObject !== null) {
+        // Wallet object retrieved successfully
+        const firstWallet = JSON.parse(walletObject);
+        setWallets([firstWallet]);
+      } else {
+        // Handle case when wallet object is not found in AsyncStorage
+      }
+    } catch (error) {
+      console.error("Error retrieving wallet object:", error);
+      // Handle error
+    }
+  };
+
+  useEffect(() => {
+    getStoredWalletObject();
+  }, []);
+
+  console.log("Walltes------>>>>>>>_____>>>>>", wallets);
+
+  const shortenEthereumAddress = (address) => {
+    if (!address) return "";
+    return `${address.substring(0, 6)}...${address.substring(
+      address.length - 4
+    )}`;
+  };
 
   const retrieveWalletAddress = async () => {
     try {
@@ -298,9 +351,44 @@ const Dashboard = ({ navigation }) => {
         );
       }
     };
-
     fetchWalletAddress();
   }, []);
+
+  useEffect(() => {
+    // Function to retrieve wallet data from AsyncStorage
+    const retrieveWallets = async () => {
+      try {
+        const serializedWallets = await AsyncStorage.getItem("wallets");
+        if (serializedWallets !== null) {
+          const parsedWallets = JSON.parse(serializedWallets);
+          setWallets(parsedWallets);
+        }
+      } catch (error) {
+        console.error("Error retrieving wallets:", error);
+      }
+    };
+
+    // Call retrieveWallets on component mount
+    retrieveWallets();
+  }, []);
+
+  // Function to add a new wallet
+  const addWallet = (newWallet) => {
+    setWallets((prevWallets) => [...prevWallets, newWallet]);
+    // Store updated wallets in AsyncStorage
+    storeWallets([...wallets, newWallet]);
+  };
+
+  // Function to store wallets in AsyncStorage
+  const storeWallets = async (walletData) => {
+    try {
+      const serializedWallets = JSON.stringify(walletData);
+      await AsyncStorage.setItem("wallets", serializedWallets);
+      console.log("Wallets stored successfully.");
+    } catch (error) {
+      console.error("Error storing wallets:", error);
+    }
+  };
 
   const createWallet = () => {
     setLoading(true);
@@ -316,6 +404,7 @@ const Dashboard = ({ navigation }) => {
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
+
     setWalletStore(wallet);
     setNewAccount((prevAccount) => [
       ...prevAccount,
@@ -325,6 +414,7 @@ const Dashboard = ({ navigation }) => {
       },
     ]);
     console.log("walet response?????", wallet);
+    addWallet(wallet);
   };
 
   console.log("new wallet account>>>>>>", newAccount);
@@ -364,6 +454,30 @@ const Dashboard = ({ navigation }) => {
     }
   };
 
+  const renderDotIndicator = () => {
+    // const startIndex = Math.max(0, activeIndex - 2); // Ensure the startIndex is not negative
+    // const endIndex = Math.min(newAccount.length - 1, startIndex + 4);
+    //slice(startIndex, endIndex + 1).
+    return newAccount.map((dot, index) => {
+      return (
+        <View
+          key={index}
+          style={{
+            backgroundColor: index === activeIndex ? "#E08416" : "#D9D9D9",
+            width: 6,
+            height: 6,
+            borderRadius: 5,
+            marginHorizontal: 5,
+            marginVertical: 5,
+            gap: 10,
+          }}
+        ></View>
+      );
+    });
+  };
+
+  const screenWidth = Dimensions.get("window").width;
+
   useEffect(() => {
     // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
@@ -385,6 +499,7 @@ const Dashboard = ({ navigation }) => {
   const handleCalculateAmount = (amount) => {
     setCalculatedAmount(amount);
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -423,8 +538,17 @@ const Dashboard = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {newAccount.map((item) => {
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled={true}
+          onScroll={(event) => {
+            const contentOffsetX = event.nativeEvent.contentOffset.x;
+            const index = Math.round(contentOffsetX / screenWidth); // Round to the nearest integer
+            setActiveIndex(index);
+          }}
+        >
+          {newAccount.map((item, index) => {
             return (
               <>
                 <LinearGradient
@@ -433,14 +557,18 @@ const Dashboard = ({ navigation }) => {
                   end={{ x: 1, y: 0 }}
                   style={[
                     styles.wallet,
-                    { borderRadius: 10, overflow: "hidden" },
+                    {
+                      borderRadius: 10,
+                      overflow: "hidden",
+                    },
                   ]}
                 >
                   <View style={styles.walletContentContainer}>
                     <View>
                       <Text style={styles.walletName}>{t("wallet")}</Text>
                       <Text style={styles.walletCode}>
-                        {item?.newWalletAddress}
+                        {/* {item?.newWalletAddress} */}
+                        {shortenEthereumAddress(fullWalletAddress)}
                       </Text>
                     </View>
                   </View>
@@ -487,15 +615,12 @@ const Dashboard = ({ navigation }) => {
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
                       <View style={styles.modalIconContainer}>
-                        {/* <Image
-                          source={require("../../assets/images/modalDot.png")}
-                          style={styles.modalDotImage}
-                        /> */}
                         <ModalDotIcon style={styles.modalDotImage} />
                         <CustomModal
                           transparent={true}
                           isVisible={modalVisible}
                           onClose={() => setModalVisible(false)}
+                          walletAddress={fullWalletAddress}
                         />
                       </View>
                     </TouchableOpacity>
@@ -505,7 +630,17 @@ const Dashboard = ({ navigation }) => {
             );
           })}
         </ScrollView>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: 10,
+          }}
+        >
+          {renderDotIndicator()}
+        </View>
       </View>
+
       <View style={{ flex: 0.8 }}>
         <FlatList
           // ListFooterComponent={}

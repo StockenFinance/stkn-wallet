@@ -135,7 +135,8 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     setTokenNumber(text);
     if (text.trim() !== "") {
       try {
-        const res = await tokenDetail(text);
+        console.log("selectedOption before res", selectedOption);
+        const res = await tokenDetail(text, selectedOption);
         if (res.success) {
           const { tokenName, decimals, symbol, balance } = res.success;
           console.log("Balance test::::", tokenName, decimals, symbol, balance);
@@ -318,17 +319,17 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  selectedOption === "first" && styles.radioButtonSelected,
+                  selectedOption === "Ethereum" && styles.radioButtonSelected,
                 ]}
-                onPress={() => handleOptionChange("first")}
+                onPress={() => handleOptionChange("Ethereum")}
               ></TouchableOpacity>
               <Text style={styles.radioText}>Ethereum</Text>
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  selectedOption === "second" && styles.radioButtonSelected,
+                  selectedOption === "Polygon" && styles.radioButtonSelected,
                 ]}
-                onPress={() => handleOptionChange("second")}
+                onPress={() => handleOptionChange("Polygon")}
               ></TouchableOpacity>
               <Text style={styles.radioText}>Polygon</Text>
             </View>

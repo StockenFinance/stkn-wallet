@@ -6,15 +6,19 @@ const walletSlice = createSlice({
   name: "wallet",
   initialState: {
     address: null,
+    recoveryModal: false,
   },
   reducers: {
     setAddress: (state, action) => {
       state.address = action.payload;
     },
+    setModal: (state, action) => {
+      state.recoveryModal = action.payload;
+    },
   },
 });
 
-export const { setAddress } = walletSlice.actions;
+export const { setAddress, setModal } = walletSlice.actions;
 export const selectWalletAddress = (state) => state.wallet.address;
 
 export default walletSlice.reducer;

@@ -16,7 +16,7 @@ const EnglishTranslation = {
     "Write down or copy these words in the right order and save them somewhere safe.",
   warningText: "Never share recovery phrase with anyone, store it securely!",
   consentText:
-    "I understand that if i loose my recovery words, I will not be able to access my wallet.",
+    "I understand that if i lose my recovery words, I will not be able to access my wallet.",
   continueText: "Continue",
 
   // Confirm Phrases Screen strings
@@ -29,12 +29,13 @@ const EnglishTranslation = {
   done: "Done",
 
   // Import wallet screen strings
-  privateKeyText: "Private Key/recovery Phrase",
+  privateKeyText: "Private Key / Recovery Phrase",
   import: "Import",
   privateKey: "Private key or Recovery Phase",
 
   // Dashboard screen strings
   addNewWallet: "Add New Wallet",
+  copyAddress: "Copy Address",
   wallet: "Wallet",
   receive: "Receive",
   yourBalance: "Your Balance",
@@ -92,6 +93,7 @@ const EnglishTranslation = {
   passcode: "Passcode & Face ID",
   viewPhrase: "View Recovery Phrase",
   viewKey: "View Private Key",
+  addCustomToken: "Add Custom Token",
 
   // Send screen strings
   wantToSend: "I want to Send",

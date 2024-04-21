@@ -40,6 +40,10 @@ const ImportWallet = ({ navigation, route }) => {
 
     console.log("check import::::", wallet);
     if (wallet) {
+      navigation.navigate("RecoveryPhraseConfirmation"),
+        {
+          selectedLanguage: selectedLanguage,
+        };
       const shortenedAddress =
         wallet.address.slice(0, 6) + wallet.address.slice(-6);
 

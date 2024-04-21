@@ -99,7 +99,7 @@ const ReceiveScreen = ({ navigation }) => {
         }}
       >
         {/* <QRCode value={walletAddress} size={200} /> */}
-        <QRCode value={walletAddress} size={200} />
+        {/* <QRCode value={walletAddress} size={200} /> */}
         {/* <Image source={require("../../assets/images/QrScanner.png")} /> */}
       </View>
       <View style={{ alignItems: "center", justifyContent: "center" }}>

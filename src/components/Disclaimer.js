@@ -11,8 +11,9 @@ import {
 import CheckBox from "react-native-check-box";
 import EnglishTranslation from "./englishTranslation";
 import ArabicTranslation from "./arabicTranslations";
+import WebView from "react-native-webview";
 
-const Disclaimer = ({ setStatus }) => {
+const Disclaimer = ({ setStatus, buyData }) => {
   const [isChecked, setIsChecked] = useState(false);
   const slide = React.useRef(new Animated.Value(300)).current;
 
@@ -24,11 +25,15 @@ const Disclaimer = ({ setStatus }) => {
   };
 
   const openBuyCrypto = () => {
-    const url = "https://buy.moonpay.com/";
+    const apiKey = "pk_test_oxQY1qdAGKlItZrVIRQ9qpNwpfAPHjQ";
+    const url = `https://buy-sandbox.moonpay.com/?apiKey=${apiKey}&cryptoAmount=${buyData.cryptoAmount}&fiatAmount=${buyData.fiatAmount}&selectedCryptoCurrency=${buyData.selectedCryptoCurrency}&selectedFiatCurrency=${buyData.selectedFiatCurrency}`;
     Linking.openURL(url).catch((err) =>
       console.error("An error occurred", err)
     );
   };
+
+  console.log("buydata.cryptoAmount", buyData.cryptoAmount);
+  console.log("buyData", buyData);
 
   const slideUp = () => {
     // Will change slide up the bottom sheet
@@ -112,8 +117,8 @@ const Disclaimer = ({ setStatus }) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                setStatus(false);
                 openBuyCrypto();
+                setStatus(false);
               }}
               style={[
                 styles.importButton,
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
-    height: "40%",
+    height: "63%",
     justifyContent: "flex-end",
   },
   bottomSheet: {
