@@ -160,12 +160,12 @@ const AddWalletModal = ({ navigation, setStatus }) => {
         >
           <View style={styles.container}>
             <View>
-              <Text style={styles.heading}>Add wallet</Text>
+              <Text style={styles.heading}>{t("addWallet")}</Text>
             </View>
             <TouchableOpacity
               style={styles.createWalletView}
               onPress={async () => {
-                await createWallet();
+                createWallet();
                 setLoading(true);
               }}
             >

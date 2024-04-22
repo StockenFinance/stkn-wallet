@@ -51,19 +51,19 @@ export const styles = StyleSheet.create({
   },
   parentView: {
     width: "87%",
-    height: 571,
+    height: "auto",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#808BA0",
     alignSelf: "center",
-    marginTop: "2%",
+    marginTop: "3%",
   },
   headerText: {
     fontSize: 16,
     fontWeight: "600",
     color: "#253452",
     textAlign: "center",
-    marginTop: "8%",
+    marginTop: "5%",
   },
   balanceText: {
     color: "#9299A8",

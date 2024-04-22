@@ -75,7 +75,11 @@ const ArabicTranslation = {
   iWant: "أريد",
   paymentMethod: "طريقة الدفع",
   moonPay: "تم إنجازه بواسطة Moonpay",
-  termAndCondition: "",
+  termAndCondition: "لقد قرأت ووافقت على",
+  disclaimer: "تنصل",
+  disclaimerPragraph:
+    "سيتم نقلك إلى MoonPay. يتم توفير الخدمات المتعلقة بالمدفوعات بواسطة MoonPay، وهي منصة منفصلة مملوكة لطرف ثالث. يرجى قراءة شروط خدمة MoonPay والموافقة عليها قبل استخدام خدمتهم. إذا كانت لديك أي أسئلة تتعلق بالمدفوعات، يرجى الاتصال بـ MoonPay. لا تتحمل Stocken أي مسؤولية عن أي خسارة أو ضرر ناتج عن استخدام خدمة الدفع هذه.",
+  termAndConditionHalf: "شروط الخدمة",
 
   //Chart screen strings
   all: "كل شيء",
@@ -94,6 +98,8 @@ const ArabicTranslation = {
   viewPhrase: "عرض عبارة الاسترداد",
   viewKey: "عرض المفتاح الخاص",
   addCustomToken: "إضافة رمز مخصص",
+  myWallet: "محفظتى",
+  addWallet: "إضافة محفظة",
 
   // Send screen strings
   wantToSend: "أريد إرسال",

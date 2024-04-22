@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next";
 const SwapScreen = ({ route, tokenList }) => {
   const { t, i18n } = useTranslation();
 
-  const { selectedSymbol, tokens } = route?.params;
+  // const { selectedSymbol, tokens } = route?.params;
   // const { tokens } = route?.params;
 
   const [selectedToken, setSelectedToken] = useState(null);
@@ -142,12 +142,7 @@ const SwapScreen = ({ route, tokenList }) => {
               onPress={() => setChainSelectionModalVisible(true)}
             >
               <Text style={styles.allNetworksText}>
-                {" "}
-                {selectedChain
-                  ? selectedChain
-                  : toggleLanguage
-                  ? "All Networks"
-                  : "جميع الشبكات"}
+                {selectedChain ? selectedChain : t("allNetworkText")}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -188,8 +183,8 @@ const SwapScreen = ({ route, tokenList }) => {
                     { fontSize: 23, fontWeight: "400", marginLeft: 8 },
                   ]}
                 >
-                  {selectedSymbol}
-                  {/* {selectedCurrency ? selectedCurrency : "ETH"} */}
+                  {/* {selectedSymbol} */}
+                  {selectedCurrency ? selectedCurrency : "ETH"}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -206,10 +201,10 @@ const SwapScreen = ({ route, tokenList }) => {
                 transparent={true}
                 isVisible={swapCurrencyModalVisible}
                 onClose={() => setSwapCurrencyModalVisible(false)}
-                // onSelect={handleCurrencySelect}
-                value={selectedCurrency}
-                tokens={tokens}
-                onSelect={handleTokenSelect}
+                onSelect={handleCurrencySelect}
+                // value={selectedCurrency}
+                // tokens={tokens}
+                // onSelect={handleTokenSelect}
               />
             </View>
 

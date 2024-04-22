@@ -5,12 +5,14 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WalletList from "./WalletList";
 import BackIcon from "../../SvgIcon/BackIcon";
 import { useSelector } from "react-redux";
 import AddWalletModal from "../../components/AddWalletModal";
+import { useTranslation } from "react-i18next";
 
 const WalletManagement = ({ navigation }) => {
   const [wallets, setWallets] = useState([]);
@@ -18,6 +20,19 @@ const WalletManagement = ({ navigation }) => {
   const scrollY = new Animated.Value(0);
 
   const [status, setStatus] = useState(false);
+  const [loading, setLoading] = useState(true); // State for loading indicator
+
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const retrieveWallets = async () => {
@@ -29,12 +44,14 @@ const WalletManagement = ({ navigation }) => {
         }
       } catch (error) {
         console.error("Error retrieving wallets:", error);
+      } finally {
+        setLoading(false); // Update loading state when fetching is done
       }
     };
     retrieveWallets();
   }, []);
 
-  console.log("walltes", wallets);
+  console.log("wallets", wallets);
 
   return (
     <View style={{ marginTop: 30, flex: 1 }}>
@@ -42,9 +59,8 @@ const WalletManagement = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <BackIcon />
         </TouchableOpacity>
-        <Text style={styles.heading}>My wallets</Text>
+        <Text style={styles.heading}>{t("myWallet")}</Text>
       </View>
-      {console.log("recoveryMOdal", recoveryModal)}
       {!recoveryModal ? (
         <Animated.ScrollView
           onScroll={Animated.event(
@@ -53,29 +69,29 @@ const WalletManagement = ({ navigation }) => {
           )}
           scrollEventThrottle={16}
         >
-          <View>
-            {wallets?.map((wallet, index) => {
-              return (
+          {loading ? (
+            <ActivityIndicator
+              styl={{ marginTop: 50 }}
+              size="large"
+              color="#F2A13F"
+            /> // Display loading indicator while fetching data
+          ) : (
+            <View>
+              {wallets?.map((wallet, index) => (
                 <WalletList
                   key={index}
                   wallet={wallet}
                   walletNumber={index + 1}
                 />
-              );
-            }) || "Please add your wallet"}
-          </View>
+              )) || <Text>Please add your wallet</Text>}
+            </View>
+          )}
         </Animated.ScrollView>
       ) : (
         <View>
-          {wallets?.map((wallet, index) => {
-            return (
-              <WalletList
-                key={index}
-                wallet={wallet}
-                walletNumber={index + 1}
-              />
-            );
-          }) || "Please add your wallet"}
+          {wallets?.map((wallet, index) => (
+            <WalletList key={index} wallet={wallet} walletNumber={index + 1} />
+          )) || <Text>Please add your wallet</Text>}
         </View>
       )}
       <TouchableOpacity
@@ -83,7 +99,7 @@ const WalletManagement = ({ navigation }) => {
         style={{ position: "absolute", top: 400, left: 120 }}
       >
         <Text style={{ fontWeight: "bold", color: "#039D00", fontSize: 20 }}>
-          <Text>+</Text>Add Wallet
+          <Text>+</Text> {t("addWallet")}
         </Text>
       </TouchableOpacity>
       {status && (

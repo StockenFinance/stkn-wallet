@@ -239,7 +239,7 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <SendIcon />
+                  <SendIcon color={"#F19220"} />
                 </View>
 
                 <Text

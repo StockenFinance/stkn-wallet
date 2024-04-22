@@ -87,10 +87,10 @@ const WalletList = ({ wallet, walletNumber }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    borderColor: "#808BA0",
+    borderColor: "black",
     borderWidth: 1,
     borderRadius: 10,
-    margin: 15,
+    margin: 10,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginLeft: "auto",
     marginTop: 5,
+    width: 150,
   },
   swapImageContainer: {
     width: 35,

@@ -454,7 +454,6 @@ const Dashboard = ({ navigation }) => {
   const screenWidth = Dimensions.get("window").width;
 
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);

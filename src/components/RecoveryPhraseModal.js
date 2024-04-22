@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
-    height: "375%",
+    height: "320%",
     justifyContent: "flex-end",
     zIndex: 999,
   },

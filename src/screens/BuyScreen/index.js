@@ -13,14 +13,12 @@ import DropDownIcon from "../../SvgIcon/DropDownIcon";
 // import BuyCurrancyModal from "../../components/BuyCurrancyModal";
 import BuyCurrancyModal from "../../components/BuyCurrencyModal/index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import EnglishTranslation from "../../components/englishTranslation";
-import ArabicTranslation from "../../components/arabicTranslations";
 import MoonPayBuy from "../../components/MoonPayBuy";
 import Disclaimer from "../../components/Disclaimer";
+import { useTranslation } from "react-i18next";
 
 const BuyScreen = () => {
   const [selectedRange, setSelectedRange] = useState(null);
-  const [toggleLanguage, setToggleLanguage] = useState(null);
 
   const [fiatModalVisible, setFiatModalVisible] = useState(false);
   const [cryptoModalVisible, setCryptoModalVisible] = useState(false);
@@ -33,6 +31,9 @@ const BuyScreen = () => {
   const [quoteData, setQuoteData] = useState(null);
   const [status, setStatus] = useState(false);
   const [buyValues, setBuyValues] = useState({});
+
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { t, i18n } = useTranslation();
 
   const openFiatModal = () => {
     setFiatModalVisible(true);
@@ -110,24 +111,13 @@ const BuyScreen = () => {
     });
   }, [selectedFiatCurrency, selectedCryptoCurrency, fiatAmount]);
 
-  const retrieveSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem("selectedLanguage");
-      if (language !== null) {
-        console.log("Retrieved language:", language);
-        let bool = language === "english" ? true : false;
-        setToggleLanguage(bool);
-      } else {
-        console.log("No language saved in AsyncStorage");
-        setToggleLanguage(true);
-      }
-    } catch (error) {
-      console.error("Error retrieving language from AsyncStorage:", error);
-    }
-  };
-
   useEffect(() => {
-    retrieveSelectedLanguage();
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
   }, []);
 
   return (
@@ -135,9 +125,7 @@ const BuyScreen = () => {
       <View style={styles.container}>
         <View style={styles.buySellButtonView}>
           <View style={styles.languageButton}>
-            <Text style={styles.englishText}>
-              {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
-            </Text>
+            <Text style={styles.englishText}>{t("buy")}</Text>
           </View>
           <View
             style={[
@@ -148,19 +136,13 @@ const BuyScreen = () => {
             ]}
           >
             <Text style={[styles.englishText, { color: "#253452" }]}>
-              {toggleLanguage
-                ? EnglishTranslation.sell
-                : ArabicTranslation.sell}
+              {t("sell")}
             </Text>
           </View>
         </View>
 
         <View style={styles.parentView}>
-          <Text style={styles.headerText}>
-            {toggleLanguage
-              ? EnglishTranslation.iHave
-              : ArabicTranslation.iHave}
-          </Text>
+          <Text style={styles.headerText}>{t("iHave")}</Text>
           <View style={styles.coinDetailsParent}>
             <TouchableOpacity
               onPress={openFiatModal}
@@ -218,12 +200,7 @@ const BuyScreen = () => {
                </View> */}
           <View style={styles.dividerContainer}></View>
 
-          <Text style={styles.headerText}>
-            {" "}
-            {toggleLanguage
-              ? EnglishTranslation.iWant
-              : ArabicTranslation.iWant}
-          </Text>
+          <Text style={styles.headerText}>{t("iWant")}</Text>
           <View style={styles.coinDetailsParent}>
             <TouchableOpacity
               onPress={openCryptoModal}
@@ -331,9 +308,7 @@ const BuyScreen = () => {
                   },
                 ]}
               >
-                {toggleLanguage
-                  ? EnglishTranslation.max
-                  : ArabicTranslation.max}
+                {t("max")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -342,12 +317,10 @@ const BuyScreen = () => {
         <Text
           style={[
             styles.paymentMethodText,
-            { right: !toggleLanguage ? "10%" : null },
+            { right: !selectedLanguage === "en" ? "10%" : null },
           ]}
         >
-          {toggleLanguage
-            ? EnglishTranslation.paymentMethod
-            : ArabicTranslation.paymentMethod}
+          {t("paymentMethod")}
         </Text>
         <TouchableOpacity
           onPress={() => setStatus(true)}
@@ -356,26 +329,19 @@ const BuyScreen = () => {
           <Text
             style={[styles.createWalletText, { textTransform: "uppercase" }]}
           >
-            {toggleLanguage ? EnglishTranslation.buy : ArabicTranslation.buy}
+            {t("buy")}
           </Text>
         </TouchableOpacity>
         <Text
           style={[
             styles.paymentMethod,
-            { right: !toggleLanguage ? "10%" : null },
+            { right: !selectedLanguage === "en" ? "10%" : null },
           ]}
         >
-          {toggleLanguage
-            ? EnglishTranslation.moonPay
-            : ArabicTranslation.moonPay}
+          {t("moonPay")}
         </Text>
         <View style={styles.importButton}>
-          <Text style={styles.importText}>
-            {" "}
-            {toggleLanguage
-              ? EnglishTranslation.continueText
-              : ArabicTranslation.continueText}
-          </Text>
+          <Text style={styles.importText}></Text>
         </View>
         {status && <Disclaimer buyData={buyValues} setStatus={setStatus} />}
       </View>

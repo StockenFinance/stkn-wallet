@@ -8,36 +8,41 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
+import { useTranslation } from "react-i18next";
 
 const LanguageChangeModal = ({ setStatus }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
+  const { t, i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
-  const [selectedLanguage, setSelectedLanguage] = useState("english");
-
-  const handleLanguageChange = (language) => {
+  const handleLanguageChange = async (language) => {
     setSelectedLanguage(language);
+    setShowContinueButton(true);
   };
 
   const saveSelectedLanguage = async (language) => {
     try {
       await AsyncStorage.setItem("selectedLanguage", language);
       console.log("Selected language saved successfully:", language);
-      // Apply language change to the app after saving to AsyncStorage
-      applyLanguageChange(language);
     } catch (error) {
       console.error("Error saving selected language to AsyncStorage:", error);
     }
   };
 
-  const applyLanguageChange = (language) => {
-    // Apply language change to the app based on the selected language
-    // For example, you might have a function to update the app's language settings
-    // Replace the following line with your actual logic
-    console.log("Applying language change to:", language);
+  const applyLanguageChange = async () => {
+    await saveSelectedLanguage(selectedLanguage);
+    i18n.changeLanguage(selectedLanguage);
+    setShowContinueButton(false);
   };
 
+  useEffect(() => {
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
   const slideUp = () => {
     Animated.timing(slide, {
       toValue: 0,
@@ -82,12 +87,12 @@ const LanguageChangeModal = ({ setStatus }) => {
             </Text>
             <View style={styles.languageViewContainer}>
               <Pressable
-                onPress={() => handleLanguageChange("english")}
+                onPress={() => handleLanguageChange("en")}
                 style={[
                   styles.languageOption,
                   {
                     backgroundColor:
-                      selectedLanguage === "english" ? "#F19220" : "#F4F7FA",
+                      selectedLanguage === "en" ? "#F19220" : "#F4F7FA",
                   },
                 ]}
               >
@@ -95,7 +100,7 @@ const LanguageChangeModal = ({ setStatus }) => {
                   style={[
                     styles.languageText,
                     {
-                      color: selectedLanguage === "english" ? "#fff" : "#000",
+                      color: selectedLanguage === "en" ? "#fff" : "#000",
                     },
                   ]}
                 >
@@ -106,11 +111,11 @@ const LanguageChangeModal = ({ setStatus }) => {
                     styles.selectCircle,
                     {
                       borderColor:
-                        selectedLanguage === "english" ? "#F19220" : "#ccc",
+                        selectedLanguage === "en" ? "#F19220" : "#ccc",
                     },
                   ]}
                 >
-                  {selectedLanguage === "english" && (
+                  {selectedLanguage === "en" && (
                     <Text style={styles.selectSymbol}>✓</Text>
                   )}
                 </View>
@@ -118,12 +123,12 @@ const LanguageChangeModal = ({ setStatus }) => {
             </View>
             <View style={styles.languageViewContainer}>
               <Pressable
-                onPress={() => handleLanguageChange("arabic")}
+                onPress={() => handleLanguageChange("ar")}
                 style={[
                   styles.languageOption,
                   {
                     backgroundColor:
-                      selectedLanguage === "arabic" ? "#F19220" : "#F4F7FA",
+                      selectedLanguage === "ar" ? "#F19220" : "#F4F7FA",
                   },
                 ]}
               >
@@ -131,7 +136,7 @@ const LanguageChangeModal = ({ setStatus }) => {
                   style={[
                     styles.languageText,
                     {
-                      color: selectedLanguage === "arabic" ? "#fff" : "#000",
+                      color: selectedLanguage === "ar" ? "#fff" : "#000",
                     },
                   ]}
                 >
@@ -142,11 +147,11 @@ const LanguageChangeModal = ({ setStatus }) => {
                     styles.selectCircle,
                     {
                       borderColor:
-                        selectedLanguage === "arabic" ? "#F19220" : "#ccc",
+                        selectedLanguage === "ar" ? "#F19220" : "#ccc",
                     },
                   ]}
                 >
-                  {selectedLanguage === "arabic" && (
+                  {selectedLanguage === "ar" && (
                     <Text style={styles.selectSymbol}>✓</Text>
                   )}
                 </View>
@@ -154,12 +159,12 @@ const LanguageChangeModal = ({ setStatus }) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                saveSelectedLanguage(selectedLanguage);
+                applyLanguageChange(selectedLanguage);
                 closeModal();
               }}
               style={styles.getStartedContainer}
             >
-              <Text style={styles.getStartedText}>Continue</Text>
+              <Text style={styles.getStartedText}>{t("continueText")}</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>

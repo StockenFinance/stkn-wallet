@@ -19,6 +19,8 @@ import {
 import Erc20Contract from "../../contracts/Erc20";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
+import DropDownIcon from "../../SvgIcon/DropDownIcon";
+import SendIcon from "../../SvgIcon/SendIcon";
 
 const SendScreen = ({ placeholder, value, route }) => {
   const { t, i18n } = useTranslation();
@@ -143,10 +145,8 @@ const SendScreen = ({ placeholder, value, route }) => {
               />
             </View>
             <Text style={styles.allNetworksText}>Ethereum</Text>
-            <Image
-              source={require("../../assets/images/dropdown.png")}
-              style={styles.dropdownImage}
-            />
+
+            <DropDownIcon style={styles.dropdownImage} />
           </View>
         </View>
         <View style={styles.parentView}>
@@ -180,8 +180,7 @@ const SendScreen = ({ placeholder, value, route }) => {
               <TouchableOpacity
                 onPress={() => setSwapCurrencyModalVisible(true)}
               >
-                <Image
-                  source={require("../../assets/images/dropdown.png")}
+                <DropDownIcon
                   style={[
                     styles.dropdownImage,
                     { marginLeft: "-1%", marginTop: "4%" },
@@ -219,11 +218,12 @@ const SendScreen = ({ placeholder, value, route }) => {
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
             <View style={styles.swapImageContainer}>
-              <Image
+              {/* <Image
                 source={require("../../assets/images/Send.png")}
                 style={styles.image}
                 resizeMode="contain"
-              />
+              /> */}
+              <SendIcon color={"#fff"} style={styles.image} />
             </View>
 
             <View style={styles.divider} />

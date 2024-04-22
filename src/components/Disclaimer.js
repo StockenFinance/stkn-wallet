@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   View,
   Text,
@@ -9,13 +11,22 @@ import {
   Linking,
 } from "react-native";
 import CheckBox from "react-native-check-box";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
-import WebView from "react-native-webview";
 
 const Disclaimer = ({ setStatus, buyData }) => {
   const [isChecked, setIsChecked] = useState(false);
   const slide = React.useRef(new Animated.Value(300)).current;
+
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
 
   const openUrl = () => {
     const url = "https://www.moonpay.com/legal/terms_of_use_row";
@@ -80,7 +91,7 @@ const Disclaimer = ({ setStatus, buyData }) => {
                 color: "black",
               }}
             >
-              Disclaimer
+              {t("disclaimer")}
             </Text>
             <Text
               style={{
@@ -93,12 +104,7 @@ const Disclaimer = ({ setStatus, buyData }) => {
                 padding: 5,
               }}
             >
-              You will be taken to MoonPay. Services relating to payments are
-              provided by MoonPay, which is a separate platform owned by a third
-              party. Please read and agree to MoonPay's Terms of Service before
-              using their service. For any questions relating to payments,
-              please contact MoonPay. 1inch does not assume any responsibility
-              for any loss or damage caused by the use of this payment service.
+              {t("disclaimerPragraph")}
             </Text>
             <View style={styles.termsConsentContainer}>
               <CheckBox
@@ -109,9 +115,9 @@ const Disclaimer = ({ setStatus, buyData }) => {
                 style={[styles.checkBox]}
               />
               <Text style={[styles.consentText]}>
-                {EnglishTranslation.termAndCondition}{" "}
+                {t("termAndCondition")}
                 <Text style={styles.linkText} onPress={openUrl}>
-                  Terms of Service
+                  {t("termAndConditionHalf")}
                 </Text>
               </Text>
             </View>
@@ -136,7 +142,7 @@ const Disclaimer = ({ setStatus, buyData }) => {
                     : styles.importTextDisabled,
                 ]}
               >
-                {EnglishTranslation.continueText}
+                {t("continueText")}
               </Text>
             </TouchableOpacity>
           </View>

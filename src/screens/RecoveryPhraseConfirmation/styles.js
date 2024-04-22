@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   image: {
     width: "41%",
     height: "37%",
-    marginTop: "31%",
+    marginTop: "40%",
   },
   welcomeText: {
     color: "black",
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "25%",
+    marginTop: "65%",
     width: 307,
     height: 49,
     borderRadius: 10,

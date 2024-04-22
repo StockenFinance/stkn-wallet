@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-const SendIcon = (props) => (
+const SendIcon = ({ color, ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={17}
@@ -9,7 +9,7 @@ const SendIcon = (props) => (
     {...props}
   >
     <Path
-      stroke="#F19220"
+      stroke={color ? color : "none"}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}

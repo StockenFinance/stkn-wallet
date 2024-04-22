@@ -51,12 +51,12 @@ export const styles = StyleSheet.create({
   },
   parentView: {
     width: "87%",
-    height: 551,
+    height: "auto",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#808BA0",
     alignSelf: "center",
-    marginTop: "2%",
+    marginTop: "3%",
   },
   headerText: {
     fontSize: 16,
@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     height: 78,
     alignSelf: "center",
     alignItems: "center",
-    marginTop: "13%",
+    marginTop: "8%",
   },
   currencyConverterText: {
     fontSize: 12,

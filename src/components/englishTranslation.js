@@ -75,6 +75,10 @@ const EnglishTranslation = {
   paymentMethod: "Payment Method",
   moonPay: "Fulfilled by Moonpay",
   termAndCondition: "I have read and agreed to the",
+  disclaimer: "Disclaimer",
+  disclaimerPragraph:
+    "You will be taken to MoonPay. Services relating to payments are provided by MoonPay, which is a separate platform owned by a third party. Please read and agree to MoonPay's Terms of Service before using their service. For any questions relating to payments, please contact MoonPay. Stocken does not assume any responsibility for any loss or damage caused by the use of this payment service.",
+  termAndConditionHalf: "Terms of Service",
 
   // Chart screen strings
   all: "ALL",
@@ -93,6 +97,8 @@ const EnglishTranslation = {
   viewPhrase: "View Recovery Phrase",
   viewKey: "View Private Key",
   addCustomToken: "Add Custom Token",
+  myWallet: "My Wallet",
+  addWallet: "Add Wallet",
 
   // Send screen strings
   wantToSend: "I want to Send",

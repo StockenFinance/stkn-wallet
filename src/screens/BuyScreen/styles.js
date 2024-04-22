@@ -223,6 +223,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     color: "#253452",
+    marginRight: "8%",
   },
   createWalletView: {
     flexDirection: "row",
@@ -262,5 +263,6 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "600",
     color: "#9F9FA0",
+    marginRight: "8%",
   },
 });
