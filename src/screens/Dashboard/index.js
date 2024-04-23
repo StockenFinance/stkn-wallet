@@ -7,7 +7,7 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import CustomModal from "../../components/CustomModal/index";
 import { styles } from "./styles";
@@ -28,13 +28,14 @@ import { useTranslation } from "react-i18next";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
 import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
 import { setCurrentChain } from "../../redux/reducer/chainReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 import PlusIcon from "../../SvgIcon/PluseIcon";
 import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
+  const currentChain = useSelector((state) => state.chain.currentChain);
 
   const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,6 +80,7 @@ const Dashboard = ({ navigation }) => {
     },
   ]);
 
+  console.log("check Cards", cardData);
   //full wallet address
 
   useEffect(() => {
@@ -411,7 +413,7 @@ const Dashboard = ({ navigation }) => {
       ...prevAccount,
       {
         newWalletAddress: shortenedAddress,
-        newWalletBalance: "", // You can set the initial balance here if needed
+        newWalletBalance: "",
       },
     ]);
     console.log("walet response?????", wallet);
@@ -456,9 +458,6 @@ const Dashboard = ({ navigation }) => {
   };
 
   const renderDotIndicator = () => {
-    // const startIndex = Math.max(0, activeIndex - 2); // Ensure the startIndex is not negative
-    // const endIndex = Math.min(newAccount.length - 1, startIndex + 4);
-    //slice(startIndex, endIndex + 1).
     return newAccount.map((dot, index) => {
       return (
         <View
@@ -489,18 +488,27 @@ const Dashboard = ({ navigation }) => {
     });
   }, []);
 
-  const handleChainSelect = (chain) => {
-    console.log("dispatcher chain", chain);
-    console.log("dispatcher card data", cardData);
-    setSelectedChain(chain);
-    dispatch(setCurrentChain(chain));
-    // const filterData = cardData.filter((item) => item.chain === chain);
-    // setCardData(filterData.length > 0 ? filterData : cardData);
+  const handleChainSelect = useCallback(
+    async (chain) => {
+      console.log("dispatcher chain", chain);
+      const serializedTokens = await AsyncStorage.getItem("importedTokens");
+      const tokens = JSON.parse(serializedTokens);
 
-    const filterData = cardData.filter((item) => item.chain === chain);
-    setCardData(filterData.length > 0 ? filterData : cardData);
-    setChainSelectionModalVisible(false);
-  };
+      console.log("dispatcher card data", cardData);
+      setSelectedChain(chain);
+      dispatch(setCurrentChain(chain));
+      if (chain === "All Network") {
+        setCardData(tokens);
+      } else {
+        const filterData = tokens.filter((item) => item.chain === chain);
+        console.log("filterData", filterData);
+        setCardData(filterData);
+      }
+
+      setChainSelectionModalVisible(false);
+    },
+    [cardData, dispatch]
+  );
 
   const handleCalculateAmount = (amount) => {
     setCalculatedAmount(amount);
@@ -523,7 +531,7 @@ const Dashboard = ({ navigation }) => {
               transparent={true}
               isVisible={chainSelectionModalVisible}
               onClose={() => setChainSelectionModalVisible(false)}
-              onSelect={handleChainSelect}
+              onSelect={(chain) => handleChainSelect(chain)}
               value={selectedChain}
             />
           </TouchableOpacity>

@@ -33,18 +33,4 @@ export const Utils = {
       console.error("Error removing value from AsyncStorage:", error);
     }
   },
-
-  //   formatStoryData: (text) => {
-  //     // let result = text?.replace(/[^\x20-\x7E]/gmi, '')
-  //     // if (result?.split(':')?.length > 1) {
-  //     //     return result?.split(':')[1]
-  //     // } else {
-  //     //     return result
-  //     // }
-  //     let result = text?.replace(
-  //       /The title:|The Title:|The Title:|The Title :|title –|Title:-|Title :-|Title :|Title:|Title -|Title-|Title|title|Paragraph 1|Paragraph 2|Paragraph 3|Paragraph 4|Paragraph 5|Paragraph 6|Paragraph 7|Paragraph 1:|Paragraph 2:|Paragraph 3:|Paragraph 4:|Paragraph 5:|Paragraph 6:|Paragraph 7:|Paragraph/gi,
-  //       ""
-  //     );
-  //     return result;
-  //   },
 };
