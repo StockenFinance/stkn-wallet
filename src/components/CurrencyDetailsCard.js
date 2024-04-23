@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { styles } from "../screens/Dashboard/styles";
 import { fetchDynamicDetailsOfToken, provider } from "../utils/helper";
@@ -35,10 +35,6 @@ const CurrencyDetailsCard = ({
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
 
-  // const handleSendButtonClick = () => {
-  //   setShowModal(true);
-  // };
-
   const getUserBalance = async (userAddress) => {
     const result = await provider().getBalance(userAddress);
     const balance = ethers.formatEther(result);
@@ -52,7 +48,6 @@ const CurrencyDetailsCard = ({
       console.log("fullwalletaddress local storage", res);
       if (res !== null) {
         getUserBalance(res);
-        // getUserBalance("0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141");
         tokenBalance(res);
       }
     });
@@ -61,11 +56,11 @@ const CurrencyDetailsCard = ({
   const tokenBalance = useCallback(async (walletAddress) => {
     console.log("token address in currency", importAddress);
     console.log("wallet address in currency", walletAddress);
-    const x = await fetchDynamicDetailsOfToken(
+    const fetchedTokenDetails = await fetchDynamicDetailsOfToken(
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", //importAddres(tokenAddress)
       "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141" //walletAddress (local storage)
     );
-    setTokenBalanceImported(x);
+    setTokenBalanceImported(fetchedTokenDetails);
   }, []);
 
   // const tokenBalance = useCallback(async (walletAddress) => {
@@ -97,7 +92,6 @@ const CurrencyDetailsCard = ({
   };
 
   console.log("item:::", item);
-  console.log("check token<<<<");
 
   useEffect(() => {
     retrieveSelectedLanguage();
@@ -128,16 +122,6 @@ const CurrencyDetailsCard = ({
       }
     });
   }, []);
-
-  // const calculateAmount = () => {
-  //   if (item.symbol === "ETH") {
-  //     return (parseFloat(item.price) * parseFloat(userEtherBalance)).toFixed(1);
-  //   } else {
-  //     return (
-  //       parseFloat(item.price) * parseFloat(tokenBalanceImported)
-  //     ).toFixed(1);
-  //   }
-  // };
 
   const calculateAmount = () => {
     let amount = 0;
@@ -213,7 +197,7 @@ const CurrencyDetailsCard = ({
                 { bottom: containerHeight === 95 ? null : "23%" },
               ]}
             >
-              {/* {item.decimals} */}${calculateAmount()}
+              ${calculateAmount()}
             </Text>
           </View>
         </View>
@@ -354,9 +338,6 @@ const CurrencyDetailsCard = ({
                     alignSelf: "center",
                   }}
                 >
-                  {/* {toggleLanguage
-                    ? EnglishTranslation.swap
-                    : ArabicTranslation.swap} */}
                   {t("swap")}
                 </Text>
               </TouchableOpacity>
@@ -393,9 +374,6 @@ const CurrencyDetailsCard = ({
                     alignSelf: "center",
                   }}
                 >
-                  {/* {toggleLanguage
-                    ? EnglishTranslation.chart
-                    : ArabicTranslation.chart} */}
                   {t("chart")}
                 </Text>
               </TouchableOpacity>

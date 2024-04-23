@@ -595,14 +595,7 @@ const Dashboard = ({ navigation }) => {
                     <TouchableOpacity
                       onPress={() => navigation.navigate("ReceiveScreen")}
                     >
-                      <Text
-                        style={[
-                          styles.receiveText,
-                          { right: !toggleLanguage ? 25 : 10 },
-                        ]}
-                      >
-                        {t("receive")}
-                      </Text>
+                      <Text style={[styles.receiveText]}>{t("receive")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => navigation.navigate("ReceiveScreen")}

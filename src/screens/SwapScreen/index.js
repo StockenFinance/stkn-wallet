@@ -143,11 +143,7 @@ const SwapScreen = ({ route, tokenList }) => {
             >
               <Text style={styles.allNetworksText}>
                 {" "}
-                {selectedChain
-                  ? selectedChain
-                  : toggleLanguage
-                  ? "All Networks"
-                  : "جميع الشبكات"}
+                {selectedChain ? selectedChain : t("allNetworkText")}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

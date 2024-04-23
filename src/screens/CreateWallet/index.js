@@ -31,6 +31,10 @@ const storeWalletAddress = async (walletAddress, wallet) => {
 const storeFullWalletAddress = async (fullWalletAddress) => {
   try {
     await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
+    console.log(
+      "Full wallet address stored on create wallet:",
+      fullWalletAddress
+    );
   } catch (error) {
     console.error("Error storing full wallet address:", error);
   }
@@ -68,13 +72,12 @@ const CreateWallet = ({ navigation, route }) => {
     storeFullWalletAddress(wallet.address);
 
     setWalletStore(wallet);
-    setTimeout(() => {
-      navigation.navigate("BackupPhrase", {
-        mnemonic,
-        selectedLanguage: selectedLanguage,
-      });
-      setLoading(false);
-    }, 2000);
+
+    navigation.navigate("BackupPhrase", {
+      mnemonic,
+      selectedLanguage: selectedLanguage,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -92,10 +95,20 @@ const CreateWallet = ({ navigation, route }) => {
     });
   }, []);
 
+  console.log("Check loader:::::", loading);
+
   return (
     <View style={styles.container}>
       <HomeLogoIcon style={styles.image} />
-      <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
+      <TouchableOpacity
+        style={styles.createWalletView}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            createWallet();
+          }, 100);
+        }}
+      >
         <CreateIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>{t("createNewWallet")}</Text>
