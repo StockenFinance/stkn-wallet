@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import LinearGradient from "react-native-linear-gradient";
@@ -390,6 +391,7 @@ const Dashboard = ({ navigation }) => {
     ]);
     console.log("walet response?????", wallet);
     addWallet(wallet);
+    setLoading(false);
   };
 
   console.log("new wallet account>>>>>>", newAccount);
@@ -619,6 +621,13 @@ const Dashboard = ({ navigation }) => {
         isVisible={isTokenDetailsModalVisible}
         onClose={toggleEnterTokenModal}
       />
+      {!loading && (
+        <ActivityIndicator
+          styl={{ marginTop: 50 }}
+          size="large"
+          color="#F2A13F"
+        />
+      )}
     </View>
   );
 };
