@@ -37,7 +37,6 @@ const storeFullWalletAddress = async (fullWalletAddress) => {
   try {
     await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
 
-    // alert("Data is set successfully ");
     console.log(
       "Full wallet address stored on create wallet:",
       fullWalletAddress
@@ -63,12 +62,12 @@ const CreateWallet = ({ navigation, route }) => {
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
 
-    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
-    console.log("Phrase wallet: ", phrase?.privateKey);
-    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
-    console.log("New Wallet Address:", wallet.address);
-    console.log("Private Key:", wallet.privateKey);
-    console.log("Generated Mnemonic:", mnemonic);
+    // console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
+    // console.log("Phrase wallet: ", phrase?.privateKey);
+    // console.log("Wallet: ", JSON.stringify(wallet, null, 2));
+    // console.log("New Wallet Address:", wallet.address);
+    // console.log("Private Key:", wallet.privateKey);
+    // console.log("Generated Mnemonic:", mnemonic);
     // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
     //   console.log("Error while setting encrypted wallet: ", err);
     // });
@@ -103,6 +102,8 @@ const CreateWallet = ({ navigation, route }) => {
       }
     });
   }, []);
+
+  console.log("check loading::::::", loading);
 
   return (
     <View style={styles.container}>

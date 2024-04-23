@@ -57,6 +57,8 @@ const Dashboard = ({ navigation }) => {
   const [selectedChain, setSelectedChain] = useState(null);
   const [calculatedBalance, setCalculatedBalance] = useState(0);
   const [calculatedAmount, setCalculatedAmount] = useState(0);
+  const [chainStatus, setChainStatus] = useState("All Network");
+  const [importTokenAddress, setImportTokenValue] = useState("");
   const dispatch = useDispatch();
 
   const [newAccount, setNewAccount] = useState([
@@ -92,8 +94,6 @@ const Dashboard = ({ navigation }) => {
     };
     retrieveWalletAddress();
   }, []);
-
-  console.log("Full ______ wallet addresss>>>>", fullWalletAddress);
 
   const getStoredWalletObject = async () => {
     try {
@@ -233,6 +233,7 @@ const Dashboard = ({ navigation }) => {
             item={item}
             navigation={navigation}
             onCalculateAmount={handleCalculateAmount}
+            importAddress={importTokenAddress}
           />
         </View>
         {isLastItem && (
@@ -490,9 +491,14 @@ const Dashboard = ({ navigation }) => {
 
   const handleChainSelect = (chain) => {
     console.log("dispatcher chain", chain);
+    console.log("dispatcher card data", cardData);
     setSelectedChain(chain);
     dispatch(setCurrentChain(chain));
+    // const filterData = cardData.filter((item) => item.chain === chain);
+    // setCardData(filterData.length > 0 ? filterData : cardData);
 
+    const filterData = cardData.filter((item) => item.chain === chain);
+    setCardData(filterData.length > 0 ? filterData : cardData);
     setChainSelectionModalVisible(false);
   };
 
@@ -663,6 +669,11 @@ const Dashboard = ({ navigation }) => {
         /> */}
       </TouchableOpacity>
       <EnterTokenModal
+        importTokenAddress={(tokenValue) => {
+          alert("selected modal value");
+          setImportTokenValue(tokenValue);
+          console.log("selected token address", tokenValue);
+        }}
         value={tokenInput}
         modalValues={(value) => addTokenBtn(value)}
         onChangeText={(text) => setTokenInput(text)}

@@ -21,7 +21,6 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
 
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
-  const [isChoose, setIsChoose] = useState([]);
   const [randomIndicess, setRandomIndicess] = useState([]);
   const [questionNumber, setQuestionNumber] = useState([]);
   const [questionValue, setQuestionValue] = useState([]);
@@ -145,12 +144,6 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           navigation.navigate("RecoveryPhraseConfirmation", {
             selectedLanguage: selectedLanguage,
           });
-          // Alert.alert("You have completed the section!", "", [
-          //   {
-          //     text: "OK",
-          //     onPress: () => navigation.navigate("RecoveryPhraseConfirmation"),
-          //   },
-          // ]);
         } else {
           Alert.alert("Incorrect phrases placement!", "", [
             { text: "OK", onPress: () => navigation.goBack() },

@@ -54,7 +54,7 @@ const EnglishTranslation = {
   importToken: "Import Token",
   enterTokenText: "Enter Token",
   bitcoin: "Bitcoin",
-  ethereum: "Ethreum",
+  ethereum: "Ethereum",
   polygon: "Polygon",
   contractAddress: "Contract address",
 

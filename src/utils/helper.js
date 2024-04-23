@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import Erc20Contract from "../contracts/Erc20";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const polygonProviderInstance = new ethers.JsonRpcProvider(
   // "https://mainnet.infura.io/v3/c5a9eaae75b04ad78aeb479a275fa884"
@@ -23,15 +24,17 @@ export const provider = (chain) => {
     ? etherumProviderInstance
     : polygonProviderInstance;
 };
-export const fetchDynamicDetailsOfToken = async (tokenAddress) => {
+export const fetchDynamicDetailsOfToken = async (tokenAddress, walletAdd) => {
+  console.log("token address", tokenAddress, "wallet address", walletAdd);
   const erc20Prov = new Erc20Contract(tokenAddress, provider());
   try {
-    const balance = await erc20Prov.balanceOf(
-      "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141"
-    );
+    // const balance = await erc20Prov.balanceOf(
+    //   "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141"
+    // );
+    const balance = await erc20Prov.balanceOf(walletAdd);
+    // const balance = await erc20Prov.balanceOf(walletAdd);
     console.log("Token balance: ", balance);
     const bal = ethers.formatUnits(balance, 6);
-
     return bal;
   } catch (e) {}
 };

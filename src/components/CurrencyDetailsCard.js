@@ -9,13 +9,16 @@ import SwapIcon from "../SvgIcon/SwapIcon";
 import SendIcon from "../SvgIcon/SendIcon";
 import ReceiveScannerIcon from "../SvgIcon/ReceiveScannerIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
 import { useTranslation } from "react-i18next";
 import { Utils } from "../utils/LocalStorage";
 import { useSelector } from "react-redux";
 
-const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
+const CurrencyDetailsCard = ({
+  item,
+  navigation,
+  onCalculateAmount,
+  importAddress,
+}) => {
   const { t, i18n } = useTranslation();
 
   const [containerHeight, setContainerHeight] = useState(95);
@@ -32,9 +35,9 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
 
-  const handleSendButtonClick = () => {
-    setShowModal(true);
-  };
+  // const handleSendButtonClick = () => {
+  //   setShowModal(true);
+  // };
 
   const getUserBalance = async (userAddress) => {
     const result = await provider().getBalance(userAddress);
@@ -55,19 +58,27 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
     });
   }, [userEtherBalance]);
 
-  // const tokenBalance = useCallback(async (res) => {
-  //   const x = await fetchDynamicDetailsOfToken(
-  //     "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
-  //   );
-  //   setTokenBalanceImported(x);
-  // }, []);
-  const tokenBalance = useCallback(async (tokenAddress) => {
-    const tokenBalance = await fetchDynamicDetailsOfToken(
-      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-      tokenAddress
+  const tokenBalance = useCallback(async (walletAddress) => {
+    console.log("token address in currency", importAddress);
+    console.log("wallet address in currency", walletAddress);
+    const x = await fetchDynamicDetailsOfToken(
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", //importAddres(tokenAddress)
+      "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141" //walletAddress (local storage)
     );
-    setTokenBalanceImported(tokenBalance);
+    setTokenBalanceImported(x);
   }, []);
+
+  // const tokenBalance = useCallback(async (walletAddress) => {
+  //   console.log("token address in currency", importAddress);
+  //   console.log("wallet address in currency", walletAddress);
+
+  //   const tokenBalance = await fetchDynamicDetailsOfToken(
+  //     importAddress,
+  //     walletAddress
+  //     0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141
+  //   );
+  //   setTokenBalanceImported(tokenBalance);
+  // }, []);
 
   function formatBalance(balance, decimals) {
     return ethers.formatUnits(balance, parseInt(decimals, 10));
@@ -142,6 +153,8 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
     // Call onCalculateAmount whenever the calculated amount changes
     onCalculateAmount(calculateAmount());
   }, [calculateAmount]);
+
+  console.log("check bal::::", tokenBalanceImported);
 
   return (
     <TouchableOpacity onPress={handleContainerClick}>

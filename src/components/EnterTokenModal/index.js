@@ -21,7 +21,12 @@ import { styles } from "./styles";
 import { Utils } from "../../utils/LocalStorage";
 import { RadioButton } from "@react-native-paper/radio-button";
 
-const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
+const EnterTokenModal = ({
+  isVisible,
+  onClose,
+  modalValues,
+  importTokenAddress,
+}) => {
   const { t, i18n } = useTranslation();
 
   const [tokenNumber, setTokenNumber] = useState("");
@@ -280,6 +285,7 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
                   value={tokenNumber}
                   onChangeText={(text) => {
                     setTokenNumber(text);
+                    importTokenAddress(text);
                     handleInputChange(text);
                     setStoredTokens((pre) => {
                       return [...pre, text];
