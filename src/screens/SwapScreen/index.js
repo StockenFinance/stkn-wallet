@@ -201,10 +201,10 @@ const SwapScreen = ({ route, tokenList }) => {
                 transparent={true}
                 isVisible={swapCurrencyModalVisible}
                 onClose={() => setSwapCurrencyModalVisible(false)}
-                onSelect={handleCurrencySelect}
-                // value={selectedCurrency}
+                // onSelect={handleCurrencySelect}
+                value={selectedCurrency}
                 // tokens={tokens}
-                // onSelect={handleTokenSelect}
+                onSelect={handleTokenSelect}
               />
             </View>
 

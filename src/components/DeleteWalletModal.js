@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Animated, Pressable } from "react-native";
 import CameraIcon from "../SvgIcon/CameraIcon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-import { setModal } from "../redux/features/CounterSlice";
+import { setModal } from "../redux/reducer/CounterSlice";
 
 const DeleteWalletModal = ({ setStatus }) => {
   const slide = React.useRef(new Animated.Value(300)).current;

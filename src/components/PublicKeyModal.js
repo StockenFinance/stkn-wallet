@@ -13,7 +13,7 @@ import PasteIcon from "../SvgIcon/PasteIcon";
 import SmallAlertIcon from "../SvgIcon/SmallAlertIcon";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { useDispatch } from "react-redux";
-import { setModal } from "../redux/features/CounterSlice";
+import { setModal } from "../redux/reducer/CounterSlice";
 
 const { height } = Dimensions.get("window");
 

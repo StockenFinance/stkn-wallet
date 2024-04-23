@@ -5288,3 +5288,4 @@ styleable ViewStubCompat android_id android_layout android_inflatedId
 xml file_provider_paths
 xml image_share_filepaths
 xml rn_dev_preferences
+xml share_download_paths

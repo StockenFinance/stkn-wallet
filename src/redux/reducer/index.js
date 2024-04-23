@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
 import walletReducer from "./walletReducer";
-import CounterSlice from "../features/CounterSlice";
+import chainReducer from "./chainReducer";
+import recoverReducer from "./CounterSlice";
+import allWalletStore from "./allWalletStore";
 
 const rootReducer = combineReducers({
   wallet: walletReducer,
-  counter: CounterSlice,
+  chain: chainReducer,
+  walletRecover: recoverReducer,
+  walletStore: allWalletStore,
   // other reducers if any
 });
 

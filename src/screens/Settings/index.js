@@ -17,7 +17,15 @@ const Settings = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { t, i18n } = useTranslation();
 
-  const [status, setStatus] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     AsyncStorage.getItem("selectedLanguage").then((language) => {
@@ -51,7 +59,7 @@ const Settings = ({ navigation }) => {
         <Text style={styles.createWalletText}> {t("setCurrency")}</Text>
         <Text style={styles.currencyText}>USD</Text>
       </View>
-      <TouchableOpacity onPress={() => setStatus(true)}>
+      <TouchableOpacity onPress={openModal}>
         <View style={[styles.createWalletView, { marginTop: "2%" }]}>
           <View style={styles.swapImageContainer}>
             <LanguageIcon style={styles.languageImage} />
@@ -62,9 +70,10 @@ const Settings = ({ navigation }) => {
             style={[
               styles.currencyText,
               { marginLeft: "40%", textTransform: "uppercase" },
+              { marginLeft: selectedLanguage === "ar" ? "auto" : null },
             ]}
           >
-            {selectedLanguage === "en" ? "en" : "عربي"}
+            {t("en")}
           </Text>
         </View>
       </TouchableOpacity>
@@ -134,7 +143,7 @@ const Settings = ({ navigation }) => {
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View> */}
-      {status && <LanguageChangeModal setStatus={setStatus} />}
+      <LanguageChangeModal isVisible={modalVisible} onClose={closeModal} />
     </View>
   );
 };

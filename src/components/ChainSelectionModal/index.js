@@ -53,8 +53,10 @@ const ChainSelectionModal = ({
       onBackdropPress={onClose}
     >
       <View style={styles.modalContent}>
-        <TouchableOpacity onPress={() => handleChainSelect(t("bitcoin"))}>
-          <Text style={styles.chainText}>{t("bitcoin")}</Text>
+        <TouchableOpacity
+          onPress={() => handleChainSelect(t("allNetworkText"))}
+        >
+          <Text style={styles.chainText}>{t("allNetworkText")}</Text>
         </TouchableOpacity>
         <View style={styles.modalSeparator} />
         <TouchableOpacity onPress={() => handleChainSelect(t("polygon"))}>

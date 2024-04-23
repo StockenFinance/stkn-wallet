@@ -10,13 +10,21 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WalletList from "./WalletList";
 import BackIcon from "../../SvgIcon/BackIcon";
-import { useSelector } from "react-redux";
 import AddWalletModal from "../../components/AddWalletModal";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
 const WalletManagement = ({ navigation }) => {
   const [wallets, setWallets] = useState([]);
-  const { recoveryModal } = useSelector((state) => state.counter);
+
+  const allWallets = useSelector((state) => state.walletStore.allWallets);
+
+  console.log("allWallets====at=====walletManagement", allWallets);
+
+  const recoveryModal = useSelector(
+    (store) => store.walletRecover.recoveryModal
+  );
+  console.log("recoveryModal-------New", recoveryModal);
   const scrollY = new Animated.Value(0);
 
   const [status, setStatus] = useState(false);
@@ -77,7 +85,7 @@ const WalletManagement = ({ navigation }) => {
             /> // Display loading indicator while fetching data
           ) : (
             <View>
-              {wallets?.map((wallet, index) => (
+              {allWallets?.map((wallet, index) => (
                 <WalletList
                   key={index}
                   wallet={wallet}
@@ -89,7 +97,7 @@ const WalletManagement = ({ navigation }) => {
         </Animated.ScrollView>
       ) : (
         <View>
-          {wallets?.map((wallet, index) => (
+          {allWallets?.map((wallet, index) => (
             <WalletList key={index} wallet={wallet} walletNumber={index + 1} />
           )) || <Text>Please add your wallet</Text>}
         </View>

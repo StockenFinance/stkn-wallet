@@ -47,6 +47,8 @@ import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.recepkocur.screencapture.ScreenCapturePackage;
 // react-native-screens
 import com.swmansion.rnscreens.RNScreensPackage;
+// react-native-share
+import cl.json.RNSharePackage;
 // react-native-svg
 import com.horcrux.svg.SvgPackage;
 // react-native-webview
@@ -114,6 +116,7 @@ public class PackageList {
       new SafeAreaContextPackage(),
       new ScreenCapturePackage(),
       new RNScreensPackage(),
+      new RNSharePackage(),
       new SvgPackage(),
       new RNCWebViewPackage()
     ));

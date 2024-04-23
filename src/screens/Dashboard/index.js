@@ -27,10 +27,13 @@ import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import { useTranslation } from "react-i18next";
 import ChainSelectionModal from "../../components/ChainSelectionModal";
-import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 import ModalDotIcon from "../../SvgIcon/ModalDotIcon";
+import { setCurrentChain } from "../../redux/reducer/chainReducer";
+import { useDispatch } from "react-redux";
+import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 import PlusIcon from "../../SvgIcon/PluseIcon";
 import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
+import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -56,6 +59,9 @@ const Dashboard = ({ navigation }) => {
   const [selectedChain, setSelectedChain] = useState(null);
   const [calculatedBalance, setCalculatedBalance] = useState(0);
   const [calculatedAmount, setCalculatedAmount] = useState(0);
+  const [chainStatus, setChainStatus] = useState("All Network");
+  const [importTokenAddress, setImportTokenValue] = useState("");
+  const dispatch = useDispatch();
 
   const [newAccount, setNewAccount] = useState([
     {
@@ -71,6 +77,7 @@ const Dashboard = ({ navigation }) => {
       balance: "0.00",
       decimals: "0",
       price: "3547.41",
+      chain: "Ethereum",
     },
   ]);
 
@@ -90,8 +97,6 @@ const Dashboard = ({ navigation }) => {
     retrieveWalletAddress();
   }, []);
 
-  console.log("Full ______ wallet addresss>>>>", fullWalletAddress);
-
   const getStoredWalletObject = async () => {
     try {
       const walletObject = await AsyncStorage.getItem("walletObject");
@@ -104,7 +109,6 @@ const Dashboard = ({ navigation }) => {
       }
     } catch (error) {
       console.error("Error retrieving wallet object:", error);
-      // Handle error
     }
   };
 
@@ -113,6 +117,20 @@ const Dashboard = ({ navigation }) => {
   }, []);
 
   console.log("Walltes------>>>>>>>_____>>>>>", wallets);
+
+  useEffect(() => {
+    // Function to retrieve wallet address
+    const retrieveWalletAddress = async () => {
+      try {
+        const wallet = await AsyncStorage.getItem("addWallet");
+        console.log("addwallet==============+++++>>>>>>>", wallet);
+        setWallets([wallet]); // Update state with fetched wallet address
+      } catch (error) {
+        console.error("Error retrieving wallet address:", error);
+      }
+    };
+    retrieveWalletAddress();
+  }, []);
 
   const shortenEthereumAddress = (address) => {
     if (!address) return "";
@@ -160,7 +178,10 @@ const Dashboard = ({ navigation }) => {
       // value.decimals.trim() === "" ||
       value.symbol.trim() === ""
     ) {
-      alert("Value contains empty fields. Not adding to array.");
+      // alert("Value contains empty fields. Not adding to array.");
+      // alert("value is alrady exist we can not allow to import same value");
+      // setCardData((prevData) => [...prevData, value]);
+
       calculateTotalBalance();
       return;
     }
@@ -216,15 +237,32 @@ const Dashboard = ({ navigation }) => {
     setActiveDotIndex(pageIndex);
   };
 
-  const renderItem = ({ item, index }) => (
-    <View style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}>
-      <CurrencyDetailsCard
-        item={item}
-        navigation={navigation}
-        onCalculateAmount={handleCalculateAmount}
-      />
-    </View>
-  );
+  const renderItem = ({ item, index }) => {
+    const isLastItem = index === cardData.length - 1;
+    return (
+      <>
+        <View
+          style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}
+        >
+          <CurrencyDetailsCard
+            item={item}
+            navigation={navigation}
+            onCalculateAmount={handleCalculateAmount}
+            importAddress={importTokenAddress}
+          />
+        </View>
+        {isLastItem && (
+          <TouchableOpacity
+            style={styles.imoprtTokenView}
+            // onPress={() => console.log("Button pressed for:", item.title)}
+            onPress={toggleEnterTokenModal}
+          >
+            <Text style={styles.importTokenText}>Import New Token</Text>
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  };
 
   useEffect(() => {
     async function testIntegration() {
@@ -237,6 +275,8 @@ const Dashboard = ({ navigation }) => {
         "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         provider
       );
+
+      console.group("check provider :::::", provider);
 
       console.log(
         "Test function:",
@@ -338,6 +378,7 @@ const Dashboard = ({ navigation }) => {
         if (serializedWallets !== null) {
           const parsedWallets = JSON.parse(serializedWallets);
           setWallets(parsedWallets);
+          dispatch(addWallet(parsedWallets));
         }
       } catch (error) {
         console.error("Error retrieving wallets:", error);
@@ -391,6 +432,7 @@ const Dashboard = ({ navigation }) => {
     ]);
     console.log("walet response?????", wallet);
     addWallet(wallet);
+    dispatch(addWalletAtReduxStore(wallet));
     setLoading(false);
   };
 
@@ -465,13 +507,22 @@ const Dashboard = ({ navigation }) => {
   }, []);
 
   const handleChainSelect = (chain) => {
+    console.log("dispatcher chain", chain);
+    console.log("dispatcher card data", cardData);
     setSelectedChain(chain);
+    dispatch(setCurrentChain(chain));
+    // const filterData = cardData.filter((item) => item.chain === chain);
+    // setCardData(filterData.length > 0 ? filterData : cardData);
+
+    const filterData = cardData.filter((item) => item.chain === chain);
+    setCardData(filterData.length > 0 ? filterData : cardData);
     setChainSelectionModalVisible(false);
   };
 
   const handleCalculateAmount = (amount) => {
     setCalculatedAmount(amount);
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -546,19 +597,32 @@ const Dashboard = ({ navigation }) => {
                   </View>
 
                   <WalletImageSvg style={styles.walletImage} />
-
-                  <Text
-                    style={[
-                      styles.receiveText,
-                      { right: !toggleLanguage ? 25 : 10 },
-                    ]}
-                  >
-                    {t("receive")}
-                  </Text>
-                  <ReceiveScannerIcon
-                    color={"white"}
-                    style={{ position: "absolute", top: 27, right: 18 }}
-                  />
+                  <View style={{ marginTop: "-12%" }}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("ReceiveScreen")}
+                    >
+                      <Text
+                        style={[
+                          styles.receiveText,
+                          { right: !toggleLanguage ? 25 : 10 },
+                        ]}
+                      >
+                        {t("receive")}
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("ReceiveScreen")}
+                    >
+                      <ReceiveScannerIcon
+                        color={"#fff"}
+                        style={{
+                          position: "absolute",
+                          top: 3,
+                          right: 18,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
                   <View style={styles.walletBalanceContainer}>
                     <View>
@@ -599,6 +663,7 @@ const Dashboard = ({ navigation }) => {
 
       <View style={{ flex: 0.8 }}>
         <FlatList
+          // ListFooterComponent={}
           data={cardData}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
@@ -606,14 +671,23 @@ const Dashboard = ({ navigation }) => {
           scrollEventThrottle={16}
         />
       </View>
+
       <TouchableOpacity
         style={{ alignItems: "flex-end" }}
-        onPress={toggleEnterTokenModal}
+        // onPress={toggleEnterTokenModal}
         // onPress={handleFetchData}
       >
-        <PlusIcon style={styles.plusImage} />
+        {/* <Image
+          source={require("../../assets/images/plus.png")}
+          style={styles.plusImage}
+        /> */}
       </TouchableOpacity>
       <EnterTokenModal
+        importTokenAddress={(tokenValue) => {
+          alert("selected modal value");
+          setImportTokenValue(tokenValue);
+          console.log("selected token address", tokenValue);
+        }}
         value={tokenInput}
         modalValues={(value) => addTokenBtn(value)}
         onChangeText={(text) => setTokenInput(text)}
@@ -621,9 +695,9 @@ const Dashboard = ({ navigation }) => {
         isVisible={isTokenDetailsModalVisible}
         onClose={toggleEnterTokenModal}
       />
-      {!loading && (
+      {loading && (
         <ActivityIndicator
-          styl={{ marginTop: 50 }}
+          style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0 }}
           size="large"
           color="#F2A13F"
         />

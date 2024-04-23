@@ -6,7 +6,7 @@ import RemoveIcon from "../../SvgIcon/RemoveIcon";
 import RecoveryPhraseModal from "../../components/RecoveryPhraseModal";
 import PublicKeyModal from "../../components/PublicKeyModal";
 import { useDispatch } from "react-redux";
-import { setModal } from "../../redux/features/CounterSlice";
+import { setModal } from "../../redux/reducer/CounterSlice";
 import DeleteWalletModal from "../../components/DeleteWalletModal";
 
 const WalletList = ({ wallet, walletNumber }) => {

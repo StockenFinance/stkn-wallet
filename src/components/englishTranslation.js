@@ -47,15 +47,16 @@ const EnglishTranslation = {
   copyAddress: "Copy Address",
   turnOffNotifications: "Turn off notifications",
   customize: "Customize",
-  enterToken: "Enter Token Address",
+  enterToken: "Add Custom Token",
   name: "Name",
   symbol: "Symbol",
   decimal: "Decimal",
   importToken: "Import Token",
   enterTokenText: "Enter Token",
   bitcoin: "Bitcoin",
-  ethereum: "Ethreum",
+  ethereum: "Ethereum",
   polygon: "Polygon",
+  contractAddress: "Contract address",
 
   // Swap screen strings
   wantToSwap: "I want to Swap",
@@ -79,6 +80,7 @@ const EnglishTranslation = {
   disclaimerPragraph:
     "You will be taken to MoonPay. Services relating to payments are provided by MoonPay, which is a separate platform owned by a third party. Please read and agree to MoonPay's Terms of Service before using their service. For any questions relating to payments, please contact MoonPay. Stocken does not assume any responsibility for any loss or damage caused by the use of this payment service.",
   termAndConditionHalf: "Terms of Service",
+  selectLanguage: "Select language",
 
   // Chart screen strings
   all: "ALL",
@@ -99,6 +101,7 @@ const EnglishTranslation = {
   addCustomToken: "Add Custom Token",
   myWallet: "My Wallet",
   addWallet: "Add Wallet",
+  en: "EN",
 
   // Send screen strings
   wantToSend: "I want to Send",

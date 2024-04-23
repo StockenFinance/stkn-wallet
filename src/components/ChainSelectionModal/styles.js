@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   modalContent: {
-    width: 160,
+    width: 150,
     height: 110,
     backgroundColor: "white",
     padding: 15,

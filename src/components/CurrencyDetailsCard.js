@@ -9,11 +9,16 @@ import SwapIcon from "../SvgIcon/SwapIcon";
 import SendIcon from "../SvgIcon/SendIcon";
 import ReceiveScannerIcon from "../SvgIcon/ReceiveScannerIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
 import { useTranslation } from "react-i18next";
+import { Utils } from "../utils/LocalStorage";
+import { useSelector } from "react-redux";
 
-const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
+const CurrencyDetailsCard = ({
+  item,
+  navigation,
+  onCalculateAmount,
+  importAddress,
+}) => {
   const { t, i18n } = useTranslation();
 
   const [containerHeight, setContainerHeight] = useState(95);
@@ -22,17 +27,20 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [tokenBalanceImported, setTokenBalanceImported] = useState();
+  const currentChain = useSelector((state) => state.chain.currentChain);
+
+  console.log("currenChain", currentChain);
 
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
 
-  const handleSendButtonClick = () => {
-    setShowModal(true);
-  };
+  // const handleSendButtonClick = () => {
+  //   setShowModal(true);
+  // };
 
   const getUserBalance = async (userAddress) => {
-    const result = await provider.getBalance(userAddress);
+    const result = await provider().getBalance(userAddress);
     const balance = ethers.formatEther(result);
     console.log("Balance: ", balance);
     setUserEtherBalance(balance);
@@ -40,16 +48,37 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
     return balance;
   };
   useEffect(() => {
-    getUserBalance("0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141");
-    tokenBalance();
+    Utils.getStoreData("fullWalletAddress").then((res) => {
+      console.log("fullwalletaddress local storage", res);
+      if (res !== null) {
+        getUserBalance(res);
+        // getUserBalance("0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141");
+        tokenBalance(res);
+      }
+    });
   }, [userEtherBalance]);
 
-  const tokenBalance = useCallback(async () => {
+  const tokenBalance = useCallback(async (walletAddress) => {
+    console.log("token address in currency", importAddress);
+    console.log("wallet address in currency", walletAddress);
     const x = await fetchDynamicDetailsOfToken(
-      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", //importAddres(tokenAddress)
+      "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141" //walletAddress (local storage)
     );
     setTokenBalanceImported(x);
   }, []);
+
+  // const tokenBalance = useCallback(async (walletAddress) => {
+  //   console.log("token address in currency", importAddress);
+  //   console.log("wallet address in currency", walletAddress);
+
+  //   const tokenBalance = await fetchDynamicDetailsOfToken(
+  //     importAddress,
+  //     walletAddress
+  //     0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141
+  //   );
+  //   setTokenBalanceImported(tokenBalance);
+  // }, []);
 
   function formatBalance(balance, decimals) {
     return ethers.formatUnits(balance, parseInt(decimals, 10));
@@ -124,6 +153,8 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
     // Call onCalculateAmount whenever the calculated amount changes
     onCalculateAmount(calculateAmount());
   }, [calculateAmount]);
+
+  console.log("check bal::::", tokenBalanceImported);
 
   return (
     <TouchableOpacity onPress={handleContainerClick}>
@@ -260,7 +291,9 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
             </View>
 
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ReceiveScreen", {})}
+              >
                 <View
                   style={{
                     width: 35,
@@ -285,9 +318,6 @@ const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {/* {toggleLanguage
-                    ? EnglishTranslation.receive
-                    : ArabicTranslation.receive} */}
                   {t("receive")}
                 </Text>
               </TouchableOpacity>

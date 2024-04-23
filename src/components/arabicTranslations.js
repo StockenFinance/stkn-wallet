@@ -48,7 +48,7 @@ const ArabicTranslation = {
   copyAddress: " نسخ العنوان",
   turnOffNotifications: "إيقاف تشغيل الإشعارات",
   customize: "التخصيص",
-  enterToken: "أدخل عنوان الرمز المميز",
+  enterToken: "إضافة رمز مخصص",
   name: "الاسم",
   symbol: " الرمز",
   decimal: "عشري",
@@ -57,6 +57,7 @@ const ArabicTranslation = {
   bitcoin: "البيتكوين",
   polygon: "مضلع",
   ethereum: "الإيثيريوم",
+  contractAddress: "عنوان العقد",
 
   // Swap screen strings
   wantToSwap: "أريد المبادلة",
@@ -80,6 +81,7 @@ const ArabicTranslation = {
   disclaimerPragraph:
     "سيتم نقلك إلى MoonPay. يتم توفير الخدمات المتعلقة بالمدفوعات بواسطة MoonPay، وهي منصة منفصلة مملوكة لطرف ثالث. يرجى قراءة شروط خدمة MoonPay والموافقة عليها قبل استخدام خدمتهم. إذا كانت لديك أي أسئلة تتعلق بالمدفوعات، يرجى الاتصال بـ MoonPay. لا تتحمل Stocken أي مسؤولية عن أي خسارة أو ضرر ناتج عن استخدام خدمة الدفع هذه.",
   termAndConditionHalf: "شروط الخدمة",
+  selectLanguage: "اختار اللغة",
 
   //Chart screen strings
   all: "كل شيء",
@@ -100,6 +102,7 @@ const ArabicTranslation = {
   addCustomToken: "إضافة رمز مخصص",
   myWallet: "محفظتى",
   addWallet: "إضافة محفظة",
+  en: "عربي",
 
   // Send screen strings
   wantToSend: "أريد إرسال",

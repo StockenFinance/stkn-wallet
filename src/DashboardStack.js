@@ -6,6 +6,8 @@ import Dashboard from "./screens/Dashboard/index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector } from "react-redux";
 import SendScreen from "./screens/SendScreen/index";
+import ChartScreen from "./screens/ChartScreen";
+import ReceiveScreen from "./screens/ReceiveScreen";
 
 const Stack = createStackNavigator();
 
@@ -62,6 +64,16 @@ const DashboardStack = () => {
       <Stack.Screen
         name="SendScreen"
         component={SendScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChartScreen"
+        component={ChartScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ReceiveScreen"
+        component={ReceiveScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

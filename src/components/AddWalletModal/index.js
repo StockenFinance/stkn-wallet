@@ -18,26 +18,13 @@ import ImportIcon from "../../SvgIcon/ImportIcon";
 import CreateIcon from "../../SvgIcon/CreateIcon";
 import { createNewWallet } from "../../utils/helper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 
-const storeWalletAddress = async (wallet) => {
+const storeWallet = async (wallet) => {
   try {
-    await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
+    await AsyncStorage.setItem("addWallet", JSON.stringify(wallet));
   } catch (error) {
     console.error("Error storing wallet address:", error);
-  }
-};
-
-const storeFullWalletAddress = async (fullWalletAddress) => {
-  try {
-    await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
-
-    // alert("Data is set successfully ");
-    console.log(
-      "Full wallet address stored on create wallet:",
-      fullWalletAddress
-    );
-  } catch (error) {
-    console.error("Error storing full wallet address:", error);
   }
 };
 
@@ -48,6 +35,8 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+
+  console.log("walletStore", walletStore);
 
   const dispatch = useDispatch();
 
@@ -124,6 +113,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     dispatch(saveWalletAddress(shortenedAddress));
 
     setWalletStore(wallet);
+    dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
       Alert.alert("Wallet is Created");
       setLoading(false);
@@ -131,8 +121,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   };
 
   useEffect(() => {
-    storeWalletAddress(walletStore);
-    storeFullWalletAddress(walletStore.address);
+    storeWallet(walletStore);
   }, [generatedWalletAddress, walletStore]);
 
   useEffect(() => {

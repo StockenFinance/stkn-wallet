@@ -18,13 +18,22 @@ import EnglishTranslation from "../englishTranslation";
 import ArabicTranslation from "../arabicTranslations";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
+import { Utils } from "../../utils/LocalStorage";
+import { RadioButton } from "@react-native-paper/radio-button";
 
-const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
+const EnterTokenModal = ({
+  isVisible,
+  onClose,
+  modalValues,
+  importTokenAddress,
+}) => {
   const { t, i18n } = useTranslation();
 
   const [tokenNumber, setTokenNumber] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [storedTokens, setStoredTokens] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Ethereum");
 
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
@@ -32,13 +41,20 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     symbol: "",
     balance: "",
     price: "",
+    chain: "",
   });
 
   const handleOverlayPress = (event) => {
     if (event?.target === event?.currentTarget) {
       setTokenNumber("");
       modalValues(tokenDetails);
-      setTokenDetails({ name: "", decimals: "", symbol: "", balance: "" });
+      setTokenDetails({
+        name: "",
+        decimals: "",
+        symbol: "",
+        balance: "",
+        chain: "",
+      });
       onClose();
     }
   };
@@ -71,11 +87,61 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     };
   };
 
+  // const handleInputChange = async (text) => {
+  //   setTokenNumber(text);
+  //   if (text.trim() !== "") {
+  //     try {
+  //       const res = await tokenDetail(text);
+  //       if (res.success) {
+  //         const { tokenName, decimals, symbol, balance } = res.success;
+  //         console.log("Balance test::::", tokenName, decimals, symbol, balance);
+  //         fetchCryptoPrice(symbol).then((usdPrice) => {
+  //           console.log("UES ReS:::", usdPrice);
+  //           // setCryptoPrice(usdPrice);
+  //           setTokenDetails({
+  //             name: tokenName,
+  //             decimals: decimals,
+  //             symbol: symbol,
+  //             balance: balance,
+  //             price: usdPrice?.USD,
+  //           });
+  //         });
+  //       } else {
+  //         setTokenDetails({
+  //           name: "",
+  //           decimals: "",
+  //           symbol: "",
+  //           balance: "",
+  //           price: "",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching token details:", error);
+  //       setTokenDetails({
+  //         name: "",
+  //         decimals: "",
+  //         symbol: "",
+  //         balance: "",
+  //         price: "",
+  //       });
+  //     }
+  //   } else {
+  //     setTokenDetails({
+  //       name: "",
+  //       decimals: "",
+  //       symbol: "",
+  //       balance: "",
+  //       price: "",
+  //     });
+  //   }
+  // };
+
   const handleInputChange = async (text) => {
     setTokenNumber(text);
     if (text.trim() !== "") {
       try {
-        const res = await tokenDetail(text);
+        console.log("selectedOption before res", selectedOption);
+        const res = await tokenDetail(text, selectedOption);
         if (res.success) {
           const { tokenName, decimals, symbol, balance } = res.success;
           console.log("Balance test::::", tokenName, decimals, symbol, balance);
@@ -88,7 +154,10 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
               symbol: symbol,
               balance: balance,
               price: usdPrice?.USD,
+              chain: selectedOption,
             });
+            // Add token address to storedTokens array
+            setStoredTokens((prevTokens) => [...prevTokens, text]);
           });
         } else {
           setTokenDetails({
@@ -179,9 +248,22 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (storedTokens.length > 0) {
+      Utils.setStoreData("STOREDTOKEN", storedTokens);
+      console.log("success token::::", storedTokens);
+    }
+  }, [storedTokens]);
+
+  console.log("check token import :::::", storedTokens);
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+    console.log("selected option", selectedOption);
+  };
   return (
     <Modal
-      animationType="fade"
+      animationType="slide"
       transparent={true}
       visible={isVisible}
       onRequestClose={onClose}
@@ -192,63 +274,70 @@ const EnterTokenModal = ({ isVisible, onClose, modalValues }) => {
             <Text style={styles.HeaderText}>{t("enterToken")}</Text>
 
             <View style={styles.TokenInputContainer}>
-              <TextInput
-                placeholderTextColor={"#7483A1"}
-                style={styles.input}
-                placeholder={t("enterTokenText")}
-                value={tokenNumber}
-                onChangeText={(text) => {
-                  setTokenNumber(text);
-                  handleInputChange(text);
-                }}
-              />
+              <Text style={styles.contractAddressText}>
+                {t("contractAddress")}
+              </Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholderTextColor={"#7483A1"}
+                  style={styles.input}
+                  placeholder={"0x..."}
+                  value={tokenNumber}
+                  onChangeText={(text) => {
+                    setTokenNumber(text);
+                    importTokenAddress(text);
+                    handleInputChange(text);
+                    setStoredTokens((pre) => {
+                      return [...pre, text];
+                    });
+                  }}
+                />
+              </View>
             </View>
 
             {/* Read-only TextInputs */}
             <View style={styles.readOnlyInputsContainer}>
-              <Text
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  marginTop: "-3%",
-                  fontWeight: "900",
-                }}
-              >
-                {t("name")}
-              </Text>
+              <Text style={styles.nameText}>{t("name")}</Text>
               <TextInput
                 style={styles.readOnlyInput}
                 value={tokenDetails.name}
                 editable={false}
               />
-              <Text
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  fontWeight: "900",
-                }}
-              >
-                {t("symbol")}
-              </Text>
+              <Text style={styles.symbolText}>{t("symbol")}</Text>
               <TextInput
                 style={styles.readOnlyInput}
                 value={tokenDetails.symbol}
                 editable={false}
               />
-              <Text
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  fontWeight: "900",
-                }}
-              >
-                {t("decimal")}
-              </Text>
+              <Text style={styles.symbolText}>{t("decimal")}</Text>
               <TextInput
                 style={styles.readOnlyInput}
                 value={tokenDetails.decimals.toString()}
                 editable={false}
               />
+            </View>
+            <Text
+              style={{ marginTop: "-3%", color: "#000000", fontWeight: "800" }}
+            >
+              Select Chain
+            </Text>
+            <View style={styles.radioButtonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.radioButton,
+                  selectedOption === "Ethereum" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleOptionChange("Ethereum")}
+              ></TouchableOpacity>
+              <Text style={styles.radioText}>Ethereum</Text>
+              <TouchableOpacity
+                style={[
+                  styles.radioButton,
+                  selectedOption === "Polygon" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleOptionChange("Polygon")}
+              ></TouchableOpacity>
+              <Text style={styles.radioText}>Polygon</Text>
             </View>
             <TouchableOpacity
               style={styles.copyPasteIcon}

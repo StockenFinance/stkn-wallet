@@ -6,18 +6,18 @@ import {
   Animated,
   Pressable,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 
-const LanguageChangeModal = ({ setStatus }) => {
-  const slide = React.useRef(new Animated.Value(300)).current;
+const LanguageChangeModal = ({ isVisible, onClose }) => {
+  const slide = React.useRef(new Animated.Value(1)).current;
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
-  const handleLanguageChange = async (language) => {
+  const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
-    setShowContinueButton(true);
   };
 
   const saveSelectedLanguage = async (language) => {
@@ -32,7 +32,7 @@ const LanguageChangeModal = ({ setStatus }) => {
   const applyLanguageChange = async () => {
     await saveSelectedLanguage(selectedLanguage);
     i18n.changeLanguage(selectedLanguage);
-    setShowContinueButton(false);
+    onClose();
   };
 
   useEffect(() => {
@@ -43,48 +43,40 @@ const LanguageChangeModal = ({ setStatus }) => {
       }
     });
   }, []);
-  const slideUp = () => {
-    Animated.timing(slide, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const slideDown = () => {
-    Animated.timing(slide, {
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      setStatus(false);
-    });
-  };
 
   useEffect(() => {
-    slideUp();
-  }, []);
+    if (isVisible) {
+      Animated.timing(slide, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(slide, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isVisible]);
 
   const closeModal = () => {
-    slideDown();
+    onClose();
   };
 
   return (
-    <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={{ width: "100%", height: "40%" }}>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={closeModal}
+    >
+      <View style={styles.modalContainer}>
         <Animated.View
           style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
         >
           <View style={styles.container}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "700",
-                padding: 10,
-                color: "black",
-              }}
-            >
-              Select Language
-            </Text>
+            <Text style={styles.modalTitle}>{t("selectLanguage")}</Text>
             <View style={styles.languageViewContainer}>
               <Pressable
                 onPress={() => handleLanguageChange("en")}
@@ -159,7 +151,7 @@ const LanguageChangeModal = ({ setStatus }) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                applyLanguageChange(selectedLanguage);
+                applyLanguageChange();
                 closeModal();
               }}
               style={styles.getStartedContainer}
@@ -168,37 +160,46 @@ const LanguageChangeModal = ({ setStatus }) => {
             </TouchableOpacity>
           </View>
         </Animated.View>
-      </Pressable>
-    </Pressable>
+        <Pressable onPress={closeModal} style={styles.backdrop} />
+      </View>
+    </Modal>
   );
 };
 
 export default LanguageChangeModal;
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   backdrop: {
     position: "absolute",
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    width: "100%",
-    height: "75%",
-    justifyContent: "flex-end",
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 999,
   },
   bottomSheet: {
     width: "100%",
-    height: "100%",
+    height: "70%",
     backgroundColor: "white",
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 20,
-    padding: "10%",
+    padding: "5%",
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: "140%",
   },
   container: {
-    display: "flex",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    padding: 10,
+    color: "black",
   },
   languageViewContainer: {
     flexDirection: "row",
@@ -237,13 +238,11 @@ const styles = StyleSheet.create({
   getStartedContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "25%",
-    width: "97%",
-    marginLeft: "-3%",
+    marginTop: 75,
+    width: 350,
     height: 55,
     borderRadius: 10,
     backgroundColor: "#F19220",
-    marginLeft: 5,
   },
   getStartedText: {
     fontSize: 21,

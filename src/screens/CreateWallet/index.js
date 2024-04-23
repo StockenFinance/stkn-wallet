@@ -16,6 +16,7 @@ import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
 import { saveWalletAddress } from "../../redux/actions/walletActions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -37,7 +38,6 @@ const storeFullWalletAddress = async (fullWalletAddress) => {
   try {
     await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
 
-    // alert("Data is set successfully ");
     console.log(
       "Full wallet address stored on create wallet:",
       fullWalletAddress
@@ -63,22 +63,24 @@ const CreateWallet = ({ navigation, route }) => {
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
 
-    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
-    console.log("Phrase wallet: ", phrase?.privateKey);
-    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
-    console.log("New Wallet Address:", wallet.address);
-    console.log("Private Key:", wallet.privateKey);
-    console.log("Generated Mnemonic:", mnemonic);
-    AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
-      console.log("Error while setting encrypted wallet: ", err);
-    });
+    // console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
+    // console.log("Phrase wallet: ", phrase?.privateKey);
+    // console.log("Wallet: ", JSON.stringify(wallet, null, 2));
+    // console.log("New Wallet Address:", wallet.address);
+    // console.log("Private Key:", wallet.privateKey);
+    // console.log("Generated Mnemonic:", mnemonic);
+    // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
+    //   console.log("Error while setting encrypted wallet: ", err);
+    // });
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(shortenedAddress));
+    storeFullWalletAddress(wallet.address);
 
     setWalletStore(wallet);
+    dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
       navigation.navigate("BackupPhrase", {
         mnemonic,
@@ -102,6 +104,8 @@ const CreateWallet = ({ navigation, route }) => {
       }
     });
   }, []);
+
+  console.log("check loading::::::", loading);
 
   return (
     <View style={styles.container}>

@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#ffffff",
     position: "absolute",
-    top: 25,
+    // top: -40,
     right: 10,
     marginHorizontal: "5%",
   },
@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   walletBalanceContainer: {
-    marginTop: "10%",
+    marginTop: "22%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -121,9 +121,10 @@ export const styles = StyleSheet.create({
   modalIconContainer: {
     alignItems: "center",
     justifyContent: "center",
-    width: 19,
-    height: 25,
-    right: 10,
+    width: 25,
+    height: 20,
+    right: 15,
+    top: "-20%",
   },
   modalDotImage: {
     width: 3,
@@ -186,4 +187,21 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#253452",
   },
+  imoprtTokenView: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "87%",
+    backgroundColor: "#F19220",
+    height: 45,
+    alignSelf: "center",
+    borderRadius: 15,
+    // top: "-15%",
+  },
+  importTokenText: {
+    textAlign: "center",
+    color: "#000000",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  contractAddressText: {},
 });

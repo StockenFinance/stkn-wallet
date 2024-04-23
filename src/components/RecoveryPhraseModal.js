@@ -16,7 +16,8 @@ import PasteIcon from "../SvgIcon/PasteIcon";
 import Clipboard from "@react-native-clipboard/clipboard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { setModal } from "../redux/features/CounterSlice";
+import { setModal } from "../redux/reducer/CounterSlice";
+import { useTranslation } from "react-i18next";
 
 const { height } = Dimensions.get("window");
 
@@ -53,7 +54,9 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
   };
 
   const mnemonicWords = mnemonic.split(" ");
-  const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+
+  const { t, i18n } = useTranslation();
 
   const copyToClipboard = async () => {
     try {
@@ -67,24 +70,14 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
     }
   };
 
-  const retrieveSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem("selectedLanguage");
-      if (language !== null) {
-        console.log("Retrieved language:", language);
-        let bool = language === "english" ? true : false;
-        setToggleLanguage(bool);
-      } else {
-        console.log("No language saved in AsyncStorage");
-        setToggleLanguage(true);
-      }
-    } catch (error) {
-      console.error("Error retrieving language from AsyncStorage:", error);
-    }
-  };
-
   useEffect(() => {
-    retrieveSelectedLanguage();
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
   }, []);
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
@@ -95,29 +88,21 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
           <View style={styles.container}>
             <View style={styles.recoveryPharseTextContainer}>
               <Text style={styles.recoveryPhraseText}>
-                {toggleLanguage
-                  ? EnglishTranslation.yourRecoveryPhraseText
-                  : ArabicTranslation.yourRecoveryPhraseText}
+                {t("yourRecoveryPhraseText")}
               </Text>
 
               <Text
                 style={[
                   styles.subText,
-                  { width: toggleLanguage === "arabic" ? "105%" : null },
+                  { width: selectedLanguage === "ar" ? "105%" : null },
                 ]}
               >
-                {toggleLanguage
-                  ? EnglishTranslation.secutiryMessageText
-                  : ArabicTranslation.secutiryMessageText}
+                {t("secutiryMessageText")}
               </Text>
             </View>
             <View style={styles.securityMessageContainer}>
               <AlertIcon style={styles.alertImage} />
-              <Text style={styles.securityText}>
-                {toggleLanguage
-                  ? EnglishTranslation.warningText
-                  : ArabicTranslation.warningText}
-              </Text>
+              <Text style={styles.securityText}>{t("warningText")}</Text>
             </View>
             <View style={styles.securityPhraseContainer}>
               <View style={styles.securityPhraseTextContainer}>
