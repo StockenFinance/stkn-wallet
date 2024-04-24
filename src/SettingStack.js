@@ -2,24 +2,19 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Settings from "./screens/Settings/Settings";
 import WalletManagement from "./screens/WalletManagement/WalletManagement";
+import Settings from "./screens/Settings";
 
 const Stack = createStackNavigator();
 
-const SettingStack = () => {
+const SettingStack = ({}) => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Settings"
-        component={Settings}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="WalletManagement"
-        component={WalletManagement}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator
+      initialRouteName="Settings"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="walletSettings" component={WalletManagement} />
     </Stack.Navigator>
   );
 };

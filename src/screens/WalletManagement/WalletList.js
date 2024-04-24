@@ -23,8 +23,7 @@ const WalletList = ({ wallet, walletNumber }) => {
   };
 
   const mnemonic = wallet?.mnemonic?.phrase;
-
-  const publicKey = wallet?.publicKey;
+  const privateKey = wallet?.privateKey;
 
   const recoveryPharseHandlers = () => {
     dispatch(setModal(true));
@@ -74,7 +73,7 @@ const WalletList = ({ wallet, walletNumber }) => {
       {publicKeyModalStatus && (
         <PublicKeyModal
           setStatus={setPublicKeyModalStatus}
-          publicKey={publicKey}
+          publicKey={privateKey}
         />
       )}
       {deleteWalletModalStatus && (

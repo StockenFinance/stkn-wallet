@@ -83,4 +83,15 @@ export const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  loader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    zIndex: 50,
+  },
 });

@@ -11,10 +11,16 @@ import WalletIcon from "./SvgIcon/WalletIcon";
 import DiamondIcon from "./SvgIcon/DiamondIcon";
 import DashboardStack from "./DashboardStack";
 import HomeScreen from "./screens/HomeScreen";
+import SettingStack from "./SettingStack";
+import { useSelector } from "react-redux";
 
 const Bottom = createBottomTabNavigator();
 
 const BottomNavigator = () => {
+  const tabHide = useSelector((store) => store.walletRecover.myTabHide);
+
+  console.log("tabHide", tabHide);
+
   return (
     <Bottom.Navigator
       initialRouteName="Dashboard"
@@ -31,7 +37,7 @@ const BottomNavigator = () => {
           height: 64,
           borderRadius: 15,
           alignSelf: "center",
-          // display: false ? "none" : "block",
+          display: tabHide ? "none" : "block",
         },
       }}
     >
@@ -154,7 +160,7 @@ const BottomNavigator = () => {
       />
       <Bottom.Screen
         name="Settings"
-        component={Settings}
+        component={SettingStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
