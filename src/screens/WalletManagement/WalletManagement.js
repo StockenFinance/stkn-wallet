@@ -15,8 +15,6 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 const WalletManagement = ({ navigation }) => {
-  const [wallets, setWallets] = useState([]);
-
   const allWallets = useSelector((state) => state.walletStore.allWallets);
 
   console.log("allWallets====at=====walletManagement", allWallets);
@@ -24,7 +22,7 @@ const WalletManagement = ({ navigation }) => {
   const recoveryModal = useSelector(
     (store) => store.walletRecover.recoveryModal
   );
-  console.log("recoveryModal-------New", recoveryModal);
+
   const scrollY = new Animated.Value(0);
 
   const [status, setStatus] = useState(false);
@@ -41,25 +39,6 @@ const WalletManagement = ({ navigation }) => {
       }
     });
   }, []);
-
-  useEffect(() => {
-    const retrieveWallets = async () => {
-      try {
-        const serializedWallets = await AsyncStorage.getItem(`wallets`);
-        if (serializedWallets !== null) {
-          const parsedWallets = JSON.parse(serializedWallets);
-          setWallets(parsedWallets);
-        }
-      } catch (error) {
-        console.error("Error retrieving wallets:", error);
-      } finally {
-        setLoading(false); // Update loading state when fetching is done
-      }
-    };
-    retrieveWallets();
-  }, []);
-
-  console.log("wallets", wallets);
 
   return (
     <View style={{ marginTop: 30, flex: 1 }}>
