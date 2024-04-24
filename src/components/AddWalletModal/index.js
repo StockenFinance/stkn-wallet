@@ -107,10 +107,6 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       console.log("Error while setting encrypted wallet: ", err);
     });
 
-    // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
-    //   console.log("Error while setting encrypted wallet: ", err);
-    // });
-
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
@@ -120,6 +116,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
       Alert.alert("Wallet is Created");
+      // navigation.navigate("Dashboard");
       setLoading(false);
     }, 2000);
   };
@@ -172,10 +169,10 @@ const AddWalletModal = ({ navigation, setStatus }) => {
           setNewAccount((prevAccount) => {
             return [
               {
-                ...prevAccount[0], // Keep other properties unchanged
+                ...prevAccount[0],
                 newWalletAddress: walletAddress,
               },
-              ...prevAccount.slice(1), // Keep other accounts unchanged
+              ...prevAccount.slice(1),
             ];
           });
         }

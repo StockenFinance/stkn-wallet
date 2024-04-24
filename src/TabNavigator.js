@@ -37,7 +37,7 @@ const BottomNavigator = () => {
           height: 64,
           borderRadius: 15,
           alignSelf: "center",
-          display: tabHide ? "none" : "block",
+          display: false ? "none" : "block",
         },
       }}
     >

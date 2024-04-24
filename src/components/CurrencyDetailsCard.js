@@ -58,7 +58,8 @@ const CurrencyDetailsCard = ({
     console.log("wallet address in currency", walletAddress);
     const fetchedTokenDetails = await fetchDynamicDetailsOfToken(
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", //importAddres(tokenAddress)
-      "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141" //walletAddress (local storage)
+      // "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141" //walletAddress (local storage)
+      "0x73f4faE4F28fe811EB77ddb63985C0b904aeb77f"
     );
     setTokenBalanceImported(fetchedTokenDetails);
   }, []);

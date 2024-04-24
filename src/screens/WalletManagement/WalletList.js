@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "semibold",
     marginTop: 5,
+    color: "#000000",
   },
   buttonContainer: {
     display: "flex",

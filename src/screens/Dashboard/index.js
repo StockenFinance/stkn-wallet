@@ -117,8 +117,6 @@ const Dashboard = ({ navigation }) => {
         // Wallet object retrieved successfully
         const firstWallet = JSON.parse(walletObject);
         setWallets([firstWallet]);
-      } else {
-        // Handle case when wallet object is not found in AsyncStorage
       }
     } catch (error) {
       console.error("Error retrieving wallet object:", error);
@@ -129,15 +127,13 @@ const Dashboard = ({ navigation }) => {
     getStoredWalletObject();
   }, []);
 
-  console.log("Walltes------>>>>>>>_____>>>>>", wallets);
-
   useEffect(() => {
     // Function to retrieve wallet address
     const retrieveWalletAddress = async () => {
       try {
         const wallet = await AsyncStorage.getItem("addWallet");
-        console.log("addwallet==============+++++>>>>>>>", wallet);
-        setWallets([wallet]); // Update state with fetched wallet address
+        console.log("addwallet=", wallet);
+        setWallets([wallet]);
       } catch (error) {
         console.error("Error retrieving wallet address:", error);
       }
@@ -183,17 +179,10 @@ const Dashboard = ({ navigation }) => {
   };
 
   const addTokenBtn = async (value) => {
-    // Store updated tokens in AsyncStorage
     storeTokens([...cardData, value]);
     toggleEnterTokenModal();
-    if (
-      value.name.trim() === "" ||
-      // value.decimals.trim() === "" ||
-      value.symbol.trim() === ""
-    ) {
-      // alert("Value contains empty fields. Not adding to array.");
+    if (value.name.trim() === "" || value.symbol.trim() === "") {
       // alert("value is alrady exist we can not allow to import same value");
-      // setCardData((prevData) => [...prevData, value]);
 
       calculateTotalBalance();
       return;
@@ -267,7 +256,6 @@ const Dashboard = ({ navigation }) => {
         {isLastItem && (
           <TouchableOpacity
             style={styles.imoprtTokenView}
-            // onPress={() => console.log("Button pressed for:", item.title)}
             onPress={toggleEnterTokenModal}
           >
             <Text style={styles.importTokenText}>Import New Token</Text>
@@ -357,32 +345,6 @@ const Dashboard = ({ navigation }) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   const fetchWalletAddress = async () => {
-  //     try {
-  //       const walletAddress = await AsyncStorage.getItem("walletAddress");
-  //       console.log("local storage >>>", walletAddress);
-  //       if (walletAddress) {
-  //         setNewAccount((prevAccount) => {
-  //           return [
-  //             {
-  //               ...prevAccount[0], // Keep other properties unchanged
-  //               newWalletAddress: walletAddress,
-  //             },
-  //             ...prevAccount.slice(1), // Keep other accounts unchanged
-  //           ];
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.error(
-  //         "Error fetching wallet address from AsyncStorage:",
-  //         error
-  //       );
-  //     }
-  //   };
-  //   fetchWalletAddress();
-  // }, []);
-
   useEffect(() => {
     // Function to retrieve wallet data from AsyncStorage
     const retrieveWallets = async () => {
@@ -419,37 +381,6 @@ const Dashboard = ({ navigation }) => {
       console.error("Error storing wallets:", error);
     }
   };
-
-  const createWallet = () => {
-    setLoading(true);
-    const { wallet, mnemonic } = createNewWallet();
-    const phrase = ethers.Wallet.fromPhrase(mnemonic);
-
-    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
-    console.log("Phrase wallet: ", phrase?.privateKey);
-    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
-    console.log("New Wallet Address:", wallet.address);
-    console.log("Private Key:", wallet.privateKey);
-    console.log("Generated Mnemonic:", mnemonic);
-    const shortenedAddress =
-      wallet.address.slice(0, 6) + wallet.address.slice(-6);
-    setGeneratedWalletAddress(shortenedAddress);
-
-    setWalletStore(wallet);
-    setNewAccount((prevAccount) => [
-      ...prevAccount,
-      {
-        newWalletAddress: shortenedAddress,
-        newWalletBalance: "",
-      },
-    ]);
-    console.log("walet response?????", wallet);
-    addWallet(wallet);
-    dispatch(addWalletAtReduxStore(wallet));
-    setLoading(false);
-  };
-
-  console.log("new wallet account>>>>>>", newAccount);
 
   useEffect(() => {
     retrieveSelectedLanguage();
@@ -564,7 +495,7 @@ const Dashboard = ({ navigation }) => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.timerImage}>
+        {/* <View style={styles.timerImage}>
           <TouchableOpacity onPress={() => createWallet()}>
             <Text
               style={{
@@ -577,7 +508,7 @@ const Dashboard = ({ navigation }) => {
               {t("addNewWallet")}
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       <View>
         <ScrollView
@@ -609,8 +540,8 @@ const Dashboard = ({ navigation }) => {
                     <View>
                       <Text style={styles.walletName}>{t("wallet")}</Text>
                       <Text style={styles.walletCode}>
-                        {/* {item?.newWalletAddress} */}
-                        {shortenEthereumAddress(fullWalletAddress)}
+                        {item?.newWalletAddress}
+                        {/* {shortenEthereumAddress(fullWalletAddress)} */}
                       </Text>
                     </View>
                   </View>

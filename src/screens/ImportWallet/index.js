@@ -88,6 +88,7 @@ const ImportWallet = ({ navigation, route }) => {
       await AsyncStorage.setItem("walletAddress", shortenedAddress);
       await AsyncStorage.setItem("securityKey", securityKey);
       await AsyncStorage.setItem("backupPhrase", backupPhrase);
+      updateCardData(shortenedAddress);
 
       console.log(
         "Shortened wallet address stored in import",
@@ -123,6 +124,56 @@ const ImportWallet = ({ navigation, route }) => {
     });
   }, []);
 
+  const updateCardData = async (shortenedAddress) => {
+    try {
+      const existingData = await AsyncStorage.getItem("CARD_DATA");
+      console.log(" Existing data CARD_DATA:", existingData);
+
+      // Parse the retrieved string or initialize an empty array
+      let dataArray = JSON.parse(existingData) || [];
+
+      console.log("parse card data", dataArray);
+
+      dataArray.push({
+        newWalletAddress: shortenedAddress,
+        newWalletBalance: "",
+      });
+
+      const updatedDataString = JSON.stringify(dataArray);
+
+      await AsyncStorage.setItem("CARD_DATA", updatedDataString);
+
+      console.log("CARD_DATA successfully updated in AsyncStorage");
+    } catch (error) {
+      console.error("Error updating data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchWalletAddress = async () => {
+      try {
+        const walletAddress = await AsyncStorage.getItem("walletAddress");
+        console.log("local storage >>>", walletAddress);
+        if (walletAddress) {
+          setNewAccount((prevAccount) => {
+            return [
+              {
+                ...prevAccount[0],
+                newWalletAddress: walletAddress,
+              },
+              ...prevAccount.slice(1),
+            ];
+          });
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching wallet address from AsyncStorage:",
+          error
+        );
+      }
+    };
+    fetchWalletAddress();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

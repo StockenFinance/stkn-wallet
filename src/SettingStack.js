@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import WalletManagement from "./screens/WalletManagement/WalletManagement";
 import Settings from "./screens/Settings";
+import ImportWallet from "./screens/ImportWallet";
+import RecoveryPhraseConfirmation from "./screens/RecoveryPhraseConfirmation";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,16 @@ const SettingStack = ({}) => {
     >
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="walletSettings" component={WalletManagement} />
+      <Stack.Screen
+        name="ImportWallet"
+        component={ImportWallet}
+        // options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RecoveryPhraseConfirmation"
+        component={RecoveryPhraseConfirmation}
+        // options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
