@@ -82,7 +82,7 @@ const WalletManagement = ({ navigation }) => {
               styl={{ marginTop: 50 }}
               size="large"
               color="#F2A13F"
-            /> // Display loading indicator while fetching data
+            />
           ) : (
             <View>
               {allWallets?.map((wallet, index) => (
