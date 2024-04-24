@@ -31,7 +31,6 @@ const SwapCurrencyModal = ({
       const serializedTokens = await AsyncStorage.getItem("importedTokens");
       if (serializedTokens !== null) {
         const tokens = JSON.parse(serializedTokens);
-        console.log("Tokens retrieved successfully>>>>>>", tokens);
         return tokens;
       } else {
         console.log("No tokens found in storage.");

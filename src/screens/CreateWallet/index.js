@@ -22,13 +22,8 @@ const storeWalletAddress = async (walletAddress, wallet) => {
   try {
     const shortenedAddress =
       walletAddress.slice(0, 6) + walletAddress.slice(-6);
-
     await AsyncStorage.setItem("walletAddress", shortenedAddress);
-
-    console.log("wallet address stored on create wallet:::", walletAddress);
-
     await AsyncStorage.setItem("walletObject", JSON.stringify(wallet));
-    console.log("wallet  stored:::", wallet);
   } catch (error) {
     console.error("Error storing wallet address:", error);
   }
@@ -37,7 +32,6 @@ const storeWalletAddress = async (walletAddress, wallet) => {
 const storeFullWalletAddress = async (fullWalletAddress) => {
   try {
     await AsyncStorage.setItem("fullWalletAddress", fullWalletAddress);
-
     console.log(
       "Full wallet address stored on create wallet:",
       fullWalletAddress
@@ -53,7 +47,6 @@ const CreateWallet = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
-  const [toggleLanguage, setToggleLanguage] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const dispatch = useDispatch();
@@ -63,12 +56,12 @@ const CreateWallet = ({ navigation, route }) => {
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
 
-    // console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
-    // console.log("Phrase wallet: ", phrase?.privateKey);
-    // console.log("Wallet: ", JSON.stringify(wallet, null, 2));
-    // console.log("New Wallet Address:", wallet.address);
-    // console.log("Private Key:", wallet.privateKey);
-    // console.log("Generated Mnemonic:", mnemonic);
+    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
+    console.log("Phrase wallet: ", phrase?.privateKey);
+    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
+    console.log("New Wallet Address:", wallet.address);
+    console.log("Private Key:", wallet.privateKey);
+    console.log("Generated Mnemonic:", mnemonic);
     // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
     //   console.log("Error while setting encrypted wallet: ", err);
     // });
@@ -81,13 +74,12 @@ const CreateWallet = ({ navigation, route }) => {
 
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
-    setTimeout(() => {
-      navigation.navigate("BackupPhrase", {
-        mnemonic,
-        selectedLanguage: selectedLanguage,
-      });
-      setLoading(false);
-    }, 2000);
+
+    navigation.navigate("BackupPhrase", {
+      mnemonic,
+      selectedLanguage: selectedLanguage,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -105,12 +97,20 @@ const CreateWallet = ({ navigation, route }) => {
     });
   }, []);
 
-  console.log("check loading::::::", loading);
+  console.log("Check loader:::::", loading);
 
   return (
     <View style={styles.container}>
       <HomeLogoIcon style={styles.image} />
-      <TouchableOpacity style={styles.createWalletView} onPress={createWallet}>
+      <TouchableOpacity
+        style={styles.createWalletView}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            createWallet();
+          }, 100);
+        }}
+      >
         <CreateIcon style={styles.createWalletImage} />
         <View style={styles.divider}></View>
         <Text style={styles.createWalletText}>{t("createNewWallet")}</Text>

@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "gray",
     marginVertical: 5,
   },
+
   modalContainer: {
     justifyContent: "flex-end",
     margin: 0,
@@ -28,9 +29,11 @@ export const styles = StyleSheet.create({
     color: "#253452",
     fontSize: 16,
     fontWeight: "800",
-    textAlign: "center",
-    marginVertical: "2%",
-    marginRight: "5%",
+    marginLeft: "5%",
+    // textAlign: "center",
+    marginVertical: "5%",
+    marginTop: "-1%",
+    // marginRight: "5%",
   },
   selectedText: {
     alignSelf: "center",
@@ -38,5 +41,9 @@ export const styles = StyleSheet.create({
     color: "#253452",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  defaultItem: {
+    backgroundColor: "#f0f0f0", // Background color for default item (ETH)
+    paddingVertical: 8,
   },
 });

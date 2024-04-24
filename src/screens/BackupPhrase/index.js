@@ -46,21 +46,21 @@ const BackupPhrase = ({ navigation, route }) => {
     // };
   }, []);
 
-  const requestPermission = async () => {
-    await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      {
-        title: "Get Read External Storage Access",
-        message: "get read external storage access for detecting screenshots",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK",
-      }
-    );
-  };
-  useEffect(() => {
-    requestPermission();
-  }, []);
+  // const requestPermission = async () => {
+  //   await PermissionsAndroid.request(
+  //     PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  //     {
+  //       title: "Get Read External Storage Access",
+  //       message: "get read external storage access for detecting screenshots",
+  //       buttonNeutral: "Ask Me Later",
+  //       buttonNegative: "Cancel",
+  //       buttonPositive: "OK",
+  //     }
+  //   );
+  // };
+  // useEffect(() => {
+  //   requestPermission();
+  // }, []);
 
   const copyToClipboard = async () => {
     try {

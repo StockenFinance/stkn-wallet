@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   tokenList,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { styles } from "./styles";
@@ -65,25 +66,35 @@ const ConvertCurrencyModal = ({
       onBackdropPress={onClose}
     >
       <View style={styles.modalContent}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={tokenList}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleChainSelect(item.symbol)}>
-              <View style={styles.tokenItem}>
-                <Image
-                  source={{ uri: item.logoURI }}
-                  style={styles.tokenLogo}
-                />
-                <View style={styles.tokenDetails}>
-                  <Text style={styles.tokenSymbol}>{item.symbol}</Text>
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#F19220"
+            style={styles.loader}
+          />
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={tokenList}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleChainSelect(item.symbol)}>
+                <View style={styles.tokenItem}>
+                  <Image
+                    source={{ uri: item.logoURI }}
+                    style={styles.tokenLogo}
+                  />
+                  <View style={styles.tokenDetails}>
+                    <Text style={styles.tokenSymbol}>{item.symbol}</Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.address}
-          ItemSeparatorComponent={() => <View style={styles.tokenSeparator} />}
-        />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item.address}
+            ItemSeparatorComponent={() => (
+              <View style={styles.tokenSeparator} />
+            )}
+          />
+        )}
       </View>
       {selectedCurrency && (
         <Text style={styles.selectedText}>Selected Chain: {value}</Text>

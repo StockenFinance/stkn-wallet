@@ -3,13 +3,13 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   modalContent: {
     width: "60%",
-    height: "20%",
+    height: "21%",
     backgroundColor: "white",
     padding: 15,
     borderRadius: 15,
     alignSelf: "center",
     position: "absolute",
-    top: "55%",
+    top: "58%",
     left: "10%",
     borderWidth: 1,
     borderColor: "#253452",
@@ -54,11 +54,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
-  // tokenName: {
-  //   fontSize: 16,
-  //   fontWeight: "bold",
-  //   color: "red",
-  // },
   tokenSymbol: {
     fontSize: 16,
     color: "#253452",
@@ -68,5 +63,16 @@ export const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "lightgray",
     marginVertical: 5,
+  },
+  loader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    zIndex: 50,
   },
 });
