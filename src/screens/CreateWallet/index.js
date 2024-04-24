@@ -17,6 +17,7 @@ import { saveWalletAddress } from "../../redux/actions/walletActions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
+import { Utils } from "../../utils/LocalStorage";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -74,7 +75,7 @@ const CreateWallet = ({ navigation, route }) => {
 
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
-
+    setCardDATAMethod(shortenedAddress);
     navigation.navigate("BackupPhrase", {
       mnemonic,
       selectedLanguage: selectedLanguage,
@@ -98,6 +99,25 @@ const CreateWallet = ({ navigation, route }) => {
   }, []);
 
   console.log("Check loader:::::", loading);
+
+  const setCardDATAMethod = (shortenedAddress) => {
+    let obj = [
+      {
+        newWalletAddress: shortenedAddress,
+        newWalletBalance: "",
+      },
+    ];
+    let jsonString = JSON.stringify(obj);
+
+    // Store the string in AsyncStorage
+    AsyncStorage.setItem("CARD_DATA", jsonString)
+      .then(() => {
+        console.log("CARD_DATA SUCCESSFULLY ADDED");
+      })
+      .catch((error) => {
+        console.error("Error storing data: ", error);
+      });
+  };
 
   return (
     <View style={styles.container}>

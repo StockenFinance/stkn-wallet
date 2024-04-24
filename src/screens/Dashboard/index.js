@@ -34,10 +34,12 @@ import ReceiveScannerIcon from "../../SvgIcon/ReceiveScannerIcon";
 import PlusIcon from "../../SvgIcon/PluseIcon";
 import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
+import { Utils } from "../../utils/LocalStorage";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const currentChain = useSelector((state) => state.chain.currentChain);
+  const allWallets = useSelector((state) => state.wallet.allWallets);
 
   const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -64,12 +66,7 @@ const Dashboard = ({ navigation }) => {
   const [importTokenAddress, setImportTokenValue] = useState("");
   const dispatch = useDispatch();
 
-  const [newAccount, setNewAccount] = useState([
-    {
-      newWalletAddress: "",
-      newWalletBalance: "",
-    },
-  ]);
+  const [newAccount, setNewAccount] = useState([]);
 
   const [cardData, setCardData] = useState([
     {
@@ -84,6 +81,20 @@ const Dashboard = ({ navigation }) => {
 
   console.log("check Cards", cardData);
   //full wallet address
+
+  useEffect(() => {
+    AsyncStorage.getItem("CARD_DATA")
+      .then((res) => {
+        console.log("CARD_DATA::::>>", res);
+        if (res) {
+          const parsedRes = JSON.parse(res); // Parse the retrieved string to convert it into an array
+          setNewAccount((prevAccounts) => [...prevAccounts, ...parsedRes]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error retrieving data: ", error);
+      });
+  }, []);
 
   useEffect(() => {
     // Function to retrieve wallet address
@@ -346,31 +357,31 @@ const Dashboard = ({ navigation }) => {
     });
   }, []);
 
-  useEffect(() => {
-    const fetchWalletAddress = async () => {
-      try {
-        const walletAddress = await AsyncStorage.getItem("walletAddress");
-        console.log("local storage >>>", walletAddress);
-        if (walletAddress) {
-          setNewAccount((prevAccount) => {
-            return [
-              {
-                ...prevAccount[0], // Keep other properties unchanged
-                newWalletAddress: walletAddress,
-              },
-              ...prevAccount.slice(1), // Keep other accounts unchanged
-            ];
-          });
-        }
-      } catch (error) {
-        console.error(
-          "Error fetching wallet address from AsyncStorage:",
-          error
-        );
-      }
-    };
-    fetchWalletAddress();
-  }, []);
+  // useEffect(() => {
+  //   const fetchWalletAddress = async () => {
+  //     try {
+  //       const walletAddress = await AsyncStorage.getItem("walletAddress");
+  //       console.log("local storage >>>", walletAddress);
+  //       if (walletAddress) {
+  //         setNewAccount((prevAccount) => {
+  //           return [
+  //             {
+  //               ...prevAccount[0], // Keep other properties unchanged
+  //               newWalletAddress: walletAddress,
+  //             },
+  //             ...prevAccount.slice(1), // Keep other accounts unchanged
+  //           ];
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error(
+  //         "Error fetching wallet address from AsyncStorage:",
+  //         error
+  //       );
+  //     }
+  //   };
+  //   fetchWalletAddress();
+  // }, []);
 
   useEffect(() => {
     // Function to retrieve wallet data from AsyncStorage
@@ -392,10 +403,10 @@ const Dashboard = ({ navigation }) => {
   }, []);
 
   // Function to add a new wallet
-  const addWallet = (newWallet) => {
+  const addWallet = async (newWallet) => {
     setWallets((prevWallets) => [...prevWallets, newWallet]);
     // Store updated wallets in AsyncStorage
-    storeWallets([...wallets, newWallet]);
+    await storeWallets([...wallets, newWallet]);
   };
 
   // Function to store wallets in AsyncStorage

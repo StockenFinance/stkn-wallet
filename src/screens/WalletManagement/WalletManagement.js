@@ -26,7 +26,7 @@ const WalletManagement = ({ navigation }) => {
   const scrollY = new Animated.Value(0);
 
   const [status, setStatus] = useState(false);
-  const [loading, setLoading] = useState(true); // State for loading indicator
+  const [loading, setLoading] = useState(false); // State for loading indicator
 
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { t, i18n } = useTranslation();

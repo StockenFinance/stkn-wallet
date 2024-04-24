@@ -35,6 +35,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [newAccount, setNewAccount] = useState([]);
 
   console.log("walletStore", walletStore);
 
@@ -102,22 +103,50 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     console.log("New Wallet Address:", wallet.address);
     console.log("Private Key:", wallet.privateKey);
     console.log("Generated Mnemonic:", mnemonic);
-
-    AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
+    AsyncStorage.setItem("walletAddress").catch((err) => {
       console.log("Error while setting encrypted wallet: ", err);
     });
+
+    // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
+    //   console.log("Error while setting encrypted wallet: ", err);
+    // });
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(shortenedAddress));
-
+    updateCardData(shortenedAddress);
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
       Alert.alert("Wallet is Created");
       setLoading(false);
     }, 2000);
+  };
+
+  const updateCardData = async (shortenedAddress) => {
+    try {
+      const existingData = await AsyncStorage.getItem("CARD_DATA");
+      console.log(" Existing data CARD_DATA:", existingData);
+
+      // Parse the retrieved string or initialize an empty array
+      let dataArray = JSON.parse(existingData) || [];
+
+      console.log("parse card data", dataArray);
+
+      dataArray.push({
+        newWalletAddress: shortenedAddress,
+        newWalletBalance: "",
+      });
+
+      const updatedDataString = JSON.stringify(dataArray);
+
+      await AsyncStorage.setItem("CARD_DATA", updatedDataString);
+
+      console.log("CARD_DATA successfully updated in AsyncStorage");
+    } catch (error) {
+      console.error("Error updating data: ", error);
+    }
   };
 
   useEffect(() => {
@@ -132,6 +161,32 @@ const AddWalletModal = ({ navigation, setStatus }) => {
         i18n.changeLanguage(language);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const fetchWalletAddress = async () => {
+      try {
+        const walletAddress = await AsyncStorage.getItem("walletAddress");
+        console.log("local storage >>>", walletAddress);
+        if (walletAddress) {
+          setNewAccount((prevAccount) => {
+            return [
+              {
+                ...prevAccount[0], // Keep other properties unchanged
+                newWalletAddress: walletAddress,
+              },
+              ...prevAccount.slice(1), // Keep other accounts unchanged
+            ];
+          });
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching wallet address from AsyncStorage:",
+          error
+        );
+      }
+    };
+    fetchWalletAddress();
   }, []);
 
   return (
