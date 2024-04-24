@@ -42,4 +42,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  defaultItem: {
+    backgroundColor: "#f0f0f0", // Background color for default item (ETH)
+    paddingVertical: 8,
+  },
 });

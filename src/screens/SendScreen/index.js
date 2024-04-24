@@ -37,10 +37,16 @@ const SendScreen = ({ placeholder, value, route }) => {
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("");
 
-  const handleTokenSelect = () => {
-    setSelectedToken(token);
+  // const handleTokenSelect = () => {
+  //   setSelectedToken(token);
+  //   setSwapCurrencyModalVisible(false);
+  //   console.log("Selected Token:", token);
+  // };
+
+  const handleTokenSelect = (selectedToken) => {
+    setSelectedToken(selectedToken);
     setSwapCurrencyModalVisible(false);
-    console.log("Selected Token:", token);
+    console.log("Selected Token:", selectedToken);
   };
 
   const onChangeText = (text, inputType) => {
@@ -174,7 +180,7 @@ const SendScreen = ({ placeholder, value, route }) => {
                     { fontSize: 23, fontWeight: "400" },
                   ]}
                 >
-                  {selectedSymbol}
+                  {selectedToken ? selectedToken : selectedSymbol}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity

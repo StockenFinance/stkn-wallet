@@ -54,11 +54,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
-  // tokenName: {
-  //   fontSize: 16,
-  //   fontWeight: "bold",
-  //   color: "red",
-  // },
   tokenSymbol: {
     fontSize: 16,
     color: "#253452",
