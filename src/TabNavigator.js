@@ -1,12 +1,15 @@
 import { Image, Text, View } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Dashboard from "./screens/Dashboard/Dashboard";
-import SwapScreen from "./screens/SwapScreen/SwapScreen";
-import BuyScreen from "./screens/BuyScreen/BuyScreen";
-import Settings from "./screens/Settings/Settings";
-import SendScreen from "./screens/SendScreen/SendScreen";
-import ChartScreen from "./screens/ChartScreen/ChartScreen";
+import SwapScreen from "./screens/SwapScreen/index";
+import BuyScreen from "./screens/BuyScreen";
+import Settings from "./screens/Settings/index";
+import ChartScreen from "./screens/ChartScreen";
+import SettingIcon from "./SvgIcon/SettingIcon";
+import SwapIcon from "./SvgIcon/SwapIcon";
+import WalletIcon from "./SvgIcon/WalletIcon";
+import DiamondIcon from "./SvgIcon/DiamondIcon";
+import DashboardStack from "./DashboardStack";
 
 const Bottom = createBottomTabNavigator();
 
@@ -27,6 +30,7 @@ const BottomNavigator = () => {
           height: 64,
           borderRadius: 15,
           alignSelf: "center",
+          // display: false ? "none" : "block",
         },
       }}
     >
@@ -45,8 +49,8 @@ const BottomNavigator = () => {
                 backgroundColor: focused ? "#F19220" : "transparent",
               }}
             >
-              <Image
-                source={require("../src/assets/images/HomeTab.png")}
+              <DiamondIcon
+                color={focused ? "#ffffff" : "#9F9FA0"}
                 style={{
                   width: 27,
                   height: 22,
@@ -96,7 +100,7 @@ const BottomNavigator = () => {
       />
       <Bottom.Screen
         name="Dashboard"
-        component={Dashboard}
+        component={DashboardStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -109,8 +113,8 @@ const BottomNavigator = () => {
                 backgroundColor: focused ? "#F19220" : "transparent",
               }}
             >
-              <Image
-                source={require("../src/assets/images/settingsWallet.png")}
+              <WalletIcon
+                color={focused ? "#ffffff" : "#9F9FA0"}
                 style={{
                   width: 27,
                   height: 22,
@@ -136,12 +140,11 @@ const BottomNavigator = () => {
                 backgroundColor: focused ? "#F19220" : "transparent",
               }}
             >
-              <Image
-                source={require("../src/assets/images/swap.png")}
+              <SwapIcon
+                color={focused ? "#ffffff" : "#9F9FA0"}
                 style={{
-                  width: 27,
-                  height: 22,
-                  tintColor: focused ? "#ffffff" : "#9F9FA0",
+                  width: 25,
+                  height: 25,
                 }}
               />
             </View>
@@ -163,12 +166,11 @@ const BottomNavigator = () => {
                 backgroundColor: focused ? "#F19220" : "transparent",
               }}
             >
-              <Image
-                source={require("../src/assets/images/settings.png")}
+              <SettingIcon
+                color={focused ? "#ffffff" : "#9F9FA0"}
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? "#ffffff" : "#9F9FA0",
                 }}
               />
             </View>

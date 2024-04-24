@@ -1,18 +1,27 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { styles } from "../screens/Dashboard/styles";
 import { fetchDynamicDetailsOfToken, provider } from "../utils/helper";
 import { ethers } from "ethers";
-import SendModal from "./SendModal";
+import SendModal from "./SendModal/index";
+import ChartIcon from "../SvgIcon/ChartIcon";
+import SwapIcon from "../SvgIcon/SwapIcon";
+import SendIcon from "../SvgIcon/SendIcon";
+import ReceiveScannerIcon from "../SvgIcon/ReceiveScannerIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "./englishTranslation";
 import ArabicTranslation from "./arabicTranslations";
+import { useTranslation } from "react-i18next";
 
-const CurrencyDetailsCard = ({ item, navigation }) => {
+const CurrencyDetailsCard = ({ item, navigation, onCalculateAmount }) => {
+  const { t, i18n } = useTranslation();
+
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [toggleLanguage, setToggleLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [tokenBalanceImported, setTokenBalanceImported] = useState();
 
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
@@ -31,9 +40,16 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
     return balance;
   };
   useEffect(() => {
-    getUserBalance("0x28C6c06298d514Db089934071355E5743bf21d60");
-    fetchDynamicDetailsOfToken("0xdAC17F958D2ee523a2206206994597C13D831ec7");
+    getUserBalance("0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141");
+    tokenBalance();
   }, [userEtherBalance]);
+
+  const tokenBalance = useCallback(async () => {
+    const x = await fetchDynamicDetailsOfToken(
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+    );
+    setTokenBalanceImported(x);
+  }, []);
 
   function formatBalance(balance, decimals) {
     return ethers.formatUnits(balance, parseInt(decimals, 10));
@@ -52,6 +68,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
   };
 
   console.log("item:::", item);
+  console.log("check token<<<<");
 
   useEffect(() => {
     retrieveSelectedLanguage();
@@ -72,6 +89,41 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
       console.error("Error retrieving language from AsyncStorage:", error);
     }
   };
+
+  useEffect(() => {
+    // Retrieve the selected language from AsyncStorage on component mount
+    AsyncStorage.getItem("selectedLanguage").then((language) => {
+      if (language) {
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+      }
+    });
+  }, []);
+
+  // const calculateAmount = () => {
+  //   if (item.symbol === "ETH") {
+  //     return (parseFloat(item.price) * parseFloat(userEtherBalance)).toFixed(1);
+  //   } else {
+  //     return (
+  //       parseFloat(item.price) * parseFloat(tokenBalanceImported)
+  //     ).toFixed(1);
+  //   }
+  // };
+
+  const calculateAmount = () => {
+    let amount = 0;
+    if (item.symbol === "ETH") {
+      amount = parseFloat(item.price) * parseFloat(userEtherBalance);
+    } else {
+      amount = parseFloat(item.price) * parseFloat(tokenBalanceImported);
+    }
+    return amount.toFixed(2);
+  };
+
+  useEffect(() => {
+    // Call onCalculateAmount whenever the calculated amount changes
+    onCalculateAmount(calculateAmount());
+  }, [calculateAmount]);
 
   return (
     <TouchableOpacity onPress={handleContainerClick}>
@@ -120,12 +172,9 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                 { bottom: containerHeight === 95 ? null : "22%" },
               ]}
             >
-              {/* {item.balance} */}
-              {/* {parseFloat(userEtherBalance).toFixed(6)} */}
-              {/* {parseFloat(item.decimals).toFixed(2)} */}
               {item.symbol === "ETH"
                 ? parseFloat(userEtherBalance).toFixed(6)
-                : formatBalance(item.balance, item.decimals)}
+                : tokenBalanceImported}
             </Text>
             <Text
               style={[
@@ -133,18 +182,19 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                 { bottom: containerHeight === 95 ? null : "23%" },
               ]}
             >
-              {item.decimals}
+              {/* {item.decimals} */}${calculateAmount()}
             </Text>
           </View>
         </View>
         <View
           style={{
             width: "70%",
-            borderWidth: 0.5,
+            borderWidth: 0.3,
             borderColor: "#344567",
             alignSelf: "center",
             marginTop: containerHeight === 95 ? "-8%" : "-28%",
             marginLeft: "9%",
+            opacity: 0.3,
           }}
         ></View>
         <Text
@@ -169,7 +219,13 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
             }}
           >
             <View>
-              <TouchableOpacity onPress={handleSendButtonClick}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("SendScreen", {
+                    selectedSymbol: item.symbol,
+                  })
+                }
+              >
                 <View
                   style={{
                     width: 35,
@@ -183,10 +239,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/send.png")}
-                    style={{}}
-                  />
+                  <SendIcon />
                 </View>
 
                 <Text
@@ -197,9 +250,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {toggleLanguage
-                    ? EnglishTranslation.send
-                    : ArabicTranslation.send}
+                  {t("send")}
                 </Text>
               </TouchableOpacity>
               <SendModal
@@ -223,10 +274,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/send.png")}
-                    style={{}}
-                  />
+                  <ReceiveScannerIcon color={"#F19220"} />
                 </View>
 
                 <Text
@@ -237,9 +285,10 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {toggleLanguage
+                  {/* {toggleLanguage
                     ? EnglishTranslation.receive
-                    : ArabicTranslation.receive}
+                    : ArabicTranslation.receive} */}
+                  {t("receive")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -264,10 +313,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/send.png")}
-                    style={{}}
-                  />
+                  <SwapIcon color={"#F19220"} />
                 </View>
 
                 <Text
@@ -278,14 +324,21 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {toggleLanguage
+                  {/* {toggleLanguage
                     ? EnglishTranslation.swap
-                    : ArabicTranslation.swap}
+                    : ArabicTranslation.swap} */}
+                  {t("swap")}
                 </Text>
               </TouchableOpacity>
             </View>
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("ChartScreen", {
+                    name: item.name,
+                  })
+                }
+              >
                 <View
                   style={{
                     width: 35,
@@ -299,10 +352,7 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     marginTop: "20%",
                   }}
                 >
-                  <Image
-                    source={require("../assets/images/Chart.png")}
-                    style={{ width: 18, height: 18 }}
-                  />
+                  <ChartIcon style={{ width: 18, height: 18 }} />
                 </View>
 
                 <Text
@@ -313,9 +363,10 @@ const CurrencyDetailsCard = ({ item, navigation }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {toggleLanguage
+                  {/* {toggleLanguage
                     ? EnglishTranslation.chart
-                    : ArabicTranslation.chart}
+                    : ArabicTranslation.chart} */}
+                  {t("chart")}
                 </Text>
               </TouchableOpacity>
             </View>

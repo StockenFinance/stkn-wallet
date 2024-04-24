@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
   },
   parentView: {
     width: "87%",
-    height: 551,
+    height: 571,
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#808BA0",
@@ -104,6 +104,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     width: "80%",
     alignSelf: "center",
+    marginTop: 18,
   },
   amountRangeText: {
     fontSize: 10,
@@ -116,7 +117,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     width: "87%",
     alignSelf: "center",
-    marginTop: "5%",
+    marginTop: "7%",
   },
   divider: {
     flex: 1,

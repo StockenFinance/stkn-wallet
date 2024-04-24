@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     marginTop: "70%",
     alignSelf: "center",
     borderRadius: 15,
-    backgroundColor: "rgba(213, 223, 235, 1)",
+    backgroundColor: "#D5DFEB",
   },
   createWalletImage: {
     alignSelf: "center",
@@ -40,9 +40,10 @@ export const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   divider: {
-    height: "70%",
+    height: "60%",
     width: 1,
     backgroundColor: "#000000",
+    opacity: 0.3,
   },
   loader: {
     position: "absolute",

@@ -96,8 +96,16 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     width: "85%",
     alignSelf: "center",
-    marginTop: "10%",
+    marginTop: "5%",
     marginLeft: "5%",
+  },
+
+  copyIcon: {
+    justifyContent: "center",
+    marginTop: "3%",
+    width: "85%",
+    alignSelf: "center",
+    marginLeft: "155%",
   },
   checkBox: {
     alignSelf: "center",

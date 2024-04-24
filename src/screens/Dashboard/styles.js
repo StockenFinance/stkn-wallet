@@ -88,7 +88,7 @@ export const styles = StyleSheet.create({
   },
   walletImage: {
     width: 200,
-    height: 170,
+    height: 180,
     position: "absolute",
     right: 1,
     resizeMode: "stretch",
@@ -122,14 +122,12 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     width: 19,
     height: 25,
-    borderColor: "#ffffff",
-    borderRadius: 6,
-    borderWidth: 1,
     right: 10,
   },
   modalDotImage: {
     width: 3,
     height: 15,
+    marginTop: 22,
   },
   currencyContainer: {
     flexDirection: "row",
@@ -171,8 +169,8 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#F4F7FA",
     borderRadius: 15,
-    width: "86%",
-    height: 78,
+    width: "86.2%",
+    height: 80,
     alignSelf: "center",
   },
   plusImage: {
