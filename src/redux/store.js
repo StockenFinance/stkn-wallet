@@ -6,7 +6,6 @@ import rootReducer from "../redux/reducer/index";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  cardState: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

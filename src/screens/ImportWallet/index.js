@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
+import { addWalletCard } from "../../redux/reducer/walletCardSlice";
 
 const ImportWallet = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
@@ -25,37 +26,6 @@ const ImportWallet = ({ navigation, route }) => {
   const handleChangeText = (newText) => {
     setText(newText);
   };
-
-  // const handleOnImport = async () => {
-  //   setLoading(true); // Show loader when import process starts
-  //   const isMnemonic = text.split(" ").length > 1;
-  //   let wallet;
-
-  //   if (isMnemonic) {
-  //     wallet = ethers.HDNodeWallet.fromMnemonic(
-  //       ethers.Mnemonic.fromPhrase(text)
-  //     );
-  //   } else {
-  //     wallet = new ethers.Wallet(text);
-  //   }
-
-  //   if (wallet) {
-  //     const shortenedAddress =
-  //       wallet.address.slice(0, 6) + wallet.address.slice(-6);
-
-  //     await AsyncStorage.setItem("fullWalletAddress", wallet.address);
-  //     await AsyncStorage.setItem("walletAddress", shortenedAddress);
-  //     console.log(
-  //       "Shortened wallet address stored in import",
-  //       shortenedAddress
-  //     );
-  //     console.log("Wallet address stored in import", wallet.address);
-  //     navigation.navigate("RecoveryPhraseConfirmation");
-  //   } else {
-  //     console.error("Warning: Recovery phrase does not match");
-  //   }
-  //   setLoading(false); // Hide loader when import process completes
-  // };
 
   const handleOnImport = async () => {
     const isMnemonic = text.split(" ").length > 1;
@@ -81,6 +51,10 @@ const ImportWallet = ({ navigation, route }) => {
     dispatch(addWalletAtReduxStore(wallet));
 
     if (wallet) {
+      dispatch(
+        addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
+      );
+
       const shortenedAddress =
         wallet.address.slice(0, 6) + wallet.address.slice(-6);
 

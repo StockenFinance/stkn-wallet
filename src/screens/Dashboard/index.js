@@ -78,8 +78,10 @@ const Dashboard = ({ navigation }) => {
       chain: "Ethereum",
     },
   ]);
-
-  console.log("check Cards", cardData);
+  const walletCardData = useSelector(
+    (state) => state.walletcards.walletCardData
+  );
+  console.log("check wallet card data>>>>>", walletCardData);
   //full wallet address
 
   useEffect(() => {
@@ -418,7 +420,7 @@ const Dashboard = ({ navigation }) => {
   };
 
   const renderDotIndicator = () => {
-    return newAccount.map((dot, index) => {
+    return walletCardData.map((dot, index) => {
       return (
         <View
           key={index}
@@ -521,7 +523,7 @@ const Dashboard = ({ navigation }) => {
             setActiveIndex(index);
           }}
         >
-          {newAccount.map((item, index) => {
+          {walletCardData.map((item, index) => {
             return (
               <>
                 <LinearGradient
@@ -540,7 +542,8 @@ const Dashboard = ({ navigation }) => {
                     <View>
                       <Text style={styles.walletName}>{t("wallet")}</Text>
                       <Text style={styles.walletCode}>
-                        {item?.newWalletAddress}
+                        {item?.newWalletAddress?.address.slice(0, 6) +
+                          item?.newWalletAddress?.address.slice(-6)}
                         {/* {shortenEthereumAddress(fullWalletAddress)} */}
                       </Text>
                     </View>
@@ -573,7 +576,9 @@ const Dashboard = ({ navigation }) => {
                         {t("yourBalance")}
                       </Text>
                       <Text style={styles.balanceText}>
-                        ${calculatedAmount}
+                        {index === 0 ? calculatedAmount : item.newWalletBalance}
+                        {/* ${calculatedAmount} */}
+                        {/* {item.newWalletBalance} */}
                       </Text>
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>

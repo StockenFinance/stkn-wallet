@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 import { Utils } from "../../utils/LocalStorage";
+import { addWalletCard } from "../../redux/reducer/walletCardSlice";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -56,13 +57,10 @@ const CreateWallet = ({ navigation, route }) => {
     setLoading(true);
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
+    dispatch(
+      addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
+    );
 
-    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
-    console.log("Phrase wallet: ", phrase?.privateKey);
-    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
-    console.log("New Wallet Address:", wallet.address);
-    console.log("Private Key:", wallet.privateKey);
-    console.log("Generated Mnemonic:", mnemonic);
     // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
     //   console.log("Error while setting encrypted wallet: ", err);
     // });
@@ -75,7 +73,7 @@ const CreateWallet = ({ navigation, route }) => {
 
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
-    setCardDATAMethod(shortenedAddress);
+    // setCardDATAMethod(shortenedAddress);
     navigation.navigate("BackupPhrase", {
       mnemonic,
       selectedLanguage: selectedLanguage,
@@ -97,27 +95,6 @@ const CreateWallet = ({ navigation, route }) => {
       }
     });
   }, []);
-
-  console.log("Check loader:::::", loading);
-
-  const setCardDATAMethod = (shortenedAddress) => {
-    let obj = [
-      {
-        newWalletAddress: shortenedAddress,
-        newWalletBalance: "",
-      },
-    ];
-    let jsonString = JSON.stringify(obj);
-
-    // Store the string in AsyncStorage
-    AsyncStorage.setItem("CARD_DATA", jsonString)
-      .then(() => {
-        console.log("CARD_DATA SUCCESSFULLY ADDED");
-      })
-      .catch((error) => {
-        console.error("Error storing data: ", error);
-      });
-  };
 
   return (
     <View style={styles.container}>

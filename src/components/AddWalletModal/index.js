@@ -19,6 +19,7 @@ import CreateIcon from "../../SvgIcon/CreateIcon";
 import { createNewWallet } from "../../utils/helper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
+import { addWalletCard } from "../../redux/reducer/walletCardSlice";
 
 const storeWallet = async (wallet) => {
   try {
@@ -96,7 +97,9 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     setLoading(true);
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
-
+    dispatch(
+      addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
+    );
     console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
     console.log("Phrase wallet: ", phrase?.privateKey);
     console.log("Wallet: ", JSON.stringify(wallet, null, 2));
@@ -111,7 +114,8 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(shortenedAddress));
-    updateCardData(shortenedAddress);
+
+    // updateCardData(shortenedAddress);
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
@@ -121,7 +125,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     }, 2000);
   };
 
-  const updateCardData = async (shortenedAddress) => {
+  const updateCardData = async (wallet) => {
     try {
       const existingData = await AsyncStorage.getItem("CARD_DATA");
       console.log(" Existing data CARD_DATA:", existingData);
@@ -132,7 +136,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       console.log("parse card data", dataArray);
 
       dataArray.push({
-        newWalletAddress: shortenedAddress,
+        newWalletAddress: wallet,
         newWalletBalance: "",
       });
 
