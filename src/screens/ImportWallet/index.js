@@ -1,60 +1,105 @@
-import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
 import CustomTextInput from "../../components//CustomText/index";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Clipboard from "@react-native-clipboard/clipboard";
-// import DocumentScanner from "react-native-document-scanner";
 import { ethers } from "ethers";
 import "react-native-get-random-values";
 import { styles } from "./styles";
 import ScanIcon from "../../SvgIcon/ScanIcon";
 import BackIcon from "../../SvgIcon/BackIcon";
 import PasteIcon from "../../SvgIcon/PasteIcon";
-import { Utils } from "../../utils/LocalStorage";
-import ArabicTranslation from "../../components/arabicTranslations";
-import EnglishTranslation from "../../components/englishTranslation";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 
 const ImportWallet = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-
   const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
   const handleChangeText = (newText) => {
     setText(newText);
   };
+
+  // const handleOnImport = async () => {
+  //   setLoading(true); // Show loader when import process starts
+  //   const isMnemonic = text.split(" ").length > 1;
+  //   let wallet;
+
+  //   if (isMnemonic) {
+  //     wallet = ethers.HDNodeWallet.fromMnemonic(
+  //       ethers.Mnemonic.fromPhrase(text)
+  //     );
+  //   } else {
+  //     wallet = new ethers.Wallet(text);
+  //   }
+
+  //   if (wallet) {
+  //     const shortenedAddress =
+  //       wallet.address.slice(0, 6) + wallet.address.slice(-6);
+
+  //     await AsyncStorage.setItem("fullWalletAddress", wallet.address);
+  //     await AsyncStorage.setItem("walletAddress", shortenedAddress);
+  //     console.log(
+  //       "Shortened wallet address stored in import",
+  //       shortenedAddress
+  //     );
+  //     console.log("Wallet address stored in import", wallet.address);
+  //     navigation.navigate("RecoveryPhraseConfirmation");
+  //   } else {
+  //     console.error("Warning: Recovery phrase does not match");
+  //   }
+  //   setLoading(false); // Hide loader when import process completes
+  // };
 
   const handleOnImport = async () => {
     const isMnemonic = text.split(" ").length > 1;
 
     let wallet;
+    let securityKey;
+    let backupPhrase;
 
     if (isMnemonic) {
       wallet = ethers.HDNodeWallet.fromMnemonic(
         ethers.Mnemonic.fromPhrase(text)
       );
+      securityKey = wallet.mnemonic.phrase;
+      backupPhrase = text;
     } else {
       wallet = new ethers.Wallet(text);
+      securityKey = wallet.privateKey;
+      backupPhrase = wallet.mnemonic.phrase;
     }
 
     console.log("check import::::", wallet);
+
+    dispatch(addWalletAtReduxStore(wallet));
+
     if (wallet) {
-      navigation.navigate("RecoveryPhraseConfirmation"),
-        {
-          selectedLanguage: selectedLanguage,
-        };
       const shortenedAddress =
         wallet.address.slice(0, 6) + wallet.address.slice(-6);
 
       await AsyncStorage.setItem("fullWalletAddress", wallet.address);
       await AsyncStorage.setItem("walletAddress", shortenedAddress);
+      await AsyncStorage.setItem("securityKey", securityKey);
+      await AsyncStorage.setItem("backupPhrase", backupPhrase);
+
       console.log(
         "Shortened wallet address stored in import",
         shortenedAddress
       );
       console.log("Wallet address stored in import", wallet.address);
-      navigation.navigate("RecoveryPhraseConfirmation");
+      console.log("Security key stored in import", securityKey);
+      console.log("Backup phrase stored in import", backupPhrase);
+
+      navigation.navigate("RecoveryPhraseConfirmation", {
+        selectedLanguage: selectedLanguage,
+      });
     } else {
       console.error("Warning: Recovery phrase does not match");
     }
@@ -131,6 +176,9 @@ const ImportWallet = ({ navigation, route }) => {
           {t("import")}
         </Text>
       </TouchableOpacity>
+      {loading && (
+        <ActivityIndicator style={styles.loader} size="large" color="#F19220" />
+      )}
     </View>
   );
 };

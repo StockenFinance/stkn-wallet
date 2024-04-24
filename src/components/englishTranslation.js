@@ -99,7 +99,7 @@ const EnglishTranslation = {
   viewPhrase: "View Recovery Phrase",
   viewKey: "View Private Key",
   addCustomToken: "Add Custom Token",
-  myWallet: "My Wallet",
+  myWallet: "My Wallets",
   addWallet: "Add Wallet",
   en: "EN",
 

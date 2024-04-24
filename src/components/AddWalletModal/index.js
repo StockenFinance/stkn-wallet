@@ -153,9 +153,11 @@ const AddWalletModal = ({ navigation, setStatus }) => {
             </View>
             <TouchableOpacity
               style={styles.createWalletView}
-              onPress={async () => {
-                createWallet();
+              onPress={() => {
                 setLoading(true);
+                setTimeout(() => {
+                  createWallet();
+                }, 100);
               }}
             >
               <CreateIcon style={styles.createWalletImage} />

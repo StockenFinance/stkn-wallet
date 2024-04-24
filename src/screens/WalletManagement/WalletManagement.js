@@ -13,6 +13,7 @@ import BackIcon from "../../SvgIcon/BackIcon";
 import AddWalletModal from "../../components/AddWalletModal";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 
 const WalletManagement = ({ navigation }) => {
   const allWallets = useSelector((state) => state.walletStore.allWallets);
@@ -23,10 +24,12 @@ const WalletManagement = ({ navigation }) => {
     (store) => store.walletRecover.recoveryModal
   );
 
+  const dispatch = useDispatch();
+
   const scrollY = new Animated.Value(0);
 
   const [status, setStatus] = useState(false);
-  const [loading, setLoading] = useState(true); // State for loading indicator
+  const [loading, setLoading] = useState(false); // State for loading indicator
 
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { t, i18n } = useTranslation();
@@ -40,10 +43,19 @@ const WalletManagement = ({ navigation }) => {
     });
   }, []);
 
+  useEffect(() => {
+    dispatch(setMyTabHide(true));
+  }, []);
+
   return (
     <View style={{ marginTop: 30, flex: 1 }}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+            dispatch(setMyTabHide(false));
+          }}
+        >
           <BackIcon />
         </TouchableOpacity>
         <Text style={styles.heading}>{t("myWallet")}</Text>
@@ -63,15 +75,32 @@ const WalletManagement = ({ navigation }) => {
               color="#F2A13F"
             />
           ) : (
-            <View>
-              {allWallets?.map((wallet, index) => (
-                <WalletList
-                  key={index}
-                  wallet={wallet}
-                  walletNumber={index + 1}
-                />
-              )) || <Text>Please add your wallet</Text>}
-            </View>
+            <>
+              <View>
+                {allWallets?.map((wallet, index) => (
+                  <WalletList
+                    key={index}
+                    wallet={wallet}
+                    walletNumber={index + 1}
+                  />
+                )) || <Text>Please add your wallet</Text>}
+              </View>
+              <TouchableOpacity
+                onPress={() => setStatus(true)}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "10%",
+                }}
+              >
+                <Text
+                  style={{ fontWeight: "bold", color: "#039D00", fontSize: 20 }}
+                >
+                  <Text>+</Text> {t("addWallet")}
+                </Text>
+              </TouchableOpacity>
+            </>
           )}
         </Animated.ScrollView>
       ) : (
@@ -81,14 +110,6 @@ const WalletManagement = ({ navigation }) => {
           )) || <Text>Please add your wallet</Text>}
         </View>
       )}
-      <TouchableOpacity
-        onPress={() => setStatus(true)}
-        style={{ position: "absolute", top: 400, left: 120 }}
-      >
-        <Text style={{ fontWeight: "bold", color: "#039D00", fontSize: 20 }}>
-          <Text>+</Text> {t("addWallet")}
-        </Text>
-      </TouchableOpacity>
       {status && (
         <AddWalletModal setStatus={setStatus} navigation={navigation} />
       )}

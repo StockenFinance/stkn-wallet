@@ -12,12 +12,19 @@ import CustomTokenIcon from "../../SvgIcon/CustomTokenIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LanguageChangeModal from "../../components/LanguageChangeModal";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { setMyTabHide } from "../../redux/reducer/CounterSlice";
+import { useRoute } from "@react-navigation/native";
 
 const Settings = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { t, i18n } = useTranslation();
 
+  const tabhide = useSelector((store) => store.walletRecover.myTabHide);
+
   const [modalVisible, setModalVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setModalVisible(true);
@@ -36,12 +43,26 @@ const Settings = ({ navigation }) => {
     });
   }, []);
 
+  const route = useRoute();
+  const ScreenName = route.name;
+
+  useEffect(() => {
+    if (ScreenName === "Settings") {
+      dispatch(setMyTabHide(false));
+    }
+  }, [ScreenName]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.walletText}>{t("settings")}</Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("WalletManagement")}>
+      <TouchableOpacity
+        onPress={() => {
+          console.log("wallet managemet", navigation);
+          navigation.navigate("walletSettings");
+        }}
+      >
         <View style={styles.createWalletView}>
           <View style={styles.swapImageContainer}>
             <WalletIcon color={"white"} />
@@ -70,7 +91,7 @@ const Settings = ({ navigation }) => {
             style={[
               styles.currencyText,
               { marginLeft: "40%", textTransform: "uppercase" },
-              { marginLeft: selectedLanguage === "ar" ? "auto" : null },
+              { marginLeft: selectedLanguage === "ar" ? 200 : null },
             ]}
           >
             {t("en")}
