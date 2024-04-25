@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     height: "280%",
     justifyContent: "flex-end",
     zIndex: 999,
-    top: -5,
+    top: -35,
   },
   bottomSheet: {
     width: "100%",

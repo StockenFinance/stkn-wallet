@@ -537,6 +537,7 @@ const Dashboard = ({ navigation }) => {
                       }`}</Text>
                       <Text style={styles.walletCode}>
                         {item?.newWalletAddress?.address.slice(0, 6) +
+                          "....." +
                           item?.newWalletAddress?.address.slice(-6)}
                         {/* {shortenEthereumAddress(fullWalletAddress)} */}
                       </Text>
