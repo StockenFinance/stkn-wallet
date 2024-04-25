@@ -164,7 +164,13 @@ const ImportWallet = ({ navigation, route }) => {
           {errorMessage ? (
             <Text style={styles.errorText}>{errorMessage}</Text>
           ) : null}
-          <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
+          <TouchableOpacity
+            style={[
+              styles.copyPasteIcon,
+              { marginTop: errorMessage ? "54%" : "64%" },
+            ]}
+            onPress={handlePaste}
+          >
             <PasteIcon style={styles.copyPasteImage} />
           </TouchableOpacity>
         </View>

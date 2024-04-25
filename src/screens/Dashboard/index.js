@@ -248,6 +248,7 @@ const Dashboard = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     const isLastItem = index === cardData.length - 1;
+
     return (
       <>
         <View
@@ -502,20 +503,6 @@ const Dashboard = ({ navigation }) => {
             />
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.timerImage}>
-          <TouchableOpacity onPress={() => createWallet()}>
-            <Text
-              style={{
-                color: "#253452",
-                fontSize: 14,
-                fontWeight: "600",
-                left: "15%",
-              }}
-            >
-              {t("addNewWallet")}
-            </Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
       <View>
         <ScrollView
@@ -524,7 +511,7 @@ const Dashboard = ({ navigation }) => {
           pagingEnabled={true}
           onScroll={(event) => {
             const contentOffsetX = event.nativeEvent.contentOffset.x;
-            const index = Math.round(contentOffsetX / screenWidth); // Round to the nearest integer
+            const index = Math.round(contentOffsetX / screenWidth);
             setActiveIndex(index);
           }}
         >
@@ -545,7 +532,9 @@ const Dashboard = ({ navigation }) => {
                 >
                   <View style={styles.walletContentContainer}>
                     <View>
-                      <Text style={styles.walletName}>{t("wallet")}</Text>
+                      <Text style={styles.walletName}>{`${t("wallet")} ${
+                        index + 1
+                      }`}</Text>
                       <Text style={styles.walletCode}>
                         {item?.newWalletAddress?.address.slice(0, 6) +
                           item?.newWalletAddress?.address.slice(-6)}

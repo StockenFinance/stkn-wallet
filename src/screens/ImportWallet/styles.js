@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
   },
   copyPasteIcon: {
     position: "absolute",
-    marginTop: "54%",
+    marginTop: "64%",
     right: 10,
   },
   copyPasteImage: {
