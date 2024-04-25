@@ -33,8 +33,6 @@ const ImportWallet = ({ navigation, route }) => {
     const isMnemonic = text.split(" ").length > 1;
 
     let wallet;
-    let securityKey;
-    let backupPhrase;
 
     if (isMnemonic) {
       try {
@@ -51,8 +49,6 @@ const ImportWallet = ({ navigation, route }) => {
     } else {
       try {
         wallet = new ethers.Wallet(text);
-        securityKey = wallet.privateKey;
-        backupPhrase = wallet.mnemonic.phrase;
       } catch (error) {
         setErrorMessage("Invalid private key");
         setLoading(false);
@@ -77,22 +73,7 @@ const ImportWallet = ({ navigation, route }) => {
         addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
       );
 
-      const shortenedAddress =
-        wallet.address.slice(0, 6) + wallet.address.slice(-6);
-
       await AsyncStorage.setItem("fullWalletAddress", wallet.address);
-      await AsyncStorage.setItem("walletAddress", shortenedAddress);
-      await AsyncStorage.setItem("securityKey", securityKey);
-      await AsyncStorage.setItem("backupPhrase", backupPhrase);
-      updateCardData(shortenedAddress);
-
-      console.log(
-        "Shortened wallet address stored in import",
-        shortenedAddress
-      );
-      console.log("Wallet address stored in import", wallet.address);
-      console.log("Security key stored in import", securityKey);
-      console.log("Backup phrase stored in import", backupPhrase);
 
       navigation.navigate("RecoveryPhraseConfirmation", {
         selectedLanguage: selectedLanguage,
@@ -119,31 +100,6 @@ const ImportWallet = ({ navigation, route }) => {
       }
     });
   }, []);
-
-  const updateCardData = async (shortenedAddress) => {
-    try {
-      const existingData = await AsyncStorage.getItem("CARD_DATA");
-      console.log(" Existing data CARD_DATA:", existingData);
-
-      // Parse the retrieved string or initialize an empty array
-      let dataArray = JSON.parse(existingData) || [];
-
-      console.log("parse card data", dataArray);
-
-      dataArray.push({
-        newWalletAddress: shortenedAddress,
-        newWalletBalance: "",
-      });
-
-      const updatedDataString = JSON.stringify(dataArray);
-
-      await AsyncStorage.setItem("CARD_DATA", updatedDataString);
-
-      console.log("CARD_DATA successfully updated in AsyncStorage");
-    } catch (error) {
-      console.error("Error updating data: ", error);
-    }
-  };
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
