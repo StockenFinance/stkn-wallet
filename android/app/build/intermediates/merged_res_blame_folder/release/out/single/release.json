@@ -8,10 +8,6 @@
         "source": "com.stockenmobile.app-res-33:/drawable-xhdpi/node_modules_reactnativecheckbox_img_ic_check_box.png"
     },
     {
-        "merged": "com.stockenmobile.app-merged_res-38:/drawable-mdpi_src_assets_images_send.png.flat",
-        "source": "com.stockenmobile.app-res-33:/drawable-mdpi/src_assets_images_send.png"
-    },
-    {
         "merged": "com.stockenmobile.app-merged_res-38:/mipmap-hdpi_ic_launcher.png.flat",
         "source": "com.stockenmobile.app-main-39:/mipmap-hdpi/ic_launcher.png"
     },
@@ -44,10 +40,6 @@
         "source": "com.stockenmobile.app-main-39:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.stockenmobile.app-merged_res-38:/drawable-mdpi_src_assets_images_dropdown.png.flat",
-        "source": "com.stockenmobile.app-res-33:/drawable-mdpi/src_assets_images_dropdown.png"
-    },
-    {
         "merged": "com.stockenmobile.app-merged_res-38:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
         "source": "com.stockenmobile.app-res-33:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
@@ -76,10 +68,6 @@
         "source": "com.stockenmobile.app-res-33:/drawable-xhdpi/node_modules_reactnativecheckbox_img_ic_check_box_outline_blank.png"
     },
     {
-        "merged": "com.stockenmobile.app-merged_res-38:/drawable-mdpi_src_assets_images_receivescanner.png.flat",
-        "source": "com.stockenmobile.app-res-33:/drawable-mdpi/src_assets_images_receivescanner.png"
-    },
-    {
         "merged": "com.stockenmobile.app-merged_res-38:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
         "source": "com.stockenmobile.app-main-39:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
@@ -102,10 +90,6 @@
     {
         "merged": "com.stockenmobile.app-merged_res-38:/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "com.stockenmobile.app-main-39:/mipmap-xxhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "com.stockenmobile.app-merged_res-38:/drawable-mdpi_src_assets_images_walletimage.png.flat",
-        "source": "com.stockenmobile.app-res-33:/drawable-mdpi/src_assets_images_walletimage.png"
     },
     {
         "merged": "com.stockenmobile.app-merged_res-38:/mipmap-xhdpi_ic_launcher_round.png.flat",
