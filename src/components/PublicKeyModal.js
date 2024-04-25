@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import PasteIcon from "../SvgIcon/PasteIcon";
 import SmallAlertIcon from "../SvgIcon/SmallAlertIcon";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { useDispatch } from "react-redux";
-import { setModal } from "../redux/reducer/CounterSlice";
+import { setModal, setMyTabHide } from "../redux/reducer/CounterSlice";
 
 const { height } = Dimensions.get("window");
 
@@ -67,6 +67,13 @@ const PublicKeyModal = ({ setStatus, publicKey }) => {
       dispatch(setModal(false));
     }, 0);
   };
+
+  useEffect(() => {
+    dispatch(setMyTabHide(true));
+    return () => {
+      dispatch(setMyTabHide(false));
+    };
+  }, []);
 
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>

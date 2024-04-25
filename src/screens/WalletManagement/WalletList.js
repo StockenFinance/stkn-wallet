@@ -6,7 +6,7 @@ import RemoveIcon from "../../SvgIcon/RemoveIcon";
 import RecoveryPhraseModal from "../../components/RecoveryPhraseModal";
 import PublicKeyModal from "../../components/PublicKeyModal";
 import { useDispatch } from "react-redux";
-import { setModal } from "../../redux/reducer/CounterSlice";
+import { setModal, setMyTabHide } from "../../redux/reducer/CounterSlice";
 import DeleteWalletModal from "../../components/DeleteWalletModal";
 
 const WalletList = ({ wallet, walletNumber }) => {
@@ -29,6 +29,13 @@ const WalletList = ({ wallet, walletNumber }) => {
     dispatch(setModal(true));
     setStatus(true);
   };
+
+  useEffect(() => {
+    dispatch(setMyTabHide(true));
+    return () => {
+      dispatch(setMyTabHide(false));
+    };
+  }, []);
 
   return (
     <>

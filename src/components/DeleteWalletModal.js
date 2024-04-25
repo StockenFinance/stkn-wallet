@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     height: "280%",
     justifyContent: "flex-end",
     zIndex: 999,
-    top: -200,
+    top: -5,
   },
   bottomSheet: {
     width: "100%",
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     paddingVertical: 20,
-    top: 180,
+    top: 148,
   },
   container: {
     display: "flex",
