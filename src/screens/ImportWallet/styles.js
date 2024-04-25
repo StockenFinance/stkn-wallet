@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
   },
   copyPasteIcon: {
     position: "absolute",
-    marginTop: "64%",
+    marginTop: "54%",
     right: 10,
   },
   copyPasteImage: {
@@ -93,5 +93,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     zIndex: 50,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    marginTop: 8,
+    textAlign: "center",
   },
 });

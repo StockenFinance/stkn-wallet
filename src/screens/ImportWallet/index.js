@@ -20,14 +20,17 @@ const ImportWallet = ({ navigation, route }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch();
 
   const handleChangeText = (newText) => {
     setText(newText);
+    setErrorMessage("");
   };
 
   const handleOnImport = async () => {
+    setLoading(true);
     const isMnemonic = text.split(" ").length > 1;
 
     let wallet;
@@ -35,15 +38,25 @@ const ImportWallet = ({ navigation, route }) => {
     let backupPhrase;
 
     if (isMnemonic) {
-      wallet = ethers.HDNodeWallet.fromMnemonic(
-        ethers.Mnemonic.fromPhrase(text)
-      );
-      securityKey = wallet.mnemonic.phrase;
-      backupPhrase = text;
+      try {
+        wallet = ethers.HDNodeWallet.fromMnemonic(
+          ethers.Mnemonic.fromPhrase(text)
+        );
+        securityKey = wallet.mnemonic.phrase;
+        backupPhrase = text;
+      } catch (error) {
+        setErrorMessage("Invalid recovery phrase");
+        return; // Exit early if there's an error
+      }
     } else {
-      wallet = new ethers.Wallet(text);
-      securityKey = wallet.privateKey;
-      backupPhrase = wallet.mnemonic.phrase;
+      try {
+        wallet = new ethers.Wallet(text);
+        securityKey = wallet.privateKey;
+        backupPhrase = wallet.mnemonic.phrase;
+      } catch (error) {
+        setErrorMessage("Invalid private key");
+        return; // Exit early if there's an error
+      }
     }
 
     console.log("check import::::", wallet);
@@ -183,6 +196,9 @@ const ImportWallet = ({ navigation, route }) => {
             onChangeText={handleChangeText}
             value={text}
           />
+          {errorMessage ? (
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          ) : null}
           <TouchableOpacity style={styles.copyPasteIcon} onPress={handlePaste}>
             <PasteIcon style={styles.copyPasteImage} />
           </TouchableOpacity>
