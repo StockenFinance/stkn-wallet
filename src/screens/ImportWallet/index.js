@@ -30,7 +30,6 @@ const ImportWallet = ({ navigation, route }) => {
   };
 
   const handleOnImport = async () => {
-    setLoading(true);
     const isMnemonic = text.split(" ").length > 1;
 
     let wallet;
@@ -46,6 +45,7 @@ const ImportWallet = ({ navigation, route }) => {
         backupPhrase = text;
       } catch (error) {
         setErrorMessage("Invalid recovery phrase");
+        setLoading(false);
         return; // Exit early if there's an error
       }
     } else {
@@ -55,6 +55,7 @@ const ImportWallet = ({ navigation, route }) => {
         backupPhrase = wallet.mnemonic.phrase;
       } catch (error) {
         setErrorMessage("Invalid private key");
+        setLoading(CSSFontFeatureValuesRule);
         return; // Exit early if there's an error
       }
     }
@@ -208,7 +209,12 @@ const ImportWallet = ({ navigation, route }) => {
         style={[styles.importButton, importButtonStyle]}
         onPress={
           importButtonStyle === styles.importButtonActive
-            ? handleOnImport
+            ? () => {
+                setLoading(true);
+                setTimeout(() => {
+                  handleOnImport();
+                }, 100);
+              }
             : null
         }
         disabled={importButtonStyle !== styles.importButtonActive}

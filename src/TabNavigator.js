@@ -25,6 +25,7 @@ const BottomNavigator = () => {
     <Bottom.Navigator
       initialRouteName="Dashboard"
       screenOptions={{
+        unmountOnBlur: true,
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
