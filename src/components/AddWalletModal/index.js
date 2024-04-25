@@ -20,6 +20,7 @@ import { createNewWallet } from "../../utils/helper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 import { addWalletCard } from "../../redux/reducer/walletCardSlice";
+import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 
 const storeWallet = async (wallet) => {
   try {

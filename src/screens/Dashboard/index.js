@@ -35,6 +35,7 @@ import PlusIcon from "../../SvgIcon/PluseIcon";
 import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 import { Utils } from "../../utils/LocalStorage";
+import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -83,6 +84,10 @@ const Dashboard = ({ navigation }) => {
   );
   console.log("check wallet card data>>>>>", walletCardData);
   //full wallet address
+
+  useEffect(() => {
+    dispatch(setMyTabHide(false));
+  }, []);
 
   useEffect(() => {
     AsyncStorage.getItem("CARD_DATA")

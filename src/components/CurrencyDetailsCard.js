@@ -20,6 +20,14 @@ const CurrencyDetailsCard = ({
   importAddress,
 }) => {
   const { t, i18n } = useTranslation();
+  const walletCardData = useSelector(
+    (state) => state.walletcards.walletCardData
+  );
+
+  console.log(
+    "walletCardData from currency details file",
+    walletCardData[0]?.newWalletAddress?.address
+  );
 
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
@@ -53,28 +61,24 @@ const CurrencyDetailsCard = ({
     });
   }, [userEtherBalance]);
 
-  const tokenBalance = useCallback(async (walletAddress) => {
-    console.log("token address in currency", importAddress);
-    console.log("wallet address in currency", walletAddress);
+  const tokenBalance = useCallback(async () => {
+    const importAddress = await AsyncStorage.getItem("STOREDTOKEN");
+    console.log("token address in currency details", importAddress);
+
+    console.log(
+      "walletCardData?.newWalletAddress?.address",
+      walletCardData[0]?.newWalletAddress?.address
+    );
+
     const fetchedTokenDetails = await fetchDynamicDetailsOfToken(
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", //importAddres(tokenAddress)
       // "0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141" //walletAddress (local storage)
-      "0x73f4faE4F28fe811EB77ddb63985C0b904aeb77f"
+      // "0x73f4faE4F28fe811EB77ddb63985C0b904aeb77f"
+
+      walletCardData[0]?.newWalletAddress?.address
     );
     setTokenBalanceImported(fetchedTokenDetails);
   }, []);
-
-  // const tokenBalance = useCallback(async (walletAddress) => {
-  //   console.log("token address in currency", importAddress);
-  //   console.log("wallet address in currency", walletAddress);
-
-  //   const tokenBalance = await fetchDynamicDetailsOfToken(
-  //     importAddress,
-  //     walletAddress
-  //     0x5Ec3A0c889CD52Fc0b482ED5F927c5a9b13EB141
-  //   );
-  //   setTokenBalanceImported(tokenBalance);
-  // }, []);
 
   function formatBalance(balance, decimals) {
     return ethers.formatUnits(balance, parseInt(decimals, 10));
@@ -158,7 +162,7 @@ const CurrencyDetailsCard = ({
                 justifyContent: "center",
               }}
             >
-              {/* <Image source={require("../src/assets/images/ETH.png")} /> */}
+              {/* <Image source={require("../src/assets/images/ETH.png")} />  */}
               <Image source={getImageSource(item.symbol)} />
             </View>
 

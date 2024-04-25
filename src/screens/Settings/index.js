@@ -90,8 +90,8 @@ const Settings = ({ navigation }) => {
           <Text
             style={[
               styles.currencyText,
-              { marginLeft: "40%", textTransform: "uppercase" },
-              { marginLeft: selectedLanguage === "ar" ? 200 : null },
+              { marginLeft: "35%", textTransform: "uppercase" },
+              // { marginLeft: selectedLanguage === "ar" ? 200 : null },
             ]}
           >
             {t("en")}
@@ -128,7 +128,7 @@ const Settings = ({ navigation }) => {
         <Text style={styles.createWalletText}>{t("passcode")}</Text>
         <Text
           style={{
-            marginLeft: 65,
+            marginLeft: 40,
             color: "#B6BDC8",
             fontSize: 17,
             fontWeight: "800",

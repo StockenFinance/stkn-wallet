@@ -17,9 +17,9 @@ import { useSelector } from "react-redux";
 const Bottom = createBottomTabNavigator();
 
 const BottomNavigator = () => {
-  const tabHide = useSelector((store) => store.walletRecover.myTabHide);
+  const { myTabHide } = useSelector((state) => state.counter);
 
-  console.log("tabHide", tabHide);
+  console.log("tabHide::::", myTabHide);
 
   return (
     <Bottom.Navigator
@@ -38,7 +38,7 @@ const BottomNavigator = () => {
           height: 64,
           borderRadius: 15,
           alignSelf: "center",
-          display: false ? "none" : "block",
+          display: myTabHide ? "none" : "block",
         },
       }}
     >
