@@ -22,7 +22,9 @@ const CustomTextInput = ({ placeholder, onChangeText, value }) => {
         value={value}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        style={styles.input}
+        style={[styles.input, { multiline: true }]}
+        multiline
+        textAlign="center"
       />
     </View>
   );

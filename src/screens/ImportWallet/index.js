@@ -46,7 +46,7 @@ const ImportWallet = ({ navigation, route }) => {
       } catch (error) {
         setErrorMessage("Invalid recovery phrase");
         setLoading(false);
-        return; // Exit early if there's an error
+        return;
       }
     } else {
       try {
@@ -55,12 +55,20 @@ const ImportWallet = ({ navigation, route }) => {
         backupPhrase = wallet.mnemonic.phrase;
       } catch (error) {
         setErrorMessage("Invalid private key");
-        setLoading(CSSFontFeatureValuesRule);
-        return; // Exit early if there's an error
+        setLoading(false);
+        return;
       }
     }
 
     console.log("check import::::", wallet);
+
+    // Check if the wallet address already exists
+    const walletAddressExists = await AsyncStorage.getItem("fullWalletAddress");
+    if (walletAddressExists === wallet.address) {
+      setErrorMessage("This wallet is already imported.");
+      setLoading(false);
+      return;
+    }
 
     dispatch(addWalletAtReduxStore(wallet));
 

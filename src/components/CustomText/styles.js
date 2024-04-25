@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     marginTop: "70%",
   },
   input: {
-    height: 50,
+    height: 90,
     fontSize: 16,
     paddingHorizontal: 8,
     color: "#000000",
