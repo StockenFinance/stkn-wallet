@@ -91,7 +91,8 @@ const WalletManagement = ({ navigation }) => {
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: "10%",
+                  // marginTop: "5%",
+                  marginBottom: "5%",
                 }}
               >
                 <Text
