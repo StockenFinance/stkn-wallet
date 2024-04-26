@@ -98,14 +98,7 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
                 {t("yourRecoveryPhraseText")}
               </Text>
 
-              <Text
-                style={[
-                  styles.subText,
-                  // { width: selectedLanguage === "ar" ? "105%" : null },
-                ]}
-              >
-                {t("secutiryMessageText")}
-              </Text>
+              <Text style={[styles.subText]}>{t("secutiryMessageText")}</Text>
             </View>
             <View style={styles.securityMessageContainer}>
               <AlertIcon style={styles.alertImage} />
