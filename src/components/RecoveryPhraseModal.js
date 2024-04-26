@@ -71,7 +71,6 @@ const RecoveryPhraseModal = ({ setStatus, mnemonic }) => {
   };
 
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);
