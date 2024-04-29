@@ -6,6 +6,16 @@ import rootReducer from "../redux/reducer/index";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
+  serialize: (value) =>
+    JSON.stringify(value, (key, val) =>
+      typeof val === "bigint" ? val.toString() : val
+    ),
+  deserialize: (value) =>
+    JSON.parse(value, (key, val) =>
+      typeof val === "string" && /^\d+n$/.test(val)
+        ? BigInt(val.slice(0, -1))
+        : val
+    ),
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,30 +1,22 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Text, View, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import BackIcon from "../../SvgIcon/BackIcon";
 import ArabicTranslation from "../../components/arabicTranslations";
 import EnglishTranslation from "../../components/englishTranslation";
-import { Utils } from "../../utils/LocalStorage";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ConfirmBackupPhrase = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
+  const { walletData } = route.params;
+  console.log("walletdata", walletData);
 
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
   const [randomIndicess, setRandomIndicess] = useState([]);
   const [questionNumber, setQuestionNumber] = useState([]);
   const [questionValue, setQuestionValue] = useState([]);
-  const [toggleLanguage, setToggleLanguage] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const [selected, setSelected] = useState([
@@ -119,17 +111,16 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
     setSelected((prevSelected) => {
       const updatedSelected = [...prevSelected];
       const currentIndex = updatedSelected.findIndex((item) => item.isFocus);
-      const nextIndex = (currentIndex + 1) % updatedSelected.length; // Move to the next index circularly
+      const nextIndex = (currentIndex + 1) % updatedSelected.length;
 
-      updatedSelected[currentIndex].isFocus = false; // Set isFocus to false for current index
-      updatedSelected[currentIndex].isSelected = true; // Set isSelected to true for current index
+      updatedSelected[currentIndex].isFocus = false;
+      updatedSelected[currentIndex].isSelected = true;
 
       if (!updatedSelected.some((item) => item.value === value)) {
-        updatedSelected[currentIndex].value = value; // Update value for current index if it doesn't exist already
+        updatedSelected[currentIndex].value = value;
       }
       updatedSelected[currentIndex].index = index;
-      updatedSelected[nextIndex].isFocus = true; // Set isFocus to true for next index
-
+      updatedSelected[nextIndex].isFocus = true;
       if (updatedSelected.every((item) => item.isSelected)) {
         // Check if all items are selected
         const questionNumberArray = questionNumber.map((item) => item);
@@ -142,6 +133,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
           JSON.stringify(selectedIndices)
         ) {
           navigation.navigate("RecoveryPhraseConfirmation", {
+            walletData: walletData,
             selectedLanguage: selectedLanguage,
           });
         } else {
@@ -155,11 +147,7 @@ const ConfirmBackupPhrase = ({ navigation, route }) => {
     });
   };
 
-  console.log("check indeces", randomIndicess);
-  console.log("check :::::", mnemonicWords);
-
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);

@@ -21,8 +21,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import SendIcon from "../../SvgIcon/SendIcon";
+import { useDispatch } from "react-redux";
+import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 
 const SendScreen = ({ placeholder, value, route }) => {
+  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
   const { selectedSymbol, tokens } = route?.params;
@@ -131,13 +134,19 @@ const SendScreen = ({ placeholder, value, route }) => {
   const isButtonDisabled = amount.trim() === "" || token.trim() === "";
 
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);
         i18n.changeLanguage(language);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    dispatch(setMyTabHide(true));
+    return () => {
+      dispatch(setMyTabHide(false));
+    };
   }, []);
   return (
     <View style={styles.container}>
@@ -197,10 +206,8 @@ const SendScreen = ({ placeholder, value, route }) => {
                 transparent={true}
                 isVisible={swapCurrencyModalVisible}
                 onClose={() => setSwapCurrencyModalVisible(false)}
-                // onSelect={handleCurrencySelect}
                 value={selectedCurrency}
-                tokens={tokens}
-                onSelect={handleTokenSelect}
+                onPress={handleTokenSelect}
               />
             </View>
 
@@ -224,19 +231,12 @@ const SendScreen = ({ placeholder, value, route }) => {
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
             <View style={styles.swapImageContainer}>
-              {/* <Image
-                source={require("../../assets/images/Send.png")}
-                style={styles.image}
-                resizeMode="contain"
-              /> */}
               <SendIcon color={"#fff"} style={styles.image} />
             </View>
 
             <View style={styles.divider} />
           </View>
-
           <Text style={styles.headerText}>{t("to")}</Text>
-
           <View style={styles.inputContainer}>
             <TextInput
               placeholderTextColor={"grey"}
@@ -252,7 +252,6 @@ const SendScreen = ({ placeholder, value, route }) => {
             </Text>
           </View>
         </View>
-        {/* <View style={styles.importButton}> */}
         <TouchableOpacity
           onPress={SendMoney}
           style={[styles.doneButton, isButtonDisabled && styles.disabledButton]}
@@ -264,7 +263,6 @@ const SendScreen = ({ placeholder, value, route }) => {
             {t("send")}
           </Text>
         </TouchableOpacity>
-        {/* </View> */}
       </ScrollView>
     </View>
   );

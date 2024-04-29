@@ -23,7 +23,6 @@ const LanguageChangeModal = ({ isVisible, onClose }) => {
   const saveSelectedLanguage = async (language) => {
     try {
       await AsyncStorage.setItem("selectedLanguage", language);
-      console.log("Selected language saved successfully:", language);
     } catch (error) {
       console.error("Error saving selected language to AsyncStorage:", error);
     }

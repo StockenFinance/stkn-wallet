@@ -43,9 +43,6 @@ const Disclaimer = ({ setStatus, buyData }) => {
     );
   };
 
-  console.log("buydata.cryptoAmount", buyData.cryptoAmount);
-  console.log("buyData", buyData);
-
   const slideUp = () => {
     // Will change slide up the bottom sheet
     Animated.timing(slide, {

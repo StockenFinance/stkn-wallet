@@ -58,6 +58,7 @@ const ArabicTranslation = {
   polygon: "مضلع",
   ethereum: "الإيثيريوم",
   contractAddress: "عنوان العقد",
+  importNewToken: "استيراد رمز جديد ",
 
   // Swap screen strings
   wantToSwap: "أريد المبادلة",

@@ -36,7 +36,7 @@ const ConvertCurrencyModal = ({
           }
         );
         setTokenList(response.data.tokens);
-        console.log("Token list fetched successfully:", response.data.tokens);
+        // console.log("Token list fetched successfully:", response.data.tokens);
       } catch (error) {
         setError(error.message);
       } finally {

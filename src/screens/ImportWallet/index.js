@@ -66,17 +66,18 @@ const ImportWallet = ({ navigation, route }) => {
       return;
     }
 
-    dispatch(addWalletAtReduxStore(wallet));
+    // dispatch(addWalletAtReduxStore(wallet));
 
     if (wallet) {
-      dispatch(
-        addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
-      );
+      // dispatch(
+      //   addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
+      // );
 
       await AsyncStorage.setItem("fullWalletAddress", wallet.address);
 
       navigation.navigate("RecoveryPhraseConfirmation", {
         selectedLanguage: selectedLanguage,
+        walletData: wallet,
       });
     } else {
       console.error("Warning: Recovery phrase does not match");

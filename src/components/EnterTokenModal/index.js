@@ -3,11 +3,10 @@ import {
   Modal,
   View,
   Text,
-  StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
   TextInput,
-  Image,
+  ActivityIndicator,
 } from "react-native";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { tokenDetail } from "../../utils/helper";
@@ -34,6 +33,7 @@ const EnterTokenModal = ({
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [storedTokens, setStoredTokens] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Ethereum");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [tokenDetails, setTokenDetails] = useState({
     name: "",
@@ -70,74 +70,26 @@ const EnterTokenModal = ({
     tokenDetails.name.trim() === "" ||
     (!tokenDetails.decimals && tokenDetails.decimals !== 0) ||
     tokenDetails.symbol.trim() === "";
-  const debounceAsync = (func, delay) => {
-    let timeoutId;
-    return (...args) => {
-      return new Promise((resolve, reject) => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(async () => {
-          try {
-            const result = await func(...args);
-            resolve(result);
-          } catch (error) {
-            reject(error);
-          }
-        }, delay);
-      });
-    };
-  };
-
-  // const handleInputChange = async (text) => {
-  //   setTokenNumber(text);
-  //   if (text.trim() !== "") {
-  //     try {
-  //       const res = await tokenDetail(text);
-  //       if (res.success) {
-  //         const { tokenName, decimals, symbol, balance } = res.success;
-  //         console.log("Balance test::::", tokenName, decimals, symbol, balance);
-  //         fetchCryptoPrice(symbol).then((usdPrice) => {
-  //           console.log("UES ReS:::", usdPrice);
-  //           // setCryptoPrice(usdPrice);
-  //           setTokenDetails({
-  //             name: tokenName,
-  //             decimals: decimals,
-  //             symbol: symbol,
-  //             balance: balance,
-  //             price: usdPrice?.USD,
-  //           });
-  //         });
-  //       } else {
-  //         setTokenDetails({
-  //           name: "",
-  //           decimals: "",
-  //           symbol: "",
-  //           balance: "",
-  //           price: "",
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching token details:", error);
-  //       setTokenDetails({
-  //         name: "",
-  //         decimals: "",
-  //         symbol: "",
-  //         balance: "",
-  //         price: "",
-  //       });
-  //     }
-  //   } else {
-  //     setTokenDetails({
-  //       name: "",
-  //       decimals: "",
-  //       symbol: "",
-  //       balance: "",
-  //       price: "",
+  // const debounceAsync = (func, delay) => {
+  //   let timeoutId;
+  //   return (...args) => {
+  //     return new Promise((resolve, reject) => {
+  //       clearTimeout(timeoutId);
+  //       timeoutId = setTimeout(async () => {
+  //         try {
+  //           const result = await func(...args);
+  //           resolve(result);
+  //         } catch (error) {
+  //           reject(error);
+  //         }
+  //       }, delay);
   //     });
-  //   }
+  //   };
   // };
 
   const handleInputChange = async (text) => {
     setTokenNumber(text);
+    setIsLoading(true);
     if (text.trim() !== "") {
       try {
         console.log("selectedOption before res", selectedOption);
@@ -158,6 +110,7 @@ const EnterTokenModal = ({
             });
             // Add token address to storedTokens array
             setStoredTokens((prevTokens) => [...prevTokens, text]);
+            setIsLoading(false);
           });
         } else {
           setTokenDetails({
@@ -167,6 +120,7 @@ const EnterTokenModal = ({
             balance: "",
             price: "",
           });
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching token details:", error);
@@ -186,10 +140,9 @@ const EnterTokenModal = ({
         balance: "",
         price: "",
       });
+      setIsLoading(false);
     }
   };
-
-  const debouncedTokenDetail = debounceAsync(tokenDetail, 3000);
 
   const fetchCryptoPrice = async (symbol) => {
     try {
@@ -218,25 +171,25 @@ const EnterTokenModal = ({
     }
   };
 
-  useEffect(() => {
-    retrieveSelectedLanguage();
-  }, []);
+  // useEffect(() => {
+  //   retrieveSelectedLanguage();
+  // }, []);
 
-  const retrieveSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem("selectedLanguage");
-      if (language !== null) {
-        console.log("Retrieved language:", language);
-        let bool = language === "english" ? true : false;
-        setToggleLanguage(bool);
-      } else {
-        console.log("No language saved in AsyncStorage");
-        setToggleLanguage(true);
-      }
-    } catch (error) {
-      console.error("Error retrieving language from AsyncStorage:", error);
-    }
-  };
+  // const retrieveSelectedLanguage = async () => {
+  //   try {
+  //     const language = await AsyncStorage.getItem("selectedLanguage");
+  //     if (language !== null) {
+  //       console.log("Retrieved language:", language);
+  //       let bool = language === "english" ? true : false;
+  //       setToggleLanguage(bool);
+  //     } else {
+  //       console.log("No language saved in AsyncStorage");
+  //       setToggleLanguage(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error retrieving language from AsyncStorage:", error);
+  //   }
+  // };
 
   useEffect(() => {
     // Retrieve the selected language from AsyncStorage on component mount
@@ -363,6 +316,9 @@ const EnterTokenModal = ({
           </View>
         </View>
       </TouchableWithoutFeedback>
+      {isLoading && (
+        <ActivityIndicator style={styles.loader} size="large" color="#F19220" />
+      )}
     </Modal>
   );
 };

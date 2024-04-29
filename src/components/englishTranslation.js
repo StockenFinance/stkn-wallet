@@ -57,6 +57,7 @@ const EnglishTranslation = {
   ethereum: "Ethereum",
   polygon: "Polygon",
   contractAddress: "Contract address",
+  importNewToken: "Import New Token",
 
   // Swap screen strings
   wantToSwap: "I want to Swap",

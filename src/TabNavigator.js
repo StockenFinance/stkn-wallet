@@ -19,7 +19,7 @@ const Bottom = createBottomTabNavigator();
 const BottomNavigator = () => {
   const { myTabHide } = useSelector((state) => state.counter);
 
-  console.log("tabHide::::", myTabHide);
+  // console.log("tabHide::::", myTabHide);
 
   return (
     <Bottom.Navigator

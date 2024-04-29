@@ -1,22 +1,22 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
 import HomeLogoDoneIcon from "../../SvgIcon/HomeLogoDoneIcon";
-import { Utils } from "../../utils/LocalStorage";
-import ArabicTranslation from "../../components/arabicTranslations";
-import EnglishTranslation from "../../components/englishTranslation";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { setNavigationEnabled } from "../../redux/reducer/navigationSlice";
+import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
+import { addWalletCard } from "../../redux/reducer/walletCardSlice";
 const RecoveryPhraseConfirmation = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
+  const { walletData } = route.params;
+  console.log("walletdata>>>", walletData);
 
   const dispatch = useDispatch();
 
-  selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
+  // selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
 
-  const [toggleLanguage, setToggleLanguage] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   useEffect(() => {
@@ -29,6 +29,25 @@ const RecoveryPhraseConfirmation = ({ navigation, route }) => {
     });
   }, []);
 
+  const handleDoneButton = () => {
+    if (walletData !== undefined) {
+      dispatch(addWalletAtReduxStore(walletData));
+      dispatch(
+        addWalletCard({
+          newWalletAddress: walletData,
+          newWalletBalance: "0.00",
+        })
+      );
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Dashboard" }],
+      });
+      dispatch(setNavigationEnabled(true));
+    } else {
+      alert("Please create wallet first");
+      navigation.goBack();
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.imageTextContainer}>
@@ -37,11 +56,9 @@ const RecoveryPhraseConfirmation = ({ navigation, route }) => {
       </View>
       <TouchableOpacity
         style={styles.getStartedContainer}
-        onPress={() =>
-          navigation.navigate("Dashboard", {
-            selectedLanguage: selectedLanguage,
-          })
-        }
+        onPress={() => {
+          handleDoneButton();
+        }}
       >
         <Text style={styles.getStartedText}> {t("done")}</Text>
       </TouchableOpacity>

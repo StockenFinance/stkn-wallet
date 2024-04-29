@@ -36,11 +36,11 @@ import WalletImageSvg from "../../SvgIcon/WalletImageSvg";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 import { Utils } from "../../utils/LocalStorage";
 import { setMyTabHide } from "../../redux/reducer/CounterSlice";
+import EmptyList from "../../components/EmptyList";
+import { addCardItem } from "../../redux/reducer/currencyCardSlice";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
-  const currentChain = useSelector((state) => state.chain.currentChain);
-  const allWallets = useSelector((state) => state.wallet.allWallets);
 
   const [activeDotIndex, setActiveDotIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,13 +61,10 @@ const Dashboard = ({ navigation }) => {
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
   const [selectedChain, setSelectedChain] = useState(null);
-  const [calculatedBalance, setCalculatedBalance] = useState(0);
   const [calculatedAmount, setCalculatedAmount] = useState(0);
-  const [chainStatus, setChainStatus] = useState("All Network");
   const [importTokenAddress, setImportTokenValue] = useState("");
-  const dispatch = useDispatch();
 
-  const [newAccount, setNewAccount] = useState([]);
+  const dispatch = useDispatch();
 
   const [cardData, setCardData] = useState([
     {
@@ -75,123 +72,51 @@ const Dashboard = ({ navigation }) => {
       name: "Ether",
       balance: "0.00",
       decimals: "0",
-      price: "3547.41",
+      price: "state3547.41",
       chain: "Ethereum",
     },
   ]);
   const walletCardData = useSelector(
     (state) => state.walletcards.walletCardData
   );
+
+  const currencyCardData = useSelector(
+    (state) => state.currencyCardData.currencyCardData[activeIndex]
+  );
+
   console.log("check wallet card data>>>>>", walletCardData);
+  console.log("currency card data status", currencyCardData);
   //full wallet address
 
+  const currencyItemTotolPrice = () => {
+    const subtotal = currencyCardData.reduce((total, item) => {
+      const decimals = parseInt(item.decimals);
+      return total + decimals;
+    }, 0);
+
+    return subtotal;
+  };
   useEffect(() => {
     dispatch(setMyTabHide(false));
   }, []);
 
   useEffect(() => {
-    AsyncStorage.getItem("CARD_DATA")
-      .then((res) => {
-        console.log("CARD_DATA::::>>", res);
-        if (res) {
-          const parsedRes = JSON.parse(res); // Parse the retrieved string to convert it into an array
-          setNewAccount((prevAccounts) => [...prevAccounts, ...parsedRes]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error retrieving data: ", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    // Function to retrieve wallet address
-    const retrieveWalletAddress = async () => {
-      try {
-        const walletAddress = await AsyncStorage.getItem("fullWalletAddress");
-        console.log("wallet address fetched::", walletAddress);
-        setFullWalletAddress(walletAddress); // Update state with fetched wallet address
-      } catch (error) {
-        console.error("Error retrieving wallet address:", error);
-      }
-    };
-    retrieveWalletAddress();
-  }, []);
-
-  const getStoredWalletObject = async () => {
-    try {
-      const walletObject = await AsyncStorage.getItem("walletObject");
-      if (walletObject !== null) {
-        // Wallet object retrieved successfully
-        const firstWallet = JSON.parse(walletObject);
-        setWallets([firstWallet]);
-      }
-    } catch (error) {
-      console.error("Error retrieving wallet object:", error);
-    }
-  };
-
-  useEffect(() => {
-    getStoredWalletObject();
-  }, []);
-
-  useEffect(() => {
-    // Function to retrieve wallet address
-    const retrieveWalletAddress = async () => {
-      try {
-        const wallet = await AsyncStorage.getItem("addWallet");
-        console.log("addwallet=", wallet);
-        setWallets([wallet]);
-      } catch (error) {
-        console.error("Error retrieving wallet address:", error);
-      }
-    };
-    retrieveWalletAddress();
-  }, []);
-
-  const shortenEthereumAddress = (address) => {
-    if (!address) return "";
-    return `${address.substring(0, 6)}...${address.substring(
-      address.length - 4
-    )}`;
-  };
-
-  const retrieveWalletAddress = async () => {
-    try {
-      const walletAddress = await AsyncStorage.getItem("walletAddress");
-      console.log("wallet address fetched::", walletAddress);
-      return walletAddress;
-    } catch (error) {
-      console.error("Error retrieving wallet address:", error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    retrieveWalletAddress().then((address) => {
-      if (address) {
-        setWalletAddress(address);
-      } else {
-        console.log("Wallet address not found.");
-      }
-    });
     calculateTotalBalance();
-  }, []);
-
+  }, [activeIndex]);
   const calculateTotalBalance = () => {
     let sum = 0;
-    cardData.forEach((item) => {
+    currencyCardData?.forEach((item) => {
       sum += parseFloat(item.price);
     });
     setTotalBalance(sum);
   };
 
   const addTokenBtn = async (value) => {
-    storeTokens([...cardData, value]);
+    console.log("add token value status>>>", value);
+    calculateTotalBalance();
     toggleEnterTokenModal();
     if (value.name.trim() === "" || value.symbol.trim() === "") {
       // alert("value is alrady exist we can not allow to import same value");
-
-      calculateTotalBalance();
       return;
     }
 
@@ -200,14 +125,15 @@ const Dashboard = ({ navigation }) => {
       decimals: parseFloat(value.decimals).toFixed(0),
     };
 
-    const isDuplicate = cardData.some((item) => isEqual(item, formattedValue));
+    const isDuplicate = currencyCardData.some((item) =>
+      isEqual(item, formattedValue)
+    );
 
     if (isDuplicate) {
       alert("Value already exists in cardData. Not adding to array.");
       return;
     }
-
-    console.log("token input value", formattedValue);
+    dispatch(addCardItem({ cardIndex: activeIndex, newItem: value }));
     setCardData((prevData) => [...prevData, formattedValue]);
     const newBalance = totalBalance + parseFloat(value.price);
     setTotalBalance(newBalance);
@@ -248,14 +174,17 @@ const Dashboard = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     const isLastItem = index === cardData.length - 1;
-
     return (
       <>
         <View
-          style={{ marginBottom: index === cardData.length - 1 ? "10%" : 0 }}
+          style={{
+            marginBottom: index === cardData.length - 1 ? "10%" : 0,
+          }}
         >
           <CurrencyDetailsCard
             item={item}
+            index={index}
+            walletIndex={activeIndex}
             navigation={navigation}
             onCalculateAmount={handleCalculateAmount}
             importAddress={importTokenAddress}
@@ -266,7 +195,7 @@ const Dashboard = ({ navigation }) => {
             style={styles.imoprtTokenView}
             onPress={toggleEnterTokenModal}
           >
-            <Text style={styles.importTokenText}>Import New Token</Text>
+            <Text style={styles.importTokenText}>{t("importNewToken")}</Text>
           </TouchableOpacity>
         )}
       </>
@@ -285,145 +214,37 @@ const Dashboard = ({ navigation }) => {
         provider
       );
 
-      console.group("check provider :::::", provider);
-
-      console.log(
-        "Test function:",
-        await erc20Prov.balanceOf("0x28C6c06298d514Db089934071355E5743bf21d60"),
-        await erc20Prov.symbol(),
-        await erc20Prov.name(),
-        await erc20Prov.decimals()
-      );
-      console.log(" erc20Prov.symbol()");
-      console.log("provider.getSigner()", provider.getSigner());
       provider
         .getBlockNumber()
-        .then((blockNumber) => {
-          console.log("Current block number:", blockNumber);
-        })
+        .then((blockNumber) => {})
         .catch((err) => {
           console.error("Error fetching block number:", err);
         });
     }
     testIntegration()
-      .then((blockNumber) => {
-        console.log("main", blockNumber);
-      })
-      .catch((err) => {
-        console.error("main error:", err);
-      });
+      .then((blockNumber) => {})
+      .catch((err) => {});
   }, []);
 
-  const storeTokens = async (tokens) => {
-    try {
-      const serializedTokens = JSON.stringify(tokens, (key, value) =>
-        typeof value === "bigint" ? value.toString() : value
-      );
-      await AsyncStorage.setItem("importedTokens", serializedTokens);
-      console.log("Tokens stored successfully.", serializedTokens);
-    } catch (error) {
-      console.error("Error storing tokens:", error);
-    }
-  };
+  // useEffect(() => {
+  //   retrieveSelectedLanguage();
+  // }, []);
 
-  // Function to retrieve tokens from AsyncStorage
-  const retrieveTokens = async () => {
-    try {
-      const serializedTokens = await AsyncStorage.getItem("importedTokens");
-      if (serializedTokens !== null) {
-        const tokens = JSON.parse(serializedTokens);
-        console.log("Tokens retrieved successfully:", tokens);
-        return tokens;
-      } else {
-        console.log("No tokens found in storage.");
-        return [];
-      }
-    } catch (error) {
-      console.error("Error retrieving tokens:", error);
-      return [];
-    }
-  };
-
-  // Call retrieveTokens on app load to get stored tokens
-  useEffect(() => {
-    retrieveTokens().then((tokens) => {
-      if (tokens.length > 0) {
-        setCardData(tokens);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    // Function to retrieve wallet data from AsyncStorage
-    const retrieveWallets = async () => {
-      try {
-        const serializedWallets = await AsyncStorage.getItem("wallets");
-        if (serializedWallets !== null) {
-          const parsedWallets = JSON.parse(serializedWallets);
-          setWallets(parsedWallets);
-          dispatch(addWallet(parsedWallets));
-        }
-      } catch (error) {
-        console.error("Error retrieving wallets:", error);
-      }
-    };
-
-    // Call retrieveWallets on component mount
-    retrieveWallets();
-  }, []);
-
-  // Function to add a new wallet
-  const addWallet = async (newWallet) => {
-    setWallets((prevWallets) => [...prevWallets, newWallet]);
-    // Store updated wallets in AsyncStorage
-    await storeWallets([...wallets, newWallet]);
-  };
-
-  // Function to store wallets in AsyncStorage
-  const storeWallets = async (walletData) => {
-    try {
-      const serializedWallets = JSON.stringify(walletData);
-      await AsyncStorage.setItem("wallets", serializedWallets);
-      console.log("Wallets stored successfully.");
-    } catch (error) {
-      console.error("Error storing wallets:", error);
-    }
-  };
-
-  useEffect(() => {
-    retrieveSelectedLanguage();
-    checkAsyncStorageStatus();
-  }, []);
-
-  const retrieveSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem("selectedLanguage");
-      if (language !== null) {
-        console.log("Retrieved language:", language);
-        let bool = language === "english" ? true : false;
-        setToggleLanguage(bool);
-      } else {
-        console.log("No language saved in AsyncStorage");
-        setToggleLanguage(true);
-      }
-    } catch (error) {
-      console.error("Error retrieving language from AsyncStorage:", error);
-    }
-  };
-  const checkAsyncStorageStatus = async () => {
-    try {
-      const allKeys = await AsyncStorage.getAllKeys();
-      console.log("All AsyncStorage Keys:", allKeys);
-
-      // Loop through all keys and get their corresponding values
-      for (const key of allKeys) {
-        const value = await AsyncStorage.getItem(key);
-        console.log(`Value for key"${key}":`, value);
-      }
-    } catch (error) {
-      console.error("Error checking AsyncStorage status:", error);
-    }
-  };
+  // const retrieveSelectedLanguage = async () => {
+  //   try {
+  //     const language = await AsyncStorage.getItem("selectedLanguage");
+  //     if (language !== null) {
+  //       // console.log("Retrieved language:", language);
+  //       let bool = language === "english" ? true : false;
+  //       setToggleLanguage(bool);
+  //     } else {
+  //       // console.log("No language saved in AsyncStorage");
+  //       setToggleLanguage(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error retrieving language from AsyncStorage:", error);
+  //   }
+  // };
 
   const renderDotIndicator = () => {
     return walletCardData.map((dot, index) => {
@@ -455,26 +276,28 @@ const Dashboard = ({ navigation }) => {
     });
   }, []);
 
+  useEffect(() => {
+    // Fetch and set initial card data
+    setCardData(currencyCardData);
+  }, [currencyCardData]);
+
   const handleChainSelect = useCallback(
     async (chain) => {
-      console.log("dispatcher chain", chain);
-      const serializedTokens = await AsyncStorage.getItem("importedTokens");
-      const tokens = JSON.parse(serializedTokens);
-
-      console.log("dispatcher card data", cardData);
       setSelectedChain(chain);
       dispatch(setCurrentChain(chain));
+
+      let filteredData = [];
+
       if (chain === "All Network") {
-        setCardData(tokens);
+        filteredData = currencyCardData; // Show all data
       } else {
-        const filterData = tokens.filter((item) => item.chain === chain);
-        console.log("filterData", filterData);
-        setCardData(filterData);
+        filteredData = currencyCardData.filter((item) => item.chain === chain);
       }
 
+      setCardData(filteredData);
       setChainSelectionModalVisible(false);
     },
-    [cardData, dispatch]
+    [currencyCardData, dispatch]
   );
 
   const handleCalculateAmount = (amount) => {
@@ -515,6 +338,7 @@ const Dashboard = ({ navigation }) => {
             setActiveIndex(index);
           }}
         >
+          {/* wallet card data */}
           {walletCardData.map((item, index) => {
             return (
               <>
@@ -574,6 +398,7 @@ const Dashboard = ({ navigation }) => {
                         {index === 0 ? calculatedAmount : item.newWalletBalance}
                         {/* ${calculatedAmount} */}
                         {/* {item.newWalletBalance} */}
+                        {/* {currencyItemTotolPrice()} */}
                       </Text>
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -612,6 +437,7 @@ const Dashboard = ({ navigation }) => {
           renderItem={renderItem}
           onScroll={handleScroll}
           scrollEventThrottle={16}
+          ListEmptyComponent={<EmptyList index={activeIndex} />}
         />
       </View>
 
@@ -629,7 +455,7 @@ const Dashboard = ({ navigation }) => {
         importTokenAddress={(tokenValue) => {
           alert("selected modal value");
           setImportTokenValue(tokenValue);
-          console.log("selected token address", tokenValue);
+          // console.log("selected token address", tokenValue);
         }}
         value={tokenInput}
         modalValues={(value) => addTokenBtn(value)}

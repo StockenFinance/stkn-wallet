@@ -57,24 +57,21 @@ const CreateWallet = ({ navigation, route }) => {
     setLoading(true);
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
-    dispatch(
-      addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
-    );
-
-    // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
-    //   console.log("Error while setting encrypted wallet: ", err);
-    // });
+    // dispatch(
+    //   addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
+    // );
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
-    dispatch(saveWalletAddress(shortenedAddress));
+    dispatch(saveWalletAddress(wallet.address));
     storeFullWalletAddress(wallet.address);
 
     setWalletStore(wallet);
-    dispatch(addWalletAtReduxStore(wallet));
+
     // setCardDATAMethod(shortenedAddress);
-    navigation.navigate("BackupPhrase", {
+    navigation.replace("BackupPhrase", {
+      walletData: wallet,
       mnemonic,
       selectedLanguage: selectedLanguage,
     });
@@ -87,7 +84,6 @@ const CreateWallet = ({ navigation, route }) => {
   }, [generatedWalletAddress, walletStore]);
 
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);

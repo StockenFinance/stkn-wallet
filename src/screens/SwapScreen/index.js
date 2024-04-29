@@ -20,20 +20,28 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const SwapScreen = ({ route, tokenList }) => {
   const { t, i18n } = useTranslation();
 
-  // const { selectedSymbol, tokens } = route?.params;
-  // const { tokens } = route?.params;
+  const walletIndex = route?.params?.walletIndex
+    ? route?.params?.walletIndex
+    : 0;
+  const itemIndex = route?.params?.itemIndex ? route?.params?.itemIndex : 0;
 
-  const [selectedToken, setSelectedToken] = useState(null);
+  const currencyCardData = useSelector(
+    (state) => state.currencyCardData.currencyCardData[walletIndex][itemIndex]
+  );
+
   const [chainSelectionModalVisible, setChainSelectionModalVisible] =
     useState(false);
   const [selectedChain, setSelectedChain] = useState(null);
   const [swapCurrencyModalVisible, setSwapCurrencyModalVisible] =
     useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState(
+    currencyCardData?.symbol
+  );
 
   const [convertCurrencyModalVisible, setConvertCurrencyModalVisible] =
     useState(false);
@@ -48,19 +56,9 @@ const SwapScreen = ({ route, tokenList }) => {
     from: "",
   });
 
-  const handleTokenSelect = (token) => {
-    setSelectedToken(token);
-    setSwapCurrencyModalVisible(false);
-  };
-
   const handleChainSelect = (chain) => {
     setSelectedChain(chain);
     setChainSelectionModalVisible(false);
-  };
-
-  const handleCurrencySelect = (chain) => {
-    setSelectedCurrency(chain);
-    setSwapCurrencyModalVisible(false);
   };
 
   const handleConvertCurrencySelect = (chain) => {
@@ -94,7 +92,6 @@ const SwapScreen = ({ route, tokenList }) => {
 
     try {
       const response = await axios.get(url, config);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -108,11 +105,9 @@ const SwapScreen = ({ route, tokenList }) => {
     try {
       const language = await AsyncStorage.getItem("selectedLanguage");
       if (language !== null) {
-        console.log("Retrieved language:", language);
         let bool = language === "english" ? true : false;
         setToggleLanguage(bool);
       } else {
-        console.log("No language saved in AsyncStorage");
         setToggleLanguage(true);
       }
     } catch (error) {
@@ -184,8 +179,7 @@ const SwapScreen = ({ route, tokenList }) => {
                     { fontSize: 23, fontWeight: "400", marginLeft: 8 },
                   ]}
                 >
-                  {/* {selectedSymbol} */}
-                  {selectedCurrency ? selectedCurrency : "ETH"}
+                  {selectedCurrency}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -199,13 +193,10 @@ const SwapScreen = ({ route, tokenList }) => {
                 />
               </TouchableOpacity>
               <SwapCurrencyModal
-                transparent={true}
                 isVisible={swapCurrencyModalVisible}
                 onClose={() => setSwapCurrencyModalVisible(false)}
-                onSelect={handleCurrencySelect}
-                // value={selectedCurrency}
-                // tokens={tokens}
-                // onSelect={handleTokenSelect}
+                value={selectedCurrency}
+                onPress={(value) => setSelectedCurrency(value)}
               />
             </View>
 

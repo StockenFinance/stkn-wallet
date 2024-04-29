@@ -35,7 +35,7 @@ const CustomModal = ({ isVisible, onClose, walletAddress }) => {
     try {
       const language = await AsyncStorage.getItem("selectedLanguage");
       if (language !== null) {
-        console.log("Retrieved language:", language);
+        // console.log("Retrieved language:", language);
         let bool = language === "english" ? true : false;
         setToggleLanguage(bool);
       } else {

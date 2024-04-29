@@ -39,8 +39,6 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [newAccount, setNewAccount] = useState([]);
 
-  console.log("walletStore", walletStore);
-
   const dispatch = useDispatch();
 
   const slide = React.useRef(new Animated.Value(300)).current;
@@ -101,22 +99,15 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     dispatch(
       addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
     );
-    console.log("Phrase wallet: ", JSON.stringify(phrase, null, 2));
-    console.log("Phrase wallet: ", phrase?.privateKey);
-    console.log("Wallet: ", JSON.stringify(wallet, null, 2));
-    console.log("New Wallet Address:", wallet.address);
-    console.log("Private Key:", wallet.privateKey);
-    console.log("Generated Mnemonic:", mnemonic);
+
     AsyncStorage.setItem("walletAddress").catch((err) => {
-      console.log("Error while setting encrypted wallet: ", err);
+      // console.log("Error while setting encrypted wallet: ", err);
     });
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
-    dispatch(saveWalletAddress(shortenedAddress));
-
-    // updateCardData(shortenedAddress);
+    dispatch(saveWalletAddress(wallet.address));
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
@@ -124,31 +115,6 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       // navigation.navigate("Dashboard");
       setLoading(false);
     }, 2000);
-  };
-
-  const updateCardData = async (wallet) => {
-    try {
-      const existingData = await AsyncStorage.getItem("CARD_DATA");
-      console.log(" Existing data CARD_DATA:", existingData);
-
-      // Parse the retrieved string or initialize an empty array
-      let dataArray = JSON.parse(existingData) || [];
-
-      console.log("parse card data", dataArray);
-
-      dataArray.push({
-        newWalletAddress: wallet,
-        newWalletBalance: "",
-      });
-
-      const updatedDataString = JSON.stringify(dataArray);
-
-      await AsyncStorage.setItem("CARD_DATA", updatedDataString);
-
-      console.log("CARD_DATA successfully updated in AsyncStorage");
-    } catch (error) {
-      console.error("Error updating data: ", error);
-    }
   };
 
   useEffect(() => {
@@ -169,7 +135,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     const fetchWalletAddress = async () => {
       try {
         const walletAddress = await AsyncStorage.getItem("walletAddress");
-        console.log("local storage >>>", walletAddress);
+
         if (walletAddress) {
           setNewAccount((prevAccount) => {
             return [

@@ -9,8 +9,6 @@ import {
   Modal,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
 import AlertIcon from "../SvgIcon/AlertIcon";
 import PasteIcon from "../SvgIcon/PasteIcon";
 import Clipboard from "@react-native-clipboard/clipboard";

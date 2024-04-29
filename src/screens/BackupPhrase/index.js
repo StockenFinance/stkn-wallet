@@ -18,18 +18,16 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { addScreenshotListener } from "react-native-detector";
 import EnglishTranslation from "../../components/englishTranslation";
 import ArabicTranslation from "../../components/arabicTranslations";
-import { Utils } from "../../utils/LocalStorage";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BackupPhrase = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
 
-  const { mnemonic } = route.params;
+  const { mnemonic, walletData } = route.params;
   const mnemonicWords = mnemonic.split(" ");
   const [isChecked, setIsChecked] = useState(false);
   const [randomIndexes, setRandomIndexes] = useState([]);
-  const [toggleLanguage, setToggleLanguage] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   selectedLanguage === "arabic" ? ArabicTranslation : EnglishTranslation;
@@ -82,8 +80,6 @@ const BackupPhrase = ({ navigation, route }) => {
     const shuffledIndexes = allIndexes.sort(() => Math.random() - 0.5);
     setRandomIndexes(shuffledIndexes.slice(0, 4));
   };
-
-  // Call getRandomIndexes when the component mounts to generate random indexes
 
   useEffect(() => {
     getRandomIndexes();
@@ -178,6 +174,7 @@ const BackupPhrase = ({ navigation, route }) => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("ConfirmBackupPhrase", {
+            walletData: walletData,
             mnemonicWords,
             randomIndexes,
             selectedLanguage: selectedLanguage,

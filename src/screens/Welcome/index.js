@@ -45,8 +45,10 @@ const Welcome = ({ navigation }) => {
         <View style={[styles.languageButtonContainer, { marginLeft: "-5%" }]}>
           <TouchableOpacity
             onPress={() => {
-              i18n.changeLanguage("en");
-              toggleLanguage();
+              if (selectedLanguage !== "en") {
+                i18n.changeLanguage("en");
+                toggleLanguage();
+              }
             }}
             style={[
               styles.languageButton,
@@ -69,8 +71,10 @@ const Welcome = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              i18n.changeLanguage("ar");
-              toggleLanguage();
+              if (selectedLanguage !== "ar") {
+                i18n.changeLanguage("ar");
+                toggleLanguage();
+              }
             }}
             style={[
               styles.languageButton,

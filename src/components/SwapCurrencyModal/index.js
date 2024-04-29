@@ -10,22 +10,21 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./styles";
 import Modal from "react-native-modal";
+import { useSelector } from "react-redux";
 
 const SwapCurrencyModal = ({
   isVisible,
   onClose,
   selectedCurrency,
   value,
-  onSelect,
-  tokens,
+  walletIndex = 0,
+  onPress = () => {},
 }) => {
   const [isChains, setIsChains] = useState([]);
 
-  const handleChainSelect = (isChains) => {
-    onSelect(isChains);
-    onClose();
-  };
-
+  const currencyCardData = useSelector(
+    (state) => state.currencyCardData.currencyCardData[walletIndex]
+  );
   const retrieveTokens = async () => {
     try {
       const serializedTokens = await AsyncStorage.getItem("importedTokens");
@@ -64,9 +63,14 @@ const SwapCurrencyModal = ({
       <View style={styles.modalContent}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={isChains}
+          data={currencyCardData}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleChainSelect(item.symbol)}>
+            <TouchableOpacity
+              onPress={() => {
+                onPress(item.symbol);
+                onClose();
+              }}
+            >
               <Text style={styles.chainText}>{item.symbol}</Text>
             </TouchableOpacity>
           )}

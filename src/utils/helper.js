@@ -18,14 +18,12 @@ const SUPPORTED_CHAINS = Object.freeze({
   POLYGON: "Polygon",
 });
 export const provider = (chain) => {
-  console.log("chain------- from provider selection", chain);
   const selectedChain = SUPPORTED_CHAINS.POLYGON;
   return chain === SUPPORTED_CHAINS.ETHEREUM
     ? etherumProviderInstance
     : polygonProviderInstance;
 };
 export const fetchDynamicDetailsOfToken = async (tokenAddress, walletAdd) => {
-  console.log("token address", tokenAddress, "wallet address", walletAdd);
   const erc20Prov = new Erc20Contract(tokenAddress, provider());
   try {
     // const balance = await erc20Prov.balanceOf(
@@ -33,28 +31,18 @@ export const fetchDynamicDetailsOfToken = async (tokenAddress, walletAdd) => {
     // );
     const balance = await erc20Prov.balanceOf(walletAdd);
     // const balance = await erc20Prov.balanceOf(walletAdd);
-    console.log("Token balance: ", balance);
     const bal = ethers.formatUnits(balance, 6);
     return bal;
   } catch (e) {}
 };
 export const tokenDetail = async (tokenAddress, chain) => {
-  console.log("tokenAddress", tokenAddress);
-  console.log("chain fromtokenDetail", chain);
-  console.log("works");
-
   const erc20Prov = new Erc20Contract(tokenAddress, provider(chain));
-  console.log(erc20Prov);
+
   try {
     const balance = await erc20Prov.balanceOf(tokenAddress);
-    console.log("In token details...", balance);
     const symbol = await erc20Prov.symbol();
     const tokenName = await erc20Prov.name();
     const decimals = await erc20Prov.decimals();
-    console.log("Balance:", balance);
-    console.log("Symbol:", symbol);
-    console.log("Name:", tokenName);
-    console.log("Decimals:", decimals);
     return {
       success: { balance, symbol, tokenName, decimals },
     };
@@ -69,7 +57,6 @@ export let wallet;
 export const createNewWallet = () => {
   wallet = ethers.Wallet.createRandom(provider);
   const mnemonic = wallet.mnemonic.phrase;
-  console.log("generation of wallet:::", wallet);
   // return { wallet, mnemonic, encryptedWallet: wallet.encryptSync("123") };
   return { wallet, mnemonic };
 };

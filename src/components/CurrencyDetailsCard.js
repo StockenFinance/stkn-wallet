@@ -18,16 +18,10 @@ const CurrencyDetailsCard = ({
   navigation,
   onCalculateAmount,
   importAddress,
+  index,
+  walletIndex,
 }) => {
   const { t, i18n } = useTranslation();
-  const walletCardData = useSelector(
-    (state) => state.walletcards.walletCardData
-  );
-
-  console.log(
-    "walletCardData from currency details file",
-    walletCardData[0]?.newWalletAddress?.address
-  );
 
   const [containerHeight, setContainerHeight] = useState(95);
   const [userEtherBalance, setUserEtherBalance] = useState(0);
@@ -37,23 +31,31 @@ const CurrencyDetailsCard = ({
   const [tokenBalanceImported, setTokenBalanceImported] = useState();
   const currentChain = useSelector((state) => state.chain.currentChain);
 
-  console.log("currenChain", currentChain);
-
   const handleContainerClick = () => {
     setContainerHeight(containerHeight === 95 ? 170 : 95);
   };
+  const walletCardData = useSelector(
+    (state) => state.walletcards.walletCardData
+  );
 
-  const getUserBalance = async (userAddress) => {
-    const result = await provider().getBalance(userAddress);
+  const getUserBalance = async (walletAddress) => {
+    console.log("full wallet address", walletAddress);
+    const result = await provider().getBalance(walletAddress);
     const balance = ethers.formatEther(result);
-    console.log("Balance: ", balance);
+    console.log("currencyCardItem balace", balance);
     setUserEtherBalance(balance);
-    console.log("Balance: ", userEtherBalance);
     return balance;
   };
+  // useEffect(() => {
+  //   if (walletCardData[walletIndex] !== undefined) {
+  //     getUserBalance(walletCardData[walletIndex]?.newWalletAddress?.address);
+  //     tokenBalance(walletCardData[walletIndex]?.newWalletAddress?.address);
+  //   }
+  // }, [userEtherBalance]);
+
   useEffect(() => {
     Utils.getStoreData("fullWalletAddress").then((res) => {
-      console.log("fullwalletaddress local storage", res);
+      console.log("fulll walleta address", res);
       if (res !== null) {
         getUserBalance(res);
         tokenBalance(res);
@@ -61,14 +63,9 @@ const CurrencyDetailsCard = ({
     });
   }, [userEtherBalance]);
 
-  const tokenBalance = useCallback(async () => {
+  const tokenBalance = useCallback(async (walletAddress) => {
     const importAddress = await AsyncStorage.getItem("STOREDTOKEN");
-    console.log("token address in currency details", importAddress);
-
-    console.log(
-      "walletCardData?.newWalletAddress?.address",
-      walletCardData[0]?.newWalletAddress?.address
-    );
+    // console.log("token address in currency details", importAddress);
 
     const fetchedTokenDetails = await fetchDynamicDetailsOfToken(
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", //importAddres(tokenAddress)
@@ -96,8 +93,6 @@ const CurrencyDetailsCard = ({
     }
   };
 
-  console.log("item:::", item);
-
   useEffect(() => {
     retrieveSelectedLanguage();
   }, []);
@@ -106,11 +101,11 @@ const CurrencyDetailsCard = ({
     try {
       const language = await AsyncStorage.getItem("selectedLanguage");
       if (language !== null) {
-        console.log("Retrieved language:", language);
+        // console.log("Retrieved language:", language);
         let bool = language === "english" ? true : false;
         setToggleLanguage(bool);
       } else {
-        console.log("No language saved in AsyncStorage");
+        // console.log("No language saved in AsyncStorage");
         setToggleLanguage(true);
       }
     } catch (error) {
@@ -142,8 +137,6 @@ const CurrencyDetailsCard = ({
     // Call onCalculateAmount whenever the calculated amount changes
     onCalculateAmount(calculateAmount());
   }, [calculateAmount]);
-
-  console.log("check bal::::", tokenBalanceImported);
 
   return (
     <TouchableOpacity onPress={handleContainerClick}>
@@ -316,6 +309,8 @@ const CurrencyDetailsCard = ({
                 onPress={() =>
                   navigation.navigate("SwapScreen", {
                     selectedSymbol: item.symbol,
+                    itemIndex: index,
+                    walletIndex: walletIndex,
                   })
                 }
               >

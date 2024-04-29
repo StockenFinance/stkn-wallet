@@ -17,12 +17,9 @@ const DashboardStack = () => {
     (state) => state.wallet.walletAddress
   );
 
-  console.log("wal", walletAddressFromApp);
-
   const asyncWrap = useCallback(async () => {
-    console.log("works from appendis and crossober");
     const value = await AsyncStorage.getItem("fullWalletAddress");
-    console.log("value from wrappppperrrr--------------", value);
+    // console.log("value from wrappppperrrr--------------", value);
   }, []);
 
   useEffect(() => {
@@ -36,15 +33,12 @@ const DashboardStack = () => {
           "fullWalletAddress"
         );
         // alert("Not getting data");
-        console.log(
-          "Retrieved wallet address for confirmation:",
-          storedWalletAddress
-        );
+
         if (storedWalletAddress) {
           setWalletAddress(storedWalletAddress);
         } else {
           // alert("Data not found");
-          console.log("Wallet address not found in AsyncStorage.");
+          // console.log("Wallet address not found in AsyncStorage.");
         }
       } catch (error) {
         console.error("Error fetching wallet address:", error);
