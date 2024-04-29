@@ -66,16 +66,7 @@ const Dashboard = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const [cardData, setCardData] = useState([
-    {
-      symbol: "ETH",
-      name: "Ether",
-      balance: "0.00",
-      decimals: "0",
-      price: "state3547.41",
-      chain: "Ethereum",
-    },
-  ]);
+  const [cardData, setCardData] = useState([]);
   const walletCardData = useSelector(
     (state) => state.walletcards.walletCardData
   );
@@ -83,9 +74,12 @@ const Dashboard = ({ navigation }) => {
   const currencyCardData = useSelector(
     (state) => state.currencyCardData.currencyCardData[activeIndex]
   );
+  const currencyCardDataAll = useSelector(
+    (state) => state.currencyCardData.currencyCardData
+  );
 
   console.log("check wallet card data>>>>>", walletCardData);
-  console.log("currency card data status", currencyCardData);
+  console.log("currency card data status", currencyCardDataAll);
   //full wallet address
 
   const currencyItemTotolPrice = () => {
@@ -106,7 +100,7 @@ const Dashboard = ({ navigation }) => {
   const calculateTotalBalance = () => {
     let sum = 0;
     currencyCardData?.forEach((item) => {
-      sum += parseFloat(item.price);
+      sum += parseFloat(item?.price);
     });
     setTotalBalance(sum);
   };
@@ -133,8 +127,8 @@ const Dashboard = ({ navigation }) => {
       alert("Value already exists in cardData. Not adding to array.");
       return;
     }
-    dispatch(addCardItem({ cardIndex: activeIndex, newItem: value }));
-    setCardData((prevData) => [...prevData, formattedValue]);
+    dispatch(addCardItem({ cardIndex: activeIndex, newItems: value }));
+    // setCardData((prevData) => [...prevData, formattedValue]);
     const newBalance = totalBalance + parseFloat(value.price);
     setTotalBalance(newBalance);
   };
@@ -281,6 +275,18 @@ const Dashboard = ({ navigation }) => {
     setCardData(currencyCardData);
   }, [currencyCardData]);
 
+  const getUserBalance = useCallback(async () => {
+    const x = await tokenDetail(
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "Polygon"
+    );
+    console.log("rishabh wearing same black", x);
+  }, []);
+
+  useEffect(() => {
+    getUserBalance();
+  }, []);
+
   const handleChainSelect = useCallback(
     async (chain) => {
       setSelectedChain(chain);
@@ -335,6 +341,7 @@ const Dashboard = ({ navigation }) => {
           onScroll={(event) => {
             const contentOffsetX = event.nativeEvent.contentOffset.x;
             const index = Math.round(contentOffsetX / screenWidth);
+            console.log("index------ from active", index);
             setActiveIndex(index);
           }}
         >

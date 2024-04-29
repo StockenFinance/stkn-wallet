@@ -14,6 +14,7 @@ import AddWalletModal from "../../components/AddWalletModal";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyTabHide } from "../../redux/reducer/CounterSlice";
+import { addCardItem } from "../../redux/reducer/currencyCardSlice";
 
 const WalletManagement = ({ navigation }) => {
   const allWallets = useSelector((state) => state.walletStore.allWallets);
@@ -43,6 +44,32 @@ const WalletManagement = ({ navigation }) => {
     });
   }, []);
 
+  useEffect(() => {
+    let defaultObject = [
+      {
+        symbol: "ETH",
+        name: "Ether",
+        balance: "0.00",
+        decimals: "0",
+        price: "3305.41",
+        chain: "Ethereum",
+      },
+      {
+        symbol: "MATIC",
+        name: "Polygon",
+        balance: "0.00",
+        decimals: "0",
+        price: "0.74",
+        chain: "Polygon",
+      },
+    ];
+    dispatch(
+      addCardItem({
+        cardIndex: allWallets.length - 1,
+        newItems: defaultObject,
+      })
+    );
+  }, [allWallets]);
   useEffect(() => {
     dispatch(setMyTabHide(true));
   }, []);

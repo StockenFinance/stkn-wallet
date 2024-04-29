@@ -36,10 +36,12 @@ export const fetchDynamicDetailsOfToken = async (tokenAddress, walletAdd) => {
   } catch (e) {}
 };
 export const tokenDetail = async (tokenAddress, chain) => {
+  console.log("check tokkennn::::", tokenAddress);
   const erc20Prov = new Erc20Contract(tokenAddress, provider(chain));
 
   try {
     const balance = await erc20Prov.balanceOf(tokenAddress);
+    console.log("test balance:::", balance);
     const symbol = await erc20Prov.symbol();
     const tokenName = await erc20Prov.name();
     const decimals = await erc20Prov.decimals();

@@ -27,12 +27,24 @@ const currencyCardSlice = createSlice({
   name: "currencyCardData", // Slice name set to currencyCardData
   initialState,
   reducers: {
+    // addCardItem(state, action) {
+    //   const { cardIndex, newItem } = action.payload;
+    //   // Create a new array with the new item added
+    //   const updatedItems = [...state.currencyCardData[cardIndex], newItem];
+    //   // Update the state with the new array
+    //   state.currencyCardData[cardIndex] = updatedItems;
+    // },
     addCardItem(state, action) {
-      const { cardIndex, newItem } = action.payload;
-      // Create a new array with the new item added
-      const updatedItems = [...state.currencyCardData[cardIndex], newItem];
-      // Update the state with the new array
-      state.currencyCardData[cardIndex] = updatedItems;
+      const { cardIndex, newItems } = action.payload;
+
+      if (Array.isArray(newItems)) {
+        state.currencyCardData[cardIndex] = newItems;
+      } else {
+        state.currencyCardData[cardIndex] = [
+          ...(state.currencyCardData[cardIndex] || []), // Ensure array exists or initialize as empty array
+          newItems,
+        ];
+      }
     },
     updateCardItem(state, action) {
       const { cardIndex, itemIndex, updatedItem } = action.payload;

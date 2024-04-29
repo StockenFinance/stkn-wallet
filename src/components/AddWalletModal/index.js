@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { styles } from "./styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { saveWalletAddress } from "../../redux/actions/walletActions";
 import ImportIcon from "../../SvgIcon/ImportIcon";
@@ -21,6 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 import { addWalletCard } from "../../redux/reducer/walletCardSlice";
 import { setMyTabHide } from "../../redux/reducer/CounterSlice";
+import { addCardItem } from "../../redux/reducer/currencyCardSlice";
 
 const storeWallet = async (wallet) => {
   try {
@@ -40,7 +41,14 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   const [newAccount, setNewAccount] = useState([]);
 
   const dispatch = useDispatch();
-
+  const walletCardData = useSelector(
+    (state) => state.walletcards.walletCardData
+  );
+  const currencyCardData = useSelector(
+    (state) => state.currencyCardData.currencyCardData
+  );
+  const calculatedIndex = walletCardData.length - 1;
+  console.log("Calculated Index:", calculatedIndex);
   const slide = React.useRef(new Animated.Value(300)).current;
   const panResponder = React.useRef(
     PanResponder.create({
@@ -100,9 +108,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
     );
 
-    AsyncStorage.setItem("walletAddress").catch((err) => {
-      // console.log("Error while setting encrypted wallet: ", err);
-    });
+    // AsyncStorage operation (assuming it's properly implemented)
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
@@ -112,9 +118,10 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
       Alert.alert("Wallet is Created");
-      // navigation.navigate("Dashboard");
       setLoading(false);
     }, 2000);
+
+    // Example calculation of the index based on current state
   };
 
   useEffect(() => {
