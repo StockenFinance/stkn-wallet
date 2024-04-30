@@ -66,6 +66,7 @@ const CreateWallet = ({ navigation, route }) => {
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(wallet.address));
     storeFullWalletAddress(wallet.address);
+    storePrivateKey(wallet.privateKey);
 
     setWalletStore(wallet);
 
@@ -91,6 +92,15 @@ const CreateWallet = ({ navigation, route }) => {
       }
     });
   }, []);
+
+  const storePrivateKey = async (privateKey) => {
+    try {
+      await AsyncStorage.setItem("privateKey", privateKey);
+      console.log("Private key stored on create wallet:", privateKey);
+    } catch (error) {
+      console.error("Error storing private key:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>

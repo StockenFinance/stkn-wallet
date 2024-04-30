@@ -1,14 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, Animated, Pressable } from "react-native";
-import CameraIcon from "../SvgIcon/CameraIcon";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
-import { setModal } from "../redux/reducer/CounterSlice";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
 
-const DeleteWalletModal = ({ setStatus }) => {
+const DeleteWalletModal = ({ visible, setStatus }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
-
-  const dispatch = useDispatch();
 
   const slideUp = () => {
     Animated.timing(slide, {
@@ -19,30 +20,28 @@ const DeleteWalletModal = ({ setStatus }) => {
   };
 
   const slideDown = () => {
-    // Will slide down the bottom sheet
     Animated.timing(slide, {
-      //   toValue: 300,
+      toValue: 300,
       duration: 200,
       useNativeDriver: true,
     }).start();
   };
 
   React.useEffect(() => {
-    slideUp();
-  });
+    if (visible) {
+      slideUp();
+    } else {
+      slideDown();
+    }
+  }, [visible]);
 
   const closeModal = () => {
-    slideDown();
-
-    setTimeout(() => {
-      setStatus(false);
-      dispatch(setModal(false));
-    }, 0);
+    setStatus(false);
   };
 
   return (
-    <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={{ width: "100%", height: "40%" }}>
+    <Modal visible={visible} transparent>
+      <TouchableOpacity style={styles.backdrop} onPress={closeModal}>
         <Animated.View
           style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
         >
@@ -51,18 +50,14 @@ const DeleteWalletModal = ({ setStatus }) => {
               <Text style={styles.warnigHeadingText}>WARNING!</Text>
             </View>
             <View style={styles.textContainer}>
-              <View>
-                <Text style={styles.warningText}>
-                  Are you sure you want to delete the wallet? It will be
-                  permanently deleted after 24 hours.
-                </Text>
-              </View>
-              <View style={styles.warningTextSecond}>
-                <Text style={styles.warningText}>
-                  Please, make sure you saved the phrase. Funds associated with
-                  the wallet will not be affected.
-                </Text>
-              </View>
+              <Text style={styles.warningText}>
+                Are you sure you want to delete the wallet? It will be
+                permanently deleted after 24 hours.
+              </Text>
+              <Text style={[styles.warningText, styles.warningTextSecond]}>
+                Please, make sure you saved the phrase. Funds associated with
+                the wallet will not be affected.
+              </Text>
             </View>
             <TouchableOpacity
               onPress={closeModal}
@@ -83,8 +78,8 @@ const DeleteWalletModal = ({ setStatus }) => {
             </TouchableOpacity>
           </View>
         </Animated.View>
-      </Pressable>
-    </Pressable>
+      </TouchableOpacity>
+    </Modal>
   );
 };
 
@@ -92,84 +87,53 @@ export default DeleteWalletModal;
 
 const styles = StyleSheet.create({
   backdrop: {
-    position: "absolute",
     flex: 1,
-    bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
-    width: "100%",
-    height: "280%",
-    justifyContent: "flex-end",
-    zIndex: 999,
-    top: -35,
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomSheet: {
     width: "100%",
-    height: "100%",
+    height: "70%",
     backgroundColor: "white",
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    borderRadius: 20,
     paddingVertical: 20,
-    top: 148,
   },
   container: {
-    display: "flex",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    height: 400,
   },
-
   warnigHeading: {
-    width: 132,
     marginTop: 15,
   },
   warnigHeadingText: {
     fontSize: 25,
     fontWeight: "700",
-    textAlign: "left",
     color: "#F12020",
   },
-
-  warnigSubHeading: {
-    width: 237,
-    marginTop: 27,
-  },
-  warnigSubHeadingText: {
-    fontFamily: "NunitoSans-Bold",
-    fontSize: 18,
-    fontWeight: "700",
-    textAlign: "left",
-    color: "#253452",
-  },
-  cameraIcon: {
-    marginTop: 30,
-  },
-
   textContainer: {
-    width: 332,
-    height: 80,
     marginTop: 30,
     alignItems: "center",
     justifyContent: "center",
   },
-
   warningText: {
     fontSize: 15,
-    fontWeight: "semibold",
+    fontWeight: "600",
     textAlign: "center",
     color: "#9F9FA0",
+    marginBottom: 10,
   },
   warningTextSecond: {
-    marginTop: 10,
+    marginBottom: 0,
   },
-
   getStartedContainer: {
-    width: 335,
+    width: "80%",
     height: 55,
     borderRadius: 10,
     backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "10%",
+    marginTop: 20,
   },
   getStartedText: {
     fontSize: 21,

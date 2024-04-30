@@ -87,57 +87,51 @@ const WalletManagement = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.heading}>{t("myWallet")}</Text>
       </View>
-      {!recoveryModal ? (
-        <Animated.ScrollView
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: true }
-          )}
-          scrollEventThrottle={16}
-        >
-          {loading ? (
-            <ActivityIndicator
-              styl={{ marginTop: 50 }}
-              size="large"
-              color="#F2A13F"
-            />
-          ) : (
-            <>
-              <View>
-                {allWallets?.map((wallet, index) => (
-                  <WalletList
-                    key={index}
-                    wallet={wallet}
-                    walletNumber={index + 1}
-                  />
-                )) || <Text>Please add your wallet</Text>}
-              </View>
-              <TouchableOpacity
-                onPress={() => setStatus(true)}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  // marginTop: "5%",
-                  marginBottom: "5%",
-                }}
+
+      <Animated.ScrollView
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+        scrollEventThrottle={16}
+      >
+        {loading ? (
+          <ActivityIndicator
+            styl={{ marginTop: 50 }}
+            size="large"
+            color="#F2A13F"
+          />
+        ) : (
+          <>
+            <View>
+              {allWallets?.map((wallet, index) => (
+                <WalletList
+                  key={index}
+                  wallet={wallet}
+                  walletNumber={index + 1}
+                />
+              )) || <Text>Please add your wallet</Text>}
+            </View>
+            <TouchableOpacity
+              onPress={() => setStatus(true)}
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                // marginTop: "5%",
+                marginBottom: "5%",
+              }}
+            >
+              <Text
+                style={{ fontWeight: "bold", color: "#039D00", fontSize: 20 }}
               >
-                <Text
-                  style={{ fontWeight: "bold", color: "#039D00", fontSize: 20 }}
-                >
-                  <Text>+</Text> {t("addWallet")}
-                </Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </Animated.ScrollView>
-      ) : (
-        <View>
-          {allWallets?.map((wallet, index) => (
-            <WalletList key={index} wallet={wallet} walletNumber={index + 1} />
-          )) || <Text>Please add your wallet</Text>}
-        </View>
-      )}
+                <Text>+</Text> {t("addWallet")}
+              </Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </Animated.ScrollView>
+
       {status && (
         <AddWalletModal setStatus={setStatus} navigation={navigation} />
       )}

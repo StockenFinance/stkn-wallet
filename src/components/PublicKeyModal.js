@@ -1,26 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Animated,
-  Pressable,
+  TouchableOpacity,
+  Modal,
+  Alert,
   Dimensions,
 } from "react-native";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
 import PasteIcon from "../SvgIcon/PasteIcon";
 import SmallAlertIcon from "../SvgIcon/SmallAlertIcon";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { useDispatch } from "react-redux";
 import { setModal, setMyTabHide } from "../redux/reducer/CounterSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height } = Dimensions.get("window");
 
-const PublicKeyModal = ({ setStatus, publicKey }) => {
+const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
+  const [privateKey, setPrivateKey] = useState("");
   const slide = React.useRef(new Animated.Value(height)).current;
-
-  const dispatch = useDispatch();
 
   const warningText =
     "Never share the private key with anyone, store it securely!";
@@ -38,7 +39,6 @@ const PublicKeyModal = ({ setStatus, publicKey }) => {
   };
 
   const slideUp = () => {
-    // Will change slide up the bottom sheet
     Animated.timing(slide, {
       toValue: 0,
       duration: 200,
@@ -47,37 +47,43 @@ const PublicKeyModal = ({ setStatus, publicKey }) => {
   };
 
   const slideDown = () => {
-    // Will slide down the bottom sheet
     Animated.timing(slide, {
-      //   toValue: 300,
+      toValue: 300,
       duration: 200,
       useNativeDriver: true,
     }).start();
   };
 
   React.useEffect(() => {
-    slideUp();
-  });
+    if (visible) {
+      slideUp();
+    } else {
+      slideDown();
+    }
+  }, [visible]);
 
   const closeModal = () => {
-    slideDown();
-
-    setTimeout(() => {
-      setStatus(false);
-      dispatch(setModal(false));
-    }, 0);
+    setStatus(false);
   };
 
   useEffect(() => {
-    dispatch(setMyTabHide(true));
-    return () => {
-      dispatch(setMyTabHide(false));
+    const fetchPrivateKey = async () => {
+      try {
+        const storedPrivateKey = await AsyncStorage.getItem("privateKey");
+        if (storedPrivateKey !== null) {
+          setPrivateKey(storedPrivateKey);
+        }
+      } catch (error) {
+        console.error("Error fetching private key:", error);
+      }
     };
+
+    fetchPrivateKey();
   }, []);
 
   return (
-    <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={{ width: "100%", height: "100%" }}>
+    <Modal visible={visible} transparent>
+      <TouchableOpacity style={styles.backdrop} onPress={closeModal}>
         <Animated.View
           style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
         >
@@ -87,7 +93,7 @@ const PublicKeyModal = ({ setStatus, publicKey }) => {
             </View>
 
             <View style={styles.publicKeyContainer}>
-              <Text style={styles.publicKeyContainerText}>{publicKey}</Text>
+              <Text style={styles.publicKeyContainerText}>{privateKey}</Text>
               <TouchableOpacity onPress={copyToClipboard}>
                 <PasteIcon />
               </TouchableOpacity>
@@ -107,8 +113,8 @@ const PublicKeyModal = ({ setStatus, publicKey }) => {
             </TouchableOpacity>
           </View>
         </Animated.View>
-      </Pressable>
-    </Pressable>
+      </TouchableOpacity>
+    </Modal>
   );
 };
 
@@ -116,33 +122,23 @@ export default PublicKeyModal;
 
 const styles = StyleSheet.create({
   backdrop: {
-    position: "absolute",
     flex: 1,
-    bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
-    width: "100%",
-    height: "520%",
-    justifyContent: "flex-end",
-    zIndex: 999,
-    top: -200,
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomSheet: {
     width: "100%",
-    height: "100%",
+    height: "70%",
     backgroundColor: "white",
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    borderRadius: 20,
     paddingVertical: 20,
-    top: 490,
   },
   container: {
-    display: "flex",
     alignItems: "center",
-    backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 20,
   },
-
   warnigHeading: {
     width: "auto",
   },
@@ -152,7 +148,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: "black",
   },
-
   publicKeyContainer: {
     width: "auto",
     height: "auto",
@@ -162,26 +157,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     margin: 15,
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   publicKeyContainerText: {
     fontSize: 16,
-    fontWeight: "semibold",
+    fontWeight: "600",
     color: "#253452",
     marginLeft: 10,
     marginRight: 10,
   },
-
   warningText: {
-    width: "auto",
-    height: "auto",
+    width: "90%",
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -189,9 +180,8 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginLeft: 12,
   },
-
   getStartedContainer: {
-    width: 350,
+    width: "90%",
     height: 55,
     borderRadius: 10,
     backgroundColor: "#F19220",

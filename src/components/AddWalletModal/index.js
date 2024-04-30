@@ -114,6 +114,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(wallet.address));
+    storePrivateKey(wallet.privateKey);
     setWalletStore(wallet);
     dispatch(addWalletAtReduxStore(wallet));
     setTimeout(() => {
@@ -163,6 +164,15 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     };
     fetchWalletAddress();
   }, []);
+
+  const storePrivateKey = async (privateKey) => {
+    try {
+      await AsyncStorage.setItem("privateKey", privateKey);
+      console.log("Private key stored on add wallet:", privateKey);
+    } catch (error) {
+      console.error("Error storing private key:", error);
+    }
+  };
 
   return (
     <Pressable
