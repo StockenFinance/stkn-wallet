@@ -90,7 +90,10 @@ const Settings = ({ navigation }) => {
           <Text
             style={[
               styles.currencyText,
-              { marginLeft: "35%", textTransform: "uppercase" },
+              {
+                marginLeft: selectedLanguage === "en" ? "43%" : "auto",
+                textTransform: "uppercase",
+              },
               // { marginLeft: selectedLanguage === "ar" ? 200 : null },
             ]}
           >
@@ -106,20 +109,7 @@ const Settings = ({ navigation }) => {
         <Text style={styles.createWalletText}>{t("walletConnect")}</Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      {/* <TouchableOpacity onPress={() => navigation.navigate("CustomToken")}>
-        <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-          <View style={styles.swapImageContainer}>
-            <CustomTokenIcon />
-          </View>
-          <View style={styles.divider}></View>
-          <Text style={styles.createWalletText}>
-            {toggleLanguage
-              ? EnglishTranslation.customTokens
-              : ArabicTranslation.customTokens}
-          </Text>
-          <RightArrowIcon style={styles.forwardIcon} />
-        </View>
-      </TouchableOpacity> */}
+
       <View style={[styles.createWalletView, { marginTop: "2%" }]}>
         <View style={styles.swapImageContainer}>
           <LockIcon />

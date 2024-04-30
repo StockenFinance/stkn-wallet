@@ -67,7 +67,7 @@ const CreateWallet = ({ navigation, route }) => {
     dispatch(saveWalletAddress(wallet.address));
     storeFullWalletAddress(wallet.address);
     storePrivateKey(wallet.privateKey);
-
+    // dispatch(addWalletAtReduxStore(wallet));
     setWalletStore(wallet);
 
     // setCardDATAMethod(shortenedAddress);

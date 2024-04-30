@@ -63,6 +63,7 @@ const Dashboard = ({ navigation }) => {
   const [selectedChain, setSelectedChain] = useState(null);
   const [calculatedAmount, setCalculatedAmount] = useState(0);
   const [importTokenAddress, setImportTokenValue] = useState("");
+  const [walletBalance, setWalletBalance] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -220,26 +221,6 @@ const Dashboard = ({ navigation }) => {
       .catch((err) => {});
   }, []);
 
-  // useEffect(() => {
-  //   retrieveSelectedLanguage();
-  // }, []);
-
-  // const retrieveSelectedLanguage = async () => {
-  //   try {
-  //     const language = await AsyncStorage.getItem("selectedLanguage");
-  //     if (language !== null) {
-  //       // console.log("Retrieved language:", language);
-  //       let bool = language === "english" ? true : false;
-  //       setToggleLanguage(bool);
-  //     } else {
-  //       // console.log("No language saved in AsyncStorage");
-  //       setToggleLanguage(true);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error retrieving language from AsyncStorage:", error);
-  //   }
-  // };
-
   const renderDotIndicator = () => {
     return walletCardData.map((dot, index) => {
       return (
@@ -309,6 +290,14 @@ const Dashboard = ({ navigation }) => {
   const handleCalculateAmount = (amount) => {
     setCalculatedAmount(amount);
   };
+  useEffect(() => {
+    // Simulating asynchronous operation to fetch wallet balance
+    setTimeout(() => {
+      const balance = 1000; // Example balance value
+      setWalletBalance(balance);
+      setLoading(false);
+    }, 500); // Simulating a 2-second delay
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -402,10 +391,13 @@ const Dashboard = ({ navigation }) => {
                         {t("yourBalance")}
                       </Text>
                       <Text style={styles.balanceText}>
-                        {index === 0 ? calculatedAmount : item.newWalletBalance}
-                        {/* ${calculatedAmount} */}
-                        {/* {item.newWalletBalance} */}
-                        {/* {currencyItemTotolPrice()} */}
+                        {isNaN(calculatedAmount) ? (
+                          <ActivityIndicator size="medium" color="#ffffff" />
+                        ) : calculatedAmount !== null ? (
+                          `${calculatedAmount}`
+                        ) : (
+                          `${item.newWalletBalance}`
+                        )}
                       </Text>
                     </View>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -460,7 +452,7 @@ const Dashboard = ({ navigation }) => {
       </TouchableOpacity>
       <EnterTokenModal
         importTokenAddress={(tokenValue) => {
-          alert("selected modal value");
+          // alert("selected modal value");
           setImportTokenValue(tokenValue);
           // console.log("selected token address", tokenValue);
         }}

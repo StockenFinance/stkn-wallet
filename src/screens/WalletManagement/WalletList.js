@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import KeyIcon from "../../SvgIcon/KeyIcon";
 import RecoveryPhraseIcon from "../../SvgIcon/RecoveryPhraseIcon";
 import RemoveIcon from "../../SvgIcon/RemoveIcon";
@@ -27,7 +27,9 @@ const WalletList = ({ wallet, walletNumber }) => {
 
   const recoveryPharseHandlers = () => {
     dispatch(setModal(true));
-    setStatus(true);
+    if (mnemonic) setStatus(true);
+    else
+      alert("wallets imported from Private Key does not have recovery phrases");
   };
 
   useEffect(() => {
@@ -74,9 +76,10 @@ const WalletList = ({ wallet, walletNumber }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {status && (
+      {status && mnemonic !== undefined && (
         <RecoveryPhraseModal setStatus={setStatus} mnemonic={mnemonic} />
       )}
+
       {publicKeyModalStatus && (
         <PublicKeyModal
           setStatus={setPublicKeyModalStatus}

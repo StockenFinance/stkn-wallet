@@ -70,8 +70,16 @@ const WalletManagement = ({ navigation }) => {
       })
     );
   }, [allWallets]);
+
+  // useEffect(() => {
+  //   dispatch(setMyTabHide(true));
+  // }, []);
+
   useEffect(() => {
     dispatch(setMyTabHide(true));
+    return () => {
+      dispatch(setMyTabHide(false));
+    };
   }, []);
 
   return (
@@ -80,7 +88,7 @@ const WalletManagement = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.goBack();
-            dispatch(setMyTabHide(false));
+            // dispatch(setMyTabHide(false));
           }}
         >
           <BackIcon />

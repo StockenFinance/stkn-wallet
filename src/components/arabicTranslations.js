@@ -31,7 +31,7 @@ const ArabicTranslation = {
   done: "تم",
 
   // Import Wallet screen strings
-  privateKeyText: "المفتاح الخاص/عبارة الاسترداد",
+  privateKeyText: "المفتاح الخاص",
   import: "الاستيراد",
   privateKey: "المفتاح الخاص أو مرحلة الاسترداد",
 

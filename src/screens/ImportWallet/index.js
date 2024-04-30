@@ -30,30 +30,16 @@ const ImportWallet = ({ navigation, route }) => {
   };
 
   const handleOnImport = async () => {
-    const isMnemonic = text.split(" ").length > 1;
+    // const isMnemonic = text.split(" ").length > 1;
 
     let wallet;
 
-    if (isMnemonic) {
-      try {
-        wallet = ethers.HDNodeWallet.fromMnemonic(
-          ethers.Mnemonic.fromPhrase(text)
-        );
-        securityKey = wallet.mnemonic.phrase;
-        backupPhrase = text;
-      } catch (error) {
-        setErrorMessage("Invalid recovery phrase");
-        setLoading(false);
-        return;
-      }
-    } else {
-      try {
-        wallet = new ethers.Wallet(text);
-      } catch (error) {
-        setErrorMessage("Invalid private key");
-        setLoading(false);
-        return;
-      }
+    try {
+      wallet = new ethers.Wallet(text);
+    } catch (error) {
+      setErrorMessage("Invalid private key");
+      setLoading(false);
+      return;
     }
 
     console.log("check import::::", wallet);

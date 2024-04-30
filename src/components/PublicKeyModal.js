@@ -20,7 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const { height } = Dimensions.get("window");
 
 const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
-  const [privateKey, setPrivateKey] = useState("");
+  // const [privateKey, setPrivateKey] = useState("");
   const slide = React.useRef(new Animated.Value(height)).current;
 
   const warningText =
@@ -28,7 +28,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
 
   const copyToClipboard = async () => {
     try {
-      Clipboard.setString(publicKey);
+      Clipboard.setString(privateKey);
       Alert.alert("Success", "Your public key copied to clipboard!", [
         { text: "OK" },
       ]);
@@ -66,20 +66,20 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
     setStatus(false);
   };
 
-  useEffect(() => {
-    const fetchPrivateKey = async () => {
-      try {
-        const storedPrivateKey = await AsyncStorage.getItem("privateKey");
-        if (storedPrivateKey !== null) {
-          setPrivateKey(storedPrivateKey);
-        }
-      } catch (error) {
-        console.error("Error fetching private key:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPrivateKey = async () => {
+  //     try {
+  //       const storedPrivateKey = await AsyncStorage.getItem("privateKey");
+  //       if (storedPrivateKey !== null) {
+  //         setPrivateKey(storedPrivateKey);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching private key:", error);
+  //     }
+  //   };
 
-    fetchPrivateKey();
-  }, []);
+  //   fetchPrivateKey();
+  // }, []);
 
   return (
     <Modal visible={visible} transparent>
@@ -93,7 +93,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
             </View>
 
             <View style={styles.publicKeyContainer}>
-              <Text style={styles.publicKeyContainerText}>{privateKey}</Text>
+              <Text style={styles.publicKeyContainerText}>{publicKey}</Text>
               <TouchableOpacity onPress={copyToClipboard}>
                 <PasteIcon />
               </TouchableOpacity>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   warningText: {
-    width: "90%",
+    width: "99%",
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   getStartedContainer: {
-    width: "90%",
+    width: "100%",
     height: 55,
     borderRadius: 10,
     backgroundColor: "#F19220",

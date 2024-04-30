@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   counter: CounterSlice,
   currencyCardData: currencyCardSlice,
   navigation: navigationSlice,
+
   // other reducers if any
 });
 

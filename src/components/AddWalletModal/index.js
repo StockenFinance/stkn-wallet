@@ -103,26 +103,24 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   const createWallet = () => {
     setLoading(true);
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
+    console.log("Wallet api response", wallet);
     const phrase = wallet;
     dispatch(
       addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
     );
-
-    // AsyncStorage operation (assuming it's properly implemented)
-
+    dispatch(addWalletAtReduxStore(wallet));
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(wallet.address));
     storePrivateKey(wallet.privateKey);
+
     setWalletStore(wallet);
-    dispatch(addWalletAtReduxStore(wallet));
+
     setTimeout(() => {
       Alert.alert("Wallet is Created");
       setLoading(false);
     }, 2000);
-
-    // Example calculation of the index based on current state
   };
 
   useEffect(() => {
@@ -130,7 +128,6 @@ const AddWalletModal = ({ navigation, setStatus }) => {
   }, [generatedWalletAddress, walletStore]);
 
   useEffect(() => {
-    // Retrieve the selected language from AsyncStorage on component mount
     AsyncStorage.getItem("selectedLanguage").then((language) => {
       if (language) {
         setSelectedLanguage(language);

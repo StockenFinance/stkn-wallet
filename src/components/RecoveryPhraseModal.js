@@ -9,14 +9,11 @@ import {
   Modal,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import EnglishTranslation from "./englishTranslation";
-import ArabicTranslation from "./arabicTranslations";
 import AlertIcon from "../SvgIcon/AlertIcon";
 import PasteIcon from "../SvgIcon/PasteIcon";
 import Clipboard from "@react-native-clipboard/clipboard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { setModal, setMyTabHide } from "../redux/reducer/CounterSlice";
 import { useTranslation } from "react-i18next";
 
 const { height } = Dimensions.get("window");
@@ -53,14 +50,15 @@ const RecoveryPhraseModal = ({ visible, setStatus, mnemonic }) => {
     setStatus(false);
   };
 
-  const mnemonicWords = mnemonic.split(" ");
+  console.log("check split:::::", mnemonic);
+  const mnemonicWords = mnemonic?.split(" ");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const { t, i18n } = useTranslation();
 
   const copyToClipboard = async () => {
     try {
-      Clipboard.setString(mnemonic);
+      Clipboard.setString(mnemonicWords);
       Alert.alert("Success", "Your recovery phrase copied to clipboard!", [
         { text: "OK" },
       ]);
@@ -79,12 +77,12 @@ const RecoveryPhraseModal = ({ visible, setStatus, mnemonic }) => {
     });
   }, []);
 
-  useEffect(() => {
-    dispatch(setMyTabHide(true));
-    return () => {
-      dispatch(setMyTabHide(false));
-    };
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setMyTabHide(true));
+  //   return () => {
+  //     dispatch(setMyTabHide(false));
+  //   };
+  // }, []);
 
   return (
     <Modal visible={visible} transparent>
