@@ -28,7 +28,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
 
   const copyToClipboard = async () => {
     try {
-      Clipboard.setString(privateKey);
+      Clipboard.setString(publicKey);
       Alert.alert("Success", "Your public key copied to clipboard!", [
         { text: "OK" },
       ]);

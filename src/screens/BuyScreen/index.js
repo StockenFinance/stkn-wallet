@@ -62,6 +62,19 @@ const BuyScreen = () => {
   };
   const handleRangePress = (range) => {
     setSelectedRange(range);
+
+    switch (range) {
+      case "$150":
+        setFiatAmount("150");
+        break;
+      case "$500":
+        setFiatAmount("500");
+        break;
+      case "MAX":
+        break;
+      default:
+        break;
+    }
   };
 
   const API_KEY = "pk_live_gCcjfuq2Kqof33l1p4iGPpeZGpwFY1";
