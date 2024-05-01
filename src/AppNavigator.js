@@ -20,6 +20,7 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const isNavigationEnabled = useSelector((state) => state.navigation);
+
   const initialRouteName = isNavigationEnabled ? "Dashboard" : "Welcome";
 
   return (

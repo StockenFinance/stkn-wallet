@@ -18,7 +18,11 @@ import { addCardItem } from "../../redux/reducer/currencyCardSlice";
 
 const WalletManagement = ({ navigation }) => {
   const allWallets = useSelector((state) => state.walletStore.allWallets);
+  const walletCardData = useSelector(
+    (state) => state.walletcards.walletCardData
+  );
 
+  console.log("walletCardData status", walletCardData);
   console.log("allWallets====at=====walletManagement", allWallets);
 
   const recoveryModal = useSelector(
@@ -112,11 +116,12 @@ const WalletManagement = ({ navigation }) => {
         ) : (
           <>
             <View>
-              {allWallets?.map((wallet, index) => (
+              {walletCardData?.map((wallet, index) => (
                 <WalletList
                   key={index}
-                  wallet={wallet}
+                  wallet={wallet.newWalletAddress} // Accessing newWalletAddress object
                   walletNumber={index + 1}
+                  index={index}
                 />
               )) || <Text>Please add your wallet</Text>}
             </View>

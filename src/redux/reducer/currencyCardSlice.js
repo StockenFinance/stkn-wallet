@@ -24,16 +24,9 @@ const initialState = {
 };
 
 const currencyCardSlice = createSlice({
-  name: "currencyCardData", // Slice name set to currencyCardData
+  name: "currencyCardData",
   initialState,
   reducers: {
-    // addCardItem(state, action) {
-    //   const { cardIndex, newItem } = action.payload;
-    //   // Create a new array with the new item added
-    //   const updatedItems = [...state.currencyCardData[cardIndex], newItem];
-    //   // Update the state with the new array
-    //   state.currencyCardData[cardIndex] = updatedItems;
-    // },
     addCardItem(state, action) {
       const { cardIndex, newItems } = action.payload;
 
@@ -41,7 +34,7 @@ const currencyCardSlice = createSlice({
         state.currencyCardData[cardIndex] = newItems;
       } else {
         state.currencyCardData[cardIndex] = [
-          ...(state.currencyCardData[cardIndex] || []), // Ensure array exists or initialize as empty array
+          ...(state.currencyCardData[cardIndex] || []),
           newItems,
         ];
       }
@@ -52,12 +45,22 @@ const currencyCardSlice = createSlice({
     },
     removeCardItem(state, action) {
       const { cardIndex, itemIndex } = action.payload;
-      state.currencyCardData[cardIndex].splice(itemIndex, 1);
+      state.currencyCardData[cardIndex] = state.currencyCardData[
+        cardIndex
+      ].filter((_, index) => index !== itemIndex);
+    },
+    emptyCardData(state, action) {
+      const cardIndex = action.payload;
+      state.currencyCardData = Object.fromEntries(
+        Object.entries(state.currencyCardData).filter(
+          ([key]) => key !== cardIndex
+        )
+      );
     },
   },
 });
 
-export const { addCardItem, updateCardItem, removeCardItem } =
+export const { addCardItem, updateCardItem, removeCardItem, emptyCardData } =
   currencyCardSlice.actions;
 
 export default currencyCardSlice.reducer;

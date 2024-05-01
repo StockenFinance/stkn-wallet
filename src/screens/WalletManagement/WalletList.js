@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setModal, setMyTabHide } from "../../redux/reducer/CounterSlice";
 import DeleteWalletModal from "../../components/DeleteWalletModal";
 
-const WalletList = ({ wallet, walletNumber }) => {
+const WalletList = ({ wallet, walletNumber, index }) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(false);
   const [publicKeyModalStatus, setPublicKeyModalStatus] = useState(false);
@@ -87,7 +87,10 @@ const WalletList = ({ wallet, walletNumber }) => {
         />
       )}
       {deleteWalletModalStatus && (
-        <DeleteWalletModal setStatus={setDeleteWalletModalStatus} />
+        <DeleteWalletModal
+          setStatus={setDeleteWalletModalStatus}
+          index={index}
+        />
       )}
     </>
   );

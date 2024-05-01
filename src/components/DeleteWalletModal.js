@@ -6,10 +6,55 @@ import {
   Animated,
   TouchableOpacity,
   Modal,
+  Alert,
 } from "react-native";
+import { removeWalletCardByIndex } from "../redux/reducer/walletCardSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setNavigationEnabled } from "../redux/reducer/navigationSlice";
+import { useNavigation } from "@react-navigation/native";
+import { emptyCardData } from "../redux/reducer/currencyCardSlice";
 
-const DeleteWalletModal = ({ visible, setStatus }) => {
+const DeleteWalletModal = ({ visible, setStatus, index }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
+
+  const walletCardData = useSelector(
+    (state) => state.walletcards.walletCardData
+  );
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const removeWalletCardItem = () => {
+    closeModal();
+    if (walletCardData.length === 1) {
+      Alert.alert(
+        "Alert",
+        "Are you sure you want to remove the last wallet?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => {
+              dispatch(removeWalletCardByIndex(0));
+              dispatch(emptyCardData(index));
+              closeModal();
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "Welcome" }],
+              });
+              // Close modal after removing the wallet card
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      dispatch(removeWalletCardByIndex(index));
+      dispatch(emptyCardData(index));
+    }
+  };
 
   const slideUp = () => {
     Animated.timing(slide, {
@@ -60,7 +105,7 @@ const DeleteWalletModal = ({ visible, setStatus }) => {
               </Text>
             </View>
             <TouchableOpacity
-              onPress={closeModal}
+              onPress={removeWalletCardItem}
               style={styles.getStartedContainer}
             >
               <Text style={styles.getStartedText}>Delete</Text>

@@ -12,10 +12,9 @@ const walletCardSlice = createSlice({
     addWalletCard: (state, action) => {
       state.walletCardData.push(action.payload);
     },
-    removeWalletCard: (state, action) => {
-      state.walletCardData = state.walletCardData.filter(
-        (card) => card.newWalletAddress !== action.payload.newWalletAddress
-      );
+    removeWalletCardByIndex: (state, action) => {
+      const indexToRemove = action.payload;
+      state.walletCardData.splice(indexToRemove, 1);
     },
     updateWalletCardByIndex: (state, action) => {
       const { index, newData } = action.payload;
@@ -29,6 +28,9 @@ const walletCardSlice = createSlice({
   },
 });
 
-export const { addWalletCard, removeWalletCard, updateWalletCardByIndex } =
-  walletCardSlice.actions;
+export const {
+  addWalletCard,
+  removeWalletCardByIndex,
+  updateWalletCardByIndex,
+} = walletCardSlice.actions;
 export default walletCardSlice.reducer;
