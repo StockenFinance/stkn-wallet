@@ -37,6 +37,7 @@ const Disclaimer = ({ setStatus, buyData }) => {
 
   const openBuyCrypto = () => {
     const apiKey = "pk_test_oxQY1qdAGKlItZrVIRQ9qpNwpfAPHjQ";
+    // const apiKey = "pk_live_IhKSIl5Zf5C0LM5Cd0hn9Je5HRfbAyEL";
     const url = `https://buy-sandbox.moonpay.com/?apiKey=${apiKey}&cryptoAmount=${buyData.cryptoAmount}&fiatAmount=${buyData.fiatAmount}&selectedCryptoCurrency=${buyData.selectedCryptoCurrency}&selectedFiatCurrency=${buyData.selectedFiatCurrency}`;
     Linking.openURL(url).catch((err) =>
       console.error("An error occurred", err)
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
   importButton: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "5%",
+    marginTop: "-25%",
     width: "96%",
     height: 49,
     alignSelf: "center",

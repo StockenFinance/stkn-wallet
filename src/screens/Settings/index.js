@@ -91,7 +91,7 @@ const Settings = ({ navigation }) => {
             style={[
               styles.currencyText,
               {
-                marginLeft: selectedLanguage === "en" ? "43%" : "auto",
+                left: !selectedLanguage === "en" ? "10%" : null,
                 textTransform: "uppercase",
               },
               // { marginLeft: selectedLanguage === "ar" ? 200 : null },
@@ -128,32 +128,7 @@ const Settings = ({ navigation }) => {
         </Text>
         <RightArrowIcon style={styles.forwardIcon} />
       </View>
-      {/* <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-        <View style={styles.swapImageContainer}>
-          <RecoveryPhraseIcon />
-        </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>
-          {" "}
-          {toggleLanguage
-            ? EnglishTranslation.viewPhrase
-            : ArabicTranslation.viewPhrase}
-        </Text>
-        <RightArrowIcon style={styles.forwardIcon} />
-      </View>
-      <View style={[styles.createWalletView, { marginTop: "2%" }]}>
-        <View style={styles.swapImageContainer}>
-          <KeyIcon />
-        </View>
-        <View style={styles.divider}></View>
-        <Text style={styles.createWalletText}>
-          {" "}
-          {toggleLanguage
-            ? EnglishTranslation.viewKey
-            : ArabicTranslation.viewKey}
-        </Text>
-        <RightArrowIcon style={styles.forwardIcon} />
-      </View> */}
+
       <LanguageChangeModal isVisible={modalVisible} onClose={closeModal} />
     </View>
   );

@@ -20,7 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const { height } = Dimensions.get("window");
 
 const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
-  // const [privateKey, setPrivateKey] = useState("");
+  const [privateKey, setPrivateKey] = useState("");
   const slide = React.useRef(new Animated.Value(height)).current;
 
   const warningText =
@@ -28,7 +28,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
 
   const copyToClipboard = async () => {
     try {
-      Clipboard.setString(publicKey);
+      Clipboard.setString(privateKey);
       Alert.alert("Success", "Your public key copied to clipboard!", [
         { text: "OK" },
       ]);
@@ -66,20 +66,20 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
     setStatus(false);
   };
 
-  // useEffect(() => {
-  //   const fetchPrivateKey = async () => {
-  //     try {
-  //       const storedPrivateKey = await AsyncStorage.getItem("privateKey");
-  //       if (storedPrivateKey !== null) {
-  //         setPrivateKey(storedPrivateKey);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching private key:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchPrivateKey = async () => {
+      try {
+        const storedPrivateKey = await AsyncStorage.getItem("privateKey");
+        if (storedPrivateKey !== null) {
+          setPrivateKey(storedPrivateKey);
+        }
+      } catch (error) {
+        console.error("Error fetching private key:", error);
+      }
+    };
 
-  //   fetchPrivateKey();
-  // }, []);
+    fetchPrivateKey();
+  }, []);
 
   return (
     <Modal visible={visible} transparent>

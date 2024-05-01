@@ -96,8 +96,7 @@ const DeleteWalletModal = ({ visible, setStatus, index }) => {
             </View>
             <View style={styles.textContainer}>
               <Text style={styles.warningText}>
-                Are you sure you want to delete the wallet? It will be
-                permanently deleted after 24 hours.
+                Are you sure you want to delete the wallet?
               </Text>
               <Text style={[styles.warningText, styles.warningTextSecond]}>
                 Please, make sure you saved the phrase. Funds associated with
