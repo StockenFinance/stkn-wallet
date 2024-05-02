@@ -7,6 +7,7 @@ import {
   FlatList,
   Dimensions,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import LinearGradient from "react-native-linear-gradient";
@@ -107,31 +108,42 @@ const Dashboard = ({ navigation }) => {
   };
 
   const addTokenBtn = async (value) => {
-    console.log("add token value status>>>", value);
-    calculateTotalBalance();
-    toggleEnterTokenModal();
-    if (value.name.trim() === "" || value.symbol.trim() === "") {
-      // alert("value is alrady exist we can not allow to import same value");
-      return;
-    }
-
-    const formattedValue = {
-      ...value,
-      decimals: parseFloat(value.decimals).toFixed(0),
-    };
-
-    const isDuplicate = currencyCardData.some((item) =>
-      isEqual(item, formattedValue)
+    const isSymbolExist = currencyCardData.some(
+      (item) => item.symbol === value.symbol
     );
 
-    if (isDuplicate) {
-      alert("Value already exists in cardData. Not adding to array.");
+    console.log("add token value status>>>", value, isSymbolExist);
+    if (isSymbolExist) {
+      Alert.alert("Token is already imported", "", [{ text: "OK" }]);
+      toggleEnterTokenModal();
       return;
+    } else {
+      console.log("add token value status>>>", value);
+      calculateTotalBalance();
+      toggleEnterTokenModal();
+      if (value.name.trim() === "" || value.symbol.trim() === "") {
+        // alert("value is alrady exist we can not allow to import same value");
+        return;
+      }
+
+      const formattedValue = {
+        ...value,
+        decimals: parseFloat(value.decimals).toFixed(0),
+      };
+
+      const isDuplicate = currencyCardData.some((item) =>
+        isEqual(item, formattedValue)
+      );
+
+      if (isDuplicate) {
+        alert("Value already exists in cardData. Not adding to array.");
+        return;
+      }
+      dispatch(addCardItem({ cardIndex: activeIndex, newItems: value }));
+      // setCardData((prevData) => [...prevData, formattedValue]);
+      const newBalance = totalBalance + parseFloat(value.price);
+      setTotalBalance(newBalance);
     }
-    dispatch(addCardItem({ cardIndex: activeIndex, newItems: value }));
-    // setCardData((prevData) => [...prevData, formattedValue]);
-    const newBalance = totalBalance + parseFloat(value.price);
-    setTotalBalance(newBalance);
   };
 
   function isEqual(obj1, obj2) {

@@ -18,8 +18,8 @@ export const styles = StyleSheet.create({
   },
   HeaderText: {
     fontSize: 16,
-    fontWeight: "500",
-    color: "#494949",
+    fontWeight: "800",
+    color: "#000000",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -64,6 +64,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     marginRight: 10,
     color: "black",
+    paddingRight: 40,
   },
   readOnlyInputsContainer: {
     margin: 20,
@@ -86,7 +87,8 @@ export const styles = StyleSheet.create({
   copyPasteIcon: {
     position: "absolute",
     marginTop: "32%",
-    right: 15,
+    right: "6%",
+    zIndex: 1,
   },
   copyPasteImage: {
     width: 25,
@@ -95,6 +97,7 @@ export const styles = StyleSheet.create({
   contractAddressText: {
     fontWeight: "800",
     marginBottom: "3%",
+    color: "#000000",
   },
   nameText: {
     color: "black",

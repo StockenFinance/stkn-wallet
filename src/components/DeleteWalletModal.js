@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setNavigationEnabled } from "../redux/reducer/navigationSlice";
 import { useNavigation } from "@react-navigation/native";
 import { emptyCardData } from "../redux/reducer/currencyCardSlice";
+import { ethers } from "ethers";
 
 const DeleteWalletModal = ({ visible, setStatus, index }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
@@ -38,6 +39,7 @@ const DeleteWalletModal = ({ visible, setStatus, index }) => {
             text: "OK",
             onPress: () => {
               dispatch(removeWalletCardByIndex(0));
+              // deleteWallet();
               dispatch(emptyCardData(index));
               closeModal();
               navigation.reset({
@@ -52,8 +54,16 @@ const DeleteWalletModal = ({ visible, setStatus, index }) => {
       );
     } else {
       dispatch(removeWalletCardByIndex(index));
+      // deleteWallet();
       dispatch(emptyCardData(index));
     }
+  };
+
+  const deleteWallet = () => {
+    const key = walletCardData[index].newWalletAddress.publicKey;
+    const wallet = new ethers.Wallet(key);
+    console.log("deletew status", wallet);
+    wallet.disconnect();
   };
 
   const slideUp = () => {

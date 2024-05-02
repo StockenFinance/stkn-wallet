@@ -93,7 +93,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
             </View>
 
             <View style={styles.publicKeyContainer}>
-              <Text style={styles.publicKeyContainerText}>{publicKey}</Text>
+              <Text style={styles.publicKeyContainerText}>{privateKey}</Text>
               <TouchableOpacity onPress={copyToClipboard}>
                 <PasteIcon />
               </TouchableOpacity>

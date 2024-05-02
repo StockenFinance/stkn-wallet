@@ -18,7 +18,6 @@ import ArabicTranslation from "../arabicTranslations";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
 import { Utils } from "../../utils/LocalStorage";
-import { RadioButton } from "@react-native-paper/radio-button";
 
 const EnterTokenModal = ({
   isVisible,
@@ -29,7 +28,6 @@ const EnterTokenModal = ({
   const { t, i18n } = useTranslation();
 
   const [tokenNumber, setTokenNumber] = useState("");
-  const [toggleLanguage, setToggleLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [storedTokens, setStoredTokens] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Ethereum");
@@ -70,22 +68,6 @@ const EnterTokenModal = ({
     tokenDetails.name.trim() === "" ||
     (!tokenDetails.decimals && tokenDetails.decimals !== 0) ||
     tokenDetails.symbol.trim() === "";
-  // const debounceAsync = (func, delay) => {
-  //   let timeoutId;
-  //   return (...args) => {
-  //     return new Promise((resolve, reject) => {
-  //       clearTimeout(timeoutId);
-  //       timeoutId = setTimeout(async () => {
-  //         try {
-  //           const result = await func(...args);
-  //           resolve(result);
-  //         } catch (error) {
-  //           reject(error);
-  //         }
-  //       }, delay);
-  //     });
-  //   };
-  // };
 
   const handleInputChange = async (text) => {
     setTokenNumber(text);
@@ -95,6 +77,7 @@ const EnterTokenModal = ({
         console.log("selectedOption before res", selectedOption);
         const res = await tokenDetail(text, selectedOption);
         if (res.success) {
+          console.log("import token api respomse", res);
           const { tokenName, decimals, symbol, balance } = res.success;
           console.log("Balance test::::", tokenName, decimals, symbol, balance);
           fetchCryptoPrice(symbol).then((usdPrice) => {
@@ -170,26 +153,6 @@ const EnterTokenModal = ({
       console.error("Error fetching crypto price:", error);
     }
   };
-
-  // useEffect(() => {
-  //   retrieveSelectedLanguage();
-  // }, []);
-
-  // const retrieveSelectedLanguage = async () => {
-  //   try {
-  //     const language = await AsyncStorage.getItem("selectedLanguage");
-  //     if (language !== null) {
-  //       console.log("Retrieved language:", language);
-  //       let bool = language === "english" ? true : false;
-  //       setToggleLanguage(bool);
-  //     } else {
-  //       console.log("No language saved in AsyncStorage");
-  //       setToggleLanguage(true);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error retrieving language from AsyncStorage:", error);
-  //   }
-  // };
 
   useEffect(() => {
     // Retrieve the selected language from AsyncStorage on component mount
