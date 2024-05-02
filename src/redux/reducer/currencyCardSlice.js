@@ -2,24 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currencyCardData: {
-    0: [
-      {
-        symbol: "ETH",
-        name: "Ether",
-        balance: "0.00",
-        decimals: "0",
-        price: "3305.41",
-        chain: "Ethereum",
-      },
-      {
-        symbol: "MATIC",
-        name: "Polygon",
-        balance: "0.00",
-        decimals: "0",
-        price: "0.74",
-        chain: "Polygon",
-      },
-    ],
+    0: [],
   },
 };
 

@@ -15,9 +15,12 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 import { addCardItem } from "../../redux/reducer/currencyCardSlice";
+import { provider } from "../../utils/helper";
 
 const WalletManagement = ({ navigation }) => {
   const allWallets = useSelector((state) => state.walletStore.allWallets);
+  const [balance, setBalance] = useState({ eth: 0.0, matic: 0.0 });
+  const walletAddress = useSelector((state) => state.wallet.walletAddress);
   const walletCardData = useSelector(
     (state) => state.walletcards.walletCardData
   );
@@ -38,6 +41,43 @@ const WalletManagement = ({ navigation }) => {
 
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { t, i18n } = useTranslation();
+  const [ethPrice, setEthPrice] = useState(null);
+  const [maticPrice, setMaticPrice] = useState(null);
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        // Define the cryptocurrencies you want to get the prices for
+        const cryptos = ["ethereum", "matic-network"];
+
+        // Define the CoinGecko API endpoint for getting the price data
+        const apiUrl = "https://api.coingecko.com/api/v3/simple/price";
+
+        // Define the parameters for the API request
+        const params = {
+          ids: cryptos.join(","),
+          vs_currencies: "usd", // Get prices in USD
+        };
+
+        // Make the API request
+        const response = await fetch(
+          `${apiUrl}?${new URLSearchParams(params)}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("data for market price", data);
+
+        // Extract the prices for each cryptocurrency
+        setEthPrice(data["ethereum"]["usd"]);
+        setMaticPrice(data["matic-network"]["usd"]);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
+
+    fetchPrices();
+  }, []);
 
   useEffect(() => {
     AsyncStorage.getItem("selectedLanguage").then((language) => {
@@ -53,17 +93,17 @@ const WalletManagement = ({ navigation }) => {
       {
         symbol: "ETH",
         name: "Ether",
-        balance: "0.00",
+        balance: balance?.eth,
         decimals: "0",
-        price: "3305.41",
+        price: ethPrice,
         chain: "Ethereum",
       },
       {
         symbol: "MATIC",
         name: "Polygon",
-        balance: "0.00",
+        balance: balance?.matic,
         decimals: "0",
-        price: "0.74",
+        price: maticPrice,
         chain: "Polygon",
       },
     ];
@@ -73,7 +113,7 @@ const WalletManagement = ({ navigation }) => {
         newItems: defaultObject,
       })
     );
-  }, [allWallets]);
+  }, [allWallets, balance]);
 
   // useEffect(() => {
   //   dispatch(setMyTabHide(true));
@@ -85,6 +125,21 @@ const WalletManagement = ({ navigation }) => {
       dispatch(setMyTabHide(false));
     };
   }, []);
+
+  const getBalance = async () => {
+    let balanceEth = await provider("Ethereum").getBalance(walletAddress);
+    let balancePoly = await provider("Polygon").getBalance(walletAddress);
+    setBalance({
+      eth: balanceEth,
+      matic: balancePoly,
+    });
+
+    console.log("balance from  Balllore and wallet", balanceEth, balancePoly);
+  };
+
+  useEffect(() => {
+    getBalance();
+  }, [walletAddress]);
 
   return (
     <View style={{ marginTop: 30, flex: 1 }}>

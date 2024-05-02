@@ -57,7 +57,10 @@ export const tokenDetail = async (tokenAddress, chain) => {
 export let wallet;
 
 export const createNewWallet = () => {
+  console.log("yes its fine");
   wallet = ethers.Wallet.createRandom(provider);
+  
+
   const mnemonic = wallet.mnemonic.phrase;
   // return { wallet, mnemonic, encryptedWallet: wallet.encryptSync("123") };
   return { wallet, mnemonic };

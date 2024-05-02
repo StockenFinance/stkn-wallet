@@ -6,19 +6,24 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { styles } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createNewWallet, provider } from "../../utils/helper";
+import { createNewWallet, provider, wallet } from "../../utils/helper";
 import ImportIcon from "../../SvgIcon/ImportIcon";
 import CreateIcon from "../../SvgIcon/CreateIcon";
 import HomeLogoIcon from "../../SvgIcon/HomeLogoIcon";
 import { saveWalletAddress } from "../../redux/actions/walletActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { addWalletAtReduxStore } from "../../redux/reducer/allWalletStore";
 import { Utils } from "../../utils/LocalStorage";
 import { addWalletCard } from "../../redux/reducer/walletCardSlice";
+import { ethers } from "ethers";
+import {
+  addCardItem,
+  updateCardItem,
+} from "../../redux/reducer/currencyCardSlice";
 
 const storeWalletAddress = async (walletAddress, wallet) => {
   try {
@@ -45,13 +50,83 @@ const storeFullWalletAddress = async (fullWalletAddress) => {
 
 const CreateWallet = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
+  const allWallets = useSelector((state) => state.walletStore.allWallets);
 
   const [loading, setLoading] = useState(false);
   const [generatedWalletAddress, setGeneratedWalletAddress] = useState("");
   const [walletStore, setWalletStore] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [balance, setBalance] = useState({ eth: 0.0, matic: 0.0 });
+
+  const [ethPrice, setEthPrice] = useState(null);
+  const [maticPrice, setMaticPrice] = useState(null);
+  const currencyCardData = useSelector(
+    (state) => state.currencyCardData.currencyCardData[0]
+  );
+  console.log("currencyCardData ---------Trenty", currencyCardData);
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        // Define the cryptocurrencies you want to get the prices for
+        const cryptos = ["ethereum", "matic-network"];
+
+        // Define the CoinGecko API endpoint for getting the price data
+        const apiUrl = "https://api.coingecko.com/api/v3/simple/price";
+
+        // Define the parameters for the API request
+        const params = {
+          ids: cryptos.join(","),
+          vs_currencies: "usd", // Get prices in USD
+        };
+
+        // Make the API request
+        const response = await fetch(
+          `${apiUrl}?${new URLSearchParams(params)}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("data for market price", data);
+
+        // Extract the prices for each cryptocurrency
+        setEthPrice(data["ethereum"]["usd"]);
+        setMaticPrice(data["matic-network"]["usd"]);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
+
+    fetchPrices();
+  }, []);
 
   const dispatch = useDispatch();
+  const updatePricesAndBalances = useCallback(() => {
+    let defaultObject = [
+      {
+        symbol: "ETH",
+        name: "Ether",
+        balance: balance?.eth,
+        decimals: "0",
+        price: ethPrice,
+        chain: "Ethereum",
+      },
+      {
+        symbol: "MATIC",
+        name: "Polygon",
+        balance: balance?.matic,
+        decimals: "0",
+        price: maticPrice,
+        chain: "Polygon",
+      },
+    ];
+    dispatch(
+      addCardItem({
+        cardIndex: 0,
+        newItems: defaultObject,
+      })
+    );
+  }, [balance, maticPrice, ethPrice]);
 
   const createWallet = () => {
     setLoading(true);
@@ -65,8 +140,10 @@ const CreateWallet = ({ navigation, route }) => {
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(wallet.address));
+
     storeFullWalletAddress(wallet.address);
     storePrivateKey(wallet.privateKey);
+
     // dispatch(addWalletAtReduxStore(wallet));
     setWalletStore(wallet);
 
@@ -77,6 +154,7 @@ const CreateWallet = ({ navigation, route }) => {
       selectedLanguage: selectedLanguage,
     });
     setLoading(false);
+    updatePricesAndBalances();
   };
 
   useEffect(() => {
@@ -101,6 +179,17 @@ const CreateWallet = ({ navigation, route }) => {
       console.error("Error storing private key:", error);
     }
   };
+
+  const getBalance = async () => {
+    let balanceEth = await provider("Ethereum").getBalance(walletStore.address);
+    let balancePoly = await provider("Polygon").getBalance(walletStore.address);
+    console.log("balance from  Balllore", balanceEth, balancePoly);
+  };
+
+  useEffect(() => {
+    console.log("walletStore", walletStore.address);
+    getBalance();
+  }, [walletStore]);
 
   return (
     <View style={styles.container}>
