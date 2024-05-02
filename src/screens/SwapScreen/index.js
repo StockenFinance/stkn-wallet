@@ -97,6 +97,7 @@ const SwapScreen = ({ route, tokenList }) => {
     }
   }
 
+  console.log("selectedCurrency-----zumba", selectedCurrency);
   useEffect(() => {
     retrieveSelectedLanguage();
   }, []);
@@ -284,6 +285,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 onClose={() => setConvertCurrencyModalVisible(false)}
                 onSelect={handleConvertCurrencySelect}
                 value={convertedCurrency}
+                selectedCurrency={selectedCurrency}
                 tokenList={tokenList}
               />
             </View>

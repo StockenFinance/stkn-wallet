@@ -7,6 +7,7 @@ import walletCardSlice from "./walletCardSlice";
 import CounterSlice from "./CounterSlice";
 import currencyCardSlice from "./currencyCardSlice";
 import navigationSlice from "./navigationSlice";
+import activeIndexSlice from "./activeIndexSlice";
 
 const rootReducer = combineReducers({
   wallet: walletReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   counter: CounterSlice,
   currencyCardData: currencyCardSlice,
   navigation: navigationSlice,
+  activeIndex: activeIndexSlice,
 
   // other reducers if any
 });

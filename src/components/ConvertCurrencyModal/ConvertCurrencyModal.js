@@ -20,15 +20,19 @@ const ConvertCurrencyModal = ({
   value,
   onSelect,
 }) => {
+  console.log("selectedCurrency-------", selectedCurrency);
   const [tokenList, setTokenList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currencyNetwork, setCurrencyNetwork] = useState(
+    selectedCurrency === "ETH" ? "1" : "137"
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.1inch.dev/token/v1.2/1/token-list`,
+          `https://api.1inch.dev/token/v1.2/${currencyNetwork}/token-list`,
           {
             headers: {
               Authorization: "Bearer BAJDKr3ufrEEEoqXT7HFJoNCUss9AIX9",
@@ -36,6 +40,7 @@ const ConvertCurrencyModal = ({
           }
         );
         setTokenList(response.data.tokens);
+        console.log("response from atrina", response.data.tokens);
         // console.log("Token list fetched successfully:", response.data.tokens);
       } catch (error) {
         setError(error.message);

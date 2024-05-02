@@ -39,6 +39,7 @@ import { Utils } from "../../utils/LocalStorage";
 import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 import EmptyList from "../../components/EmptyList";
 import { addCardItem } from "../../redux/reducer/currencyCardSlice";
+import { setCardActiveIndex } from "../../redux/reducer/activeIndexSlice";
 
 const Dashboard = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -344,6 +345,7 @@ const Dashboard = ({ navigation }) => {
             const index = Math.round(contentOffsetX / screenWidth);
             console.log("index------ from active", index);
             setActiveIndex(index);
+            dispatch(setCardActiveIndex(index));
           }}
         >
           {/* wallet card data */}

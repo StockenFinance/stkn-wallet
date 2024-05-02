@@ -91,7 +91,7 @@ const Settings = ({ navigation }) => {
             style={[
               styles.currencyText,
               {
-                left: !selectedLanguage === "en" ? "10%" : null,
+                marginLeft: selectedLanguage === "en" ? "38%" : "auto",
                 textTransform: "uppercase",
               },
               // { marginLeft: selectedLanguage === "ar" ? 200 : null },
