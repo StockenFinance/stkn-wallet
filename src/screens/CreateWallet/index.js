@@ -132,12 +132,10 @@ const CreateWallet = ({ navigation, route }) => {
     setLoading(true);
     const { wallet, mnemonic, encryptedWallet } = createNewWallet();
     const phrase = wallet;
-    // dispatch(
-    //   addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
-    // );
-    AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
-      console.log("Error while setting encrypted wallet: ", err);
-    });
+
+    // AsyncStorage.setItem("encryptedWallet", encryptedWallet).catch((err) => {
+    //   console.log("Error while setting encrypted wallet: ", err);
+    // });
 
     const shortenedAddress =
       wallet.address.slice(0, 6) + wallet.address.slice(-6);

@@ -61,13 +61,13 @@ export const createNewWallet = () => {
   wallet = ethers.Wallet.createRandom(provider);
 
   const mnemonic = wallet.mnemonic.phrase;
-  return { wallet, mnemonic, encryptedWallet: wallet.encryptSync("123") };
-  // return { wallet, mnemonic };
+  // return { wallet, mnemonic, encryptedWallet: wallet.encryptSync("123") };
+  return { wallet, mnemonic };
 };
 
-export const decryptWalletFromJson = (jsonWallet) => {
-  return ethers.Wallet.fromEncryptedJsonSync(jsonWallet, "123");
-};
+// export const decryptWalletFromJson = (jsonWallet) => {
+//   return ethers.Wallet.fromEncryptedJsonSync(jsonWallet, "123");
+// };
 
 export const erc20Instance = (tokenAddress) => {
   const erc20Prov = new Erc20Contract(tokenAddress, provider);

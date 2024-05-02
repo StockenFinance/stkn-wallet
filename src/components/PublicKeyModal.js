@@ -28,7 +28,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
 
   const copyToClipboard = async () => {
     try {
-      Clipboard.setString(privateKey);
+      Clipboard.setString(publicKey);
       Alert.alert("Success", "Your public key copied to clipboard!", [
         { text: "OK" },
       ]);
@@ -66,20 +66,20 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
     setStatus(false);
   };
 
-  useEffect(() => {
-    const fetchPrivateKey = async () => {
-      try {
-        const storedPrivateKey = await AsyncStorage.getItem("privateKey");
-        if (storedPrivateKey !== null) {
-          setPrivateKey(storedPrivateKey);
-        }
-      } catch (error) {
-        console.error("Error fetching private key:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPrivateKey = async () => {
+  //     try {
+  //       const storedPrivateKey = await AsyncStorage.getItem("privateKey");
+  //       if (storedPrivateKey !== null) {
+  //         setPrivateKey(storedPrivateKey);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching private key:", error);
+  //     }
+  //   };
 
-    fetchPrivateKey();
-  }, []);
+  //   fetchPrivateKey();
+  // }, []);
 
   return (
     <Modal visible={visible} transparent>
@@ -93,7 +93,7 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
             </View>
 
             <View style={styles.publicKeyContainer}>
-              <Text style={styles.publicKeyContainerText}>{privateKey}</Text>
+              <Text style={styles.publicKeyContainerText}>{publicKey}</Text>
               <TouchableOpacity onPress={copyToClipboard}>
                 <PasteIcon />
               </TouchableOpacity>
