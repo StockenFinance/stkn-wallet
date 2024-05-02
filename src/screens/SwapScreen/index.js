@@ -129,7 +129,7 @@ const SwapScreen = ({ route, tokenList }) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.headerContainer}>
-          <View style={styles.allNetworksView}>
+          {/* <View style={styles.allNetworksView}>
             <View>
               <AllNetworkIcon style={styles.allNetworksImage} />
             </View>
@@ -153,7 +153,7 @@ const SwapScreen = ({ route, tokenList }) => {
                 value={selectedChain}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
         <View style={styles.parentView}>
           <Text style={styles.headerText}>{t("wantToSwap")}</Text>
@@ -170,34 +170,15 @@ const SwapScreen = ({ route, tokenList }) => {
                   style={styles.coinImage}
                 />
               </View>
-              <TouchableOpacity
-                onPress={() => setSwapCurrencyModalVisible(true)}
+
+              <Text
+                style={[
+                  styles.allNetworksText,
+                  { fontSize: 23, fontWeight: "400", marginLeft: 8 },
+                ]}
               >
-                <Text
-                  style={[
-                    styles.allNetworksText,
-                    { fontSize: 23, fontWeight: "400", marginLeft: 8 },
-                  ]}
-                >
-                  {selectedCurrency}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSwapCurrencyModalVisible(true)}
-              >
-                <DropDownIcon
-                  style={[
-                    styles.dropdownImage,
-                    { marginLeft: "-1%", marginTop: "4%" },
-                  ]}
-                />
-              </TouchableOpacity>
-              <SwapCurrencyModal
-                isVisible={swapCurrencyModalVisible}
-                onClose={() => setSwapCurrencyModalVisible(false)}
-                value={selectedCurrency}
-                onPress={(value) => setSelectedCurrency(value)}
-              />
+                {selectedCurrency}
+              </Text>
             </View>
 
             <Text style={styles.balanceText}>You have 0 Ethereum</Text>

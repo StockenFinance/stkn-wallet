@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
+    marginTop: "15%",
   },
   coinDetailsParent: {
     flexDirection: "row",
