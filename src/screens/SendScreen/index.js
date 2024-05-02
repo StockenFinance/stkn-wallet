@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
@@ -23,6 +24,7 @@ import DropDownIcon from "../../SvgIcon/DropDownIcon";
 import SendIcon from "../../SvgIcon/SendIcon";
 import { useDispatch } from "react-redux";
 import { setMyTabHide } from "../../redux/reducer/CounterSlice";
+import { flare } from "viem/chains";
 
 const SendScreen = ({ placeholder, value, route }) => {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ const SendScreen = ({ placeholder, value, route }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(null);
   const [selectedToken, setSelectedToken] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [loading, setLoading] = useState(false);
 
   const [inputValue, setInputValue] = useState({
     to: "",
@@ -64,6 +67,7 @@ const SendScreen = ({ placeholder, value, route }) => {
   console.log("check token:::", token);
 
   const SendMoney = async () => {
+    setLoading(true);
     try {
       const encryptedWallet = await AsyncStorage.getItem("encryptedWallet");
       console.log("get encrypted wallet:::::", encryptedWallet);
@@ -111,6 +115,7 @@ const SendScreen = ({ placeholder, value, route }) => {
             console.error("Error sending Ether transaction:", err);
           });
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error sending transaction:", error);
     }
@@ -152,7 +157,14 @@ const SendScreen = ({ placeholder, value, route }) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.headerContainer}>
-          <View style={styles.allNetworksView}>
+          {loading && (
+            <ActivityIndicator
+              style={styles.loader}
+              size="large"
+              color="#F19220"
+            />
+          )}
+          {/* <View style={styles.allNetworksView}>
             <View style={styles.coinImageContainer}>
               <Image
                 source={require("../../assets/images/ethereum.png")}
@@ -162,7 +174,7 @@ const SendScreen = ({ placeholder, value, route }) => {
             <Text style={styles.allNetworksText}>Ethereum</Text>
 
             <DropDownIcon style={styles.dropdownImage} />
-          </View>
+          </View> */}
         </View>
         <View style={styles.parentView}>
           <Text style={styles.headerText}>{t("wantToSend")}</Text>
@@ -189,10 +201,10 @@ const SendScreen = ({ placeholder, value, route }) => {
                     { fontSize: 23, fontWeight: "400" },
                   ]}
                 >
-                  {selectedToken ? selectedToken : selectedSymbol}
+                  {selectedSymbol}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => setSwapCurrencyModalVisible(true)}
               >
                 <DropDownIcon
@@ -208,7 +220,7 @@ const SendScreen = ({ placeholder, value, route }) => {
                 onClose={() => setSwapCurrencyModalVisible(false)}
                 value={selectedCurrency}
                 onPress={handleTokenSelect}
-              />
+              /> */}
             </View>
 
             <Text style={styles.balanceText}>You have 0 Ethereum</Text>

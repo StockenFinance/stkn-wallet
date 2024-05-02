@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "90%",
+    marginTop: "15%",
   },
   coinDetailsParent: {
     flexDirection: "row",
@@ -205,5 +206,18 @@ export const styles = StyleSheet.create({
   },
   disabledText: {
     color: "#979797",
+  },
+  loader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    zIndex: 50,
+    marginTop: "90%",
+    marginLeft: "10%",
   },
 });
