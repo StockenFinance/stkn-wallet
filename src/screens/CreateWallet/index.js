@@ -143,7 +143,7 @@ const CreateWallet = ({ navigation, route }) => {
     dispatch(saveWalletAddress(wallet.address));
 
     storeFullWalletAddress(wallet.address);
-    storePrivateKey(wallet.privateKey);
+    storePrivateKey(wallet.privateKey, 0);
 
     // dispatch(addWalletAtReduxStore(wallet));
     setWalletStore(wallet);
@@ -172,9 +172,14 @@ const CreateWallet = ({ navigation, route }) => {
     });
   }, []);
 
-  const storePrivateKey = async (privateKey) => {
+  const storePrivateKey = async (privateKey, index) => {
     try {
-      await AsyncStorage.setItem("privateKey", privateKey);
+      // await AsyncStorage.setItem("privateKey", privateKey);
+      let privateKeys = await AsyncStorage.getItem("privateKeys");
+      privateKeys = privateKeys ? JSON.parse(privateKeys) : [];
+
+      privateKeys[index] = privateKey;
+      await AsyncStorage.setItem("privateKeys", JSON.stringify(privateKeys));
       console.log("Private key stored on create wallet:", privateKey);
     } catch (error) {
       console.error("Error storing private key:", error);
@@ -213,6 +218,7 @@ const CreateWallet = ({ navigation, route }) => {
         onPress={() =>
           navigation.navigate("ImportWallet", {
             selectedLanguage: selectedLanguage,
+            index: 0,
           })
         }
       >

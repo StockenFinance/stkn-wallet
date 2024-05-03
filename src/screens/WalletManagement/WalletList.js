@@ -84,6 +84,7 @@ const WalletList = ({ wallet, walletNumber, index }) => {
         <PublicKeyModal
           setStatus={setPublicKeyModalStatus}
           publicKey={privateKey}
+          index={index}
         />
       )}
       {deleteWalletModalStatus && (

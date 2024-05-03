@@ -48,6 +48,8 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     (state) => state.currencyCardData.currencyCardData
   );
   const calculatedIndex = walletCardData.length - 1;
+  console.log("index---- from add wallet", walletCardData, calculatedIndex);
+
   console.log("Calculated Index:", calculatedIndex);
   const slide = React.useRef(new Animated.Value(300)).current;
   const panResponder = React.useRef(
@@ -113,7 +115,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
       wallet.address.slice(0, 6) + wallet.address.slice(-6);
     setGeneratedWalletAddress(shortenedAddress);
     dispatch(saveWalletAddress(wallet.address));
-    storePrivateKey(wallet.privateKey);
+    storePrivateKey(wallet.privateKey, walletCardData.length);
 
     setWalletStore(wallet);
 
@@ -162,15 +164,21 @@ const AddWalletModal = ({ navigation, setStatus }) => {
     fetchWalletAddress();
   }, []);
 
-  const storePrivateKey = async (privateKey) => {
+  const storePrivateKey = async (privateKey, index) => {
     try {
-      await AsyncStorage.setItem("privateKey", privateKey);
-      console.log("Private key stored on add wallet:", privateKey);
+      // await AsyncStorage.setItem("privateKey", privateKey);
+      console.log("index---- from add wallet", index);
+      let privateKeys = await AsyncStorage.getItem("privateKeys");
+      privateKeys = privateKeys ? JSON.parse(privateKeys) : [];
+      console.log("privateKeys", privateKeys);
+
+      privateKeys[index] = privateKey;
+      await AsyncStorage.setItem("privateKeys", JSON.stringify(privateKeys));
+      console.log("Private key stored on create wallet:", privateKey);
     } catch (error) {
       console.error("Error storing private key:", error);
     }
   };
-
   return (
     <Pressable
       onPress={() => {
@@ -208,6 +216,7 @@ const AddWalletModal = ({ navigation, setStatus }) => {
               onPress={() =>
                 navigation.navigate("ImportWallet", {
                   selectedLanguage: selectedLanguage,
+                  index: walletCardData?.length,
                 })
               }
             >

@@ -29,7 +29,7 @@ const EnglishTranslation = {
   done: "Done",
 
   // Import wallet screen strings
-  privateKeyText: "Enter Private Key",
+  privateKeyText: "Enter Private Key/Recovery phrase",
   import: "Import",
   privateKey: "Private key or Recovery Phase",
 

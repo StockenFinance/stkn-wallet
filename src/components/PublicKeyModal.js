@@ -19,9 +19,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height } = Dimensions.get("window");
 
-const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
+const PublicKeyModal = ({ visible, setStatus, publicKey, index }) => {
   const [privateKey, setPrivateKey] = useState("");
   const slide = React.useRef(new Animated.Value(height)).current;
+
+  console.log("index", index);
 
   const warningText =
     "Never share the private key with anyone, store it securely!";
@@ -70,11 +72,13 @@ const PublicKeyModal = ({ visible, setStatus, publicKey }) => {
     const fetchPrivateKey = async () => {
       try {
         console.log("from modal:::");
-        const storedPrivateKey = await AsyncStorage.getItem("privateKey");
-        console.log("from modal:::>>>>", storedPrivateKey);
+        const storedPrivateKey = await AsyncStorage.getItem("privateKeys");
+        console.log("from modal:::>>>>", JSON.parse(storedPrivateKey));
+        console.log("storedPrivateKey[index]", storedPrivateKey[index]);
+        const storedPrivate = JSON.parse(storedPrivateKey);
 
         if (storedPrivateKey !== null) {
-          setPrivateKey(storedPrivateKey);
+          setPrivateKey(storedPrivate[index]);
         }
       } catch (error) {
         console.error("Error fetching private key:", error);
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   warningText: {
-    width: "99%",
+    width: "102%",
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,

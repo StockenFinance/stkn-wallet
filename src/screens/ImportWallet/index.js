@@ -21,12 +21,28 @@ const ImportWallet = ({ navigation, route }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const index = route?.params?.index;
 
   const dispatch = useDispatch();
 
   const handleChangeText = (newText) => {
     setText(newText);
     setErrorMessage("");
+  };
+  const storePrivateKey = async (privateKey, index) => {
+    try {
+      // await AsyncStorage.setItem("privateKey", privateKey);
+      console.log("index---- from add wallet", index);
+      let privateKeys = await AsyncStorage.getItem("privateKeys");
+      privateKeys = privateKeys ? JSON.parse(privateKeys) : [];
+      console.log("privateKeys", privateKeys);
+
+      privateKeys[index] = privateKey;
+      await AsyncStorage.setItem("privateKeys", JSON.stringify(privateKeys));
+      console.log("Private key stored on create wallet:", privateKey);
+    } catch (error) {
+      console.error("Error storing private key:", error);
+    }
   };
 
   const handleOnImport = async () => {
@@ -39,8 +55,11 @@ const ImportWallet = ({ navigation, route }) => {
         wallet = ethers.HDNodeWallet.fromMnemonic(
           ethers.Mnemonic.fromPhrase(text)
         );
+        console.log("wallet if Mneomnic", wallet);
+
         securityKey = wallet.mnemonic.phrase;
         backupPhrase = text;
+        storePrivateKey(wallet.privateKey, index);
       } catch (error) {
         setErrorMessage("Invalid recovery phrase");
         setLoading(false);
@@ -49,6 +68,9 @@ const ImportWallet = ({ navigation, route }) => {
     } else {
       try {
         wallet = new ethers.Wallet(text);
+        console.log("wallet if phrase", wallet);
+
+        storePrivateKey(wallet.privateKey, index);
       } catch (error) {
         setErrorMessage("Invalid private key");
         setLoading(false);
@@ -58,7 +80,6 @@ const ImportWallet = ({ navigation, route }) => {
 
     console.log("check import::::", wallet);
 
-    // Check if the wallet address already exists
     const walletAddressExists = await AsyncStorage.getItem("fullWalletAddress");
     if (walletAddressExists === wallet.address) {
       setErrorMessage("This wallet is already imported.");
@@ -69,10 +90,6 @@ const ImportWallet = ({ navigation, route }) => {
     // dispatch(addWalletAtReduxStore(wallet));
 
     if (wallet) {
-      // dispatch(
-      //   addWalletCard({ newWalletAddress: wallet, newWalletBalance: "0.00" })
-      // );
-
       await AsyncStorage.setItem("fullWalletAddress", wallet.address);
 
       navigation.navigate("RecoveryPhraseConfirmation", {
@@ -102,31 +119,6 @@ const ImportWallet = ({ navigation, route }) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   const fetchWalletAddress = async () => {
-  //     try {
-  //       const walletAddress = await AsyncStorage.getItem("walletAddress");
-  //       console.log("local storage >>>", walletAddress);
-  //       if (walletAddress) {
-  //         setNewAccount((prevAccount) => {
-  //           return [
-  //             {
-  //               ...prevAccount[0],
-  //               newWalletAddress: walletAddress,
-  //             },
-  //             ...prevAccount.slice(1),
-  //           ];
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.error(
-  //         "Error fetching wallet address from AsyncStorage:",
-  //         error
-  //       );
-  //     }
-  //   };
-  //   fetchWalletAddress();
-  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

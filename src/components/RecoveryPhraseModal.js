@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     borderColor: "#F3AB1D",
     borderRadius: 15,
     height: 83,
-    marginTop: "7%",
+    marginTop: "5%",
     backgroundColor: "#F4F7FA",
   },
   alertImage: {
@@ -263,10 +263,11 @@ const styles = StyleSheet.create({
 
   copyIcon: {
     justifyContent: "center",
-    marginTop: "3%",
+    marginTop: "1%",
     width: "85%",
     alignSelf: "center",
     marginLeft: "155%",
+    marginBottom: "2%",
   },
   getStartedContainer: {
     width: 335,
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F19220",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: "auto",
   },
   getStartedText: {
     fontSize: 21,
