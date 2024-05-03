@@ -130,7 +130,11 @@ const CurrencyDetailsCard = ({
     } else {
       amount = parseFloat(item.price) * parseFloat(tokenBalanceImported);
     }
-    return amount.toFixed(2);
+    if (isNaN(amount)) {
+      return "0.00";
+    } else {
+      return amount.toFixed(2);
+    }
   };
 
   useEffect(() => {
@@ -218,7 +222,12 @@ const CurrencyDetailsCard = ({
             marginLeft: "20%",
           }}
         >
-          ${item?.price}
+          $
+          {item?.price
+            ? item?.price
+            : item.symbol === "ETH"
+            ? "2967.39"
+            : "0.717864"}
         </Text>
       </View>
       {containerHeight === 170 && (

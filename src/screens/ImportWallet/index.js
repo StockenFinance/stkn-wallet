@@ -30,16 +30,30 @@ const ImportWallet = ({ navigation, route }) => {
   };
 
   const handleOnImport = async () => {
-    // const isMnemonic = text.split(" ").length > 1;
+    const isMnemonic = text.split(" ").length > 1;
 
     let wallet;
 
-    try {
-      wallet = new ethers.Wallet(text);
-    } catch (error) {
-      setErrorMessage("Invalid private key");
-      setLoading(false);
-      return;
+    if (isMnemonic) {
+      try {
+        wallet = ethers.HDNodeWallet.fromMnemonic(
+          ethers.Mnemonic.fromPhrase(text)
+        );
+        securityKey = wallet.mnemonic.phrase;
+        backupPhrase = text;
+      } catch (error) {
+        setErrorMessage("Invalid recovery phrase");
+        setLoading(false);
+        return;
+      }
+    } else {
+      try {
+        wallet = new ethers.Wallet(text);
+      } catch (error) {
+        setErrorMessage("Invalid private key");
+        setLoading(false);
+        return;
+      }
     }
 
     console.log("check import::::", wallet);
@@ -88,31 +102,31 @@ const ImportWallet = ({ navigation, route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    const fetchWalletAddress = async () => {
-      try {
-        const walletAddress = await AsyncStorage.getItem("walletAddress");
-        console.log("local storage >>>", walletAddress);
-        if (walletAddress) {
-          setNewAccount((prevAccount) => {
-            return [
-              {
-                ...prevAccount[0],
-                newWalletAddress: walletAddress,
-              },
-              ...prevAccount.slice(1),
-            ];
-          });
-        }
-      } catch (error) {
-        console.error(
-          "Error fetching wallet address from AsyncStorage:",
-          error
-        );
-      }
-    };
-    fetchWalletAddress();
-  }, []);
+  // useEffect(() => {
+  //   const fetchWalletAddress = async () => {
+  //     try {
+  //       const walletAddress = await AsyncStorage.getItem("walletAddress");
+  //       console.log("local storage >>>", walletAddress);
+  //       if (walletAddress) {
+  //         setNewAccount((prevAccount) => {
+  //           return [
+  //             {
+  //               ...prevAccount[0],
+  //               newWalletAddress: walletAddress,
+  //             },
+  //             ...prevAccount.slice(1),
+  //           ];
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error(
+  //         "Error fetching wallet address from AsyncStorage:",
+  //         error
+  //       );
+  //     }
+  //   };
+  //   fetchWalletAddress();
+  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

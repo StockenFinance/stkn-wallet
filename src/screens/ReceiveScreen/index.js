@@ -10,9 +10,12 @@ import React, { useEffect, useState } from "react";
 import BackIcon from "../../SvgIcon/BackIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QRCode from "react-native-qrcode-svg";
+import { useDispatch } from "react-redux";
+import { setMyTabHide } from "../../redux/reducer/CounterSlice";
 // import QRCode from "react-native-qrcode-generator";
 
 const ReceiveScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [walletAddress, setWalletAddress] = useState("");
   const [lastFourCharacters, setLastFourCharacters] = useState("");
 
@@ -61,6 +64,13 @@ const ReceiveScreen = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(setMyTabHide(true));
+    return () => {
+      dispatch(setMyTabHide(false));
+    };
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -106,7 +116,7 @@ const ReceiveScreen = ({ navigation }) => {
         <Text
           numberOfLines={2}
           style={{
-            marginTop: "5%",
+            marginTop: "45%",
             width: "60%",
             textAlign: "center",
             color: "#000000",
@@ -124,7 +134,7 @@ const ReceiveScreen = ({ navigation }) => {
 
           alignSelf: "center",
           borderRadius: 15,
-          marginTop: "50%",
+          marginTop: "90%",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#F19220",

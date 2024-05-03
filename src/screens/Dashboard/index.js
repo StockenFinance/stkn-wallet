@@ -66,6 +66,7 @@ const Dashboard = ({ navigation }) => {
   const [calculatedAmount, setCalculatedAmount] = useState(0);
   const [importTokenAddress, setImportTokenValue] = useState("");
   const [walletBalance, setWalletBalance] = useState(null);
+  const [privateKey, setPrivateKey] = useState("");
 
   const dispatch = useDispatch();
 
@@ -309,6 +310,23 @@ const Dashboard = ({ navigation }) => {
       setWalletBalance(balance);
       setLoading(false);
     }, 500); // Simulating a 2-second delay
+  }, []);
+
+  useEffect(() => {
+    const fetchPrivateKey = async () => {
+      try {
+        console.log("workkkk>>>");
+        const storedPrivateKey = await AsyncStorage.getItem("privateKey");
+        console.log("checkk>>>", storedPrivateKey);
+        if (storedPrivateKey !== null) {
+          setPrivateKey(storedPrivateKey);
+        }
+      } catch (error) {
+        console.error("Error fetching private key:", error);
+      }
+    };
+
+    fetchPrivateKey();
   }, []);
 
   return (
